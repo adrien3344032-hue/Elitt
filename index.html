@@ -1652,11 +1652,22 @@ savePersistedBases();
     if(typeof isSAV==='function'&&isSAV(v)){const est=Number(v.savEstimated)||0,act=Number(v.savActual)||0;if(v.savDone)return 100;if(!est)return 0;return Math.min(100,Math.round(act/est*100));}
     const total=totalUnitsV5(v);return total?Math.round(doneUnitsV5(v)/total*100):0;
   };
-  function phaseProgressHtmlV5(v){
-  if(typeof isSAV==='function' && isSAV(v)){
-    return '<div class="progress"><div class="bar" style="width:'+pct(v)+'%"></div></div>' +
-           '<div class="muted">'+fmt(v.savActual||0)+' / '+fmt(v.savEstimated||0)+'</div>';
-  }
+  
+  function phaseStatsV5(v,cat){
+  const list=(v.ofs||[]).filter(o=>(o.category||'')===cat);
+  const total=list.reduce((s,o)=>s+qtyTotalV5(o),0);
+  const done=list.reduce((s,o)=>s+qtyDoneV5(o),0);
+
+  return {
+    total,
+    done,
+    pct: total ? Math.round(done/total*100) : 0
+  };
+}
+
+function phaseProgressHtmlV5(v){
+  ...
+}
 
   let html = '';
 
