@@ -1653,12 +1653,26 @@ savePersistedBases();
     const total=totalUnitsV5(v);return total?Math.round(doneUnitsV5(v)/total*100):0;
   };
 
-  function phaseStatsV5(v,cat){const list=(v.ofs||[]).filter(o=>(o.category||'')===cat),total=list.reduce((s,o)=>s+qtyTotalV5(o),0),done=list.reduce((s,o)=>s+qtyDoneV5(o),0);return{total,done,pct:total?Math.round(done/total*100):0};}
   function phaseProgressHtmlV5(v){
-    if(typeof isSAV==='function'&&isSAV(v))return`<div class="progress"><div class="bar" style="width:${pct(v)}%"></div></div><div class="muted">${fmt(v.savActual||0)} / ${fmt(v.savEstimated||0)}</div>`;
-    return`<div class="phaseProgress">${['Fabrication','Prémontage','Pose'].map(cat=>{const s=phaseStatsV5(v,cat);return`<div class="phaseLine"><span class="phaseName">${cat}</span><div class="progress"><div class="bar" style="width:${s.pct}%"></div></div><span class="phasePct">${s.pct}%</span></div><div class="muted" style="margin:-4px 0 0 100px">${s.done}/${s.total} réalisation${s.total>1?'s':''}</div>`;}).join('')}</div>`;
-  }
+  if(typeof isSAV==='function'&&isSAV(v))
+    return `<div class="progress"><div class="bar" style="width:${pct(v)}%"></div></div><div class="muted">${fmt(v.savActual||0)} / ${fmt(v.savEstimated||0)}</div>`;
 
+  return `<div style="display:grid;gap:7px;min-width:190px">
+    ${['Fabrication','Prémontage','Pose'].map(cat=>{
+      const s=phaseStatsV5(v,cat);
+      return `
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:3px">
+            <span><b>${cat}</b> ${s.pct}%</span>
+            <span class="muted">${s.done}/${s.total} réalisations</span>
+          </div>
+          <div class="progress" style="height:7px;min-width:190px">
+            <div class="bar" style="width:${s.pct}%"></div>
+          </div>
+        </div>`;
+    }).join('')}
+  </div>`;
+}
   estimateVehiclesActive=function(){
     normalizeAll();normalizeQtyAllV5();const people=state.people.filter(p=>personName(p));if(!people.length)return{};
     const now=new Date(),slots=people.map(p=>({p,free:nextWorkStart(p,now)||now})),result={};
