@@ -2184,7 +2184,7 @@ ${reason}`))return;let count=0;const now=new Date().toISOString();ids.forEach(id
   function vinChoiceV9(v,o){
     const rem=remainV9(o),d=doneV9(o),t=totalV9(o),done=rem===0,blocked=o.status==='Bloqué',sel=window._bulkSelectedV9?.has(v.id),selectable=!done&&!blocked;
     const info=done?`✓ Terminé ${d}/${t}`:blocked?`Déjà bloqué • ${o.blockReason||'sans raison'}`:`${d}/${t} faits • ${rem} restant${rem>1?'s':''}`;
-    return`<button type="button" class="vinBlockChoiceV7 ${done?'done':''} ${blocked?'blocked':''} ${sel?'selected':''}" ${selectable?'':'disabled'} data-vin-v9="${escV9(v.id)}"><b>${sel?'✓ ':''}${escV9(v.vin)}</b><small>${escV9(info)}</small></button>`;
+    return`<button type="button" class="vinBlockChoiceV7 ${done?'done':''} ${blocked?'blocked':''} ${sel?'selected':''}" ${selectable?'':'disabled'} data-vin-v9="${escV9(v.id)}"><b>${sel?'✓ ':''}${escV9(v.vin)}</b><small style="margin-left:8px">${escV9(info)}</small></button>`;
   }
   function refreshBulkV9(){
     const box=document.getElementById('vinBlockGridV9');if(box){box.innerHTML=bulkRowsV9().map(x=>vinChoiceV9(x.v,x.o)).join('');box.querySelectorAll('[data-vin-v9]').forEach(btn=>btn.addEventListener('click',()=>toggleBulkV9(btn.dataset.vinV9)));}
@@ -2213,7 +2213,7 @@ ${reason}`))return;let count=0;const now=new Date().toISOString();ids.forEach(id
       </div>
       <div class="bulkToolsV3"><button class="small alt" id="bulkAllV9">Sélectionner tous les disponibles</button><button class="small alt" id="bulkNoneV9">Tout enlever</button></div>
       <div id="vinBlockGridV9" class="vinBlockGridV7"></div>
-      <div class="bulkBlockFooterV7"><span id="bulkCountV9" class="count">0 VIN sélectionné</span><button class="alt" id="bulkCancelV9">Annuler</button><button id="bulkValidateV9" class="bad" disabled>⛔ Bloquer 0 VIN</button></div>
+      <div class="bulkBlockFooterV7"><span id="bulkCountV9" class="count">0 VIN sélectionné</span><button class="alt" id="bulkCancelV9" style="margin-left:15px">Annuler</button><button id="bulkValidateV9" class="bad" style="margin-left:10px" disabled>⛔ Bloquer 0 VIN</button></div>
     </div>`);
     const mode=document.getElementById('bulkModeV9'),part=document.getElementById('bulkPartV9');
     const toggle=()=>{const show=mode?.value==='piece';['bulkPartLabelV9','bulkQtyLabelV9','bulkSelectedPartInfoV9'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display=show?'grid':'none';});};
