@@ -1652,27 +1652,32 @@ savePersistedBases();
     if(typeof isSAV==='function'&&isSAV(v)){const est=Number(v.savEstimated)||0,act=Number(v.savActual)||0;if(v.savDone)return 100;if(!est)return 0;return Math.min(100,Math.round(act/est*100));}
     const total=totalUnitsV5(v);return total?Math.round(doneUnitsV5(v)/total*100):0;
   };
-
   function phaseProgressHtmlV5(v){
-  if(typeof isSAV==='function'&&isSAV(v))
-    return `<div class="progress"><div class="bar" style="width:${pct(v)}%"></div></div><div class="muted">${fmt(v.savActual||0)} / ${fmt(v.savEstimated||0)}</div>`;
+  if(typeof isSAV==='function' && isSAV(v)){
+    return '<div class="progress"><div class="bar" style="width:'+pct(v)+'%"></div></div>' +
+           '<div class="muted">'+fmt(v.savActual||0)+' / '+fmt(v.savEstimated||0)+'</div>';
+  }
 
-  return `<div style="display:grid;gap:7px;min-width:190px">
-    ${['Fabrication','Prémontage','Pose'].map(cat=>{
-      const s=phaseStatsV5(v,cat);
-      return `
-        <div>
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:3px">
-            <span><b>${cat}</b> ${s.pct}%</span>
-            <span class="muted">${s.done}/${s.total} réalisations</span>
-          </div>
-          <div class="progress" style="height:7px;min-width:190px">
-            <div class="bar" style="width:${s.pct}%"></div>
-          </div>
-        </div>`;
-    }).join('')}
-  </div>`;
- }
+  let html = '';
+
+  ['Fabrication','Prémontage','Pose'].forEach(function(cat){
+    const s = phaseStatsV5(v,cat);
+
+    html +=
+      '<div style="margin-bottom:6px">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:3px">' +
+          '<span><b>'+cat+'</b> '+s.pct+'%</span>' +
+          '<span class="muted">'+s.done+'/'+s.total+' réalisations</span>' +
+        '</div>' +
+        '<div class="progress" style="height:7px;min-width:190px">' +
+          '<div class="bar" style="width:'+s.pct+'%"></div>' +
+        '</div>' +
+      '</div>';
+  });
+
+  return '<div style="min-width:190px">'+html+'</div>';
+}
+
   estimateVehiclesActive=function(){
     normalizeAll();normalizeQtyAllV5();const people=state.people.filter(p=>personName(p));if(!people.length)return{};
     const now=new Date(),slots=people.map(p=>({p,free:nextWorkStart(p,now)||now})),result={};
