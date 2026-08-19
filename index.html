@@ -1672,7 +1672,7 @@ savePersistedBases();
         </div>`;
     }).join('')}
   </div>`;
-}
+ }
   estimateVehiclesActive=function(){
     normalizeAll();normalizeQtyAllV5();const people=state.people.filter(p=>personName(p));if(!people.length)return{};
     const now=new Date(),slots=people.map(p=>({p,free:nextWorkStart(p,now)||now})),result={};
