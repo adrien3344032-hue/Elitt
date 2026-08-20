@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ELITT Suivi OF - V11.4 SANS MAIL - OF BLOQUES GROUPES + CONGES -->
+<!-- ELITT Suivi OF - V11.5 OBJECTIF + QR CODE -->
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,15 +75,32 @@ tr.vehicleRow td:first-child{border-left:6px solid var(--vehColor,#3b82f6)}
 
 /* V11.3 : fenêtre d’envoi d’un OF bloqué */
 
+
+/* V11.5 : date objectif de fin et indicateurs de risque */
+.deadlineBox{display:grid;gap:5px;min-width:125px}
+.deadlineBadge{display:inline-flex;align-items:center;width:max-content;max-width:100%;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:900;white-space:nowrap}
+.deadlineBadge.ok{background:#064e3b;color:#bbf7d0}
+.deadlineBadge.risk{background:#78350f;color:#fde68a}
+.deadlineBadge.late{background:#7f1d1d;color:#fecaca}
+.deadlineBadge.none{background:#26374f;color:#cbd5e1}
+.deadlineBadge.done{background:#164e63;color:#cffafe}
+
+/* V11.5 : fenêtre QR Code d'accès direct à une fiche VIN */
+.qrWrapV115{display:grid;justify-items:center;gap:14px;padding:16px 0}
+.qrBoxV115{background:#fff;padding:14px;border-radius:16px;min-width:248px;min-height:248px;display:flex;align-items:center;justify-content:center}
+.qrLinkV115{width:100%;overflow-wrap:anywhere;white-space:normal;text-align:center}
+.qrActionsV115{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
 </style>
 </head>
 <body><div class="app"><aside><div class="brand"><img class="logo" src="logo_elitt.png" alt="Elitt"></div><nav id="nav"></nav></aside><main><header><div><h1 id="title"></h1><p id="subtitle"></p></div><div class="toolbar"><button onclick="openVehicle()">+ Véhicule</button><button class="good" onclick="openSAV()">+ SAV</button><button class="alt" onclick="openExcelImport()">Bases OF + pièces</button><button class="alt" onclick="backupAllV37()">Sauvegarder données</button><button class="alt" onclick="restoreAllV37()">Restaurer données</button></div></header><section id="view"></section></main></div>
 <div class="modal" id="modal"><div class="dialog"><h2 id="modalTitle"></h2><div id="modalBody"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
 /*
   ============================================================================
-  ELITT - SUIVI OF - V11.4 SANS MAIL - OF BLOQUES GROUPES + CONGES
+  ELITT - SUIVI OF - V11.5 OBJECTIF + QR CODE
   ============================================================================
   Base fonctionnelle : V11 nettoyée.
   Objectif : une seule version active de chaque fonctionnalité, sans les anciens
@@ -423,6 +440,8 @@ function normalizeAll() {
   state.vehicles.forEach((vehicle, index) => {
     vehicle.ofs = Array.isArray(vehicle.ofs) ? vehicle.ofs : [];
     if (!vehicle.color) vehicle.color = colors[index % colors.length];
+    // Compatibilité V11.5 : les anciennes fiches n'avaient pas encore de date objectif.
+    if (typeof vehicle.targetDate !== 'string') vehicle.targetDate = '';
   });
   normalizePeople();
   normalizeQtyAllV5();
@@ -659,6 +678,106 @@ function fmtDate(date) {
   return date ? date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : '-';
 }
 
+// Formate une date objectif YYYY-MM-DD au format français sans décalage de fuseau horaire.
+function targetDateLabelV115(value) {
+  if (!value) return '-';
+  const parts = String(value).split('-').map(Number);
+  if (parts.length !== 3 || !parts[0] || !parts[1] || !parts[2]) return '-';
+  return String(parts[2]).padStart(2, '0') + '/' + String(parts[1]).padStart(2, '0') + '/' + parts[0];
+}
+
+// Transforme une date objectif en fin de journée locale pour comparer proprement planning et objectif.
+function targetEndDateV115(value) {
+  if (!value) return null;
+  const parts = String(value).split('-').map(Number);
+  if (parts.length !== 3 || !parts[0] || !parts[1] || !parts[2]) return null;
+  return new Date(parts[0], parts[1] - 1, parts[2], 23, 59, 59, 999);
+}
+
+// Détermine si un camion est dans les temps, à risque ou déjà en retard par rapport à sa date objectif.
+function deadlineInfoV115(vehicle, estimatedEnd, isArchive = false) {
+  if (!vehicle || isSAV(vehicle) || !vehicle.targetDate) return { label: 'Non défini', className: 'none' };
+  if (isArchive) return { label: 'Archivé', className: 'none' };
+  if (remain(vehicle) <= 0) return { label: 'Terminé', className: 'done' };
+  const targetEnd = targetEndDateV115(vehicle.targetDate);
+  if (!targetEnd) return { label: 'Non défini', className: 'none' };
+  const now = new Date();
+  if (now > targetEnd) return { label: 'En retard', className: 'late' };
+  if (!estimatedEnd) return { label: 'À calculer', className: 'none' };
+  if (estimatedEnd > targetEnd) return { label: 'Risque de retard', className: 'risk' };
+  return { label: 'Dans les temps', className: 'ok' };
+}
+
+// Génère la cellule Objectif du tableau de bord avec la date et l'état calculé.
+function deadlineHtmlV115(vehicle, estimatedEnd, isArchive = false) {
+  if (isSAV(vehicle)) return '<span class="muted">-</span>';
+  const info = deadlineInfoV115(vehicle, estimatedEnd, isArchive);
+  if (!vehicle.targetDate) return '<div class="deadlineBox"><span class="muted">Aucune date</span><span class="deadlineBadge none">Non défini</span></div>';
+  return '<div class="deadlineBox"><b>' + escHtml(targetDateLabelV115(vehicle.targetDate)) + '</b><span class="deadlineBadge ' + info.className + '">' + escHtml(info.label) + '</span></div>';
+}
+
+// Construit le lien public du site qui permet d'ouvrir directement la fiche d'un VIN après connexion.
+function vehicleDeepLinkV115(vehicle) {
+  const base = window.location.origin + window.location.pathname;
+  const params = new URLSearchParams();
+  params.set('vehicle', vehicle.id);
+  params.set('vin', vehicle.vin || '');
+  return base + '?' + params.toString();
+}
+
+// Ouvre une fenêtre contenant le QR Code d'un camion et son lien d'accès direct.
+function openVehicleQRV115(vehicleId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId);
+  if (!vehicle || isSAV(vehicle)) return;
+  const link = vehicleDeepLinkV115(vehicle);
+  openModal('QR Code - VIN ' + vehicle.vin, `<div class="qrWrapV115">
+    <div class="muted" style="text-align:center">Scanne ce QR Code pour ouvrir directement la fiche du VIN <b>${escHtml(vehicle.vin)}</b>.</div>
+    <div id="qrCodeV115" class="qrBoxV115"></div>
+    <div class="qrLinkV115 muted">${escHtml(link)}</div>
+    <div class="qrActionsV115"><button onclick="printVehicleQRV115('${vehicle.id}')">🖨️ Imprimer le QR</button><button class="alt" onclick="closeModal()">Fermer</button></div>
+  </div>`);
+  setTimeout(() => {
+    const box = document.getElementById('qrCodeV115');
+    if (!box) return;
+    if (typeof QRCode !== 'function') {
+      box.innerHTML = '<div style="color:#111;text-align:center">QR Code indisponible.<br>Vérifie la connexion Internet.</div>';
+      return;
+    }
+    box.innerHTML = '';
+    new QRCode(box, { text: link, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
+  }, 0);
+}
+
+// Ouvre une page d'impression simple contenant uniquement le VIN et son QR Code.
+function printVehicleQRV115(vehicleId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId);
+  const canvas = document.querySelector('#qrCodeV115 canvas');
+  const image = document.querySelector('#qrCodeV115 img');
+  if (!vehicle || (!canvas && !image)) { alert('Le QR Code n’est pas encore prêt.'); return; }
+  const src = canvas ? canvas.toDataURL('image/png') : image.src;
+  const popup = window.open('', '_blank', 'width=620,height=760');
+  if (!popup) { alert('Le navigateur a bloqué la fenêtre d’impression.'); return; }
+  popup.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>QR VIN ${escHtml(vehicle.vin)}</title><style>body{font-family:Arial,sans-serif;text-align:center;padding:35px}h1{font-size:30px;margin:0 0 8px}p{font-size:16px;color:#444;margin:0 0 24px}img{width:320px;height:320px}small{display:block;margin-top:18px;word-break:break-all;color:#666}@media print{button{display:none}}</style></head><body><h1>VIN ${escHtml(vehicle.vin)}</h1><p>${escHtml(vehicle.brand || '')} • ${escHtml(vehicle.client || '')}</p><img src="${src}" alt="QR Code VIN ${escHtml(vehicle.vin)}"><small>${escHtml(vehicleDeepLinkV115(vehicle))}</small><br><button onclick="window.print()">Imprimer</button><script>setTimeout(()=>window.print(),300)<\/script></body></html>`);
+  popup.document.close();
+}
+
+// Lit le paramètre vehicle/vin du QR Code et ouvre une seule fois la fiche correspondante après chargement des données.
+function applyVehicleDeepLinkV115() {
+  if (window.__elittVehicleDeepLinkConsumedV115) return false;
+  const params = new URLSearchParams(window.location.search);
+  const vehicleId = params.get('vehicle') || '';
+  const vin = params.get('vin') || '';
+  if (!vehicleId && !vin) return false;
+  const vehicle = (state.vehicles || []).find(item => (vehicleId && item.id === vehicleId) || (!vehicleId && vin && String(item.vin || '') === vin))
+    || (state.vehicles || []).find(item => vin && String(item.vin || '') === vin);
+  if (!vehicle) return false;
+  window.__elittVehicleDeepLinkConsumedV115 = true;
+  state.detailVin = vehicle.id;
+  page = 'detail';
+  render();
+  return true;
+}
+
 // Estime la date de fin des véhicules actifs en répartissant le travail restant sur les personnes disponibles.
 function estimateVehiclesActive() {
   normalizeAll();
@@ -720,11 +839,11 @@ function blockedCount(vehicle) {
   return (vehicle.ofs || []).filter(of => of.status === 'Bloqué').length;
 }
 
-// Génère le tableau principal des véhicules actifs ou archivés.
+// Génère le tableau principal des véhicules actifs ou archivés, avec date objectif et risque de retard.
 function vehicleTable(list, estimates = null, isArchive = false) {
   normalizeAll();
   estimates = estimates || estimateVehiclesActive();
-  return `<div class="tablewrap"><table><thead><tr><th>VIN</th><th>Marque</th><th>Client</th><th>Options</th><th>Priorité</th><th>Avancement par phase</th><th>OF bloqués</th><th>Restant</th><th>${isArchive ? 'Archivé le' : 'Fin estimée'}</th><th>Actions</th></tr></thead><tbody>${list.map(vehicle => {
+  return `<div class="tablewrap"><table><thead><tr><th>VIN</th><th>Marque</th><th>Client</th><th>Options</th><th>Priorité</th><th>Avancement par phase</th><th>OF bloqués</th><th>Restant</th><th>Objectif</th><th>${isArchive ? 'Archivé le' : 'Fin estimée'}</th><th>Actions</th></tr></thead><tbody>${list.map(vehicle => {
     const sav = isSAV(vehicle);
     const blocked = sav ? 0 : blockedCount(vehicle);
     const archivedDate = vehicle.archivedAt ? new Date(vehicle.archivedAt).toLocaleDateString('fr-FR') : '-';
@@ -755,6 +874,7 @@ function vehicleTable(list, estimates = null, isArchive = false) {
       <td>${phaseProgressHtmlV5(vehicle)}</td>
       <td><b class="${blocked ? 'dangertext' : ''}">${blocked}</b>${blocked ? '<div class="muted">à traiter</div>' : '<div class="muted">aucun</div>'}</td>
       <td><b>${fmt(remain(vehicle))}</b></td>
+      <td>${deadlineHtmlV115(vehicle, estimates[vehicle.id], isArchive)}</td>
       <td><b>${escHtml(endLabel)}</b>${endSub}</td>
       <td class="actions">${actions}</td>
     </tr>`;
@@ -857,7 +977,7 @@ function openVehicle(id) {
   const existing = id ? state.vehicles.find(vehicle => vehicle.id === id) : null;
   const vehicle = existing || {
     id: '', vin: '', brand: 'Renault', client: 'SDIS 33', type: 'CCF', priority: 1,
-    color: '#3b82f6', selectedBase: true, selectedOptions: []
+    color: '#3b82f6', targetDate: '', selectedBase: true, selectedOptions: []
   };
   if (!vehicle) return;
   const selectedData = JSON.stringify(vehicle.selectedOptions || []).replace(/"/g, '&quot;');
@@ -868,6 +988,7 @@ function openVehicle(id) {
     <label>Type<input id="type" value="${escHtml(vehicle.type || 'CCF')}"></label>
     <label>Priorité véhicule<input type="number" id="prio" value="${escHtml(vehicle.priority || 1)}"></label>
     <label>Couleur<input type="color" id="color" value="${escHtml(vehicle.color || '#3b82f6')}"></label>
+    <label class="full">Date objectif de fin<input type="date" id="targetDate" value="${escHtml(vehicle.targetDate || '')}"></label>
     <div class="full card" id="baseChoice" style="margin:0;padding:12px">
       <b>Options du camion</b>
       <label class="checkrow"><input type="checkbox" id="createBase" ${vehicle.selectedBase === false ? '' : 'checked'}> <span id="baseBrandLabel">Camion de base ${escHtml(vehicle.brand || 'Renault')}</span></label>
@@ -901,7 +1022,8 @@ function saveVehicle(id) {
     client: document.getElementById('client').value,
     type: document.getElementById('type').value,
     priority: Number(document.getElementById('prio').value) || 1,
-    color: document.getElementById('color').value
+    color: document.getElementById('color').value,
+    targetDate: document.getElementById('targetDate')?.value || ''
   });
   const hasTemplate = templateForBrand(vehicle.brand).length > 0;
   if (hasTemplate) {
@@ -1515,7 +1637,9 @@ function vehicleDetail() {
   const back = vehicle.archived ? `<button class="alt" onclick="page='archives';render()">← Retour archives</button>` : `<button class="alt" onclick="page='dash';render()">← Retour tableau de bord</button>`;
   const actions = vehicle.archived ? `<button class="good" onclick="restoreVehicle('${vehicle.id}')">Restaurer</button>` : `<button onclick="openOF('${vehicle.id}')">+ Ajouter OF</button><button class="warn" onclick="archiveVehicle('${vehicle.id}')">Archiver</button>`;
   const timeline = `<button class="alt" onclick="openVehicleTimelineV6('${vehicle.id}')">📈 Avancement dans le temps</button>`;
-  document.getElementById('view').innerHTML = `<div class="toolbar">${back}${actions}${timeline}</div><br><div class="grid cards"><div class="card vehicleBanner" style="--vehColor:${vehicleColor(vehicle)}"><b>VIN</b><div class="kpi">${colorDot(vehicle)}${escHtml(vehicle.vin)}</div><div class="muted">${escHtml(vehicle.brand || '-')} • ${escHtml(vehicle.client || '-')}</div></div><div class="card"><b>Avancement total</b><div class="kpi">${pct(vehicle)}%</div><div class="muted">${doneUnitsV5(vehicle)}/${totalUnitsV5(vehicle)} réalisations</div></div><div class="card"><b>Temps restant</b><div class="kpi">${fmt(remain(vehicle))}</div></div><div class="card"><b>OF</b><div class="kpi">${doneOf(vehicle)}/${(vehicle.ofs || []).length}</div><div class="muted">lignes terminées</div></div></div><br>${detailTableV5(vehicle)}`;
+  const qrButton = `<button class="alt" onclick="openVehicleQRV115('${vehicle.id}')">▦ QR Code</button>`;
+  const objectiveText = vehicle.targetDate ? ' • Objectif ' + targetDateLabelV115(vehicle.targetDate) : ' • Objectif non défini';
+  document.getElementById('view').innerHTML = `<div class="toolbar">${back}${actions}${timeline}${qrButton}</div><br><div class="grid cards"><div class="card vehicleBanner" style="--vehColor:${vehicleColor(vehicle)}"><b>VIN</b><div class="kpi">${colorDot(vehicle)}${escHtml(vehicle.vin)}</div><div class="muted">${escHtml(vehicle.brand || '-')} • ${escHtml(vehicle.client || '-')}${escHtml(objectiveText)}</div></div><div class="card"><b>Avancement total</b><div class="kpi">${pct(vehicle)}%</div><div class="muted">${doneUnitsV5(vehicle)}/${totalUnitsV5(vehicle)} réalisations</div></div><div class="card"><b>Temps restant</b><div class="kpi">${fmt(remain(vehicle))}</div></div><div class="card"><b>OF</b><div class="kpi">${doneOf(vehicle)}/${(vehicle.ofs || []).length}</div><div class="muted">lignes terminées</div></div></div><br>${detailTableV5(vehicle)}`;
 }
 
 // Retourne le libellé français correspondant au type d'événement d'avancement.
@@ -2451,6 +2575,7 @@ function initApp() {
   migrateStateV10();
   initModalBackdrop();
   render();
+  applyVehicleDeepLinkV115();
 }
 
 initApp();
@@ -2539,7 +2664,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11,
+      version: 11.5,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -2657,6 +2782,7 @@ initApp();
       localStorage.setItem(LS, JSON.stringify(state));
       lastRemoteDataJSON = JSON.stringify({state:data.state, basesExcel:data.basesExcel || {}});
       render();
+      applyVehicleDeepLinkV115();
       setStatus('Données chargées Firebase', 'ok');
     }finally{
       applyingRemote = false;
