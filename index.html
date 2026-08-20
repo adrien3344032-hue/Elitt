@@ -114,35 +114,60 @@ body.publicVinModeV116 main{padding:24px;max-width:900px;margin:0 auto}
 .publicVinErrorV116{max-width:620px;margin:70px auto 0;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;text-align:center}
 @media(max-width:700px){body.publicVinModeV116 main{padding:16px}.publicVinGridV116{grid-template-columns:1fr}.publicVinHeaderV116 h1{font-size:25px}}
 
-/* V11.7 : tableau public global, compact et adaptatif pour afficher plusieurs VIN sur un seul écran */
+/* V11.8 : tableau public global avec fiches VIN environ deux fois plus grandes */
 body.publicGlobalModeV117 .app{display:block;min-height:100vh}
 body.publicGlobalModeV117 aside,body.publicGlobalModeV117 header,body.publicGlobalModeV117 #fbTopbar,body.publicGlobalModeV117 #modal{display:none!important}
-body.publicGlobalModeV117 main{padding:12px;max-width:1900px;margin:0 auto}
-.publicGlobalShellV117{display:grid;gap:10px}
-.publicGlobalHeaderV117{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:2px 2px 4px;flex-wrap:wrap}
-.publicGlobalHeaderV117 .left{display:flex;align-items:center;gap:12px;min-width:0}
-.publicGlobalHeaderV117 img{width:105px;height:auto;flex:0 0 auto}
-.publicGlobalHeaderV117 h1{font-size:24px;margin:0 0 3px}
-.publicGlobalHeaderV117 p{margin:0;font-size:12px}
-.publicGlobalGridV117{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;align-items:stretch}
-.publicGlobalCardV117{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:11px;display:grid;gap:8px;min-width:0}
-.publicGlobalCardHeadV117{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.publicGlobalVinV117{font-size:19px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.publicGlobalPhaseListV117{display:grid;gap:6px}
-.publicGlobalPhaseV117{display:grid;gap:3px}
-.publicGlobalPhaseHeadV117{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px}
-.publicGlobalPhaseHeadV117 strong{font-size:12px}
-.publicGlobalPhaseTrackV117{height:6px;background:#203654;border-radius:999px;overflow:hidden}
+body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
+.publicGlobalShellV117{display:grid;gap:18px}
+.publicGlobalHeaderV117{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:4px 4px 8px;flex-wrap:wrap}
+.publicGlobalHeaderV117 .left{display:flex;align-items:center;gap:16px;min-width:0}
+.publicGlobalHeaderV117 img{width:135px;height:auto;flex:0 0 auto}
+.publicGlobalHeaderV117 h1{font-size:30px;margin:0 0 4px}
+.publicGlobalHeaderV117 p{margin:0;font-size:15px}
+.publicGlobalGridV117{display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:18px;align-items:stretch}
+.publicGlobalCardV117{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;display:grid;gap:16px;min-width:0}
+.publicGlobalCardHeadV117{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.publicGlobalVinV117{font-size:30px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.publicGlobalCardV117 .deadlineBadge{font-size:14px;padding:6px 10px}
+.publicGlobalPhaseListV117{display:grid;gap:12px}
+.publicGlobalPhaseV117{display:grid;gap:6px}
+.publicGlobalPhaseHeadV117{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:17px}
+.publicGlobalPhaseHeadV117 strong{font-size:19px}
+.publicGlobalPhaseTrackV117{height:12px;background:#203654;border-radius:999px;overflow:hidden}
 .publicGlobalPhaseBarV117{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e);border-radius:999px}
-.publicGlobalMetricsV117{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-.publicGlobalMetricV117{background:#0a1a30;border:1px solid #203b5d;border-radius:10px;padding:7px;min-width:0}
-.publicGlobalMetricV117 b{display:block;font-size:10px;color:#bcd2f2;margin-bottom:3px}
-.publicGlobalMetricV117 .value{font-size:12px;font-weight:900;line-height:1.2;overflow-wrap:anywhere}
-.publicGlobalMetricV117 .deadlineBadge{font-size:9px;padding:3px 6px;margin-top:4px}
-.publicGlobalFooterV117{text-align:right;color:var(--muted);font-size:10px}
-.publicGlobalEmptyV117{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;text-align:center}
-@media(max-width:560px){body.publicGlobalModeV117 main{padding:8px}.publicGlobalGridV117{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.publicGlobalCardV117{padding:8px;gap:6px}.publicGlobalHeaderV117 img{width:82px}.publicGlobalHeaderV117 h1{font-size:19px}.publicGlobalMetricsV117{grid-template-columns:1fr}.publicGlobalMetricV117{padding:5px}.publicGlobalVinV117{font-size:16px}.publicGlobalPhaseHeadV117{font-size:9px}.publicGlobalPhaseHeadV117 strong{font-size:10px}}
-@media(max-width:360px){.publicGlobalGridV117{grid-template-columns:1fr}}
+.publicGlobalMetricsV117{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.publicGlobalMetricV117{background:#0a1a30;border:1px solid #203b5d;border-radius:14px;padding:14px;min-width:0}
+.publicGlobalMetricV117 b{display:block;font-size:15px;color:#bcd2f2;margin-bottom:6px}
+.publicGlobalMetricV117 .value{font-size:18px;font-weight:900;line-height:1.25;overflow-wrap:anywhere}
+.publicGlobalMetricV117 .deadlineBadge{font-size:13px;padding:5px 8px;margin-top:7px}
+.publicGlobalFooterV117{text-align:right;color:var(--muted);font-size:14px}
+.publicGlobalEmptyV117{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:30px;text-align:center}
+@media(max-width:1150px){
+  body.publicGlobalModeV117 main{padding:14px}
+  .publicGlobalGridV117{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .publicGlobalCardV117{padding:17px;gap:12px}
+  .publicGlobalVinV117{font-size:25px}
+  .publicGlobalPhaseHeadV117{font-size:14px}
+  .publicGlobalPhaseHeadV117 strong{font-size:16px}
+  .publicGlobalMetricV117 b{font-size:13px}
+  .publicGlobalMetricV117 .value{font-size:16px}
+}
+@media(max-width:700px){
+  body.publicGlobalModeV117 main{padding:10px}
+  .publicGlobalGridV117{grid-template-columns:1fr;gap:10px}
+  .publicGlobalCardV117{padding:14px;gap:10px}
+  .publicGlobalHeaderV117 img{width:95px}
+  .publicGlobalHeaderV117 h1{font-size:22px}
+  .publicGlobalHeaderV117 p{font-size:12px}
+  .publicGlobalMetricsV117{grid-template-columns:1fr}
+  .publicGlobalVinV117{font-size:22px}
+  .publicGlobalPhaseHeadV117{font-size:12px}
+  .publicGlobalPhaseHeadV117 strong{font-size:14px}
+  .publicGlobalPhaseTrackV117{height:9px}
+  .publicGlobalMetricV117{padding:10px}
+  .publicGlobalMetricV117 b{font-size:12px}
+  .publicGlobalMetricV117 .value{font-size:15px}
+}
 
 </style>
 </head>
