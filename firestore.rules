@@ -1,8 +1,19 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // Données complètes du logiciel : connexion Firebase obligatoire.
     match /suivi_of/{document=**} {
       allow read, write: if request.auth != null;
+    }
+
+    // Fiches VIN publiques créées par le QR Code.
+    // Une personne qui possède le lien peut lire UNE fiche précise sans connexion.
+    // La liste complète reste inaccessible au public et seul un utilisateur connecté peut écrire/supprimer.
+    match /public_vins/{publicId} {
+      allow get: if true;
+      allow list: if request.auth != null;
+      allow create, update, delete: if request.auth != null;
     }
   }
 }
