@@ -1798,7 +1798,7 @@ function blockOF(vehicleId, ofId, backToReal = false) {
     <label id="blockQtyLabel">Quantité manquante<input type="number" min="1" step="1" id="blockMissingQty" value="${defaultQuantity}"></label>
     <div id="blockSelectedPartInfo" class="full">${selectedPartHtml(parts[0])}</div>
     <label class="full">Commentaire<textarea id="blockComment" placeholder="Ex : attente magasin, commande fournisseur, autre précision..."></textarea></label>
-    <div class="full actions"><button class="alt" onclick="closeModal()">Annuler</button><button class="bad" onclick="confirmSingleBlock()">⛔ Bloquer l’OF</button></div>
+    <div class="full actions" style="margin-top:18px"><button class="alt" onclick="closeModal()">Annuler</button><button class="bad" onclick="confirmSingleBlock()">⛔ Bloquer l’OF</button></div>
   </div>`);
   const mode = document.getElementById('blockMode');
   const partSelect = document.getElementById('blockPart');
