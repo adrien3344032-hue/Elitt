@@ -2236,7 +2236,7 @@ function restoreVehicle(id) {
 function vacationsHtml(person) {
   const vacations = personVacations(person);
   if (!vacations.length) return '<span class="muted">Aucun congé</span>';
-  return vacations.map(vacation => `<span class="pill" style="margin:3px">${escHtml(new Date(vacation.start).toLocaleDateString('fr-FR'))} → ${escHtml(new Date(vacation.end).toLocaleDateString('fr-FR'))} <button class="small bad" onclick="removeVacation('${person.id}','${vacation.id}')">x</button></span>`).join('');
+  return vacs.map(v=>`<span class="pill" style="margin:3px;display:inline-flex;align-items:center;gap:10px">${new Date(v.start).toLocaleDateString('fr-FR')} → ${new Date(v.end).toLocaleDateString('fr-FR')}<button class="small bad" style="width:24px;height:24px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:50%" onclick="removeVacation('${p.id}','${v.id}')">×</button></span>`).join('');
 }
 
 // Génère une ligne du tableau de gestion des personnes.
