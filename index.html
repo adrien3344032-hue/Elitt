@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ELITT Suivi OF - V11 NETTOYAGE - base V10 corrigée -->
+<!-- ELITT Suivi OF - V11.1 MULTI-PIECES - base V11 nettoyée -->
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,6 +50,25 @@ tr.vehicleRow td:first-child{border-left:6px solid var(--vehColor,#3b82f6)}
 .savcomment{white-space:pre-wrap;background:#081830;border:1px solid var(--line);border-radius:14px;padding:12px;color:#eaf2ff}
 .savdone{background:#064e3b;color:#bbf7d0}
 
+/* V11.1 : sélection de plusieurs pièces manquantes dans le blocage d’un OF */
+.singlePartsList{display:grid;gap:8px;max-height:300px;overflow:auto;padding:8px;background:#081830;border:1px solid #385579;border-radius:14px}
+.singlePartRow{display:grid;grid-template-columns:auto minmax(0,1fr) 120px;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:#0d1f38}
+.singlePartRow.selected{border-color:#3b82f6;background:#102846}
+.singlePartCheck{width:18px;height:18px;margin:0}
+.singlePartMain{min-width:0}
+.singlePartMain b,.singlePartMain span{overflow-wrap:anywhere}
+.singlePartQtyBox{display:grid;gap:4px;font-size:12px;color:#dceaff}
+.singlePartQtyBox input{width:100%;min-width:0}
+@media(max-width:650px){.singlePartRow{grid-template-columns:auto minmax(0,1fr)}.singlePartQtyBox{grid-column:2}}
+
+
+/* V11.2 : regroupement compact des OF bloqués identiques */
+.blockedGroupSummary{cursor:pointer;background:rgba(245,158,11,.07)}
+.blockedGroupSummary:hover{background:rgba(245,158,11,.13)}
+.blockedGroupSummary td{border-bottom-color:#5c4720}
+.blockedGroupDetail{background:rgba(239,68,68,.035)}
+.blockedGroupDetail td:nth-child(2){padding-left:24px}
+
 </style>
 </head>
 <body><div class="app"><aside><div class="brand"><img class="logo" src="logo_elitt.png" alt="Elitt"></div><nav id="nav"></nav></aside><main><header><div><h1 id="title"></h1><p id="subtitle"></p></div><div class="toolbar"><button onclick="openVehicle()">+ Véhicule</button><button class="good" onclick="openSAV()">+ SAV</button><button class="alt" onclick="openExcelImport()">Bases OF + pièces</button><button class="alt" onclick="backupAllV37()">Sauvegarder données</button><button class="alt" onclick="restoreAllV37()">Restaurer données</button></div></header><section id="view"></section></main></div>
@@ -58,9 +77,9 @@ tr.vehicleRow td:first-child{border-left:6px solid var(--vehColor,#3b82f6)}
 <script>
 /*
   ============================================================================
-  ELITT - SUIVI OF - V11 NETTOYAGE
+  ELITT - SUIVI OF - V11.1 MULTI-PIECES
   ============================================================================
-  Base fonctionnelle : V10 corrigée.
+  Base fonctionnelle : V11 nettoyée.
   Objectif : une seule version active de chaque fonctionnalité, sans les anciens
   écrans Recherche / Tous les OF / Véhicules, sans l'ancien statut rapide V34/V35
   et sans pièces de démonstration.
@@ -1777,7 +1796,75 @@ function blockDetails(mode, part, missingQuantity, comment) {
   return { type: 'other', comment: comment || '' };
 }
 
-// Ouvre la fenêtre de blocage d'un seul OF avec sélection éventuelle de la pièce manquante.
+// Génère la liste des pièces sélectionnables pour bloquer plusieurs références sur un même OF.
+function singleBlockPartsHtml(parts) {
+  if (!parts.length) return '<div class="muted">Aucune pièce renseignée pour cet OF.</div>';
+  return `<div class="singlePartsList">${parts.map((part, index) => {
+    const quantity = Math.max(1, Number(part.quantity) || 1);
+    return `<div class="singlePartRow" id="singlePartRow_${index}">
+      <input class="singlePartCheck" type="checkbox" id="blockPartCheck_${index}" onchange="refreshSingleBlockPartRow(${index})">
+      <label for="blockPartCheck_${index}" class="singlePartMain" style="display:block;cursor:pointer">
+        <b>${escHtml(part.ref || '-')}</b> — ${escHtml(part.name || '-')}
+        <div class="muted" style="margin-top:4px">Qté / OF : ${quantity}${part.comment ? ' • ' + escHtml(part.comment) : ''}</div>
+      </label>
+      <label class="singlePartQtyBox">Qté manquante
+        <input type="number" min="1" step="1" id="blockPartQty_${index}" value="${quantity}" disabled>
+      </label>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+// Active ou désactive la quantité d'une pièce selon que sa case est cochée et met la ligne en évidence.
+function refreshSingleBlockPartRow(index) {
+  const checked = !!document.getElementById('blockPartCheck_' + index)?.checked;
+  const quantity = document.getElementById('blockPartQty_' + index);
+  const row = document.getElementById('singlePartRow_' + index);
+  if (quantity) quantity.disabled = !checked;
+  if (row) row.classList.toggle('selected', checked);
+}
+
+// Retourne toutes les pièces cochées dans le blocage individuel avec une quantité propre à chaque référence.
+function selectedSingleBlockParts() {
+  const parts = window._singleBlock?.parts || [];
+  return parts.map((part, index) => {
+    const checked = !!document.getElementById('blockPartCheck_' + index)?.checked;
+    if (!checked) return null;
+    const missingQty = Math.max(1, Math.floor(Number(document.getElementById('blockPartQty_' + index)?.value) || 1));
+    return { part, missingQty };
+  }).filter(Boolean);
+}
+
+// Construit le texte lisible d'un blocage contenant plusieurs pièces manquantes.
+function multiPartsBlockReason(selectedParts, comment) {
+  let text = 'Pièces manquantes : ' + selectedParts.map(item => {
+    const label = [item.part.ref, item.part.name].filter(Boolean).join(' — ');
+    return `${label} • Qté manquante ${item.missingQty}`;
+  }).join(' | ');
+  if (comment) text += ' • ' + comment;
+  return text;
+}
+
+// Construit les données structurées d'un blocage multi-pièces tout en gardant les anciens champs de compatibilité.
+function multiPartsBlockDetails(selectedParts, comment) {
+  const rows = selectedParts.map(item => ({
+    partRef: item.part.ref || '',
+    partName: item.part.name || '',
+    partQtyPerOF: Math.max(1, Number(item.part.quantity) || 1),
+    missingQty: Math.max(1, Math.floor(Number(item.missingQty) || 1))
+  }));
+  const first = rows[0] || {};
+  return {
+    type: rows.length > 1 ? 'pieces' : 'piece',
+    parts: rows,
+    partRef: first.partRef || '',
+    partName: first.partName || '',
+    partQtyPerOF: first.partQtyPerOF || 1,
+    missingQty: first.missingQty || 1,
+    comment: comment || ''
+  };
+}
+
+// Ouvre la fenêtre de blocage d'un seul OF et permet de sélectionner une ou plusieurs pièces manquantes.
 function blockOF(vehicleId, ofId, backToReal = false) {
   const vehicle = state.vehicles.find(item => item.id === vehicleId);
   const of = vehicle?.ofs.find(item => item.id === ofId);
@@ -1788,39 +1875,30 @@ function blockOF(vehicleId, ofId, backToReal = false) {
     const name = personName(person);
     return `<option value="${escHtml(name)}" ${state.realPerson === name ? 'selected' : ''}>${escHtml(name)}</option>`;
   }).join('');
-  const defaultQuantity = parts.length ? Math.max(1, Number(parts[0].quantity) || 1) : 1;
   window._singleBlock = { vehicleId, ofId, parts, backToReal };
   openModal('Bloquer OF — ' + of.name, `<div class="blockFormV9">
     <div class="full"><h3>${escHtml(vehicle.vin)} • ${escHtml(of.name)}</h3><div class="muted">${escHtml(of.desc || '')} • ${qtyDoneV5(of)}/${qtyTotalV5(of)} réalisé(s)</div>${piecesPreview(parts)}</div>
     <label>Personne<select id="blockPerson">${peopleOptions}</select></label>
     <label>Motif<select id="blockMode"><option value="piece" ${parts.length ? '' : 'disabled'}>Pièce manquante</option><option value="other" ${parts.length ? '' : 'selected'}>Autre motif</option></select></label>
-    <label id="blockPartLabel">Pièce manquante<select id="blockPart">${partOptions(parts)}</select></label>
-    <label id="blockQtyLabel">Quantité manquante<input type="number" min="1" step="1" id="blockMissingQty" value="${defaultQuantity}"></label>
-    <div id="blockSelectedPartInfo" class="full" style="margin-top:12px">${selectedPartHtml(parts[0])}</div>
+    <div id="blockPartsMulti" class="full">
+      <b>Pièces manquantes</b>
+      <div class="muted" style="margin:5px 0 8px">Coche une ou plusieurs références et indique la quantité manquante pour chacune.</div>
+      ${singleBlockPartsHtml(parts)}
+    </div>
     <label class="full">Commentaire<textarea id="blockComment" placeholder="Ex : attente magasin, commande fournisseur, autre précision..."></textarea></label>
     <div class="full actions" style="margin-top:18px"><button class="alt" onclick="closeModal()">Annuler</button><button class="bad" onclick="confirmSingleBlock()">⛔ Bloquer l’OF</button></div>
   </div>`);
   const mode = document.getElementById('blockMode');
-  const partSelect = document.getElementById('blockPart');
   const refreshMode = () => {
-    const show = mode?.value === 'piece';
-    ['blockPartLabel', 'blockQtyLabel', 'blockSelectedPartInfo'].forEach(id => {
-      const element = document.getElementById(id);
-      if (element) element.style.display = show ? 'grid' : 'none';
-    });
+    const partMode = mode?.value === 'piece';
+    const box = document.getElementById('blockPartsMulti');
+    if (box) box.style.display = partMode ? 'block' : 'none';
   };
   mode?.addEventListener('change', refreshMode);
-  partSelect?.addEventListener('change', () => {
-    const part = parts[Number(partSelect.value || 0)];
-    const quantity = document.getElementById('blockMissingQty');
-    const info = document.getElementById('blockSelectedPartInfo');
-    if (part && quantity) quantity.value = Math.max(1, Number(part.quantity) || 1);
-    if (info) info.innerHTML = selectedPartHtml(part);
-  });
   refreshMode();
 }
 
-// Valide le blocage d'un seul OF et enregistre la raison, la personne et l'événement graphique.
+// Valide le blocage d'un OF avec une ou plusieurs pièces manquantes, ou avec un motif libre.
 function confirmSingleBlock() {
   const context = window._singleBlock;
   const vehicle = state.vehicles.find(item => item.id === context?.vehicleId);
@@ -1828,17 +1906,16 @@ function confirmSingleBlock() {
   if (!vehicle || !of) return;
   const person = document.getElementById('blockPerson')?.value || state.realPerson || '';
   const mode = document.getElementById('blockMode')?.value || 'other';
-  const part = context.parts?.[Number(document.getElementById('blockPart')?.value || 0)] || null;
-  const missing = Math.max(1, Math.floor(Number(document.getElementById('blockMissingQty')?.value) || 1));
   const comment = (document.getElementById('blockComment')?.value || '').trim();
+  const selectedParts = mode === 'piece' ? selectedSingleBlockParts() : [];
   if (!person) { alert('Choisis une personne.'); return; }
-  if (mode === 'piece' && !part) { alert('Choisis la pièce manquante.'); return; }
+  if (mode === 'piece' && !selectedParts.length) { alert('Coche au moins une pièce manquante.'); return; }
   if (mode === 'other' && !comment) { alert('Écris le motif du blocage.'); return; }
   const beforeSnapshot = progressSnapshot(vehicle);
-  const reason = blockReasonText(mode, part, missing, comment);
+  const reason = mode === 'piece' ? multiPartsBlockReason(selectedParts, comment) : comment;
   of.status = 'Bloqué';
   of.blockReason = reason;
-  of.blockDetailsV8 = blockDetails(mode, part, missing, comment);
+  of.blockDetailsV8 = mode === 'piece' ? multiPartsBlockDetails(selectedParts, comment) : { type: 'other', comment };
   of.doneBy = person;
   of.doneAt = new Date().toISOString();
   state.realPerson = person;
@@ -1988,22 +2065,93 @@ function validateBulkBlock() {
   save();
 }
 
-// Affiche la page regroupant tous les OF actuellement bloqués sur les véhicules actifs.
+// Regroupe les OF bloqués identiques afin de n'afficher qu'une seule ligne par OF dans la page OF bloqués.
+function groupedBlockedOFs() {
+  const groups = new Map();
+  activeNormalVehicles().forEach(vehicle => (vehicle.ofs || []).forEach(of => {
+    if (of.status !== 'Bloqué') return;
+    const key = ofKeyV5(of);
+    if (!groups.has(key)) {
+      groups.set(key, {
+        key,
+        name: of.name || '-',
+        category: of.category || '',
+        desc: of.desc || '',
+        order: Number(of.order) || 99999,
+        items: []
+      });
+    }
+    const group = groups.get(key);
+    group.order = Math.min(group.order, Number(of.order) || 99999);
+    group.items.push({ vehicle, of });
+  }));
+
+  return Array.from(groups.values()).map(group => {
+    group.items.sort((a, b) => new Date(b.of.doneAt || 0) - new Date(a.of.doneAt || 0));
+    group.latestDate = group.items[0]?.of?.doneAt || '';
+    return group;
+  }).sort((a, b) => new Date(b.latestDate || 0) - new Date(a.latestDate || 0));
+}
+
+// Ouvre ou referme le détail des VIN concernés par un même OF bloqué.
+function toggleBlockedGroup(groupId) {
+  const rows = Array.from(document.querySelectorAll(`[data-block-group="${groupId}"]`));
+  if (!rows.length) return;
+  const open = rows[0].style.display === 'none';
+  rows.forEach(row => { row.style.display = open ? 'table-row' : 'none'; });
+  const button = document.getElementById('btn_' + groupId);
+  if (button) button.textContent = open ? `▲ Masquer (${rows.length})` : `▼ Afficher (${rows.length})`;
+}
+
+// Affiche les OF bloqués regroupés par OF ; un clic sur une ligne déroule les VIN bloqués correspondants.
 function blockedPage() {
   setHead('OF bloqués');
-  const rows = [];
-  activeNormalVehicles().forEach(vehicle => (vehicle.ofs || []).forEach(of => {
-    if (of.status === 'Bloqué') rows.push({ vehicle, of });
-  }));
-  if (!rows.length) {
+  const groups = groupedBlockedOFs();
+  if (!groups.length) {
     document.getElementById('view').innerHTML = '<div class="card">Aucun OF bloqué sur les véhicules actifs.</div>';
     return;
   }
-  rows.sort((a, b) => new Date(b.of.doneAt || 0) - new Date(a.of.doneAt || 0));
-  document.getElementById('view').innerHTML = `<div class="tablewrap"><table><thead><tr><th>Date blocage</th><th>VIN</th><th>Ordre</th><th>OF</th><th>Description</th><th>Avancement</th><th>Blocage / raison</th><th>Personne</th><th>Action</th></tr></thead><tbody>${rows.map(({ vehicle, of }) => {
-    const date = of.doneAt ? new Date(of.doneAt).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
-    return `<tr class="blockedrow"><td><b>${escHtml(date)}</b></td><td><b>${escHtml(vehicle.vin)}</b></td><td><b>${of.order || '-'}</b></td><td><b>${escHtml(of.name)}</b><div class="muted">${escHtml(of.category || '')}</div></td><td class="desc">${escHtml(of.desc || '')}</td><td>${qtyVisualV5(of)}</td><td><span class="pill blocked">Bloqué</span><div class="blockedtxt">${escHtml(of.blockReason || '-')}</div></td><td><b>${escHtml(of.doneBy || '-')}</b></td><td class="actions"><button class="small good" onclick="unblockOF('${vehicle.id}','${of.id}')">Débloquer</button></td></tr>`;
-  }).join('')}</tbody></table></div>`;
+
+  const body = groups.map((group, index) => {
+    const groupId = 'blockedGroup_' + index;
+    const latestDate = group.latestDate ? new Date(group.latestDate).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
+    const reasons = [...new Set(group.items.map(item => item.of.blockReason || '-'))];
+    const people = [...new Set(group.items.map(item => item.of.doneBy || '-'))];
+    const reasonSummary = reasons.length === 1 ? reasons[0] : `${reasons.length} motifs différents`;
+    const peopleSummary = people.length === 1 ? people[0] : `${people.length} personnes`;
+    const order = group.order === 99999 ? '-' : group.order;
+
+    const summary = `<tr class="blockedGroupSummary" onclick="toggleBlockedGroup('${groupId}')">
+      <td><b>${escHtml(latestDate)}</b><div class="muted">dernier blocage</div></td>
+      <td><span class="pill blocked">${group.items.length} VIN</span></td>
+      <td><b>${order}</b></td>
+      <td><b>${escHtml(group.name)}</b><div class="muted">${escHtml(group.category)}</div></td>
+      <td class="desc">${escHtml(group.desc)}</td>
+      <td><b>${group.items.length} OF bloqué${group.items.length > 1 ? 's' : ''}</b><div class="muted">Cliquer pour voir les VIN</div></td>
+      <td><span class="pill blocked">Bloqué</span><div class="blockedtxt">${escHtml(reasonSummary)}</div></td>
+      <td><b>${escHtml(peopleSummary)}</b></td>
+      <td class="actions"><button id="btn_${groupId}" class="small alt" onclick="event.stopPropagation();toggleBlockedGroup('${groupId}')">▼ Afficher (${group.items.length})</button></td>
+    </tr>`;
+
+    const details = group.items.map(({ vehicle, of }) => {
+      const date = of.doneAt ? new Date(of.doneAt).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
+      return `<tr class="blockedrow blockedGroupDetail" data-block-group="${groupId}" style="display:none">
+        <td><b>${escHtml(date)}</b></td>
+        <td><b>${escHtml(vehicle.vin)}</b></td>
+        <td><b>${of.order || '-'}</b></td>
+        <td><b>${escHtml(of.name)}</b><div class="muted">${escHtml(of.category || '')}</div></td>
+        <td class="desc">${escHtml(of.desc || '')}</td>
+        <td>${qtyVisualV5(of)}</td>
+        <td><span class="pill blocked">Bloqué</span><div class="blockedtxt">${escHtml(of.blockReason || '-')}</div></td>
+        <td><b>${escHtml(of.doneBy || '-')}</b></td>
+        <td class="actions"><button class="small good" onclick="unblockOF('${vehicle.id}','${of.id}')">Débloquer</button></td>
+      </tr>`;
+    }).join('');
+
+    return summary + details;
+  }).join('');
+
+  document.getElementById('view').innerHTML = `<div class="card" style="margin-bottom:14px"><b>${groups.length} OF bloqué${groups.length > 1 ? 's' : ''} différent${groups.length > 1 ? 's' : ''}</b><div class="muted" style="margin-top:5px">Les mêmes OF bloqués sur plusieurs camions sont regroupés. Clique sur une ligne pour afficher les VIN concernés.</div></div><div class="tablewrap"><table><thead><tr><th>Dernier blocage</th><th>VIN concernés</th><th>Ordre</th><th>OF</th><th>Description</th><th>Blocages</th><th>Blocage / raison</th><th>Personne</th><th>Action</th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
 
 // Débloque un OF et le remet à faire sans modifier la quantité déjà réalisée.
