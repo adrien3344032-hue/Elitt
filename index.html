@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ELITT Suivi OF - V11.1 MULTI-PIECES - base V11 nettoyée -->
+<!-- ELITT Suivi OF - V11.4 SANS MAIL - OF BLOQUES GROUPES + CONGES -->
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -69,6 +69,12 @@ tr.vehicleRow td:first-child{border-left:6px solid var(--vehColor,#3b82f6)}
 .blockedGroupDetail{background:rgba(239,68,68,.035)}
 .blockedGroupDetail td:nth-child(2){padding-left:24px}
 
+/* V11.3 : congés mieux espacés et bouton de suppression centré */
+.vacationPill{display:inline-flex;align-items:center;gap:12px;margin:3px}
+.vacationDelete{width:26px!important;height:26px!important;min-width:26px!important;padding:0!important;margin:0!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;border-radius:50%!important;line-height:1!important}
+
+/* V11.3 : fenêtre d’envoi d’un OF bloqué */
+
 </style>
 </head>
 <body><div class="app"><aside><div class="brand"><img class="logo" src="logo_elitt.png" alt="Elitt"></div><nav id="nav"></nav></aside><main><header><div><h1 id="title"></h1><p id="subtitle"></p></div><div class="toolbar"><button onclick="openVehicle()">+ Véhicule</button><button class="good" onclick="openSAV()">+ SAV</button><button class="alt" onclick="openExcelImport()">Bases OF + pièces</button><button class="alt" onclick="backupAllV37()">Sauvegarder données</button><button class="alt" onclick="restoreAllV37()">Restaurer données</button></div></header><section id="view"></section></main></div>
@@ -77,7 +83,7 @@ tr.vehicleRow td:first-child{border-left:6px solid var(--vehColor,#3b82f6)}
 <script>
 /*
   ============================================================================
-  ELITT - SUIVI OF - V11.1 MULTI-PIECES
+  ELITT - SUIVI OF - V11.4 SANS MAIL - OF BLOQUES GROUPES + CONGES
   ============================================================================
   Base fonctionnelle : V11 nettoyée.
   Objectif : une seule version active de chaque fonctionnalité, sans les anciens
@@ -2151,7 +2157,7 @@ function blockedPage() {
     return summary + details;
   }).join('');
 
-  document.getElementById('view').innerHTML = `<div class="card" style="margin-bottom:14px"><b>${groups.length} OF bloqué${groups.length > 1 ? 's' : ''} différent${groups.length > 1 ? 's' : ''}</b><div class="muted" style="margin-top:5px">Les mêmes OF bloqués sur plusieurs camions sont regroupés. Clique sur une ligne pour afficher les VIN concernés.</div></div><div class="tablewrap"><table><thead><tr><th>Dernier blocage</th><th>VIN concernés</th><th>Ordre</th><th>OF</th><th>Description</th><th>Blocages</th><th>Blocage / raison</th><th>Personne</th><th>Action</th></tr></thead><tbody>${body}</tbody></table></div>`;
+  document.getElementById('view').innerHTML = `<div class="card" style="margin-bottom:14px"><b>${groups.length} OF bloqué${groups.length > 1 ? 's' : ''} différent${groups.length > 1 ? 's' : ''}</b><div class="muted" style="margin-top:5px">Les mêmes OF bloqués sur plusieurs camions sont regroupés. Clique sur une ligne ou sur Afficher pour voir les VIN concernés.</div></div><div class="tablewrap"><table><thead><tr><th>Dernier blocage</th><th>VIN concernés</th><th>Ordre</th><th>OF</th><th>Description</th><th>Blocages</th><th>Blocage / raison</th><th>Personne</th><th>Action</th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
 
 // Débloque un OF et le remet à faire sans modifier la quantité déjà réalisée.
@@ -2236,7 +2242,7 @@ function restoreVehicle(id) {
 function vacationsHtml(person) {
   const vacations = personVacations(person);
   if (!vacations.length) return '<span class="muted">Aucun congé</span>';
-  return vacs.map(v=>`<span class="pill" style="margin:3px;display:inline-flex;align-items:center;gap:10px">${new Date(v.start).toLocaleDateString('fr-FR')} → ${new Date(v.end).toLocaleDateString('fr-FR')}<button class="small bad" style="width:24px;height:24px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:50%" onclick="removeVacation('${p.id}','${v.id}')">×</button></span>`).join('');
+  return vacations.map(vacation => `<span class="pill vacationPill">${escHtml(new Date(vacation.start).toLocaleDateString('fr-FR'))} → ${escHtml(new Date(vacation.end).toLocaleDateString('fr-FR'))}<button class="small bad vacationDelete" title="Supprimer ce congé" onclick="removeVacation('${person.id}','${vacation.id}')">×</button></span>`).join('');
 }
 
 // Génère une ligne du tableau de gestion des personnes.
