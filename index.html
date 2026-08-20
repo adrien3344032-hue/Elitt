@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ELITT Suivi OF - V11.5 OBJECTIF + QR CODE -->
+<!-- ELITT Suivi OF - V11.6 FICHE VIN PUBLIQUE -->
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,6 +91,29 @@ tr.vehicleRow td:first-child{border-left:6px solid var(--vehColor,#3b82f6)}
 .qrLinkV115{width:100%;overflow-wrap:anywhere;white-space:normal;text-align:center}
 .qrActionsV115{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 
+
+/* V11.6 : fiche VIN publique en lecture seule ouverte directement depuis le QR Code */
+body.publicVinModeV116 .app{display:block;min-height:100vh}
+body.publicVinModeV116 aside,body.publicVinModeV116 header,body.publicVinModeV116 #fbTopbar,body.publicVinModeV116 #modal{display:none!important}
+body.publicVinModeV116 main{padding:24px;max-width:900px;margin:0 auto}
+.publicVinShellV116{display:grid;gap:18px;padding-top:10px}
+.publicVinHeaderV116{text-align:center;padding:10px 0 2px}
+.publicVinHeaderV116 img{width:min(190px,55vw);height:auto;margin-bottom:14px}
+.publicVinHeaderV116 h1{font-size:30px;margin:0 0 6px}
+.publicVinHeaderV116 p{margin:0}
+.publicVinGridV116{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.publicVinMetricV116{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+.publicVinMetricV116 .value{font-size:25px;font-weight:900;margin-top:7px}
+.publicVinPhasesV116{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;gap:15px}
+.publicPhaseV116{display:grid;gap:6px}
+.publicPhaseHeadV116{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.publicPhaseHeadV116 strong{font-size:16px}
+.publicPhaseTrackV116{height:12px;background:#203654;border-radius:999px;overflow:hidden}
+.publicPhaseBarV116{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e);border-radius:999px}
+.publicVinUpdateV116{text-align:center;color:var(--muted);font-size:12px;padding-bottom:8px}
+.publicVinErrorV116{max-width:620px;margin:70px auto 0;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;text-align:center}
+@media(max-width:700px){body.publicVinModeV116 main{padding:16px}.publicVinGridV116{grid-template-columns:1fr}.publicVinHeaderV116 h1{font-size:25px}}
+
 </style>
 </head>
 <body><div class="app"><aside><div class="brand"><img class="logo" src="logo_elitt.png" alt="Elitt"></div><nav id="nav"></nav></aside><main><header><div><h1 id="title"></h1><p id="subtitle"></p></div><div class="toolbar"><button onclick="openVehicle()">+ Véhicule</button><button class="good" onclick="openSAV()">+ SAV</button><button class="alt" onclick="openExcelImport()">Bases OF + pièces</button><button class="alt" onclick="backupAllV37()">Sauvegarder données</button><button class="alt" onclick="restoreAllV37()">Restaurer données</button></div></header><section id="view"></section></main></div>
@@ -100,7 +123,7 @@ tr.vehicleRow td:first-child{border-left:6px solid var(--vehColor,#3b82f6)}
 <script>
 /*
   ============================================================================
-  ELITT - SUIVI OF - V11.5 OBJECTIF + QR CODE
+  ELITT - SUIVI OF - V11.6 FICHE VIN PUBLIQUE
   ============================================================================
   Base fonctionnelle : V11 nettoyée.
   Objectif : une seule version active de chaque fonctionnalité, sans les anciens
@@ -716,22 +739,127 @@ function deadlineHtmlV115(vehicle, estimatedEnd, isArchive = false) {
   return '<div class="deadlineBox"><b>' + escHtml(targetDateLabelV115(vehicle.targetDate)) + '</b><span class="deadlineBadge ' + info.className + '">' + escHtml(info.label) + '</span></div>';
 }
 
-// Construit le lien public du site qui permet d'ouvrir directement la fiche d'un VIN après connexion.
+// Indique si l'URL courante demande la fiche VIN publique accessible sans connexion.
+function isPublicVinRequestV116() {
+  return new URLSearchParams(window.location.search).has('fiche');
+}
+
+// Retourne l'identifiant public contenu dans l'URL du QR Code.
+function publicVinIdFromUrlV116() {
+  return (new URLSearchParams(window.location.search).get('fiche') || '').trim();
+}
+
+// Génère un identifiant public aléatoire difficile à deviner pour une fiche VIN.
+function generatePublicVinIdV116() {
+  if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+    return 'vin_' + window.crypto.randomUUID().replace(/-/g, '');
+  }
+  return 'vin_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 14) + Math.random().toString(36).slice(2, 10);
+}
+
+// Garantit qu'un camion possède un identifiant public stable ; cet identifiant ne change plus ensuite.
+function ensureVehiclePublicIdV116(vehicle) {
+  if (!vehicle || isSAV(vehicle)) return '';
+  if (!vehicle.publicIdV116) vehicle.publicIdV116 = generatePublicVinIdV116();
+  return vehicle.publicIdV116;
+}
+
+// Construit le lien permanent de la fiche VIN publique ; le QR Code reste donc valable quand l'avancement change.
 function vehicleDeepLinkV115(vehicle) {
   const base = window.location.origin + window.location.pathname;
+  const publicId = ensureVehiclePublicIdV116(vehicle);
   const params = new URLSearchParams();
-  params.set('vehicle', vehicle.id);
-  params.set('vin', vehicle.vin || '');
+  params.set('fiche', publicId);
   return base + '?' + params.toString();
 }
 
-// Ouvre une fenêtre contenant le QR Code d'un camion et son lien d'accès direct.
+// Formate une date/heure ISO pour l'affichage de la fiche VIN publique.
+function publicDateTimeLabelV116(value) {
+  if (!value) return '-';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '-';
+  return date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+}
+
+// Prépare uniquement les informations autorisées à apparaître sur la fiche publique du camion.
+function buildPublicVinPayloadV116(vehicle, estimatedEnd) {
+  const phases = {};
+  ['Fabrication', 'Prémontage', 'Pose'].forEach(category => {
+    const stats = phaseStatsV5(vehicle, category);
+    phases[category] = { pct: stats.pct, done: stats.done, total: stats.total };
+  });
+  return {
+    publicVersion: 1,
+    publicId: vehicle.publicIdV116 || '',
+    vin: String(vehicle.vin || ''),
+    phases,
+    remainingHours: Math.max(0, Number(remain(vehicle)) || 0),
+    estimatedEnd: estimatedEnd ? estimatedEnd.toISOString() : null,
+    targetDate: vehicle.targetDate || '',
+    targetStatus: deadlineInfoV115(vehicle, estimatedEnd || null, !!vehicle.archived).label,
+    archived: !!vehicle.archived,
+    completed: remain(vehicle) <= 0,
+    updatedAt: new Date().toISOString()
+  };
+}
+
+// Affiche le chargement de la fiche VIN publique sans exposer le logiciel ni ses données privées.
+function renderPublicVinLoadingV116() {
+  document.body.classList.add('publicVinModeV116');
+  const view = document.getElementById('view');
+  if (!view) return;
+  view.innerHTML = `<div class="publicVinShellV116"><div class="publicVinHeaderV116"><img src="logo_elitt.png" alt="Elitt"><h1>Suivi du véhicule</h1><p>Chargement de l'avancement...</p></div><div class="publicVinMetricV116" style="text-align:center"><b>Connexion aux données...</b></div></div>`;
+}
+
+// Affiche un message propre lorsqu'une fiche publique est introuvable ou inaccessible.
+function renderPublicVinErrorV116(message) {
+  document.body.classList.add('publicVinModeV116');
+  const view = document.getElementById('view');
+  if (!view) return;
+  view.innerHTML = `<div class="publicVinErrorV116"><img src="logo_elitt.png" alt="Elitt" style="width:170px;max-width:60%;margin-bottom:18px"><h2>Fiche VIN indisponible</h2><p>${escHtml(message || 'Cette fiche n’existe pas ou n’est plus disponible.')}</p></div>`;
+}
+
+// Affiche la fiche VIN publique en lecture seule avec les trois phases, les heures et les dates de fin.
+function renderPublicVinDataV116(data) {
+  document.body.classList.add('publicVinModeV116');
+  const view = document.getElementById('view');
+  if (!view) return;
+  const phases = data?.phases || {};
+  const phaseHtml = ['Fabrication', 'Prémontage', 'Pose'].map(category => {
+    const stats = phases[category] || { pct: 0, done: 0, total: 0 };
+    const pctValue = Math.max(0, Math.min(100, Number(stats.pct) || 0));
+    return `<div class="publicPhaseV116"><div class="publicPhaseHeadV116"><strong>${escHtml(category)} — ${pctValue}%</strong><span class="muted">${Number(stats.done)||0}/${Number(stats.total)||0} réalisations</span></div><div class="publicPhaseTrackV116"><div class="publicPhaseBarV116" style="width:${pctValue}%"></div></div></div>`;
+  }).join('');
+  const target = data?.targetDate ? targetDateLabelV115(data.targetDate) : 'Non définie';
+  const estimated = data?.completed ? 'Terminé' : publicDateTimeLabelV116(data?.estimatedEnd);
+  const statusClass = data?.completed ? 'done' : (data?.targetStatus === 'En retard' ? 'late' : (data?.targetStatus === 'Risque de retard' ? 'risk' : (data?.targetStatus === 'Dans les temps' ? 'ok' : 'none')));
+  view.innerHTML = `<div class="publicVinShellV116">
+    <div class="publicVinHeaderV116"><img src="logo_elitt.png" alt="Elitt"><h1>VIN ${escHtml(data?.vin || '-')}</h1><p>Fiche de suivi en lecture seule</p></div>
+    <div class="publicVinPhasesV116"><b>Avancement par phase</b>${phaseHtml}</div>
+    <div class="publicVinGridV116">
+      <div class="publicVinMetricV116"><b>Temps restant</b><div class="value">${fmt(data?.remainingHours || 0)}</div></div>
+      <div class="publicVinMetricV116"><b>Fin estimée</b><div class="value" style="font-size:20px">${escHtml(estimated)}</div></div>
+      <div class="publicVinMetricV116"><b>Date objectif</b><div class="value" style="font-size:20px">${escHtml(target)}</div><div style="margin-top:8px"><span class="deadlineBadge ${statusClass}">${escHtml(data?.targetStatus || 'Non défini')}</span></div></div>
+    </div>
+    <div class="publicVinUpdateV116">Dernière mise à jour : ${escHtml(publicDateTimeLabelV116(data?.updatedAt))}</div>
+  </div>`;
+}
+
+// Ouvre une fenêtre contenant le QR Code permanent de la fiche VIN publique.
 function openVehicleQRV115(vehicleId) {
   const vehicle = state.vehicles.find(item => item.id === vehicleId);
   if (!vehicle || isSAV(vehicle)) return;
+  const hadPublicId = !!vehicle.publicIdV116;
   const link = vehicleDeepLinkV115(vehicle);
+  if (!hadPublicId) {
+    try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {}
+    if (typeof window.requestFirebaseSave === 'function') window.requestFirebaseSave(true);
+  } else if (typeof window.requestFirebaseSave === 'function') {
+    // Une sauvegarde forcée garantit que la fiche publique existe avant l'impression du QR.
+    window.requestFirebaseSave(true);
+  }
   openModal('QR Code - VIN ' + vehicle.vin, `<div class="qrWrapV115">
-    <div class="muted" style="text-align:center">Scanne ce QR Code pour ouvrir directement la fiche du VIN <b>${escHtml(vehicle.vin)}</b>.</div>
+    <div class="muted" style="text-align:center">Ce QR Code ouvre une fiche VIN publique en lecture seule. Il reste identique pendant toute la vie du camion et les données s’actualisent automatiquement.</div>
     <div id="qrCodeV115" class="qrBoxV115"></div>
     <div class="qrLinkV115 muted">${escHtml(link)}</div>
     <div class="qrActionsV115"><button onclick="printVehicleQRV115('${vehicle.id}')">🖨️ Imprimer le QR</button><button class="alt" onclick="closeModal()">Fermer</button></div>
@@ -748,7 +876,7 @@ function openVehicleQRV115(vehicleId) {
   }, 0);
 }
 
-// Ouvre une page d'impression simple contenant uniquement le VIN et son QR Code.
+// Ouvre une page d'impression simple contenant uniquement le VIN et son QR Code permanent.
 function printVehicleQRV115(vehicleId) {
   const vehicle = state.vehicles.find(item => item.id === vehicleId);
   const canvas = document.querySelector('#qrCodeV115 canvas');
@@ -757,13 +885,13 @@ function printVehicleQRV115(vehicleId) {
   const src = canvas ? canvas.toDataURL('image/png') : image.src;
   const popup = window.open('', '_blank', 'width=620,height=760');
   if (!popup) { alert('Le navigateur a bloqué la fenêtre d’impression.'); return; }
-  popup.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>QR VIN ${escHtml(vehicle.vin)}</title><style>body{font-family:Arial,sans-serif;text-align:center;padding:35px}h1{font-size:30px;margin:0 0 8px}p{font-size:16px;color:#444;margin:0 0 24px}img{width:320px;height:320px}small{display:block;margin-top:18px;word-break:break-all;color:#666}@media print{button{display:none}}</style></head><body><h1>VIN ${escHtml(vehicle.vin)}</h1><p>${escHtml(vehicle.brand || '')} • ${escHtml(vehicle.client || '')}</p><img src="${src}" alt="QR Code VIN ${escHtml(vehicle.vin)}"><small>${escHtml(vehicleDeepLinkV115(vehicle))}</small><br><button onclick="window.print()">Imprimer</button><script>setTimeout(()=>window.print(),300)<\/script></body></html>`);
+  popup.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>QR VIN ${escHtml(vehicle.vin)}</title><style>body{font-family:Arial,sans-serif;text-align:center;padding:35px}h1{font-size:30px;margin:0 0 8px}p{font-size:16px;color:#444;margin:0 0 24px}img{width:320px;height:320px}small{display:block;margin-top:18px;word-break:break-all;color:#666}@media print{button{display:none}}</style></head><body><h1>VIN ${escHtml(vehicle.vin)}</h1><p>Fiche de suivi publique en lecture seule</p><img src="${src}" alt="QR Code VIN ${escHtml(vehicle.vin)}"><small>${escHtml(vehicleDeepLinkV115(vehicle))}</small><br><button onclick="window.print()">Imprimer</button><script>setTimeout(()=>window.print(),300)<\/script></body></html>`);
   popup.document.close();
 }
 
-// Lit le paramètre vehicle/vin du QR Code et ouvre une seule fois la fiche correspondante après chargement des données.
+// Conserve la compatibilité avec les anciens QR V11.5 qui ouvraient une fiche après connexion.
 function applyVehicleDeepLinkV115() {
-  if (window.__elittVehicleDeepLinkConsumedV115) return false;
+  if (isPublicVinRequestV116() || window.__elittVehicleDeepLinkConsumedV115) return false;
   const params = new URLSearchParams(window.location.search);
   const vehicleId = params.get('vehicle') || '';
   const vin = params.get('vin') || '';
@@ -1052,11 +1180,13 @@ function saveVehicle(id) {
 function delVehicle(id) {
   const vehicle = state.vehicles.find(item => item.id === id);
   if (!vehicle || !confirm('Supprimer ce véhicule ?')) return;
+  const publicId = vehicle.publicIdV116 || '';
   logAction(isSAV(vehicle) ? 'SAV supprimé' : 'Véhicule supprimé', vehicle, null, '');
   state.vehicles = state.vehicles.filter(item => item.id !== id);
   if (state.detailVin === id) state.detailVin = '';
   if (state.realVin === id) state.realVin = '';
   save();
+  if (publicId && typeof window.deletePublicVinV116 === 'function') window.deletePublicVinV116(publicId);
 }
 
 // Ouvre la fenêtre de création ou de modification d'un SAV.
@@ -2574,6 +2704,10 @@ function initApp() {
   normalizeAll();
   migrateStateV10();
   initModalBackdrop();
+  if (isPublicVinRequestV116()) {
+    renderPublicVinLoadingV116();
+    return;
+  }
   render();
   applyVehicleDeepLinkV115();
 }
@@ -2601,6 +2735,7 @@ initApp();
   const FIREBASE_SAVE_DELAY = 650;
   const FIREBASE_DOC_COLLECTION = 'suivi_of';
   const FIREBASE_DOC_ID = 'donnees_principales';
+  const FIREBASE_PUBLIC_VINS_COLLECTION = 'public_vins';
 
   let fbReady = false;
   let db = null;
@@ -2610,6 +2745,7 @@ initApp();
   let saveTimer = null;
   let unsubscribeSnapshot = null;
   let lastRemoteDataJSON = '';
+  const lastPublicPayloadJSONV116 = new Map();
 
   const css = document.createElement('style');
   css.textContent = `
@@ -2664,11 +2800,55 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.5,
+      version: 11.6,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
     };
+  }
+
+  // Synchronise vers Firestore uniquement les fiches VIN pour lesquelles un QR public a déjà été créé.
+  async function syncPublicVinDocumentsV116(){
+    if(!db || !currentUser) return;
+    const estimated = (typeof estimateVehiclesActive === 'function') ? estimateVehiclesActive() : {};
+    const jobs = [];
+    (state.vehicles || []).forEach(vehicle => {
+      if(isSAV(vehicle) || !vehicle.publicIdV116) return;
+      const payload = buildPublicVinPayloadV116(vehicle, estimated[vehicle.id] || null);
+      const stablePayload = {...payload};
+      delete stablePayload.updatedAt;
+      const json = JSON.stringify(stablePayload);
+      if(lastPublicPayloadJSONV116.get(vehicle.publicIdV116) === json) return;
+      lastPublicPayloadJSONV116.set(vehicle.publicIdV116, json);
+      payload.updatedAt = new Date().toISOString();
+      jobs.push(db.collection(FIREBASE_PUBLIC_VINS_COLLECTION).doc(vehicle.publicIdV116).set(payload));
+    });
+    if(jobs.length) await Promise.all(jobs);
+  }
+
+  // Supprime la fiche VIN publique lorsqu'un véhicule ayant un QR est supprimé du logiciel.
+  window.deletePublicVinV116 = async function deletePublicVinV116(publicId){
+    if(!publicId || !db || !currentUser) return;
+    try{
+      await db.collection(FIREBASE_PUBLIC_VINS_COLLECTION).doc(publicId).delete();
+      lastPublicPayloadJSONV116.delete(publicId);
+    }catch(e){
+      console.warn('Suppression de la fiche VIN publique impossible.', e);
+    }
+  };
+
+  // Charge en temps réel une fiche VIN publique sans demander de connexion au logiciel principal.
+  function startPublicVinSnapshotV116(){
+    const publicId = publicVinIdFromUrlV116();
+    if(!publicId){ renderPublicVinErrorV116('Lien QR incomplet.'); return; }
+    const reference = db.collection(FIREBASE_PUBLIC_VINS_COLLECTION).doc(publicId);
+    unsubscribeSnapshot = reference.onSnapshot(snapshot => {
+      if(snapshot.exists) renderPublicVinDataV116(snapshot.data());
+      else renderPublicVinErrorV116('Cette fiche VIN n’existe pas encore. Ouvre le QR depuis le logiciel connecté une première fois afin de publier la fiche.');
+    }, error => {
+      console.error(error);
+      renderPublicVinErrorV116('Lecture Firebase impossible : ' + error.message);
+    });
   }
 
   // Met à jour le texte et la couleur du voyant de synchronisation Firebase.
@@ -2695,6 +2875,7 @@ initApp();
       setStatus('Sauvegarde...', '');
       const payload = payloadFromCurrent();
       await db.collection(FIREBASE_DOC_COLLECTION).doc(FIREBASE_DOC_ID).set(payload, {merge:true});
+      await syncPublicVinDocumentsV116();
       lastRemoteDataJSON = stableJSON;
       setStatus('Sauvegardé Firebase', 'ok');
     }catch(e){
@@ -2830,18 +3011,27 @@ initApp();
 
   // Initialise Firebase, l'authentification et l'écoute Firestore lorsque la page est complètement chargée.
   function initFirebase(){
-    buildLogin();
-    buildTopbar();
     if(!window.SUIVI_OF_FIREBASE_CONFIG || !window.SUIVI_OF_FIREBASE_CONFIG.apiKey || window.SUIVI_OF_FIREBASE_CONFIG.apiKey.includes('REMPLACER')){
-      setStatus('Configuration Firebase manquante', 'bad');
-      showError('Il faut remplir le fichier firebase-config.js avec la configuration de ton projet Firebase.');
+      if(isPublicVinRequestV116()) renderPublicVinErrorV116('Configuration Firebase manquante.');
+      else {
+        buildLogin();
+        buildTopbar();
+        setStatus('Configuration Firebase manquante', 'bad');
+        showError('Il faut remplir le fichier firebase-config.js avec la configuration de ton projet Firebase.');
+      }
       return;
     }
     try{
       firebase.initializeApp(window.SUIVI_OF_FIREBASE_CONFIG);
-      auth = firebase.auth();
       db = firebase.firestore();
       fbReady = true;
+      if(isPublicVinRequestV116()){
+        startPublicVinSnapshotV116();
+        return;
+      }
+      buildLogin();
+      buildTopbar();
+      auth = firebase.auth();
       auth.onAuthStateChanged(user => {
         currentUser = user;
         const login = document.getElementById('fbLogin');
