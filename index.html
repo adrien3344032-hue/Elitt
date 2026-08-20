@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF</title>
+<title>ELITT - Suivi OF - V11.10 Fiabilité</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -119,7 +119,7 @@ body.publicVinModeV116 main{padding:24px;max-width:900px;margin:0 auto}
    Modifie UNIQUEMENT la valeur ci-dessous :
    0.75 = plus petit | 1 = taille actuelle | 1.25 = plus grand | 1.5 = très grand
    ========================================================================== */
-:root{--echelle-fiche-vin-global:0.75;}
+:root{--echelle-fiche-vin-global:1;}
 
 /* V11.9 : tableau public global - taille pilotée par une seule variable */
 body.publicGlobalModeV117 .app{display:block;min-height:100vh}
@@ -524,7 +524,7 @@ function defaultSchedule(mode = '39h') {
   return schedule;
 }
 
-// Convertit les anciennes personnes simples en objets complets avec horaires et congés.
+// Convertit les anciennes personnes simples en objets complets avec horaires et congés, puis garantit que la personne active existe toujours.
 function normalizePeople() {
   state.people = (state.people || []).map((person, index) => {
     if (typeof person === 'string') {
@@ -537,7 +537,11 @@ function normalizePeople() {
     person.vacations = Array.isArray(person.vacations) ? person.vacations : [];
     return person;
   });
-  if (!state.realPerson && state.people[0]) state.realPerson = personName(state.people[0]);
+
+  const validNames = new Set(state.people.map(person => personName(person)).filter(Boolean));
+  if (!state.realPerson || !validNames.has(state.realPerson)) {
+    state.realPerson = state.people[0] ? personName(state.people[0]) : '';
+  }
 }
 
 // Normalise l'ensemble de l'état après un chargement local, une restauration ou une réception Firebase.
@@ -1244,9 +1248,34 @@ function openVehicleDetail(id) {
   render();
 }
 
-// Retourne une clé stable utilisée pour rapprocher un OF existant de sa version issue de la base Excel.
+// Retourne une clé stable d'un OF automatique sans utiliser son numéro d'ordre, afin qu'un OF manuel inséré avant lui ne fasse jamais perdre son avancement.
 function automaticOFKey(of) {
-  return [of?.order || '', of?.name || '', of?.category || '', of?.option || '', of?.removeIfOption || ''].join('||');
+  return [
+    String(of?.name || '').trim().toUpperCase(),
+    String(of?.category || '').trim().toUpperCase(),
+    String(of?.desc || '').trim().toUpperCase(),
+    String(of?.option || '').trim().toUpperCase(),
+    String(of?.removeIfOption || '').trim().toUpperCase()
+  ].join('||');
+}
+
+// Retrouve l'ancien OF automatique correspondant à un nouvel OF de base, avec un secours contrôlé pour les anciennes données.
+function findPreviousAutomaticOF(oldAutomaticOFs, newOF, alreadyUsedIds) {
+  const exactKey = automaticOFKey(newOF);
+  let candidate = oldAutomaticOFs.find(oldOF =>
+    !alreadyUsedIds.has(oldOF.id) &&
+    automaticOFKey(oldOF) === exactKey
+  );
+  if (candidate) return candidate;
+
+  const fallback = oldAutomaticOFs.filter(oldOF =>
+    !alreadyUsedIds.has(oldOF.id) &&
+    String(oldOF.name || '').trim().toUpperCase() === String(newOF.name || '').trim().toUpperCase() &&
+    String(oldOF.category || '').trim().toUpperCase() === String(newOF.category || '').trim().toUpperCase() &&
+    String(oldOF.option || '').trim().toUpperCase() === String(newOF.option || '').trim().toUpperCase()
+  );
+
+  return fallback.length === 1 ? fallback[0] : null;
 }
 
 // Génère les cases à cocher des options disponibles pour une marque.
@@ -1286,15 +1315,28 @@ function sameOptions(a, b) {
   return JSON.stringify(first) === JSON.stringify(second);
 }
 
-// Reconstruit uniquement les OF automatiques d'un camion après changement de base ou d'option tout en conservant les OF manuels.
+// Reconstruit les OF automatiques après changement de base ou d'option sans perdre leur avancement, même si des OF manuels ont modifié les numéros d'ordre.
 function syncVehicleOFs(vehicle, includeBase, options) {
   const desired = buildOFsForVehicle(vehicle.brand, includeBase, options);
-  const old = vehicle.ofs || [];
-  const oldByKey = new Map(old.filter(of => !of.manual).map(of => [automaticOFKey(of), of]));
-  const merged = desired.map(newOF => {
-    const previous = oldByKey.get(automaticOFKey(newOF));
-    if (!previous) return newOF;
-    return {
+  const old = Array.isArray(vehicle.ofs) ? vehicle.ofs : [];
+  const oldAutomaticOFs = old.filter(of => of.manual !== true);
+  const manualOFs = old
+    .filter(of => of.manual === true)
+    .map(of => ({ ...of, __savedOrder: Math.max(1, Number(of.order) || 1) }))
+    .sort((a, b) => a.__savedOrder - b.__savedOrder);
+
+  const usedOldIds = new Set();
+
+  const rebuiltAutomaticOFs = desired.map(newOF => {
+    const previous = findPreviousAutomaticOF(oldAutomaticOFs, newOF, usedOldIds);
+    if (!previous) {
+      normalizeQtyOFV5(newOF);
+      return { ...newOF, manual: false };
+    }
+
+    usedOldIds.add(previous.id);
+
+    const rebuilt = {
       ...newOF,
       id: previous.id || newOF.id,
       completedQty: Math.min(qtyDoneV5(previous), qtyTotalV5(newOF)),
@@ -1305,10 +1347,30 @@ function syncVehicleOFs(vehicle, includeBase, options) {
       blockDetailsV8: previous.blockDetailsV8 || undefined,
       manual: false
     };
+
+    normalizeQtyOFV5(rebuilt);
+    if (rebuilt.completedQty >= qtyTotalV5(rebuilt)) rebuilt.status = 'Fait';
+    else if (rebuilt.status !== 'Bloqué') rebuilt.status = 'À faire';
+
+    return rebuilt;
   });
-  old.filter(of => of.manual === true).forEach(of => merged.push(of));
-  vehicle.ofs = merged.sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
-  vehicle.ofs.forEach(normalizeQtyOFV5);
+
+  const merged = rebuiltAutomaticOFs.slice();
+
+  manualOFs.forEach(manualOF => {
+    const targetIndex = Math.min(
+      Math.max(0, manualOF.__savedOrder - 1),
+      merged.length
+    );
+    delete manualOF.__savedOrder;
+    merged.splice(targetIndex, 0, manualOF);
+  });
+
+  vehicle.ofs = merged;
+  vehicle.ofs.forEach((of, index) => {
+    of.order = index + 1;
+    normalizeQtyOFV5(of);
+  });
 }
 
 // Ouvre la fenêtre de création ou de modification d'un véhicule classique.
@@ -1420,6 +1482,20 @@ function openSAV(id) {
   </div>`);
 }
 
+// Génère la première référence SAV libre (SAV-1, SAV-2, SAV-3...) sans dépendre du nombre de véhicules classiques.
+function nextSAVReference(excludeVehicleId = '') {
+  const used = new Set(
+    (state.vehicles || [])
+      .filter(vehicle => isSAV(vehicle) && vehicle.id !== excludeVehicleId)
+      .map(vehicle => String(vehicle.vin || '').trim().toUpperCase())
+      .filter(Boolean)
+  );
+
+  let number = 1;
+  while (used.has('SAV-' + number)) number++;
+  return 'SAV-' + number;
+}
+
 // Enregistre les informations d'un SAV sans créer d'OF.
 function saveSAV(id) {
   const isNew = !id;
@@ -1428,9 +1504,12 @@ function saveSAV(id) {
     vehicle = { id: uid(), ofs: [], isSAV: true };
     state.vehicles.push(vehicle);
   }
+
+  const requestedReference = document.getElementById('savVin').value.trim();
+
   Object.assign(vehicle, {
     isSAV: true,
-    vin: document.getElementById('savVin').value.trim() || ('SAV-' + (state.vehicles.length + 1)),
+    vin: requestedReference || nextSAVReference(vehicle.id),
     brand: 'SAV',
     client: document.getElementById('savClient').value || '',
     type: 'SAV',
@@ -2731,11 +2810,18 @@ function addPerson() {
   save();
 }
 
-// Supprime une personne après confirmation.
+// Supprime une personne après confirmation et bascule automatiquement la personne active vers une personne encore disponible.
 function removePerson(id) {
   const person = state.people.find(item => item.id === id);
   if (!person || !confirm('Supprimer ' + personName(person) + ' ?')) return;
+
+  const removedName = personName(person);
   state.people = state.people.filter(item => item.id !== id);
+
+  if (state.realPerson === removedName) {
+    state.realPerson = state.people[0] ? personName(state.people[0]) : '';
+  }
+
   save();
 }
 
@@ -2766,14 +2852,19 @@ function applyModeSchedule() {
   });
 }
 
-// Enregistre le nom, le contrat et les créneaux personnalisés d'une personne.
+// Enregistre le nom, le contrat et les créneaux personnalisés d'une personne et met à jour la sélection active si son nom change.
 function savePersonSchedule(id) {
   const person = state.people.find(item => item.id === id);
   if (!person) return;
+
   const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
-  person.name = document.getElementById('editName').value.trim() || person.name;
+  const oldName = personName(person);
+  const newName = document.getElementById('editName').value.trim() || oldName;
+
+  person.name = newName;
   person.mode = document.getElementById('editMode').value;
   person.schedule = {};
+
   days.forEach(day => {
     person.schedule[day] = {
       work: document.getElementById('w_' + day).checked,
@@ -2783,6 +2874,9 @@ function savePersonSchedule(id) {
       pmEnd: document.getElementById('pe_' + day).value
     };
   });
+
+  if (state.realPerson === oldName) state.realPerson = newName;
+
   closeModal();
   save();
 }
