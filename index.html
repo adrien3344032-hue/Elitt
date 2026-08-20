@@ -114,7 +114,14 @@ body.publicVinModeV116 main{padding:24px;max-width:900px;margin:0 auto}
 .publicVinErrorV116{max-width:620px;margin:70px auto 0;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;text-align:center}
 @media(max-width:700px){body.publicVinModeV116 main{padding:16px}.publicVinGridV116{grid-template-columns:1fr}.publicVinHeaderV116 h1{font-size:25px}}
 
-/* V11.8 : tableau public global avec fiches VIN environ deux fois plus grandes */
+/* ==========================================================================
+   RÉGLAGE SIMPLE - TAILLE DES FICHES VIN DU SUIVI GLOBAL
+   Modifie UNIQUEMENT la valeur ci-dessous :
+   0.75 = plus petit | 1 = taille actuelle | 1.25 = plus grand | 1.5 = très grand
+   ========================================================================== */
+:root{--echelle-fiche-vin-global:1;}
+
+/* V11.9 : tableau public global - taille pilotée par une seule variable */
 body.publicGlobalModeV117 .app{display:block;min-height:100vh}
 body.publicGlobalModeV117 aside,body.publicGlobalModeV117 header,body.publicGlobalModeV117 #fbTopbar,body.publicGlobalModeV117 #modal{display:none!important}
 body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
@@ -124,27 +131,52 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
 .publicGlobalHeaderV117 img{width:135px;height:auto;flex:0 0 auto}
 .publicGlobalHeaderV117 h1{font-size:30px;margin:0 0 4px}
 .publicGlobalHeaderV117 p{margin:0;font-size:15px}
-.publicGlobalGridV117{display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:18px;align-items:stretch}
-.publicGlobalCardV117{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;display:grid;gap:16px;min-width:0}
-.publicGlobalCardHeadV117{display:flex;align-items:center;justify-content:space-between;gap:14px}
-.publicGlobalVinV117{font-size:30px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.publicGlobalCardV117 .deadlineBadge{font-size:14px;padding:6px 10px}
-.publicGlobalPhaseListV117{display:grid;gap:12px}
-.publicGlobalPhaseV117{display:grid;gap:6px}
-.publicGlobalPhaseHeadV117{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:17px}
-.publicGlobalPhaseHeadV117 strong{font-size:19px}
-.publicGlobalPhaseTrackV117{height:12px;background:#203654;border-radius:999px;overflow:hidden}
+
+/* La largeur, les espacements, les textes et les barres suivent tous la variable --echelle-fiche-vin-global. */
+.publicGlobalGridV117{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,calc(500px * var(--echelle-fiche-vin-global))),1fr));
+  gap:calc(18px * var(--echelle-fiche-vin-global));
+  align-items:stretch
+}
+.publicGlobalCardV117{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:calc(20px * var(--echelle-fiche-vin-global));
+  padding:calc(22px * var(--echelle-fiche-vin-global));
+  display:grid;
+  gap:calc(16px * var(--echelle-fiche-vin-global));
+  min-width:0
+}
+.publicGlobalCardHeadV117{display:flex;align-items:center;justify-content:space-between;gap:calc(14px * var(--echelle-fiche-vin-global))}
+.publicGlobalVinV117{font-size:calc(30px * var(--echelle-fiche-vin-global));font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.publicGlobalCardV117 .deadlineBadge{font-size:calc(14px * var(--echelle-fiche-vin-global));padding:calc(6px * var(--echelle-fiche-vin-global)) calc(10px * var(--echelle-fiche-vin-global))}
+.publicGlobalPhaseListV117{display:grid;gap:calc(12px * var(--echelle-fiche-vin-global))}
+.publicGlobalPhaseV117{display:grid;gap:calc(6px * var(--echelle-fiche-vin-global))}
+.publicGlobalPhaseHeadV117{display:flex;align-items:center;justify-content:space-between;gap:calc(12px * var(--echelle-fiche-vin-global));font-size:calc(17px * var(--echelle-fiche-vin-global))}
+.publicGlobalPhaseHeadV117 strong{font-size:calc(19px * var(--echelle-fiche-vin-global))}
+.publicGlobalPhaseTrackV117{height:calc(12px * var(--echelle-fiche-vin-global));background:#203654;border-radius:999px;overflow:hidden}
 .publicGlobalPhaseBarV117{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e);border-radius:999px}
-.publicGlobalMetricsV117{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.publicGlobalMetricV117{background:#0a1a30;border:1px solid #203b5d;border-radius:14px;padding:14px;min-width:0}
-.publicGlobalMetricV117 b{display:block;font-size:15px;color:#bcd2f2;margin-bottom:6px}
-.publicGlobalMetricV117 .value{font-size:18px;font-weight:900;line-height:1.25;overflow-wrap:anywhere}
-.publicGlobalMetricV117 .deadlineBadge{font-size:13px;padding:5px 8px;margin-top:7px}
-.publicGlobalFooterV117{text-align:right;color:var(--muted);font-size:14px}
+.publicGlobalMetricsV117{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(12px * var(--echelle-fiche-vin-global))}
+.publicGlobalMetricV117{background:#0a1a30;border:1px solid #203b5d;border-radius:calc(14px * var(--echelle-fiche-vin-global));padding:calc(14px * var(--echelle-fiche-vin-global));min-width:0}
+.publicGlobalMetricV117 b{display:block;font-size:calc(15px * var(--echelle-fiche-vin-global));color:#bcd2f2;margin-bottom:calc(6px * var(--echelle-fiche-vin-global))}
+.publicGlobalMetricV117 .value{font-size:calc(18px * var(--echelle-fiche-vin-global));font-weight:900;line-height:1.25;overflow-wrap:anywhere}
+.publicGlobalMetricV117 .deadlineBadge{font-size:calc(13px * var(--echelle-fiche-vin-global));padding:calc(5px * var(--echelle-fiche-vin-global)) calc(8px * var(--echelle-fiche-vin-global));margin-top:calc(7px * var(--echelle-fiche-vin-global))}
+.publicGlobalFooterV117{text-align:right;color:var(--muted);font-size:calc(14px * var(--echelle-fiche-vin-global))}
 .publicGlobalEmptyV117{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:30px;text-align:center}
+
+/* Mise en page des boutons principaux du tableau de bord. */
+.mainHeaderActions{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap}
+.mainHeaderActions .headerGroup{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.mainHeaderActions button{margin:0}
+
+/* Mise en page des boutons de sauvegarde placés dans la barre Firebase. */
+.fbTopbarActions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.fbTopbarActions button{margin:0}
+
 @media(max-width:1150px){
   body.publicGlobalModeV117 main{padding:14px}
-  .publicGlobalGridV117{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .publicGlobalGridV117{gap:14px}
   .publicGlobalCardV117{padding:17px;gap:12px}
   .publicGlobalVinV117{font-size:25px}
   .publicGlobalPhaseHeadV117{font-size:14px}
@@ -167,11 +199,12 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
   .publicGlobalMetricV117{padding:10px}
   .publicGlobalMetricV117 b{font-size:12px}
   .publicGlobalMetricV117 .value{font-size:15px}
+  .mainHeaderActions{justify-content:flex-start}
 }
 
 </style>
 </head>
-<body><div class="app"><aside><div class="brand"><img class="logo" src="logo_elitt.png" alt="Elitt"></div><nav id="nav"></nav></aside><main><header><div><h1 id="title"></h1><p id="subtitle"></p></div><div class="toolbar"><button onclick="openVehicle()">+ Véhicule</button><button class="good" onclick="openSAV()">+ SAV</button><button class="alt" onclick="openExcelImport()">Bases OF + pièces</button><button class="alt" onclick="backupAllV37()">Sauvegarder données</button><button class="alt" onclick="restoreAllV37()">Restaurer données</button></div></header><section id="view"></section></main></div>
+<body><div class="app"><aside><div class="brand"><img class="logo" src="logo_elitt.png" alt="Elitt"></div><nav id="nav"></nav></aside><main><header><div><h1 id="title"></h1><p id="subtitle"></p></div><div class="mainHeaderActions"><div class="headerGroup"><button onclick="openVehicle()">+ Véhicule</button><button class="good" onclick="openSAV()">+ SAV</button></div><div class="headerGroup"><button class="alt" onclick="openExcelImport()">Bases OF + pièces</button><button class="alt" onclick="openGlobalTrackingQRV117()">▦ QR Suivi global</button></div></div></header><section id="view"></section></main></div>
 <div class="modal" id="modal"><div class="dialog"><h2 id="modalTitle"></h2><div id="modalBody"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -1196,7 +1229,6 @@ function dash() {
   const done = active.reduce((sum, vehicle) => sum + (isSAV(vehicle) ? 0 : doneOf(vehicle)), 0);
   const estimates = estimateVehiclesActive();
   document.getElementById('view').innerHTML = `
-    <div class="toolbar" style="margin-bottom:14px"><button class="alt" onclick="openGlobalTrackingQRV117()">▦ QR Suivi global</button></div>
     <div class="grid cards">
       <div class="card"><b>Véhicules actifs</b><div class="kpi">${active.length}</div><div class="muted">Archivés : ${archivedVehicles().length}</div></div>
       <div class="card"><b>OF total</b><div class="kpi">${total}</div></div>
@@ -3151,9 +3183,16 @@ initApp();
     bar.className = 'fbTopbar';
     bar.innerHTML = `
       <div class="fbStatus"><span id="fbDot" class="fbDot"></span><span id="fbStatusText">Connexion Firebase...</span></div>
-      <div class="toolbar"><button class="small alt" id="fbForceSave">Forcer sauvegarde</button><button class="small bad" id="fbLogout">Déconnexion</button></div>`;
+      <div class="fbTopbarActions">
+        <button class="small alt" id="fbForceSave">Forcer sauvegarde</button>
+        <button class="small alt" id="fbBackupData">Sauvegarder données</button>
+        <button class="small alt" id="fbRestoreData">Restaurer données</button>
+        <button class="small bad" id="fbLogout">Déconnexion</button>
+      </div>`;
     main.prepend(bar);
     document.getElementById('fbForceSave').onclick = () => pushFirebaseNow(true);
+    document.getElementById('fbBackupData').onclick = () => backupAllV37();
+    document.getElementById('fbRestoreData').onclick = () => restoreAllV37();
     document.getElementById('fbLogout').onclick = () => auth.signOut();
   }
 
