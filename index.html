@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.12.1 Correction suppression temps</title>
+<title>ELITT - Suivi OF - V11.12.2 Heures par phase</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -314,6 +314,15 @@ function uid() {
 // Formate un nombre d'heures pour l'affichage français.
 function fmt(value) {
   return (Math.round((Number(value) || 0) * 100) / 100).toString().replace('.', ',') + ' h';
+}
+
+// Formate une durée décimale en heures et minutes, par exemple 25,5 h devient 25 h 30.
+function fmtHoursMinutesV11122(value) {
+  const totalMinutes = Math.max(0, Math.round((Number(value) || 0) * 60));
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  if (minutes === 0) return `${hours} h`;
+  return `${hours} h ${String(minutes).padStart(2, '0')}`;
 }
 
 // Retourne le nom d'une personne, que l'ancienne donnée soit une chaîne ou le nouvel objet personne.
@@ -1336,9 +1345,11 @@ function buildPublicVinPayloadV116(vehicle, estimatedEnd) {
     const stats = phaseStatsV5(vehicle, category);
     phases[category] = {
       pct: stats.pct,
+      hoursPct: stats.hoursPct,
       done: stats.done,
       total: stats.total,
       totalHours: stats.totalHours,
+      doneHours: stats.doneHours,
       remainingHours: stats.remainingHours
     };
   });
@@ -1381,9 +1392,29 @@ function renderPublicVinDataV116(data) {
   if (!view) return;
   const phases = data?.phases || {};
   const phaseHtml = ['Fabrication', 'Prémontage', 'Pose'].map(category => {
-    const stats = phases[category] || { pct: 0, done: 0, total: 0 };
-    const pctValue = Math.max(0, Math.min(100, Number(stats.pct) || 0));
-    return `<div class="publicPhaseV116"><div class="publicPhaseHeadV116"><strong>${escHtml(category)} — ${pctValue}%</strong><span class="muted">${Number(stats.done)||0}/${Number(stats.total)||0} réalisations • ${fmt(stats.totalHours || 0)} total</span></div><div class="publicPhaseTrackV116"><div class="publicPhaseBarV116" style="width:${pctValue}%"></div></div></div>`;
+    const stats = phases[category] || { pct: 0, hoursPct: 0, done: 0, total: 0, totalHours: 0, doneHours: 0, remainingHours: 0 };
+    const totalHours = Math.max(0, Number(stats.totalHours) || 0);
+    const doneHours = stats.doneHours !== undefined
+      ? Math.max(0, Number(stats.doneHours) || 0)
+      : Math.max(0, totalHours - (Number(stats.remainingHours) || 0));
+    const pctValue = Math.max(
+      0,
+      Math.min(
+        100,
+        stats.hoursPct !== undefined
+          ? Number(stats.hoursPct) || 0
+          : (totalHours ? Math.round(doneHours / totalHours * 100) : Number(stats.pct) || 0)
+      )
+    );
+
+    return `<div class="publicPhaseV116">
+      <div class="publicPhaseHeadV116">
+        <strong>${escHtml(category)} — ${pctValue}%</strong>
+        <span>${fmtHoursMinutesV11122(doneHours)} / ${fmtHoursMinutesV11122(totalHours)}</span>
+      </div>
+      <div class="publicPhaseTrackV116"><div class="publicPhaseBarV116" style="width:${pctValue}%"></div></div>
+      <div class="muted" style="margin-top:5px">${Number(stats.done)||0}/${Number(stats.total)||0} réalisations • reste ${fmtHoursMinutesV11122(Math.max(0, totalHours - doneHours))}</div>
+    </div>`;
   }).join('');
   const target = data?.targetDate ? targetDateLabelV115(data.targetDate) : 'Non définie';
   const estimated = data?.completed ? 'Terminé' : publicDateTimeLabelV116(data?.estimatedEnd);
@@ -1447,9 +1478,28 @@ function renderPublicGlobalErrorV117(message) {
 function publicGlobalVehicleCardV117(data) {
   const phases = data?.phases || {};
   const phaseHtml = ['Fabrication', 'Prémontage', 'Pose'].map(category => {
-    const stats = phases[category] || { pct: 0, done: 0, total: 0 };
-    const pctValue = Math.max(0, Math.min(100, Number(stats.pct) || 0));
-    return `<div class="publicGlobalPhaseV117"><div class="publicGlobalPhaseHeadV117"><strong>${escHtml(category)} ${pctValue}%</strong><span>${Number(stats.done) || 0}/${Number(stats.total) || 0} • ${fmt(stats.totalHours || 0)}</span></div><div class="publicGlobalPhaseTrackV117"><div class="publicGlobalPhaseBarV117" style="width:${pctValue}%"></div></div></div>`;
+    const stats = phases[category] || { pct: 0, hoursPct: 0, done: 0, total: 0, totalHours: 0, doneHours: 0, remainingHours: 0 };
+    const totalHours = Math.max(0, Number(stats.totalHours) || 0);
+    const doneHours = stats.doneHours !== undefined
+      ? Math.max(0, Number(stats.doneHours) || 0)
+      : Math.max(0, totalHours - (Number(stats.remainingHours) || 0));
+    const pctValue = Math.max(
+      0,
+      Math.min(
+        100,
+        stats.hoursPct !== undefined
+          ? Number(stats.hoursPct) || 0
+          : (totalHours ? Math.round(doneHours / totalHours * 100) : Number(stats.pct) || 0)
+      )
+    );
+
+    return `<div class="publicGlobalPhaseV117">
+      <div class="publicGlobalPhaseHeadV117">
+        <strong>${escHtml(category)} ${pctValue}%</strong>
+        <span>${fmtHoursMinutesV11122(doneHours)} / ${fmtHoursMinutesV11122(totalHours)}</span>
+      </div>
+      <div class="publicGlobalPhaseTrackV117"><div class="publicGlobalPhaseBarV117" style="width:${pctValue}%"></div></div>
+    </div>`;
   }).join('');
   const target = data?.targetDate ? targetDateLabelV115(data.targetDate) : 'Non définie';
   const estimated = data?.completed ? 'Terminé' : publicDateTimeLabelV116(data?.estimatedEnd);
@@ -1601,23 +1651,37 @@ function estimateVehiclesActive() {
   return result;
 }
 
-// Calcule l'avancement d'une phase précise en unités réalisées et non simplement en nombre de lignes OF.
+// Calcule l'avancement d'une phase en quantités ET en heures afin que chaque réalisation retire uniquement le temps de sa propre phase.
 function phaseStatsV5(vehicle, category) {
   const list = (vehicle.ofs || []).filter(of => (of.category || '') === category);
+
   const total = list.reduce((sum, of) => sum + qtyTotalV5(of), 0);
   const done = list.reduce((sum, of) => sum + qtyDoneV5(of), 0);
-  const totalHours = list.reduce((sum, of) => sum + (Number(of.time) || 0) * qtyTotalV5(of), 0);
-  const remainingHours = list.reduce((sum, of) => sum + (Number(of.time) || 0) * qtyRemainingV5(of), 0);
+
+  const totalHours = list.reduce(
+    (sum, of) => sum + (Number(of.time) || 0) * qtyTotalV5(of),
+    0
+  );
+
+  const doneHours = list.reduce(
+    (sum, of) => sum + (Number(of.time) || 0) * qtyDoneV5(of),
+    0
+  );
+
+  const remainingHours = Math.max(0, totalHours - doneHours);
+
   return {
     total,
     done,
     pct: total ? Math.round(done / total * 100) : 0,
     totalHours,
-    remainingHours
+    doneHours,
+    remainingHours,
+    hoursPct: totalHours ? Math.round(doneHours / totalHours * 100) : 0
   };
 }
 
-// Génère l'affichage compact des barres Fabrication, Prémontage et Pose du tableau de bord.
+// Génère les trois barres du tableau de bord en heures faites / heures totales, séparées strictement par phase.
 function phaseProgressHtmlV5(vehicle) {
   if (isSAV(vehicle)) {
     return '<div class="progress"><div class="bar" style="width:' + pct(vehicle) + '%"></div></div>' +
@@ -1625,16 +1689,24 @@ function phaseProgressHtmlV5(vehicle) {
   }
 
   let html = '';
+
   ['Fabrication', 'Prémontage', 'Pose'].forEach(category => {
     const stats = phaseStatsV5(vehicle, category);
-    html += '<div style="margin-bottom:6px">' +
-      '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:3px">' +
-      '<span><b>' + escHtml(category) + '</b> ' + stats.pct + '%</span>' +
-      '<span class="muted">' + stats.done + '/' + stats.total + ' réalisations • ' + fmt(stats.totalHours) + ' total</span>' +
+
+    html += '<div style="margin-bottom:8px">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:3px;flex-wrap:wrap">' +
+        '<span><b>' + escHtml(category) + '</b> ' + stats.hoursPct + '%</span>' +
+        '<span style="font-weight:850">' +
+          fmtHoursMinutesV11122(stats.doneHours) + ' / ' + fmtHoursMinutesV11122(stats.totalHours) +
+        '</span>' +
       '</div>' +
       '<div class="progress" style="height:7px;min-width:190px">' +
-      '<div class="bar" style="width:' + stats.pct + '%"></div>' +
-      '</div></div>';
+        '<div class="bar" style="width:' + stats.hoursPct + '%"></div>' +
+      '</div>' +
+      '<div class="muted" style="margin-top:3px">' +
+        stats.done + '/' + stats.total + ' réalisations • reste ' + fmtHoursMinutesV11122(stats.remainingHours) +
+      '</div>' +
+    '</div>';
   });
 
   const current = inProgressCountV1111(vehicle);
@@ -1642,7 +1714,7 @@ function phaseProgressHtmlV5(vehicle) {
     html += '<div class="inProgressBadgeV1111" style="margin-top:2px">▶ ' + current + ' OF en cours</div>';
   }
 
-  return '<div style="min-width:190px">' + html + '</div>';
+  return '<div style="min-width:220px">' + html + '</div>';
 }
 
 // Compte les OF actuellement bloqués d'un véhicule.
@@ -3651,7 +3723,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.121,
+      version: 11.122,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
