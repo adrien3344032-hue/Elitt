@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.10 Fiabilité</title>
+<title>ELITT - Suivi OF - V11.11 En cours</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -184,6 +184,16 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
   .publicGlobalMetricV117 b{font-size:13px}
   .publicGlobalMetricV117 .value{font-size:16px}
 }
+/* V11.11 : suivi des OF réellement démarrés + affichage des heures cumulées par phase */
+.inProgressBadgeV1111{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;background:#78350f;color:#fde68a;font-size:12px;font-weight:900;white-space:nowrap}
+.workStatusV1111{display:grid;gap:4px}
+.workStatusV1111 .startedBy{font-size:12px;color:#fde68a;font-weight:800}
+.dashboardKpisV1111{grid-template-columns:repeat(5,minmax(140px,1fr))}
+.publicVinGridV116{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1200px){.dashboardKpisV1111{grid-template-columns:repeat(3,minmax(150px,1fr))}}
+@media(max-width:760px){.dashboardKpisV1111{grid-template-columns:1fr 1fr}.publicVinGridV116{grid-template-columns:1fr}}
+@media(max-width:480px){.dashboardKpisV1111{grid-template-columns:1fr}}
+
 @media(max-width:700px){
   body.publicGlobalModeV117 main{padding:10px}
   .publicGlobalGridV117{grid-template-columns:1fr;gap:10px}
@@ -313,6 +323,137 @@ function qtyRemainingV5(of) {
   return Math.max(0, qtyTotalV5(of) - qtyDoneV5(of));
 }
 
+// Retourne la session de travail active d'un OF si quelqu'un l'a réellement démarré.
+function activeWorkSessionV1111(of) {
+  const session = of?.workSessionV1111;
+  if (!session || !session.person || !session.startedAt) return null;
+  if (qtyRemainingV5(of) <= 0 || of.status === 'Bloqué') return null;
+  return session;
+}
+
+// Nettoie une ancienne session invalide et force le statut En cours lorsqu'une session valide existe.
+function normalizeWorkSessionV1111(of) {
+  if (!of) return;
+  const session = activeWorkSessionV1111(of);
+  if (session) {
+    of.status = 'En cours';
+    return;
+  }
+  if (of.workSessionV1111) delete of.workSessionV1111;
+  if (of.status === 'En cours') {
+    of.status = qtyRemainingV5(of) <= 0 ? 'Fait' : 'À faire';
+  }
+}
+
+// Compte le nombre d'OF réellement en cours sur un véhicule.
+function inProgressCountV1111(vehicle) {
+  if (!vehicle || isSAV(vehicle)) return 0;
+  return (vehicle.ofs || []).filter(of => !!activeWorkSessionV1111(of)).length;
+}
+
+// Compte tous les OF réellement en cours sur l'ensemble des véhicules actifs.
+function totalInProgressV1111() {
+  return activeVehicles()
+    .filter(vehicle => !isSAV(vehicle))
+    .reduce((sum, vehicle) => sum + inProgressCountV1111(vehicle), 0);
+}
+
+// Formate la durée écoulée entre le démarrage et la fin d'une réalisation.
+function workDurationLabelV1111(startedAt, endedAt = new Date().toISOString()) {
+  const start = new Date(startedAt);
+  const end = new Date(endedAt);
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return '-';
+  const minutes = Math.max(0, Math.round((end - start) / 60000));
+  const hours = Math.floor(minutes / 60);
+  const rest = minutes % 60;
+  if (hours && rest) return `${hours} h ${rest} min`;
+  if (hours) return `${hours} h`;
+  return `${rest} min`;
+}
+
+// Retourne le libellé court de l'heure de démarrage d'un OF.
+function workStartTimeLabelV1111(startedAt) {
+  const date = new Date(startedAt);
+  if (Number.isNaN(date.getTime())) return '-';
+  return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+}
+
+// Démarre une réalisation d'OF pour la personne sélectionnée sans augmenter encore la quantité faite.
+function startOFWorkV1111(vehicleId, ofId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId);
+  const of = vehicle?.ofs.find(item => item.id === ofId);
+  if (!vehicle || !of) return;
+  normalizeQtyOFV5(of);
+
+  if (of.status === 'Bloqué') {
+    alert('Cet OF est bloqué. Débloque-le avant de le démarrer.');
+    return;
+  }
+  if (qtyRemainingV5(of) <= 0) {
+    alert('Cet OF est déjà terminé.');
+    return;
+  }
+
+  const existing = activeWorkSessionV1111(of);
+  if (existing) {
+    alert(`Cet OF est déjà en cours par ${existing.person} depuis ${workStartTimeLabelV1111(existing.startedAt)}.`);
+    return;
+  }
+
+  const person = state.realPerson || '';
+  if (!person) {
+    alert('Choisis une personne avant de démarrer cet OF.');
+    return;
+  }
+
+  const beforeSnapshot = progressSnapshot(vehicle);
+  const now = new Date().toISOString();
+  of.workSessionV1111 = { person, startedAt: now };
+  of.status = 'En cours';
+  state.realPerson = person;
+
+  logAction('OF débuté', vehicle, of, `${person} • réalisation ${qtyDoneV5(of) + 1}/${qtyTotalV5(of)}`);
+  recordProgressEvent(vehicle, of, 0, person, 'start', 'OF débuté', beforeSnapshot, now);
+  save();
+}
+
+// Termine la réalisation actuellement démarrée et ajoute exactement +1 à la quantité faite.
+function finishOFWorkV1111(vehicleId, ofId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId);
+  const of = vehicle?.ofs.find(item => item.id === ofId);
+  const session = activeWorkSessionV1111(of);
+  if (!vehicle || !of || !session) {
+    alert("Cet OF n'est pas actuellement démarré.");
+    return;
+  }
+
+  if (state.realPerson && state.realPerson !== session.person) {
+    const ok = confirm(`Cet OF a été démarré par ${session.person}.\n\nLe terminer au nom de ${session.person} ?`);
+    if (!ok) return;
+  }
+
+  addQtyDoneV5(vehicleId, ofId, 1, session.person);
+}
+
+// Annule un démarrage sans modifier la quantité déjà réalisée.
+function cancelOFWorkV1111(vehicleId, ofId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId);
+  const of = vehicle?.ofs.find(item => item.id === ofId);
+  const session = activeWorkSessionV1111(of);
+  if (!vehicle || !of || !session) return;
+
+  if (!confirm(`Annuler le démarrage de ${of.name} par ${session.person} ?`)) return;
+
+  const beforeSnapshot = progressSnapshot(vehicle);
+  const duration = workDurationLabelV1111(session.startedAt);
+  delete of.workSessionV1111;
+  of.status = qtyRemainingV5(of) <= 0 ? 'Fait' : 'À faire';
+
+  logAction('Démarrage OF annulé', vehicle, of, `${session.person} • après ${duration}`);
+  recordProgressEvent(vehicle, of, 0, session.person, 'cancel', 'Démarrage annulé', beforeSnapshot);
+  save();
+}
+
 // Met un OF ancien au format quantité actuel sans perdre son statut ni son avancement.
 function normalizeQtyOFV5(of) {
   if (!of) return;
@@ -328,7 +469,10 @@ function normalizeQtyOFV5(of) {
 
 // Met tous les OF et toutes les bases Excel au format quantité actuel.
 function normalizeQtyAllV5() {
-  (state.vehicles || []).forEach(vehicle => (vehicle.ofs || []).forEach(normalizeQtyOFV5));
+  (state.vehicles || []).forEach(vehicle => (vehicle.ofs || []).forEach(of => {
+    normalizeQtyOFV5(of);
+    normalizeWorkSessionV1111(of);
+  }));
   ['Renault', 'Mercedes', 'MAN'].forEach(brand => {
     (state.customTemplates?.[brand] || []).forEach(of => {
       const n = Math.floor(Number(of?.quantity ?? of?.qty ?? 1));
@@ -896,13 +1040,20 @@ function buildPublicVinPayloadV116(vehicle, estimatedEnd) {
   const phases = {};
   ['Fabrication', 'Prémontage', 'Pose'].forEach(category => {
     const stats = phaseStatsV5(vehicle, category);
-    phases[category] = { pct: stats.pct, done: stats.done, total: stats.total };
+    phases[category] = {
+      pct: stats.pct,
+      done: stats.done,
+      total: stats.total,
+      totalHours: stats.totalHours,
+      remainingHours: stats.remainingHours
+    };
   });
   return {
     publicVersion: 1,
     publicId: vehicle.publicIdV116 || '',
     vin: String(vehicle.vin || ''),
     phases,
+    inProgressCount: inProgressCountV1111(vehicle),
     remainingHours: Math.max(0, Number(remain(vehicle)) || 0),
     estimatedEnd: estimatedEnd ? estimatedEnd.toISOString() : null,
     targetDate: vehicle.targetDate || '',
@@ -938,7 +1089,7 @@ function renderPublicVinDataV116(data) {
   const phaseHtml = ['Fabrication', 'Prémontage', 'Pose'].map(category => {
     const stats = phases[category] || { pct: 0, done: 0, total: 0 };
     const pctValue = Math.max(0, Math.min(100, Number(stats.pct) || 0));
-    return `<div class="publicPhaseV116"><div class="publicPhaseHeadV116"><strong>${escHtml(category)} — ${pctValue}%</strong><span class="muted">${Number(stats.done)||0}/${Number(stats.total)||0} réalisations</span></div><div class="publicPhaseTrackV116"><div class="publicPhaseBarV116" style="width:${pctValue}%"></div></div></div>`;
+    return `<div class="publicPhaseV116"><div class="publicPhaseHeadV116"><strong>${escHtml(category)} — ${pctValue}%</strong><span class="muted">${Number(stats.done)||0}/${Number(stats.total)||0} réalisations • ${fmt(stats.totalHours || 0)} total</span></div><div class="publicPhaseTrackV116"><div class="publicPhaseBarV116" style="width:${pctValue}%"></div></div></div>`;
   }).join('');
   const target = data?.targetDate ? targetDateLabelV115(data.targetDate) : 'Non définie';
   const estimated = data?.completed ? 'Terminé' : publicDateTimeLabelV116(data?.estimatedEnd);
@@ -947,6 +1098,7 @@ function renderPublicVinDataV116(data) {
     <div class="publicVinHeaderV116"><img src="logo_elitt.png" alt="Elitt"><h1>VIN ${escHtml(data?.vin || '-')}</h1><p>Fiche de suivi en lecture seule</p></div>
     <div class="publicVinPhasesV116"><b>Avancement par phase</b>${phaseHtml}</div>
     <div class="publicVinGridV116">
+      <div class="publicVinMetricV116"><b>OF en cours</b><div class="value">${Number(data?.inProgressCount) || 0}</div><div class="muted">réellement démarrés</div></div>
       <div class="publicVinMetricV116"><b>Temps restant</b><div class="value">${fmt(data?.remainingHours || 0)}</div></div>
       <div class="publicVinMetricV116"><b>Fin estimée</b><div class="value" style="font-size:20px">${escHtml(estimated)}</div></div>
       <div class="publicVinMetricV116"><b>Date objectif</b><div class="value" style="font-size:20px">${escHtml(target)}</div><div style="margin-top:8px"><span class="deadlineBadge ${statusClass}">${escHtml(data?.targetStatus || 'Non défini')}</span></div></div>
@@ -965,6 +1117,7 @@ function buildPublicGlobalPayloadV117(estimates = {}) {
       return {
         vin: payload.vin,
         phases: payload.phases,
+        inProgressCount: payload.inProgressCount,
         remainingHours: payload.remainingHours,
         estimatedEnd: payload.estimatedEnd,
         targetDate: payload.targetDate,
@@ -972,7 +1125,12 @@ function buildPublicGlobalPayloadV117(estimates = {}) {
         completed: payload.completed
       };
     });
-  return { publicVersion: 1, vehicles, updatedAt: new Date().toISOString() };
+  return {
+    publicVersion: 2,
+    vehicles,
+    inProgressTotal: vehicles.reduce((sum, vehicle) => sum + (Number(vehicle.inProgressCount) || 0), 0),
+    updatedAt: new Date().toISOString()
+  };
 }
 
 // Affiche l'écran de chargement du tableau public global avant la première réponse de Firebase.
@@ -997,13 +1155,14 @@ function publicGlobalVehicleCardV117(data) {
   const phaseHtml = ['Fabrication', 'Prémontage', 'Pose'].map(category => {
     const stats = phases[category] || { pct: 0, done: 0, total: 0 };
     const pctValue = Math.max(0, Math.min(100, Number(stats.pct) || 0));
-    return `<div class="publicGlobalPhaseV117"><div class="publicGlobalPhaseHeadV117"><strong>${escHtml(category)} ${pctValue}%</strong><span>${Number(stats.done) || 0}/${Number(stats.total) || 0}</span></div><div class="publicGlobalPhaseTrackV117"><div class="publicGlobalPhaseBarV117" style="width:${pctValue}%"></div></div></div>`;
+    return `<div class="publicGlobalPhaseV117"><div class="publicGlobalPhaseHeadV117"><strong>${escHtml(category)} ${pctValue}%</strong><span>${Number(stats.done) || 0}/${Number(stats.total) || 0} • ${fmt(stats.totalHours || 0)}</span></div><div class="publicGlobalPhaseTrackV117"><div class="publicGlobalPhaseBarV117" style="width:${pctValue}%"></div></div></div>`;
   }).join('');
   const target = data?.targetDate ? targetDateLabelV115(data.targetDate) : 'Non définie';
   const estimated = data?.completed ? 'Terminé' : publicDateTimeLabelV116(data?.estimatedEnd);
   const statusClass = data?.completed ? 'done' : (data?.targetStatus === 'En retard' ? 'late' : (data?.targetStatus === 'Risque de retard' ? 'risk' : (data?.targetStatus === 'Dans les temps' ? 'ok' : 'none')));
+  const currentCount = Number(data?.inProgressCount) || 0;
   return `<article class="publicGlobalCardV117">
-    <div class="publicGlobalCardHeadV117"><div class="publicGlobalVinV117">VIN ${escHtml(data?.vin || '-')}</div><span class="deadlineBadge ${statusClass}">${escHtml(data?.completed ? 'Terminé' : (data?.targetStatus || 'Non défini'))}</span></div>
+    <div class="publicGlobalCardHeadV117"><div class="publicGlobalVinV117">VIN ${escHtml(data?.vin || '-')}</div><div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:flex-end">${currentCount ? `<span class="inProgressBadgeV1111">▶ ${currentCount} en cours</span>` : ''}<span class="deadlineBadge ${statusClass}">${escHtml(data?.completed ? 'Terminé' : (data?.targetStatus || 'Non défini'))}</span></div></div>
     <div class="publicGlobalPhaseListV117">${phaseHtml}</div>
     <div class="publicGlobalMetricsV117">
       <div class="publicGlobalMetricV117"><b>Temps restant</b><div class="value">${fmt(data?.remainingHours || 0)}</div></div>
@@ -1021,7 +1180,7 @@ function renderPublicGlobalDataV117(data) {
   const vehicles = Array.isArray(data?.vehicles) ? data.vehicles : [];
   const cards = vehicles.map(publicGlobalVehicleCardV117).join('');
   view.innerHTML = `<div class="publicGlobalShellV117">
-    <div class="publicGlobalHeaderV117"><div class="left"><img src="logo_elitt.png" alt="Elitt"><div><h1>Suivi production</h1><p>${vehicles.length} camion${vehicles.length > 1 ? 's' : ''} actif${vehicles.length > 1 ? 's' : ''} • lecture seule</p></div></div><div class="muted">Mise à jour : ${escHtml(publicDateTimeLabelV116(data?.updatedAt))}</div></div>
+    <div class="publicGlobalHeaderV117"><div class="left"><img src="logo_elitt.png" alt="Elitt"><div><h1>Suivi production</h1><p>${vehicles.length} camion${vehicles.length > 1 ? 's' : ''} actif${vehicles.length > 1 ? 's' : ''} • ${Number(data?.inProgressTotal) || 0} OF en cours • lecture seule</p></div></div><div class="muted">Mise à jour : ${escHtml(publicDateTimeLabelV116(data?.updatedAt))}</div></div>
     ${vehicles.length ? `<div class="publicGlobalGridV117">${cards}</div>` : '<div class="publicGlobalEmptyV117">Aucun camion actif à afficher.</div>'}
   </div>`;
 }
@@ -1153,7 +1312,15 @@ function phaseStatsV5(vehicle, category) {
   const list = (vehicle.ofs || []).filter(of => (of.category || '') === category);
   const total = list.reduce((sum, of) => sum + qtyTotalV5(of), 0);
   const done = list.reduce((sum, of) => sum + qtyDoneV5(of), 0);
-  return { total, done, pct: total ? Math.round(done / total * 100) : 0 };
+  const totalHours = list.reduce((sum, of) => sum + (Number(of.time) || 0) * qtyTotalV5(of), 0);
+  const remainingHours = list.reduce((sum, of) => sum + (Number(of.time) || 0) * qtyRemainingV5(of), 0);
+  return {
+    total,
+    done,
+    pct: total ? Math.round(done / total * 100) : 0,
+    totalHours,
+    remainingHours
+  };
 }
 
 // Génère l'affichage compact des barres Fabrication, Prémontage et Pose du tableau de bord.
@@ -1162,18 +1329,25 @@ function phaseProgressHtmlV5(vehicle) {
     return '<div class="progress"><div class="bar" style="width:' + pct(vehicle) + '%"></div></div>' +
       '<div class="muted">' + fmt(vehicle.savActual || 0) + ' / ' + fmt(vehicle.savEstimated || 0) + '</div>';
   }
+
   let html = '';
   ['Fabrication', 'Prémontage', 'Pose'].forEach(category => {
     const stats = phaseStatsV5(vehicle, category);
     html += '<div style="margin-bottom:6px">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:3px">' +
       '<span><b>' + escHtml(category) + '</b> ' + stats.pct + '%</span>' +
-      '<span class="muted">' + stats.done + '/' + stats.total + ' réalisations</span>' +
+      '<span class="muted">' + stats.done + '/' + stats.total + ' réalisations • ' + fmt(stats.totalHours) + ' total</span>' +
       '</div>' +
       '<div class="progress" style="height:7px;min-width:190px">' +
       '<div class="bar" style="width:' + stats.pct + '%"></div>' +
       '</div></div>';
   });
+
+  const current = inProgressCountV1111(vehicle);
+  if (current > 0) {
+    html += '<div class="inProgressBadgeV1111" style="margin-top:2px">▶ ' + current + ' OF en cours</div>';
+  }
+
   return '<div style="min-width:190px">' + html + '</div>';
 }
 
@@ -1232,11 +1406,13 @@ function dash() {
   const total = active.reduce((sum, vehicle) => sum + (isSAV(vehicle) ? 0 : (vehicle.ofs || []).length), 0);
   const done = active.reduce((sum, vehicle) => sum + (isSAV(vehicle) ? 0 : doneOf(vehicle)), 0);
   const estimates = estimateVehiclesActive();
+  const inProgress = totalInProgressV1111();
   document.getElementById('view').innerHTML = `
-    <div class="grid cards">
+    <div class="grid cards dashboardKpisV1111">
       <div class="card"><b>Véhicules actifs</b><div class="kpi">${active.length}</div><div class="muted">Archivés : ${archivedVehicles().length}</div></div>
       <div class="card"><b>OF total</b><div class="kpi">${total}</div></div>
       <div class="card"><b>OF faits</b><div class="kpi">${done}</div></div>
+      <div class="card"><b>OF en cours</b><div class="kpi">${inProgress}</div><div class="muted">réellement démarrés</div></div>
       <div class="card"><b>Temps restant</b><div class="kpi">${fmt(active.reduce((sum, vehicle) => sum + remain(vehicle), 0))}</div></div>
     </div><br>${vehicleTable(active, estimates, false)}`;
 }
@@ -1345,6 +1521,7 @@ function syncVehicleOFs(vehicle, includeBase, options) {
       doneAt: previous.doneAt || '',
       blockReason: previous.blockReason || '',
       blockDetailsV8: previous.blockDetailsV8 || undefined,
+      workSessionV1111: previous.workSessionV1111 || undefined,
       manual: false
     };
 
@@ -1688,22 +1865,38 @@ function addQtyDoneV5(vehicleId, ofId, amount = 1, personOverride = '') {
   const of = vehicle?.ofs.find(item => item.id === ofId);
   if (!vehicle || !of) return 0;
   normalizeQtyOFV5(of);
-  const person = personOverride || state.realPerson || of.doneBy || '';
+
+  const workSession = activeWorkSessionV1111(of);
+  const person = personOverride || workSession?.person || state.realPerson || of.doneBy || '';
   if (!person) { alert('Choisis une personne avant de valider.'); return qtyDoneV5(of); }
+
   const beforeSnapshot = progressSnapshot(vehicle);
   const before = qtyDoneV5(of);
   const after = Math.min(qtyTotalV5(of), before + Math.max(1, Math.floor(Number(amount) || 1)));
   const added = after - before;
   if (!added) return after;
+
+  const now = new Date().toISOString();
+  const duration = workSession ? workDurationLabelV1111(workSession.startedAt, now) : '';
+
   of.completedQty = after;
   of.status = after >= qtyTotalV5(of) ? 'Fait' : 'À faire';
   of.doneBy = person;
-  of.doneAt = new Date().toISOString();
+  of.doneAt = now;
   of.blockReason = '';
   delete of.blockDetailsV8;
+  if (workSession) delete of.workSessionV1111;
+
   state.realPerson = person;
-  logAction('Quantité OF réalisée', vehicle, of, `+${added} • ${after}/${qtyTotalV5(of)} • ${person}`);
-  recordProgressEvent(vehicle, of, added, person, 'realisation', `+${added} réalisation${added > 1 ? 's' : ''}`, beforeSnapshot);
+
+  if (workSession) {
+    logAction('OF terminé', vehicle, of, `+${added} • ${after}/${qtyTotalV5(of)} • ${person} • durée ${duration}`);
+    recordProgressEvent(vehicle, of, added, person, 'finish', `OF terminé • ${duration}`, beforeSnapshot, now);
+  } else {
+    logAction('Quantité OF réalisée', vehicle, of, `+${added} • ${after}/${qtyTotalV5(of)} • ${person}`);
+    recordProgressEvent(vehicle, of, added, person, 'realisation', `+${added} réalisation${added > 1 ? 's' : ''}`, beforeSnapshot, now);
+  }
+
   save();
   return after;
 }
@@ -1715,6 +1908,10 @@ function finishQtyV5(vehicleId, ofId) {
   if (!vehicle || !of) return;
   const remaining = qtyRemainingV5(of);
   if (remaining <= 0) return;
+  if (activeWorkSessionV1111(of)) {
+    alert("Cet OF est actuellement en cours. Termine d'abord la réalisation démarrée.");
+    return;
+  }
   if (!confirm(`Marquer les ${remaining} réalisation${remaining > 1 ? 's' : ''} restante${remaining > 1 ? 's' : ''} comme faites ?`)) return;
   addQtyDoneV5(vehicleId, ofId, remaining);
 }
@@ -1745,9 +1942,24 @@ function removeQtyDoneV5(vehicleId, ofId) {
 // Génère la pastille de statut d'un OF avec son éventuelle raison de blocage.
 function statusHtmlV5(of) {
   const total = qtyTotalV5(of), done = qtyDoneV5(of);
-  if (of.status === 'Bloqué') return `<span class="pill blocked">Bloqué</span>${of.blockReason ? `<div class="blockedtxt">${escHtml(of.blockReason)}</div>` : ''}`;
-  if (done >= total) return `<span class="pill" style="background:#064e3b;color:#bbf7d0">✓ Fait ${done}/${total}</span>`;
-  if (done > 0) return `<span class="pill" style="background:#78350f;color:#fde68a">En cours ${done}/${total}</span>`;
+  const session = activeWorkSessionV1111(of);
+
+  if (of.status === 'Bloqué') {
+    return `<span class="pill blocked">Bloqué</span>${of.blockReason ? `<div class="blockedtxt">${escHtml(of.blockReason)}</div>` : ''}`;
+  }
+
+  if (done >= total) {
+    return `<span class="pill" style="background:#064e3b;color:#bbf7d0">✓ Fait ${done}/${total}</span>`;
+  }
+
+  if (session) {
+    return `<div class="workStatusV1111"><span class="inProgressBadgeV1111">▶ En cours ${done}/${total}</span><span class="startedBy">${escHtml(session.person)} • depuis ${escHtml(workStartTimeLabelV1111(session.startedAt))}</span></div>`;
+  }
+
+  if (done > 0) {
+    return `<span class="pill">À faire</span><div class="muted" style="margin-top:4px">${done}/${total} déjà réalisé${done > 1 ? 's' : ''}</div>`;
+  }
+
   return '<span class="pill">À faire</span>';
 }
 
@@ -1762,11 +1974,20 @@ function qtyVisualV5(of) {
 function realVinTableV5(vehicle, list) {
   return `<div class="tablewrap"><table><thead><tr><th>Ordre</th><th>OF</th><th>Description</th><th>Temps X1</th><th>Quantité</th><th>Réalisé</th><th>Statut</th><th>Actions</th></tr></thead><tbody>${list.map(of => {
     const total = qtyTotalV5(of), done = qtyDoneV5(of);
-    return `<tr class="${of.status === 'Bloqué' ? 'blockedrow' : ''}">
+    const session = activeWorkSessionV1111(of);
+    const blocked = of.status === 'Bloqué';
+
+    const workButtons = blocked
+      ? ''
+      : session
+        ? `<button class="small good" onclick="finishOFWorkV1111('${vehicle.id}','${of.id}')">✓ Terminer</button><button class="small warn" onclick="cancelOFWorkV1111('${vehicle.id}','${of.id}')">Annuler démarrage</button>`
+        : `<button class="small good" onclick="startOFWorkV1111('${vehicle.id}','${of.id}')">▶ Débuter</button><button class="small alt" onclick="addQtyDoneV5('${vehicle.id}','${of.id}',1)">${total > 1 ? 'Fait +1' : 'Fait'}</button>${total > 1 && done < total ? `<button class="small alt" onclick="finishQtyV5('${vehicle.id}','${of.id}')">Tout fait</button>` : ''}`;
+
+    return `<tr class="${blocked ? 'blockedrow' : ''}">
       <td><b>${of.order || '-'}</b></td><td><b>${escHtml(of.name)}</b><div class="muted">${escHtml(of.category || '')}</div></td>
       <td class="desc">${escHtml(of.desc || '')}</td><td><b>${fmt(of.time)}</b></td><td><span class="pill">× ${total}</span></td>
       <td>${qtyVisualV5(of)}</td><td>${statusHtmlV5(of)}</td>
-      <td class="actions"><button class="small good" onclick="addQtyDoneV5('${vehicle.id}','${of.id}',1)">${total > 1 ? 'Fait +1' : 'Fait'}</button>${total > 1 && done < total ? `<button class="small alt" onclick="finishQtyV5('${vehicle.id}','${of.id}')">Tout fait</button>` : ''}<button class="small bad" onclick="blockOF('${vehicle.id}','${of.id}',true)">Blocage</button><button class="small alt" onclick="openOF('${vehicle.id}','${of.id}')">Modifier</button></td>
+      <td class="actions">${workButtons}<button class="small bad" onclick="blockOF('${vehicle.id}','${of.id}',true)">Blocage</button><button class="small alt" onclick="openOF('${vehicle.id}','${of.id}')">Modifier</button></td>
     </tr>`;
   }).join('')}</tbody></table></div>`;
 }
@@ -1794,7 +2015,7 @@ function groupedOFsV5() {
       if (!map.has(key)) {
         map.set(key, {
           key, name: of.name, desc: of.desc || '', category: of.category || 'Autre', time: Number(of.time) || 0,
-          order: Number(of.order) || 99999, vehicles: 0, totalUnits: 0, doneUnits: 0, finishedVehicles: 0, blockedVehicles: 0
+          order: Number(of.order) || 99999, vehicles: 0, totalUnits: 0, doneUnits: 0, finishedVehicles: 0, blockedVehicles: 0, inProgressVehicles: 0
         });
       }
       const group = map.get(key);
@@ -1804,6 +2025,7 @@ function groupedOFsV5() {
       group.doneUnits += done;
       if (done >= total) group.finishedVehicles++;
       if (of.status === 'Bloqué') group.blockedVehicles++;
+      if (activeWorkSessionV1111(of)) group.inProgressVehicles++;
       group.order = Math.min(group.order, Number(of.order) || 99999);
     });
   });
@@ -1820,6 +2042,7 @@ function filteredGroupsV5() {
   const status = document.getElementById('ofStatusV5')?.value || state.ofStatusV5 || 'À valider';
   if (category !== 'Tous') groups = groups.filter(group => group.category === category);
   if (status === 'À valider') groups = groups.filter(group => group.doneUnits < group.totalUnits);
+  if (status === 'En cours') groups = groups.filter(group => group.inProgressVehicles > 0);
   if (status === 'Terminés') groups = groups.filter(group => group.doneUnits >= group.totalUnits && group.totalUnits > 0);
   if (query) groups = groups.filter(group => [group.name, group.desc, group.category].join(' ').toLowerCase().includes(query));
   return groups;
@@ -1828,7 +2051,7 @@ function filteredGroupsV5() {
 // Génère la liste du mode Par OF avec les boutons de validation multiple et de blocage multiple.
 function ofListV5(groups) {
   if (!groups.length) return '<div class="card">Aucun OF ne correspond à ce filtre.</div>';
-  return `<div class="tablewrap"><table><thead><tr><th>Ordre</th><th>OF</th><th>Description</th><th>Temps X1</th><th>Qté totale</th><th>Avancement</th><th>VIN terminés</th><th>Bloqués</th><th>Actions</th></tr></thead><tbody>${groups.map(group => {
+  return `<div class="tablewrap"><table><thead><tr><th>Ordre</th><th>OF</th><th>Description</th><th>Temps X1</th><th>Qté totale</th><th>Avancement</th><th>VIN terminés</th><th>En cours</th><th>Bloqués</th><th>Actions</th></tr></thead><tbody>${groups.map(group => {
     const percent = group.totalUnits ? Math.round(group.doneUnits / group.totalUnits * 100) : 0;
     const complete = group.doneUnits === group.totalUnits && group.totalUnits > 0;
     const encoded = encodeURIComponent(group.key);
@@ -1839,6 +2062,7 @@ function ofListV5(groups) {
       <td><span class="pill">× ${group.totalUnits}</span><div class="muted">${group.vehicles} VIN</div></td>
       <td><div class="progress"><div class="bar" style="width:${percent}%"></div></div><div class="muted"><b>${group.doneUnits}/${group.totalUnits}</b> réalisés • ${group.totalUnits - group.doneUnits} restants</div></td>
       <td><b>${group.finishedVehicles}/${group.vehicles}</b></td>
+      <td>${group.inProgressVehicles ? `<span class="inProgressBadgeV1111">▶ ${group.inProgressVehicles}</span>` : '<span class="muted">0</span>'}</td>
       <td>${group.blockedVehicles ? `<span class="dangertext">${group.blockedVehicles}</span>` : '<span class="muted">0</span>'}</td>
       <td class="actions"><button class="small ${complete ? 'alt' : 'good'}" ${complete ? 'disabled' : ''} onclick="openBulkOFV5('${encoded}')">${complete ? '✓ Terminé' : 'Valider plusieurs VIN'}</button><button class="small bad" ${complete ? 'disabled' : ''} onclick="openBulkBlockV7('${encoded}')">⛔ Bloquer plusieurs VIN</button></td>
     </tr>`;
@@ -1872,11 +2096,12 @@ function renderByVinV5(active) {
   state.realFilter = state.realFilter || 'Tous';
   const vehicleOptions = active.map(vehicle => `<option value="${vehicle.id}" ${state.realVin === vehicle.id ? 'selected' : ''}>${escHtml(vehicle.vin)} • ${escHtml(vehicle.brand || '')}</option>`).join('');
   const personOptions = state.people.map(person => `<option ${state.realPerson === personName(person) ? 'selected' : ''}>${escHtml(personName(person))}</option>`).join('');
-  const filters = ['Tous', 'Fabrication', 'Prémontage', 'Pose', 'Essais', 'Autre', 'Bloqué'];
+  const filters = ['Tous', 'En cours', 'Fabrication', 'Prémontage', 'Pose', 'Essais', 'Autre', 'Bloqué'];
   const filterOptions = filters.map(filter => `<option ${state.realFilter === filter ? 'selected' : ''}>${escHtml(filter)}</option>`).join('');
   const vehicle = active.find(item => item.id === state.realVin);
   let list = vehicle ? (vehicle.ofs || []).filter(of => qtyRemainingV5(of) > 0 || of.status === 'Bloqué') : [];
   if (state.realFilter === 'Bloqué') list = list.filter(of => of.status === 'Bloqué');
+  else if (state.realFilter === 'En cours') list = list.filter(of => !!activeWorkSessionV1111(of));
   else if (state.realFilter !== 'Tous') list = list.filter(of => (of.category || '') === state.realFilter);
   list.sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
   return `<div class="card"><div class="toolbar filterbar">
@@ -1894,7 +2119,7 @@ function renderByOFV5() {
   return `<div class="card"><div class="toolbar filterbar">
     <input id="ofSearchV5" value="${escHtml(state.ofSearchV5 || '')}" placeholder="Rechercher un OF..." oninput="renderOFListV5()">
     <label>Phase <select id="ofPhaseV5" onchange="renderOFListV5()">${categories.map(category => `<option ${state.ofPhaseV5 === category ? 'selected' : ''}>${escHtml(category)}</option>`).join('')}</select></label>
-    <label>Afficher <select id="ofStatusV5" onchange="renderOFListV5()"><option ${state.ofStatusV5 === 'À valider' ? 'selected' : ''}>À valider</option><option ${state.ofStatusV5 === 'Tous' ? 'selected' : ''}>Tous</option><option ${state.ofStatusV5 === 'Terminés' ? 'selected' : ''}>Terminés</option></select></label>
+    <label>Afficher <select id="ofStatusV5" onchange="renderOFListV5()"><option ${state.ofStatusV5 === 'À valider' ? 'selected' : ''}>À valider</option><option ${state.ofStatusV5 === 'Tous' ? 'selected' : ''}>Tous</option><option ${state.ofStatusV5 === 'En cours' ? 'selected' : ''}>En cours</option><option ${state.ofStatusV5 === 'Terminés' ? 'selected' : ''}>Terminés</option></select></label>
   </div></div><br><div id="ofListV5"></div>`;
 }
 
@@ -1927,10 +2152,17 @@ function rowsBulkV5(key) {
 function vinButtonV5(vehicle, of) {
   normalizeQtyOFV5(of);
   const total = qtyTotalV5(of), done = qtyDoneV5(of), remaining = total - done;
+  const session = activeWorkSessionV1111(of);
   const complete = remaining === 0, blocked = of.status === 'Bloqué', selected = window._bulkV5Selected?.has(vehicle.id);
   const percent = total ? Math.round(done / total * 100) : 0;
-  const info = complete ? `✓ Terminé ${done}/${total}` : blocked ? `Bloqué • ${done}/${total} • ${of.blockReason || ''}` : `${done}/${total} faits • ${remaining} restant${remaining > 1 ? 's' : ''}`;
-  return `<button type="button" class="vinChoiceV3 ${complete ? 'done' : ''} ${blocked ? 'blocked' : ''} ${selected ? 'selected' : ''}" ${complete ? 'disabled' : ''} onclick="toggleBulkVinV5('${vehicle.id}')"><b>${complete ? '✓ ' : selected ? '✓ ' : ''}${escHtml(vehicle.vin)}</b><small style="margin-left:8px">${escHtml(info)}</small><div class="progress" style="height:4px;margin-top:5px"><div class="bar" style="width:${percent}%"></div></div></button>`;
+  const info = complete
+    ? `✓ Terminé ${done}/${total}`
+    : blocked
+      ? `Bloqué • ${done}/${total} • ${of.blockReason || ''}`
+      : session
+        ? `En cours par ${session.person} depuis ${workStartTimeLabelV1111(session.startedAt)}`
+        : `${done}/${total} faits • ${remaining} restant${remaining > 1 ? 's' : ''}`;
+  return `<button type="button" class="vinChoiceV3 ${complete ? 'done' : ''} ${blocked ? 'blocked' : ''} ${session ? 'blocked' : ''} ${selected ? 'selected' : ''}" ${complete || session ? 'disabled' : ''} onclick="toggleBulkVinV5('${vehicle.id}')"><b>${complete ? '✓ ' : selected ? '✓ ' : ''}${escHtml(vehicle.vin)}</b><small style="margin-left:8px">${escHtml(info)}</small><div class="progress" style="height:4px;margin-top:5px"><div class="bar" style="width:${percent}%"></div></div></button>`;
 }
 
 // Rafraîchit la grille des VIN et le compteur dans la fenêtre de validation multiple.
@@ -1964,6 +2196,7 @@ function bulkSelectModeV5(mode) {
   if (mode !== 'none') {
     rowsBulkV5(group.key).forEach(({ vehicle, of }) => {
       if (qtyRemainingV5(of) <= 0) return;
+      if (activeWorkSessionV1111(of)) return;
       if (mode === 'todo' && of.status === 'Bloqué') return;
       selected.add(vehicle.id);
     });
@@ -2004,7 +2237,7 @@ function validateBulkV5() {
   ids.forEach(id => {
     const vehicle = state.vehicles.find(item => item.id === id);
     const of = vehicle ? ofForVehicleV5(vehicle, group.key) : null;
-    if (!vehicle || !of || qtyRemainingV5(of) <= 0) return;
+    if (!vehicle || !of || qtyRemainingV5(of) <= 0 || activeWorkSessionV1111(of)) return;
     const beforeSnapshot = progressSnapshot(vehicle);
     const before = qtyDoneV5(of);
     const after = Math.min(qtyTotalV5(of), before + amount);
@@ -2033,7 +2266,13 @@ function detailTableV5(vehicle) {
   const rows = (vehicle.ofs || []).slice().sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
   return `<div class="tablewrap"><table><thead><tr><th>Ordre</th><th>OF</th><th>Description</th><th>Temps X1</th><th>Quantité</th><th>Réalisé</th><th>Statut</th><th>Fait par</th><th>Actions</th></tr></thead><tbody>${rows.map(of => {
     const total = qtyTotalV5(of), done = qtyDoneV5(of);
-    return `<tr class="${of.status === 'Bloqué' ? 'blockedrow' : ''}"><td><b>${of.order || '-'}</b></td><td><b>${escHtml(of.name)}</b><div class="muted">${escHtml(of.category || '')}</div></td><td class="desc">${escHtml(of.desc || '')}</td><td><b>${fmt(of.time)}</b></td><td><span class="pill">× ${total}</span></td><td>${qtyVisualV5(of)}</td><td>${statusHtmlV5(of)}</td><td>${escHtml(of.doneBy || '-')}</td><td class="actions">${vehicle.archived ? '' : `<button class="small good" onclick="addQtyDoneV5('${vehicle.id}','${of.id}',1)">${total > 1 ? 'Fait +1' : 'Fait'}</button>${done > 0 ? `<button class="small warn" onclick="removeQtyDoneV5('${vehicle.id}','${of.id}')">-1</button>` : ''}<button class="small bad" onclick="blockOF('${vehicle.id}','${of.id}',false)">Blocage</button><button class="small alt" onclick="openOF('${vehicle.id}','${of.id}')">Modifier</button><button class="small bad" onclick="delOF('${vehicle.id}','${of.id}')">Suppr.</button>`}</td></tr>`;
+    const session = activeWorkSessionV1111(of);
+    const worker = session ? `${session.person} (en cours)` : (of.doneBy || '-');
+    const workButtons = session
+      ? `<button class="small good" onclick="finishOFWorkV1111('${vehicle.id}','${of.id}')">✓ Terminer</button><button class="small warn" onclick="cancelOFWorkV1111('${vehicle.id}','${of.id}')">Annuler démarrage</button>`
+      : `<button class="small good" onclick="startOFWorkV1111('${vehicle.id}','${of.id}')">▶ Débuter</button><button class="small alt" onclick="addQtyDoneV5('${vehicle.id}','${of.id}',1)">${total > 1 ? 'Fait +1' : 'Fait'}</button>`;
+
+    return `<tr class="${of.status === 'Bloqué' ? 'blockedrow' : ''}"><td><b>${of.order || '-'}</b></td><td><b>${escHtml(of.name)}</b><div class="muted">${escHtml(of.category || '')}</div></td><td class="desc">${escHtml(of.desc || '')}</td><td><b>${fmt(of.time)}</b></td><td><span class="pill">× ${total}</span></td><td>${qtyVisualV5(of)}</td><td>${statusHtmlV5(of)}</td><td>${escHtml(worker)}</td><td class="actions">${vehicle.archived ? '' : `${of.status === 'Bloqué' ? '' : workButtons}${done > 0 ? `<button class="small warn" onclick="removeQtyDoneV5('${vehicle.id}','${of.id}')">-1</button>` : ''}<button class="small bad" onclick="blockOF('${vehicle.id}','${of.id}',false)">Blocage</button><button class="small alt" onclick="openOF('${vehicle.id}','${of.id}')">Modifier</button><button class="small bad" onclick="delOF('${vehicle.id}','${of.id}')">Suppr.</button>`}</td></tr>`;
   }).join('')}</tbody></table></div>`;
 }
 
@@ -2059,7 +2298,7 @@ function vehicleDetail() {
   const timeline = `<button class="alt" onclick="openVehicleTimelineV6('${vehicle.id}')">📈 Avancement dans le temps</button>`;
   const qrButton = `<button class="alt" onclick="openVehicleQRV115('${vehicle.id}')">▦ QR Code</button>`;
   const objectiveText = vehicle.targetDate ? ' • Objectif ' + targetDateLabelV115(vehicle.targetDate) : ' • Objectif non défini';
-  document.getElementById('view').innerHTML = `<div class="toolbar">${back}${actions}${timeline}${qrButton}</div><br><div class="grid cards"><div class="card vehicleBanner" style="--vehColor:${vehicleColor(vehicle)}"><b>VIN</b><div class="kpi">${colorDot(vehicle)}${escHtml(vehicle.vin)}</div><div class="muted">${escHtml(vehicle.brand || '-')} • ${escHtml(vehicle.client || '-')}${escHtml(objectiveText)}</div></div><div class="card"><b>Avancement total</b><div class="kpi">${pct(vehicle)}%</div><div class="muted">${doneUnitsV5(vehicle)}/${totalUnitsV5(vehicle)} réalisations</div></div><div class="card"><b>Temps restant</b><div class="kpi">${fmt(remain(vehicle))}</div></div><div class="card"><b>OF</b><div class="kpi">${doneOf(vehicle)}/${(vehicle.ofs || []).length}</div><div class="muted">lignes terminées</div></div></div><br>${detailTableV5(vehicle)}`;
+  document.getElementById('view').innerHTML = `<div class="toolbar">${back}${actions}${timeline}${qrButton}</div><br><div class="grid cards"><div class="card vehicleBanner" style="--vehColor:${vehicleColor(vehicle)}"><b>VIN</b><div class="kpi">${colorDot(vehicle)}${escHtml(vehicle.vin)}</div><div class="muted">${escHtml(vehicle.brand || '-')} • ${escHtml(vehicle.client || '-')}${escHtml(objectiveText)}</div></div><div class="card"><b>Avancement total</b><div class="kpi">${pct(vehicle)}%</div><div class="muted">${doneUnitsV5(vehicle)}/${totalUnitsV5(vehicle)} réalisations</div></div><div class="card"><b>Temps restant</b><div class="kpi">${fmt(remain(vehicle))}</div></div><div class="card"><b>OF</b><div class="kpi">${doneOf(vehicle)}/${(vehicle.ofs || []).length}</div><div class="muted">lignes terminées • ${inProgressCountV1111(vehicle)} en cours</div></div></div><br>${detailTableV5(vehicle)}`;
 }
 
 // Retourne le libellé français correspondant au type d'événement d'avancement.
@@ -2069,6 +2308,8 @@ function progressKindLabel(event) {
   if (event.kind === 'correction') return 'Correction';
   if (event.kind === 'baseline') return 'Reprise historique';
   if (event.kind === 'start') return 'Début';
+  if (event.kind === 'finish') return 'Terminé';
+  if (event.kind === 'cancel') return 'Démarrage annulé';
   return 'Réalisation';
 }
 
@@ -2462,7 +2703,9 @@ function confirmSingleBlock() {
   if (mode === 'piece' && !selectedParts.length) { alert('Coche au moins une pièce manquante.'); return; }
   if (mode === 'other' && !comment) { alert('Écris le motif du blocage.'); return; }
   const beforeSnapshot = progressSnapshot(vehicle);
+  const activeSession = activeWorkSessionV1111(of);
   const reason = mode === 'piece' ? multiPartsBlockReason(selectedParts, comment) : comment;
+  if (activeSession) delete of.workSessionV1111;
   of.status = 'Bloqué';
   of.blockReason = reason;
   of.blockDetailsV8 = mode === 'piece' ? multiPartsBlockDetails(selectedParts, comment) : { type: 'other', comment };
@@ -2599,6 +2842,7 @@ function validateBulkBlock() {
     const of = vehicle ? ofForVehicleV5(vehicle, window._bulkBlockKey) : null;
     if (!vehicle || !of || qtyRemainingV5(of) <= 0 || of.status === 'Bloqué') return;
     const beforeSnapshot = progressSnapshot(vehicle);
+    if (activeWorkSessionV1111(of)) delete of.workSessionV1111;
     of.status = 'Bloqué';
     of.blockReason = reason;
     of.blockDetailsV8 = blockDetails(mode, part, missing, comment);
@@ -3111,7 +3355,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.7,
+      version: 11.11,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
