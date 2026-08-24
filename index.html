@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.11 En cours</title>
+<title>ELITT - Suivi OF - V11.12 Temps OF</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -184,6 +184,23 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
   .publicGlobalMetricV117 b{font-size:13px}
   .publicGlobalMetricV117 .value{font-size:16px}
 }
+/* V11.12 : analyse simple des temps réels Débuter -> Terminer */
+.timePerfGoodV1112{background:rgba(34,197,94,.14)!important}
+.timePerfWarnV1112{background:rgba(245,158,11,.16)!important}
+.timePerfBadV1112{background:rgba(239,68,68,.16)!important}
+.timePerfNeutralV1112{background:rgba(148,163,184,.08)!important}
+.timeBadgeV1112{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:900;white-space:nowrap}
+.timeBadgeV1112.good{background:#14532d;color:#bbf7d0}
+.timeBadgeV1112.warn{background:#78350f;color:#fde68a}
+.timeBadgeV1112.bad{background:#7f1d1d;color:#fecaca}
+.timeBadgeV1112.neutral{background:#334155;color:#e2e8f0}
+.timeFiltersV1112{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:10px;align-items:end}
+.timeSummaryV1112{grid-template-columns:repeat(4,minmax(150px,1fr))}
+.timeLegendV1112{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.timeLegendV1112 span{font-size:12px}
+@media(max-width:1000px){.timeFiltersV1112{grid-template-columns:1fr 1fr}.timeSummaryV1112{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.timeFiltersV1112,.timeSummaryV1112{grid-template-columns:1fr}}
+
 /* V11.11 : suivi des OF réellement démarrés + affichage des heures cumulées par phase */
 .inProgressBadgeV1111{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;background:#78350f;color:#fde68a;font-size:12px;font-weight:900;white-space:nowrap}
 .workStatusV1111{display:grid;gap:4px}
@@ -250,6 +267,7 @@ const pages = [
   ['dash', 'Tableau de bord'],
   ['real', 'Réalisation'],
   ['blocked', 'OF bloqués'],
+  ['times', 'Temps OF'],
   ['history', 'Historique'],
   ['people', 'Personnes'],
   ['archives', 'Archives']
@@ -273,6 +291,7 @@ let state = (() => {
     customTemplates: { Renault: [], Mercedes: [], MAN: [] },
     partsCatalogV8: { Renault: [], Mercedes: [], MAN: [], Autre: [] },
     progressEventsV6: [],
+    workTimesV1112: [],
     schemaVersion: 10
   };
 })();
@@ -369,6 +388,266 @@ function workDurationLabelV1111(startedAt, endedAt = new Date().toISOString()) {
   if (hours && rest) return `${hours} h ${rest} min`;
   if (hours) return `${hours} h`;
   return `${rest} min`;
+}
+
+// Formate un nombre de minutes réelles sous forme lisible.
+function workMinutesLabelV1112(minutes) {
+  const value = Math.max(0, Math.round(Number(minutes) || 0));
+  const hours = Math.floor(value / 60);
+  const rest = value % 60;
+  if (hours && rest) return `${hours} h ${rest} min`;
+  if (hours) return `${hours} h`;
+  return `${rest} min`;
+}
+
+// Classe un temps réel par rapport au temps prévu : vert jusqu'à +10 %, orange jusqu'à +50 %, rouge au-delà.
+function workPerformanceV1112(actualMinutes, plannedMinutes) {
+  const actual = Math.max(0, Number(actualMinutes) || 0);
+  const planned = Math.max(0, Number(plannedMinutes) || 0);
+  if (!planned) return { key: 'neutral', label: 'Sans temps prévu', ratio: null };
+  const ratio = actual / planned;
+  if (ratio <= 1.10) return { key: 'good', label: 'Bon', ratio };
+  if (ratio <= 1.50) return { key: 'warn', label: 'Un peu dépassé', ratio };
+  return { key: 'bad', label: 'Fort dépassement', ratio };
+}
+
+// Retourne la classe de fond utilisée dans les tableaux de temps.
+function workPerformanceRowClassV1112(actualMinutes, plannedMinutes) {
+  const perf = workPerformanceV1112(actualMinutes, plannedMinutes);
+  return perf.key === 'good'
+    ? 'timePerfGoodV1112'
+    : perf.key === 'warn'
+      ? 'timePerfWarnV1112'
+      : perf.key === 'bad'
+        ? 'timePerfBadV1112'
+        : 'timePerfNeutralV1112';
+}
+
+// Génère la pastille colorée correspondant au respect du temps prévu.
+function workPerformanceBadgeV1112(actualMinutes, plannedMinutes) {
+  const perf = workPerformanceV1112(actualMinutes, plannedMinutes);
+  if (perf.ratio === null) return `<span class="timeBadgeV1112 neutral">${escHtml(perf.label)}</span>`;
+  const deltaPct = Math.round((perf.ratio - 1) * 100);
+  const suffix = deltaPct > 0 ? ` • +${deltaPct}%` : deltaPct < 0 ? ` • ${deltaPct}%` : '';
+  return `<span class="timeBadgeV1112 ${perf.key}">${escHtml(perf.label + suffix)}</span>`;
+}
+
+// Retourne tous les temps chronométrés, du plus récent au plus ancien.
+function workTimesV1112() {
+  state.workTimesV1112 = Array.isArray(state.workTimesV1112) ? state.workTimesV1112 : [];
+  return state.workTimesV1112.slice().sort((a, b) => new Date(b.finishedAt) - new Date(a.finishedAt));
+}
+
+// Retrouve le temps prévu actuel d'un OF, utilisé seulement pour migrer les premières données V11.11.
+function currentPlannedMinutesForOFV1112(vehicleId, ofId) {
+  const vehicle = (state.vehicles || []).find(item => item.id === vehicleId);
+  const of = vehicle?.ofs?.find(item => item.id === ofId);
+  return Math.max(0, Math.round((Number(of?.time) || 0) * 60));
+}
+
+// Migre automatiquement les éventuels Début/Terminé déjà enregistrés avec la V11.11.
+function migrateWorkTimesV1112() {
+  state.workTimesV1112 = Array.isArray(state.workTimesV1112) ? state.workTimesV1112 : [];
+  const events = (state.progressEventsV6 || []).slice().sort((a, b) => new Date(a.at) - new Date(b.at));
+  const existingKeys = new Set(state.workTimesV1112.map(item =>
+    [item.vehicleId, item.ofId, item.person, item.startedAt, item.finishedAt].join('||')
+  ));
+  const openStarts = [];
+
+  events.forEach(event => {
+    if (event.kind === 'start' && event.vehicleId && event.ofId && event.person) {
+      openStarts.push(event);
+      return;
+    }
+    if (event.kind !== 'finish' || !event.vehicleId || !event.ofId || !event.person) return;
+
+    let index = -1;
+    for (let i = openStarts.length - 1; i >= 0; i--) {
+      const start = openStarts[i];
+      if (start.vehicleId === event.vehicleId && start.ofId === event.ofId && start.person === event.person && new Date(start.at) <= new Date(event.at)) {
+        index = i;
+        break;
+      }
+    }
+    if (index < 0) return;
+
+    const start = openStarts.splice(index, 1)[0];
+    const key = [event.vehicleId, event.ofId, event.person, start.at, event.at].join('||');
+    if (existingKeys.has(key)) return;
+
+    const minutes = Math.max(0, Math.round((new Date(event.at) - new Date(start.at)) / 60000));
+    state.workTimesV1112.push({
+      id: uid(),
+      vehicleId: event.vehicleId,
+      vin: event.vin || '',
+      ofId: event.ofId,
+      ofName: event.ofName || '',
+      description: event.description || '',
+      category: event.category || '',
+      person: event.person,
+      startedAt: start.at,
+      finishedAt: event.at,
+      durationMinutes: minutes,
+      plannedMinutes: currentPlannedMinutesForOFV1112(event.vehicleId, event.ofId),
+      quantityNumber: Number(event.qtyAfter) || 0,
+      migratedFromV1111: true
+    });
+    existingKeys.add(key);
+  });
+}
+
+// Enregistre une réalisation chronométrée terminée avec son temps réel et son temps prévu au moment du travail.
+function addWorkTimeRecordV1112(vehicle, of, session, finishedAt, quantityNumber) {
+  if (!vehicle || !of || !session?.person || !session?.startedAt) return;
+  const actualMinutes = Math.max(0, Math.round((new Date(finishedAt) - new Date(session.startedAt)) / 60000));
+  const plannedMinutes = Math.max(0, Math.round((Number(of.time) || 0) * 60));
+
+  state.workTimesV1112 = Array.isArray(state.workTimesV1112) ? state.workTimesV1112 : [];
+  state.workTimesV1112.push({
+    id: uid(),
+    vehicleId: vehicle.id,
+    vin: vehicle.vin || '',
+    ofId: of.id || '',
+    ofName: of.name || '',
+    description: of.desc || '',
+    category: of.category || '',
+    person: session.person,
+    startedAt: session.startedAt,
+    finishedAt,
+    durationMinutes: actualMinutes,
+    plannedMinutes,
+    quantityNumber: Number(quantityNumber) || 0
+  });
+
+  if (state.workTimesV1112.length > 10000) {
+    state.workTimesV1112 = state.workTimesV1112.slice(-10000);
+  }
+}
+
+// Supprime une ligne de temps erronée après confirmation sans toucher à l'avancement de l'OF.
+function deleteWorkTimeV1112(id) {
+  const item = (state.workTimesV1112 || []).find(row => row.id === id);
+  if (!item || !confirm(`Supprimer ce temps chronométré ?\n\n${item.person} • ${item.vin} • ${item.ofName}`)) return;
+  state.workTimesV1112 = state.workTimesV1112.filter(row => row.id !== id);
+  save();
+}
+
+// Ouvre la page Temps OF directement filtrée sur un VIN.
+function openVehicleTimesV1112(vehicleId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId);
+  if (!vehicle) return;
+  state.timeVinFilterV1112 = vehicle.vin || '';
+  state.timePersonFilterV1112 = 'Tous';
+  state.timeCategoryFilterV1112 = 'Toutes';
+  state.timeSearchV1112 = '';
+  page = 'times';
+  render();
+}
+
+// Modifie un filtre de la page Temps OF puis rafraîchit l'affichage.
+function setTimeFilterV1112(key, value) {
+  state[key] = value;
+  render();
+}
+
+// Retourne les temps respectant les filtres actifs de la page Temps OF.
+function filteredWorkTimesV1112() {
+  const person = state.timePersonFilterV1112 || 'Tous';
+  const vin = state.timeVinFilterV1112 || 'Tous';
+  const category = state.timeCategoryFilterV1112 || 'Toutes';
+  const search = String(state.timeSearchV1112 || '').trim().toLowerCase();
+
+  return workTimesV1112().filter(item => {
+    if (person !== 'Tous' && item.person !== person) return false;
+    if (vin !== 'Tous' && item.vin !== vin) return false;
+    if (category !== 'Toutes' && item.category !== category) return false;
+    if (search) {
+      const haystack = [item.ofName, item.description, item.vin, item.person].join(' ').toLowerCase();
+      if (!haystack.includes(search)) return false;
+    }
+    return true;
+  });
+}
+
+// Calcule les totaux utiles en haut de la page Temps OF.
+function workTimeSummaryV1112(rows) {
+  const actual = rows.reduce((sum, item) => sum + (Number(item.durationMinutes) || 0), 0);
+  const planned = rows.reduce((sum, item) => sum + (Number(item.plannedMinutes) || 0), 0);
+  const delta = actual - planned;
+  return { count: rows.length, actual, planned, delta };
+}
+
+// Affiche la page générale des temps chronométrés avec filtres et comparaison prévu/réel.
+function timesPageV1112() {
+  normalizeAll();
+  setHead('Temps OF', 'Temps réel mesuré entre Débuter et Terminer');
+
+  state.timePersonFilterV1112 = state.timePersonFilterV1112 || 'Tous';
+  state.timeVinFilterV1112 = state.timeVinFilterV1112 || 'Tous';
+  state.timeCategoryFilterV1112 = state.timeCategoryFilterV1112 || 'Toutes';
+  state.timeSearchV1112 = state.timeSearchV1112 || '';
+
+  const people = Array.from(new Set(workTimesV1112().map(item => item.person).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'fr'));
+  const vins = Array.from(new Set(workTimesV1112().map(item => item.vin).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'fr', { numeric: true }));
+  const categories = Array.from(new Set(workTimesV1112().map(item => item.category).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'fr'));
+
+  const rows = filteredWorkTimesV1112();
+  const summary = workTimeSummaryV1112(rows);
+  const deltaSign = summary.delta > 0 ? '+' : '';
+  const average = summary.count ? Math.round(summary.actual / summary.count) : 0;
+
+  const personOptions = ['Tous', ...people].map(value => `<option value="${escHtml(value)}" ${state.timePersonFilterV1112 === value ? 'selected' : ''}>${escHtml(value)}</option>`).join('');
+  const vinOptions = ['Tous', ...vins].map(value => `<option value="${escHtml(value)}" ${state.timeVinFilterV1112 === value ? 'selected' : ''}>${escHtml(value)}</option>`).join('');
+  const categoryOptions = ['Toutes', ...categories].map(value => `<option value="${escHtml(value)}" ${state.timeCategoryFilterV1112 === value ? 'selected' : ''}>${escHtml(value)}</option>`).join('');
+
+  const table = rows.length
+    ? `<div class="tablewrap"><table><thead><tr><th>Date</th><th>VIN</th><th>OF</th><th>Phase</th><th>Personne</th><th>Réalisation</th><th>Temps prévu</th><th>Temps réel</th><th>Écart</th><th>Résultat</th><th></th></tr></thead><tbody>${rows.map(item => {
+        const perfClass = workPerformanceRowClassV1112(item.durationMinutes, item.plannedMinutes);
+        const delta = (Number(item.durationMinutes) || 0) - (Number(item.plannedMinutes) || 0);
+        const deltaText = item.plannedMinutes ? `${delta > 0 ? '+' : ''}${workMinutesLabelV1112(Math.abs(delta))}` : '-';
+        const deltaDisplay = item.plannedMinutes && delta < 0 ? `-${workMinutesLabelV1112(Math.abs(delta))}` : deltaText;
+        return `<tr class="${perfClass}">
+          <td>${escHtml(fmtProgressDate(item.finishedAt))}</td>
+          <td><b>${escHtml(item.vin || '-')}</b></td>
+          <td><b>${escHtml(item.ofName || '-')}</b><div class="muted">${escHtml(item.description || '')}</div></td>
+          <td>${escHtml(item.category || '-')}</td>
+          <td><b>${escHtml(item.person || '-')}</b></td>
+          <td>${item.quantityNumber ? escHtml(String(item.quantityNumber)) : '-'}</td>
+          <td>${item.plannedMinutes ? escHtml(workMinutesLabelV1112(item.plannedMinutes)) : '-'}</td>
+          <td><b>${escHtml(workMinutesLabelV1112(item.durationMinutes))}</b><div class="muted">${escHtml(workStartTimeLabelV1111(item.startedAt))} → ${escHtml(workStartTimeLabelV1111(item.finishedAt))}</div></td>
+          <td>${escHtml(deltaDisplay)}</td>
+          <td>${workPerformanceBadgeV1112(item.durationMinutes, item.plannedMinutes)}</td>
+          <td><button class="small bad" onclick="deleteWorkTimeV1112('${item.id}')">Suppr.</button></td>
+        </tr>`;
+      }).join('')}</tbody></table></div>`
+    : '<div class="card">Aucun temps chronométré avec ces filtres. Les validations faites uniquement avec « Fait +1 » n’ont pas de durée.</div>';
+
+  document.getElementById('view').innerHTML = `
+    <div class="grid cards timeSummaryV1112">
+      <div class="card"><b>Réalisations chronométrées</b><div class="kpi">${summary.count}</div></div>
+      <div class="card"><b>Temps réel total</b><div class="kpi">${workMinutesLabelV1112(summary.actual)}</div></div>
+      <div class="card"><b>Temps prévu total</b><div class="kpi">${workMinutesLabelV1112(summary.planned)}</div></div>
+      <div class="card"><b>Écart cumulé</b><div class="kpi">${summary.planned ? `${deltaSign}${workMinutesLabelV1112(Math.abs(summary.delta))}` : '-'}</div><div class="muted">Moyenne réelle : ${workMinutesLabelV1112(average)}</div></div>
+    </div>
+    <br>
+    <div class="card">
+      <div class="timeFiltersV1112">
+        <label>Personne<select onchange="setTimeFilterV1112('timePersonFilterV1112',this.value)">${personOptions}</select></label>
+        <label>VIN<select onchange="setTimeFilterV1112('timeVinFilterV1112',this.value)">${vinOptions}</select></label>
+        <label>Phase<select onchange="setTimeFilterV1112('timeCategoryFilterV1112',this.value)">${categoryOptions}</select></label>
+        <label>Rechercher un OF<input value="${escHtml(state.timeSearchV1112)}" oninput="state.timeSearchV1112=this.value" onkeydown="if(event.key==='Enter')render()" placeholder="Nom ou description..."></label>
+      </div>
+      <div class="toolbar" style="margin-top:12px">
+        <button class="alt" onclick="render()">Rechercher</button>
+        <button class="alt" onclick="state.timePersonFilterV1112='Tous';state.timeVinFilterV1112='Tous';state.timeCategoryFilterV1112='Toutes';state.timeSearchV1112='';render()">Réinitialiser</button>
+      </div>
+      <div class="timeLegendV1112" style="margin-top:14px">
+        <span class="timeBadgeV1112 good">Vert clair : bon ≤ +10 %</span>
+        <span class="timeBadgeV1112 warn">Orange clair : +10 à +50 %</span>
+        <span class="timeBadgeV1112 bad">Rouge clair : &gt; +50 %</span>
+      </div>
+    </div>
+    <br>${table}`;
 }
 
 // Retourne le libellé court de l'heure de démarrage d'un OF.
@@ -695,6 +974,7 @@ function normalizeAll() {
   state.customTemplates = state.customTemplates || { Renault: [], Mercedes: [], MAN: [] };
   state.partsCatalogV8 = state.partsCatalogV8 || { Renault: [], Mercedes: [], MAN: [], Autre: [] };
   state.progressEventsV6 = Array.isArray(state.progressEventsV6) ? state.progressEventsV6 : [];
+  state.workTimesV1112 = Array.isArray(state.workTimesV1112) ? state.workTimesV1112 : [];
   const colors = ['#3b82f6', '#22c55e', '#f97316', '#a855f7', '#ef4444', '#14b8a6', '#eab308', '#ec4899'];
   state.vehicles.forEach((vehicle, index) => {
     vehicle.ofs = Array.isArray(vehicle.ofs) ? vehicle.ofs : [];
@@ -704,6 +984,7 @@ function normalizeAll() {
   });
   normalizePeople();
   normalizeQtyAllV5();
+  migrateWorkTimesV1112();
   ['Renault', 'Mercedes', 'MAN', 'Autre'].forEach(brand => {
     if (!Array.isArray(state.partsCatalogV8[brand])) state.partsCatalogV8[brand] = [];
   });
@@ -731,6 +1012,7 @@ function render() {
     dash,
     real,
     blocked: blockedPage,
+    times: timesPageV1112,
     history: historyPage,
     people,
     archives: archivesPage,
@@ -1890,6 +2172,7 @@ function addQtyDoneV5(vehicleId, ofId, amount = 1, personOverride = '') {
   state.realPerson = person;
 
   if (workSession) {
+    addWorkTimeRecordV1112(vehicle, of, workSession, now, after);
     logAction('OF terminé', vehicle, of, `+${added} • ${after}/${qtyTotalV5(of)} • ${person} • durée ${duration}`);
     recordProgressEvent(vehicle, of, added, person, 'finish', `OF terminé • ${duration}`, beforeSnapshot, now);
   } else {
@@ -2296,9 +2579,10 @@ function vehicleDetail() {
   const back = vehicle.archived ? `<button class="alt" onclick="page='archives';render()">← Retour archives</button>` : `<button class="alt" onclick="page='dash';render()">← Retour tableau de bord</button>`;
   const actions = vehicle.archived ? `<button class="good" onclick="restoreVehicle('${vehicle.id}')">Restaurer</button>` : `<button onclick="openOF('${vehicle.id}')">+ Ajouter OF</button><button class="warn" onclick="archiveVehicle('${vehicle.id}')">Archiver</button>`;
   const timeline = `<button class="alt" onclick="openVehicleTimelineV6('${vehicle.id}')">📈 Avancement dans le temps</button>`;
+  const timeButton = `<button class="alt" onclick="openVehicleTimesV1112('${vehicle.id}')">⏱ Temps OF</button>`;
   const qrButton = `<button class="alt" onclick="openVehicleQRV115('${vehicle.id}')">▦ QR Code</button>`;
   const objectiveText = vehicle.targetDate ? ' • Objectif ' + targetDateLabelV115(vehicle.targetDate) : ' • Objectif non défini';
-  document.getElementById('view').innerHTML = `<div class="toolbar">${back}${actions}${timeline}${qrButton}</div><br><div class="grid cards"><div class="card vehicleBanner" style="--vehColor:${vehicleColor(vehicle)}"><b>VIN</b><div class="kpi">${colorDot(vehicle)}${escHtml(vehicle.vin)}</div><div class="muted">${escHtml(vehicle.brand || '-')} • ${escHtml(vehicle.client || '-')}${escHtml(objectiveText)}</div></div><div class="card"><b>Avancement total</b><div class="kpi">${pct(vehicle)}%</div><div class="muted">${doneUnitsV5(vehicle)}/${totalUnitsV5(vehicle)} réalisations</div></div><div class="card"><b>Temps restant</b><div class="kpi">${fmt(remain(vehicle))}</div></div><div class="card"><b>OF</b><div class="kpi">${doneOf(vehicle)}/${(vehicle.ofs || []).length}</div><div class="muted">lignes terminées • ${inProgressCountV1111(vehicle)} en cours</div></div></div><br>${detailTableV5(vehicle)}`;
+  document.getElementById('view').innerHTML = `<div class="toolbar">${back}${actions}${timeline}${timeButton}${qrButton}</div><br><div class="grid cards"><div class="card vehicleBanner" style="--vehColor:${vehicleColor(vehicle)}"><b>VIN</b><div class="kpi">${colorDot(vehicle)}${escHtml(vehicle.vin)}</div><div class="muted">${escHtml(vehicle.brand || '-')} • ${escHtml(vehicle.client || '-')}${escHtml(objectiveText)}</div></div><div class="card"><b>Avancement total</b><div class="kpi">${pct(vehicle)}%</div><div class="muted">${doneUnitsV5(vehicle)}/${totalUnitsV5(vehicle)} réalisations</div></div><div class="card"><b>Temps restant</b><div class="kpi">${fmt(remain(vehicle))}</div></div><div class="card"><b>OF</b><div class="kpi">${doneOf(vehicle)}/${(vehicle.ofs || []).length}</div><div class="muted">lignes terminées • ${inProgressCountV1111(vehicle)} en cours</div></div></div><br>${detailTableV5(vehicle)}`;
 }
 
 // Retourne le libellé français correspondant au type d'événement d'avancement.
@@ -3355,7 +3639,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.11,
+      version: 11.12,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
