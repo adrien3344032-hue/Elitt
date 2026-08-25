@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.12.2 Heures par phase</title>
+<title>ELITT - Suivi OF - V11.13 Pause OF</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -203,6 +203,7 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
 
 /* V11.11 : suivi des OF réellement démarrés + affichage des heures cumulées par phase */
 .inProgressBadgeV1111{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;background:#78350f;color:#fde68a;font-size:12px;font-weight:900;white-space:nowrap}
+.pausedBadgeV1113{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;background:#854d0e;color:#fef3c7;font-size:12px;font-weight:900;white-space:nowrap}
 .workStatusV1111{display:grid;gap:4px}
 .workStatusV1111 .startedBy{font-size:12px;color:#fde68a;font-weight:800}
 .dashboardKpisV1111{grid-template-columns:repeat(5,minmax(140px,1fr))}
@@ -351,24 +352,78 @@ function qtyRemainingV5(of) {
   return Math.max(0, qtyTotalV5(of) - qtyDoneV5(of));
 }
 
-// Retourne la session de travail active d'un OF si quelqu'un l'a réellement démarré.
+// Retourne la session de travail active d'un OF, qu'elle soit en cours ou momentanément en pause.
 function activeWorkSessionV1111(of) {
   const session = of?.workSessionV1111;
   if (!session || !session.person || !session.startedAt) return null;
   if (qtyRemainingV5(of) <= 0 || of.status === 'Bloqué') return null;
+  session.pausedTotalMs = Math.max(0, Number(session.pausedTotalMs) || 0);
+  session.pausedAt = session.pausedAt || '';
   return session;
 }
 
-// Nettoie une ancienne session invalide et force le statut En cours lorsqu'une session valide existe.
+// Indique si une session de travail est actuellement en pause.
+function isWorkPausedV1113(ofOrSession) {
+  const session = ofOrSession?.workSessionV1111 ? activeWorkSessionV1111(ofOrSession) : ofOrSession;
+  return !!(session && session.pausedAt);
+}
+
+// Calcule le temps de travail réellement écoulé en excluant toutes les périodes de pause.
+function workSessionActiveMinutesV1113(session, endedAt = new Date().toISOString()) {
+  if (!session?.startedAt) return 0;
+
+  const start = new Date(session.startedAt);
+  const end = new Date(endedAt);
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return 0;
+
+  let pausedMs = Math.max(0, Number(session.pausedTotalMs) || 0);
+
+  // Si l'OF est encore en pause, on retire également la pause actuellement ouverte.
+  if (session.pausedAt) {
+    const pausedAt = new Date(session.pausedAt);
+    if (!Number.isNaN(pausedAt.getTime())) {
+      pausedMs += Math.max(0, end - pausedAt);
+    }
+  }
+
+  return Math.max(0, Math.round(((end - start) - pausedMs) / 60000));
+}
+
+// Calcule le temps total passé en pause pour une session.
+function workSessionPausedMinutesV1113(session, endedAt = new Date().toISOString()) {
+  if (!session) return 0;
+
+  let pausedMs = Math.max(0, Number(session.pausedTotalMs) || 0);
+
+  if (session.pausedAt) {
+    const pausedAt = new Date(session.pausedAt);
+    const end = new Date(endedAt);
+    if (!Number.isNaN(pausedAt.getTime()) && !Number.isNaN(end.getTime())) {
+      pausedMs += Math.max(0, end - pausedAt);
+    }
+  }
+
+  return Math.max(0, Math.round(pausedMs / 60000));
+}
+
+// Formate le temps de travail réellement comptabilisé d'une session.
+function workSessionDurationLabelV1113(session, endedAt = new Date().toISOString()) {
+  return workMinutesLabelV1112(workSessionActiveMinutesV1113(session, endedAt));
+}
+
+// Nettoie une ancienne session invalide et restaure correctement son statut En cours ou En pause.
 function normalizeWorkSessionV1111(of) {
   if (!of) return;
   const session = activeWorkSessionV1111(of);
+
   if (session) {
-    of.status = 'En cours';
+    of.status = session.pausedAt ? 'En pause' : 'En cours';
     return;
   }
+
   if (of.workSessionV1111) delete of.workSessionV1111;
-  if (of.status === 'En cours') {
+
+  if (of.status === 'En cours' || of.status === 'En pause') {
     of.status = qtyRemainingV5(of) <= 0 ? 'Fait' : 'À faire';
   }
 }
@@ -515,10 +570,12 @@ function migrateWorkTimesV1112() {
   state.workTimesMigrationDoneV1112 = true;
 }
 
-// Enregistre une réalisation chronométrée terminée avec son temps réel et son temps prévu au moment du travail.
+// Enregistre une réalisation chronométrée en ne comptant que le temps réellement travaillé, pauses exclues.
 function addWorkTimeRecordV1112(vehicle, of, session, finishedAt, quantityNumber) {
   if (!vehicle || !of || !session?.person || !session?.startedAt) return;
-  const actualMinutes = Math.max(0, Math.round((new Date(finishedAt) - new Date(session.startedAt)) / 60000));
+
+  const actualMinutes = workSessionActiveMinutesV1113(session, finishedAt);
+  const pausedMinutes = workSessionPausedMinutesV1113(session, finishedAt);
   const plannedMinutes = Math.max(0, Math.round((Number(of.time) || 0) * 60));
 
   state.workTimesV1112 = Array.isArray(state.workTimesV1112) ? state.workTimesV1112 : [];
@@ -534,6 +591,7 @@ function addWorkTimeRecordV1112(vehicle, of, session, finishedAt, quantityNumber
     startedAt: session.startedAt,
     finishedAt,
     durationMinutes: actualMinutes,
+    pausedMinutes,
     plannedMinutes,
     quantityNumber: Number(quantityNumber) || 0
   });
@@ -635,7 +693,11 @@ function timesPageV1112() {
           <td><b>${escHtml(item.person || '-')}</b></td>
           <td>${item.quantityNumber ? escHtml(String(item.quantityNumber)) : '-'}</td>
           <td>${item.plannedMinutes ? escHtml(workMinutesLabelV1112(item.plannedMinutes)) : '-'}</td>
-          <td><b>${escHtml(workMinutesLabelV1112(item.durationMinutes))}</b><div class="muted">${escHtml(workStartTimeLabelV1111(item.startedAt))} → ${escHtml(workStartTimeLabelV1111(item.finishedAt))}</div></td>
+          <td>
+            <b>${escHtml(workMinutesLabelV1112(item.durationMinutes))}</b>
+            <div class="muted">${escHtml(workStartTimeLabelV1111(item.startedAt))} → ${escHtml(workStartTimeLabelV1111(item.finishedAt))}</div>
+            ${Number(item.pausedMinutes) > 0 ? `<div class="muted">⏸ ${escHtml(workMinutesLabelV1112(item.pausedMinutes))} de pause non comptée</div>` : ''}
+          </td>
           <td>${escHtml(deltaDisplay)}</td>
           <td>${workPerformanceBadgeV1112(item.durationMinutes, item.plannedMinutes)}</td>
           <td><button class="small bad" onclick="deleteWorkTimeV1112('${item.id}')">Suppr.</button></td>
@@ -708,12 +770,83 @@ function startOFWorkV1111(vehicleId, ofId) {
 
   const beforeSnapshot = progressSnapshot(vehicle);
   const now = new Date().toISOString();
-  of.workSessionV1111 = { person, startedAt: now };
+  of.workSessionV1111 = {
+    person,
+    startedAt: now,
+    pausedAt: '',
+    pausedTotalMs: 0
+  };
   of.status = 'En cours';
   state.realPerson = person;
 
   logAction('OF débuté', vehicle, of, `${person} • réalisation ${qtyDoneV5(of) + 1}/${qtyTotalV5(of)}`);
   recordProgressEvent(vehicle, of, 0, person, 'start', 'OF débuté', beforeSnapshot, now);
+  save();
+}
+
+// Met en pause une réalisation sans la terminer et sans augmenter la quantité réalisée.
+function pauseOFWorkV1113(vehicleId, ofId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId);
+  const of = vehicle?.ofs.find(item => item.id === ofId);
+  const session = activeWorkSessionV1111(of);
+
+  if (!vehicle || !of || !session) {
+    alert("Cet OF n'est pas actuellement démarré.");
+    return;
+  }
+
+  if (session.pausedAt) {
+    alert('Cet OF est déjà en pause.');
+    return;
+  }
+
+  const beforeSnapshot = progressSnapshot(vehicle);
+  const now = new Date().toISOString();
+
+  session.pausedAt = now;
+  of.status = 'En pause';
+
+  logAction('OF mis en pause', vehicle, of, `${session.person} • temps travaillé ${workSessionDurationLabelV1113(session, now)}`);
+  recordProgressEvent(vehicle, of, 0, session.person, 'pause', 'OF mis en pause', beforeSnapshot, now);
+  save();
+}
+
+// Relance une réalisation en pause en reprenant le chronomètre à partir de maintenant.
+function resumeOFWorkV1113(vehicleId, ofId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId);
+  const of = vehicle?.ofs.find(item => item.id === ofId);
+  const session = activeWorkSessionV1111(of);
+
+  if (!vehicle || !of || !session) {
+    alert("Cet OF n'est pas actuellement démarré.");
+    return;
+  }
+
+  if (!session.pausedAt) {
+    alert("Cet OF n'est pas en pause.");
+    return;
+  }
+
+  if (state.realPerson && state.realPerson !== session.person) {
+    const ok = confirm(`Cet OF a été démarré par ${session.person}.\n\nLe reprendre au nom de ${session.person} ?`);
+    if (!ok) return;
+  }
+
+  const beforeSnapshot = progressSnapshot(vehicle);
+  const now = new Date().toISOString();
+  const pausedAt = new Date(session.pausedAt);
+  const resumedAt = new Date(now);
+
+  if (!Number.isNaN(pausedAt.getTime()) && !Number.isNaN(resumedAt.getTime())) {
+    session.pausedTotalMs = Math.max(0, Number(session.pausedTotalMs) || 0) + Math.max(0, resumedAt - pausedAt);
+  }
+
+  session.pausedAt = '';
+  of.status = 'En cours';
+  state.realPerson = session.person;
+
+  logAction('OF repris', vehicle, of, `${session.person} • temps travaillé ${workSessionDurationLabelV1113(session, now)}`);
+  recordProgressEvent(vehicle, of, 0, session.person, 'resume', 'OF repris', beforeSnapshot, now);
   save();
 }
 
@@ -724,6 +857,11 @@ function finishOFWorkV1111(vehicleId, ofId) {
   const session = activeWorkSessionV1111(of);
   if (!vehicle || !of || !session) {
     alert("Cet OF n'est pas actuellement démarré.");
+    return;
+  }
+
+  if (session.pausedAt) {
+    alert("Cet OF est en pause. Clique d'abord sur « Reprendre », puis sur « Terminer ».");
     return;
   }
 
@@ -745,7 +883,7 @@ function cancelOFWorkV1111(vehicleId, ofId) {
   if (!confirm(`Annuler le démarrage de ${of.name} par ${session.person} ?`)) return;
 
   const beforeSnapshot = progressSnapshot(vehicle);
-  const duration = workDurationLabelV1111(session.startedAt);
+  const duration = workSessionDurationLabelV1113(session);
   delete of.workSessionV1111;
   of.status = qtyRemainingV5(of) <= 0 ? 'Fait' : 'À faire';
 
@@ -2243,7 +2381,7 @@ function addQtyDoneV5(vehicleId, ofId, amount = 1, personOverride = '') {
   if (!added) return after;
 
   const now = new Date().toISOString();
-  const duration = workSession ? workDurationLabelV1111(workSession.startedAt, now) : '';
+  const duration = workSession ? workSessionDurationLabelV1113(workSession, now) : '';
 
   of.completedQty = after;
   of.status = after >= qtyTotalV5(of) ? 'Fait' : 'À faire';
@@ -2320,7 +2458,17 @@ function statusHtmlV5(of) {
   }
 
   if (session) {
-    return `<div class="workStatusV1111"><span class="inProgressBadgeV1111">▶ En cours ${done}/${total}</span><span class="startedBy">${escHtml(session.person)} • depuis ${escHtml(workStartTimeLabelV1111(session.startedAt))}</span></div>`;
+    if (session.pausedAt) {
+      return `<div class="workStatusV1111">
+        <span class="pausedBadgeV1113">⏸ En pause ${done}/${total}</span>
+        <span class="startedBy">${escHtml(session.person)} • début ${escHtml(workStartTimeLabelV1111(session.startedAt))} • pause depuis ${escHtml(workStartTimeLabelV1111(session.pausedAt))}</span>
+      </div>`;
+    }
+
+    return `<div class="workStatusV1111">
+      <span class="inProgressBadgeV1111">▶ En cours ${done}/${total}</span>
+      <span class="startedBy">${escHtml(session.person)} • depuis ${escHtml(workStartTimeLabelV1111(session.startedAt))}</span>
+    </div>`;
   }
 
   if (done > 0) {
@@ -2347,7 +2495,9 @@ function realVinTableV5(vehicle, list) {
     const workButtons = blocked
       ? ''
       : session
-        ? `<button class="small good" onclick="finishOFWorkV1111('${vehicle.id}','${of.id}')">✓ Terminer</button><button class="small warn" onclick="cancelOFWorkV1111('${vehicle.id}','${of.id}')">Annuler démarrage</button>`
+        ? session.pausedAt
+          ? `<button class="small good" onclick="resumeOFWorkV1113('${vehicle.id}','${of.id}')">▶ Reprendre</button><button class="small warn" onclick="cancelOFWorkV1111('${vehicle.id}','${of.id}')">Annuler démarrage</button>`
+          : `<button class="small warn" onclick="pauseOFWorkV1113('${vehicle.id}','${of.id}')">⏸ Pause</button><button class="small good" onclick="finishOFWorkV1111('${vehicle.id}','${of.id}')">✓ Terminer</button><button class="small alt" onclick="cancelOFWorkV1111('${vehicle.id}','${of.id}')">Annuler démarrage</button>`
         : `<button class="small good" onclick="startOFWorkV1111('${vehicle.id}','${of.id}')">▶ Débuter</button><button class="small alt" onclick="addQtyDoneV5('${vehicle.id}','${of.id}',1)">${total > 1 ? 'Fait +1' : 'Fait'}</button>${total > 1 && done < total ? `<button class="small alt" onclick="finishQtyV5('${vehicle.id}','${of.id}')">Tout fait</button>` : ''}`;
 
     return `<tr class="${blocked ? 'blockedrow' : ''}">
@@ -2634,9 +2784,14 @@ function detailTableV5(vehicle) {
   return `<div class="tablewrap"><table><thead><tr><th>Ordre</th><th>OF</th><th>Description</th><th>Temps X1</th><th>Quantité</th><th>Réalisé</th><th>Statut</th><th>Fait par</th><th>Actions</th></tr></thead><tbody>${rows.map(of => {
     const total = qtyTotalV5(of), done = qtyDoneV5(of);
     const session = activeWorkSessionV1111(of);
-    const worker = session ? `${session.person} (en cours)` : (of.doneBy || '-');
+    const worker = session
+      ? `${session.person} (${session.pausedAt ? 'en pause' : 'en cours'})`
+      : (of.doneBy || '-');
+
     const workButtons = session
-      ? `<button class="small good" onclick="finishOFWorkV1111('${vehicle.id}','${of.id}')">✓ Terminer</button><button class="small warn" onclick="cancelOFWorkV1111('${vehicle.id}','${of.id}')">Annuler démarrage</button>`
+      ? session.pausedAt
+        ? `<button class="small good" onclick="resumeOFWorkV1113('${vehicle.id}','${of.id}')">▶ Reprendre</button><button class="small warn" onclick="cancelOFWorkV1111('${vehicle.id}','${of.id}')">Annuler démarrage</button>`
+        : `<button class="small warn" onclick="pauseOFWorkV1113('${vehicle.id}','${of.id}')">⏸ Pause</button><button class="small good" onclick="finishOFWorkV1111('${vehicle.id}','${of.id}')">✓ Terminer</button><button class="small alt" onclick="cancelOFWorkV1111('${vehicle.id}','${of.id}')">Annuler démarrage</button>`
       : `<button class="small good" onclick="startOFWorkV1111('${vehicle.id}','${of.id}')">▶ Débuter</button><button class="small alt" onclick="addQtyDoneV5('${vehicle.id}','${of.id}',1)">${total > 1 ? 'Fait +1' : 'Fait'}</button>`;
 
     return `<tr class="${of.status === 'Bloqué' ? 'blockedrow' : ''}"><td><b>${of.order || '-'}</b></td><td><b>${escHtml(of.name)}</b><div class="muted">${escHtml(of.category || '')}</div></td><td class="desc">${escHtml(of.desc || '')}</td><td><b>${fmt(of.time)}</b></td><td><span class="pill">× ${total}</span></td><td>${qtyVisualV5(of)}</td><td>${statusHtmlV5(of)}</td><td>${escHtml(worker)}</td><td class="actions">${vehicle.archived ? '' : `${of.status === 'Bloqué' ? '' : workButtons}${done > 0 ? `<button class="small warn" onclick="removeQtyDoneV5('${vehicle.id}','${of.id}')">-1</button>` : ''}<button class="small bad" onclick="blockOF('${vehicle.id}','${of.id}',false)">Blocage</button><button class="small alt" onclick="openOF('${vehicle.id}','${of.id}')">Modifier</button><button class="small bad" onclick="delOF('${vehicle.id}','${of.id}')">Suppr.</button>`}</td></tr>`;
@@ -2676,6 +2831,8 @@ function progressKindLabel(event) {
   if (event.kind === 'correction') return 'Correction';
   if (event.kind === 'baseline') return 'Reprise historique';
   if (event.kind === 'start') return 'Début';
+  if (event.kind === 'pause') return 'Pause';
+  if (event.kind === 'resume') return 'Reprise';
   if (event.kind === 'finish') return 'Terminé';
   if (event.kind === 'cancel') return 'Démarrage annulé';
   return 'Réalisation';
@@ -3723,7 +3880,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.122,
+      version: 11.13,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
