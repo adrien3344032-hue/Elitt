@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.13 Pause OF</title>
+<title>ELITT - Suivi OF - V11.14 SAV Chrono</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -204,6 +204,17 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
 /* V11.11 : suivi des OF réellement démarrés + affichage des heures cumulées par phase */
 .inProgressBadgeV1111{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;background:#78350f;color:#fde68a;font-size:12px;font-weight:900;white-space:nowrap}
 .pausedBadgeV1113{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;background:#854d0e;color:#fef3c7;font-size:12px;font-weight:900;white-space:nowrap}
+.savWorkBadgeV1114{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:900;white-space:nowrap}
+.savWorkBadgeV1114.todo{background:#334155;color:#e2e8f0}
+.savWorkBadgeV1114.running{background:#78350f;color:#fde68a}
+.savWorkBadgeV1114.paused{background:#854d0e;color:#fef3c7}
+.savWorkBadgeV1114.done{background:#14532d;color:#bbf7d0}
+.savRealTableV1114 td{vertical-align:middle}
+.savWorkerV1114{font-weight:850}
+.savWorkerV1114 small{display:block;color:var(--muted);font-weight:600;margin-top:4px}
+.dashboardKpisV1111{grid-template-columns:repeat(6,minmax(130px,1fr))}
+@media(max-width:1300px){.dashboardKpisV1111{grid-template-columns:repeat(3,minmax(150px,1fr))}}
+
 .workStatusV1111{display:grid;gap:4px}
 .workStatusV1111 .startedBy{font-size:12px;color:#fde68a;font-weight:800}
 .dashboardKpisV1111{grid-template-columns:repeat(5,minmax(140px,1fr))}
@@ -680,7 +691,7 @@ function timesPageV1112() {
   const categoryOptions = ['Toutes', ...categories].map(value => `<option value="${escHtml(value)}" ${state.timeCategoryFilterV1112 === value ? 'selected' : ''}>${escHtml(value)}</option>`).join('');
 
   const table = rows.length
-    ? `<div class="tablewrap"><table><thead><tr><th>Date</th><th>VIN</th><th>OF</th><th>Phase</th><th>Personne</th><th>Réalisation</th><th>Temps prévu</th><th>Temps réel</th><th>Écart</th><th>Résultat</th><th></th></tr></thead><tbody>${rows.map(item => {
+    ? `<div class="tablewrap"><table><thead><tr><th>Date</th><th>VIN</th><th>OF</th><th>Phase</th><th>Personne</th><th>N°</th><th>Temps prévu</th><th>Temps réel</th><th>Écart</th><th>Résultat</th><th></th></tr></thead><tbody>${rows.map(item => {
         const perfClass = workPerformanceRowClassV1112(item.durationMinutes, item.plannedMinutes);
         const delta = (Number(item.durationMinutes) || 0) - (Number(item.plannedMinutes) || 0);
         const deltaText = item.plannedMinutes ? `${delta > 0 ? '+' : ''}${workMinutesLabelV1112(Math.abs(delta))}` : '-';
@@ -930,7 +941,7 @@ function pct(vehicle) {
   if (isSAV(vehicle)) {
     if (vehicle.savDone) return 100;
     const planned = Number(vehicle.savEstimated) || 0;
-    const actual = Number(vehicle.savActual) || 0;
+    const actual = savActualHoursNowV1114(vehicle);
     return planned ? Math.min(100, Math.round(actual / planned * 100)) : 0;
   }
   const total = (vehicle.ofs || []).reduce((sum, of) => sum + qtyTotalV5(of), 0);
@@ -942,7 +953,7 @@ function pct(vehicle) {
 function remain(vehicle) {
   if (isSAV(vehicle)) {
     if (vehicle.savDone) return 0;
-    return Math.max((Number(vehicle.savEstimated) || 0) - (Number(vehicle.savActual) || 0), 0);
+    return Math.max((Number(vehicle.savEstimated) || 0) - savActualHoursNowV1114(vehicle), 0);
   }
   return (vehicle.ofs || []).reduce((sum, of) => sum + (Number(of.time) || 0) * qtyRemainingV5(of), 0);
 }
@@ -1143,11 +1154,324 @@ function normalizeAll() {
   });
   normalizePeople();
   normalizeQtyAllV5();
+  normalizeSAVWorkV1114();
   migrateWorkTimesV1112();
   ['Renault', 'Mercedes', 'MAN', 'Autre'].forEach(brand => {
     if (!Array.isArray(state.partsCatalogV8[brand])) state.partsCatalogV8[brand] = [];
   });
   state.schemaVersion = 10;
+}
+
+// Normalise les informations de chronométrage d'un SAV ancien ou en cours.
+function normalizeSAVWorkV1114() {
+  (state.vehicles || []).filter(vehicle => isSAV(vehicle)).forEach(vehicle => {
+    if (vehicle.savDone && vehicle.savWorkSessionV1114) {
+      delete vehicle.savWorkSessionV1114;
+    }
+
+    const session = vehicle.savWorkSessionV1114;
+    if (!session) return;
+
+    if (!session.person || !session.startedAt) {
+      delete vehicle.savWorkSessionV1114;
+      return;
+    }
+
+    session.pausedTotalMs = Math.max(0, Number(session.pausedTotalMs) || 0);
+    session.pausedAt = session.pausedAt || '';
+  });
+}
+
+// Retourne la session de travail active d'un SAV.
+function savWorkSessionV1114(vehicle) {
+  if (!vehicle || !isSAV(vehicle) || vehicle.savDone) return null;
+  const session = vehicle.savWorkSessionV1114;
+  if (!session || !session.person || !session.startedAt) return null;
+  session.pausedTotalMs = Math.max(0, Number(session.pausedTotalMs) || 0);
+  session.pausedAt = session.pausedAt || '';
+  return session;
+}
+
+// Retourne le temps SAV déjà enregistré auquel s'ajoute le travail de la session actuellement ouverte.
+function savActualHoursNowV1114(vehicle) {
+  const base = Math.max(0, Number(vehicle?.savActual) || 0);
+  const session = savWorkSessionV1114(vehicle);
+  if (!session) return base;
+  return base + workSessionActiveMinutesV1113(session) / 60;
+}
+
+// Retourne l'état lisible d'un SAV : À faire, En cours, En pause ou Terminé.
+function savWorkStatusV1114(vehicle) {
+  if (!vehicle || !isSAV(vehicle)) return { key: 'todo', label: 'À faire', person: '', session: null };
+  if (vehicle.savDone) return { key: 'done', label: 'Terminé', person: '', session: null };
+
+  const session = savWorkSessionV1114(vehicle);
+  if (!session) return { key: 'todo', label: 'À faire', person: '', session: null };
+
+  if (session.pausedAt) {
+    return { key: 'paused', label: 'En pause', person: session.person, session };
+  }
+
+  return { key: 'running', label: 'En cours', person: session.person, session };
+}
+
+// Génère la pastille d'état d'un SAV et indique la personne qui travaille dessus.
+function savWorkStatusHtmlV1114(vehicle) {
+  const status = savWorkStatusV1114(vehicle);
+  let sub = '';
+
+  if (status.session) {
+    sub = status.key === 'paused'
+      ? `<div class="muted" style="margin-top:5px">${escHtml(status.person)} • pause depuis ${escHtml(workStartTimeLabelV1111(status.session.pausedAt))}</div>`
+      : `<div class="muted" style="margin-top:5px">${escHtml(status.person)} • depuis ${escHtml(workStartTimeLabelV1111(status.session.startedAt))}</div>`;
+  }
+
+  return `<span class="savWorkBadgeV1114 ${status.key}">${status.key === 'running' ? '▶ ' : status.key === 'paused' ? '⏸ ' : status.key === 'done' ? '✓ ' : ''}${escHtml(status.label)}</span>${sub}`;
+}
+
+// Compte les SAV sur lesquels une personne travaille actuellement, pause comprise.
+function totalSAVInProgressV1114() {
+  return activeVehicles()
+    .filter(vehicle => isSAV(vehicle) && !!savWorkSessionV1114(vehicle))
+    .length;
+}
+
+// Crée un pseudo-OF SAV uniquement pour enregistrer proprement sa durée dans la page Temps OF.
+function savPseudoOFV1114(vehicle) {
+  return {
+    id: 'SAV-' + vehicle.id,
+    name: 'SAV',
+    desc: vehicle.savComment || '',
+    category: 'SAV',
+    time: Math.max(0, Number(vehicle.savEstimated) || 0)
+  };
+}
+
+// Démarre le chronomètre d'un SAV avec la personne sélectionnée dans Réalisation.
+function startSAVWorkV1114(vehicleId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId && isSAV(item));
+  if (!vehicle) return;
+
+  if (vehicle.savDone) {
+    alert('Ce SAV est déjà terminé. Décoche « SAV terminé » dans Modifier SAV pour le rouvrir.');
+    return;
+  }
+
+  const existing = savWorkSessionV1114(vehicle);
+  if (existing) {
+    alert(`Ce SAV est déjà ${existing.pausedAt ? 'en pause' : 'en cours'} par ${existing.person}.`);
+    return;
+  }
+
+  const person = state.realPerson || '';
+  if (!person) {
+    alert('Choisis une personne avant de démarrer le SAV.');
+    return;
+  }
+
+  const now = new Date().toISOString();
+
+  vehicle.savWorkSessionV1114 = {
+    person,
+    startedAt: now,
+    pausedAt: '',
+    pausedTotalMs: 0
+  };
+
+  state.realPerson = person;
+  logAction('SAV débuté', vehicle, { name: 'SAV', doneBy: person }, `${person} • ${workStartTimeLabelV1111(now)}`);
+  save();
+}
+
+// Met le chronomètre d'un SAV en pause sans comptabiliser cette période dans le temps réel.
+function pauseSAVWorkV1114(vehicleId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId && isSAV(item));
+  const session = savWorkSessionV1114(vehicle);
+
+  if (!vehicle || !session) {
+    alert("Ce SAV n'est pas actuellement démarré.");
+    return;
+  }
+
+  if (session.pausedAt) {
+    alert('Ce SAV est déjà en pause.');
+    return;
+  }
+
+  const now = new Date().toISOString();
+  session.pausedAt = now;
+
+  logAction('SAV mis en pause', vehicle, { name: 'SAV', doneBy: session.person }, `${session.person} • ${workSessionDurationLabelV1113(session, now)} travaillé`);
+  save();
+}
+
+// Reprend le chronomètre d'un SAV en pause.
+function resumeSAVWorkV1114(vehicleId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId && isSAV(item));
+  const session = savWorkSessionV1114(vehicle);
+
+  if (!vehicle || !session) {
+    alert("Ce SAV n'est pas actuellement démarré.");
+    return;
+  }
+
+  if (!session.pausedAt) {
+    alert("Ce SAV n'est pas en pause.");
+    return;
+  }
+
+  if (state.realPerson && state.realPerson !== session.person) {
+    const ok = confirm(`Ce SAV a été démarré par ${session.person}.\n\nLe reprendre au nom de ${session.person} ?`);
+    if (!ok) return;
+  }
+
+  const now = new Date().toISOString();
+  const pausedAt = new Date(session.pausedAt);
+  const resumedAt = new Date(now);
+
+  if (!Number.isNaN(pausedAt.getTime()) && !Number.isNaN(resumedAt.getTime())) {
+    session.pausedTotalMs =
+      Math.max(0, Number(session.pausedTotalMs) || 0) +
+      Math.max(0, resumedAt - pausedAt);
+  }
+
+  session.pausedAt = '';
+  state.realPerson = session.person;
+
+  logAction('SAV repris', vehicle, { name: 'SAV', doneBy: session.person }, `${session.person} • ${workSessionDurationLabelV1113(session, now)} travaillé`);
+  save();
+}
+
+// Annule un démarrage de SAV sans ajouter de temps réel.
+function cancelSAVWorkV1114(vehicleId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId && isSAV(item));
+  const session = savWorkSessionV1114(vehicle);
+  if (!vehicle || !session) return;
+
+  if (!confirm(`Annuler le démarrage du SAV ${vehicle.vin} par ${session.person} ?`)) return;
+
+  const duration = workSessionDurationLabelV1113(session);
+  delete vehicle.savWorkSessionV1114;
+
+  logAction('Démarrage SAV annulé', vehicle, { name: 'SAV', doneBy: session.person }, `${session.person} • après ${duration}`);
+  save();
+}
+
+// Termine un SAV, ajoute automatiquement son temps travaillé au temps réel et l'enregistre dans Temps OF.
+function finishSAVWorkV1114(vehicleId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId && isSAV(item));
+  const session = savWorkSessionV1114(vehicle);
+
+  if (!vehicle || !session) {
+    alert("Ce SAV n'est pas actuellement démarré.");
+    return;
+  }
+
+  if (session.pausedAt) {
+    alert("Ce SAV est en pause. Clique d'abord sur « Reprendre », puis sur « Terminer ».");
+    return;
+  }
+
+  if (state.realPerson && state.realPerson !== session.person) {
+    const ok = confirm(`Ce SAV a été démarré par ${session.person}.\n\nLe terminer au nom de ${session.person} ?`);
+    if (!ok) return;
+  }
+
+  const now = new Date().toISOString();
+  const actualMinutes = workSessionActiveMinutesV1113(session, now);
+  const pausedMinutes = workSessionPausedMinutesV1113(session, now);
+  const previousActual = Math.max(0, Number(vehicle.savActual) || 0);
+
+  // Le temps manuel déjà présent est conservé ; le chrono vient simplement s'y ajouter.
+  vehicle.savActual = previousActual + actualMinutes / 60;
+  vehicle.savDone = true;
+  vehicle.savDoneAt = now;
+
+  addWorkTimeRecordV1112(vehicle, savPseudoOFV1114(vehicle), session, now, 1);
+
+  const person = session.person;
+  delete vehicle.savWorkSessionV1114;
+
+  logAction(
+    'SAV terminé',
+    vehicle,
+    { name: 'SAV', doneBy: person },
+    `${person} • ${workMinutesLabelV1112(actualMinutes)} travaillé${pausedMinutes ? ` • ${workMinutesLabelV1112(pausedMinutes)} de pause` : ''}`
+  );
+
+  save();
+}
+
+// Génère les boutons Débuter / Pause / Reprendre / Terminer d'un SAV.
+function savWorkButtonsV1114(vehicle) {
+  if (!vehicle || vehicle.archived || vehicle.savDone) return '';
+
+  const session = savWorkSessionV1114(vehicle);
+
+  if (!session) {
+    return `<button class="small good" onclick="startSAVWorkV1114('${vehicle.id}')">▶ Débuter</button>`;
+  }
+
+  if (session.pausedAt) {
+    return `<button class="small good" onclick="resumeSAVWorkV1114('${vehicle.id}')">▶ Reprendre</button>
+      <button class="small warn" onclick="cancelSAVWorkV1114('${vehicle.id}')">Annuler démarrage</button>`;
+  }
+
+  return `<button class="small warn" onclick="pauseSAVWorkV1114('${vehicle.id}')">⏸ Pause</button>
+    <button class="small good" onclick="finishSAVWorkV1114('${vehicle.id}')">✓ Terminer</button>
+    <button class="small alt" onclick="cancelSAVWorkV1114('${vehicle.id}')">Annuler démarrage</button>`;
+}
+
+// Affiche les SAV actifs dans Réalisation avec sélection de personne et commandes de chronométrage.
+function renderSAVRealizationV1114() {
+  if (!state.realPerson && state.people[0]) state.realPerson = personName(state.people[0]);
+
+  const peopleOptions = state.people
+    .map(person => `<option value="${escHtml(personName(person))}" ${state.realPerson === personName(person) ? 'selected' : ''}>${escHtml(personName(person))}</option>`)
+    .join('');
+
+  const savs = activeVehicles()
+    .filter(vehicle => isSAV(vehicle) && !vehicle.savDone)
+    .sort((a, b) =>
+      (Number(a.priority) || 1) - (Number(b.priority) || 1) ||
+      String(a.vin || '').localeCompare(String(b.vin || ''), 'fr', { numeric: true })
+    );
+
+  const personBar = `<div class="card"><div class="toolbar filterbar">
+    <label>Personne <select id="realPersonSavV1114" onchange="state.realPerson=this.value;save()">${peopleOptions}</select></label>
+    <span class="muted">Sélectionne la personne, puis démarre le SAV concerné.</span>
+  </div></div>`;
+
+  if (!savs.length) {
+    return personBar + '<br><div class="card">Aucun SAV actif à réaliser.</div>';
+  }
+
+  const rows = savs.map(vehicle => {
+    const status = savWorkStatusV1114(vehicle);
+    const actual = savActualHoursNowV1114(vehicle);
+    const planned = Math.max(0, Number(vehicle.savEstimated) || 0);
+    const worker = status.person
+      ? `<span class="savWorkerV1114">${escHtml(status.person)}<small>${status.key === 'paused' ? 'En pause' : 'Travaille actuellement sur ce SAV'}</small></span>`
+      : '<span class="muted">Personne</span>';
+
+    return `<tr>
+      <td><div class="vinbox">${colorDot(vehicle)}<b>${escHtml(vehicle.vin)}</b></div></td>
+      <td>${escHtml(vehicle.client || '-')}</td>
+      <td><b>${fmtHoursMinutesV11122(planned)}</b></td>
+      <td><b>${fmtHoursMinutesV11122(actual)}</b></td>
+      <td>${savWorkStatusHtmlV1114(vehicle)}</td>
+      <td>${worker}</td>
+      <td class="actions">${savWorkButtonsV1114(vehicle)}<button class="small alt" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button></td>
+    </tr>`;
+  }).join('');
+
+  return `${personBar}<br>
+    <div class="tablewrap savRealTableV1114">
+      <table>
+        <thead><tr><th>SAV</th><th>Client</th><th>Temps prévu</th><th>Temps réel</th><th>Statut</th><th>Personne</th><th>Actions</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
 }
 
 // Enregistre l'état dans le navigateur puis rafraîchit l'écran ; Firebase enrichit cette fonction au chargement.
@@ -1822,8 +2146,16 @@ function phaseStatsV5(vehicle, category) {
 // Génère les trois barres du tableau de bord en heures faites / heures totales, séparées strictement par phase.
 function phaseProgressHtmlV5(vehicle) {
   if (isSAV(vehicle)) {
-    return '<div class="progress"><div class="bar" style="width:' + pct(vehicle) + '%"></div></div>' +
-      '<div class="muted">' + fmt(vehicle.savActual || 0) + ' / ' + fmt(vehicle.savEstimated || 0) + '</div>';
+    const actual = savActualHoursNowV1114(vehicle);
+    const planned = Math.max(0, Number(vehicle.savEstimated) || 0);
+    return '<div style="min-width:220px">' +
+      '<div style="display:flex;justify-content:space-between;gap:10px;margin-bottom:5px">' +
+        '<b>SAV ' + pct(vehicle) + '%</b>' +
+        '<b>' + fmtHoursMinutesV11122(actual) + ' / ' + fmtHoursMinutesV11122(planned) + '</b>' +
+      '</div>' +
+      '<div class="progress"><div class="bar" style="width:' + pct(vehicle) + '%"></div></div>' +
+      '<div style="margin-top:7px">' + savWorkStatusHtmlV1114(vehicle) + '</div>' +
+    '</div>';
   }
 
   let html = '';
@@ -1873,18 +2205,21 @@ function vehicleTable(list, estimates = null, isArchive = false) {
       : sav
         ? `<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="openSAV('${vehicle.id}')">Modifier SAV</button><button class="small warn" onclick="archiveVehicle('${vehicle.id}')">Archiver</button><button class="small bad" onclick="delVehicle('${vehicle.id}')">Suppr.</button>`
         : `<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="openVehicle('${vehicle.id}')">Modifier</button><button class="small warn" onclick="archiveVehicle('${vehicle.id}')">Archiver</button><button class="small bad" onclick="delVehicle('${vehicle.id}')">Suppr.</button>`;
+    const savStatus = sav ? savWorkStatusV1114(vehicle) : null;
     const options = sav
-      ? `<span class="savbadge ${vehicle.savDone ? 'savdone' : ''}">${vehicle.savDone ? 'SAV terminé' : 'SAV'}</span>`
+      ? `<span class="savbadge ${vehicle.savDone ? 'savdone' : ''}">SAV • ${escHtml(savStatus.label)}</span>${savStatus.person ? `<div class="muted" style="margin-top:5px">${escHtml(savStatus.person)}</div>` : ''}`
       : `<div class="optionchips">${vehicleOptionsHtml(vehicle)}</div>`;
     const endLabel = isArchive
       ? archivedDate
       : sav
-        ? (vehicle.savDone ? 'Terminé' : 'SAV en cours')
+        ? savWorkStatusV1114(vehicle).label
         : (remain(vehicle) > 0 ? fmtDate(estimates[vehicle.id]) : 'Terminé');
     const endSub = isArchive
       ? '<div class="muted">hors tableau de bord</div>'
       : sav
-        ? '<div class="muted">temps réel / prévu</div>'
+        ? (savWorkStatusV1114(vehicle).person
+            ? `<div class="muted">${escHtml(savWorkStatusV1114(vehicle).person)} • temps réel / prévu</div>`
+            : '<div class="muted">temps réel / prévu</div>')
         : '<div class="muted">hors week-end et fériés</div>';
     return `<tr class="vehicleRow ${blocked ? 'blockedrow' : ''}" style="--vehColor:${escHtml(vehicleColor(vehicle))}">
       <td><div class="vinbox">${colorDot(vehicle)}<b>${escHtml(vehicle.vin)}</b></div><div class="muted">${escHtml(vehicle.type || 'CCF')}${vehicle.archived ? ' • Archivé' : ''}</div></td>
@@ -1911,12 +2246,15 @@ function dash() {
   const done = active.reduce((sum, vehicle) => sum + (isSAV(vehicle) ? 0 : doneOf(vehicle)), 0);
   const estimates = estimateVehiclesActive();
   const inProgress = totalInProgressV1111();
+  const savInProgress = totalSAVInProgressV1114();
+
   document.getElementById('view').innerHTML = `
     <div class="grid cards dashboardKpisV1111">
       <div class="card"><b>Véhicules actifs</b><div class="kpi">${active.length}</div><div class="muted">Archivés : ${archivedVehicles().length}</div></div>
       <div class="card"><b>OF total</b><div class="kpi">${total}</div></div>
       <div class="card"><b>OF faits</b><div class="kpi">${done}</div></div>
       <div class="card"><b>OF en cours</b><div class="kpi">${inProgress}</div><div class="muted">réellement démarrés</div></div>
+      <div class="card"><b>SAV en cours</b><div class="kpi">${savInProgress}</div><div class="muted">travail démarré ou en pause</div></div>
       <div class="card"><b>Temps restant</b><div class="kpi">${fmt(active.reduce((sum, vehicle) => sum + remain(vehicle), 0))}</div></div>
     </div><br>${vehicleTable(active, estimates, false)}`;
 }
@@ -2202,6 +2540,10 @@ function saveSAV(id) {
     savDone: !!document.getElementById('savDone').checked,
     ofs: []
   });
+  if (vehicle.savDone && vehicle.savWorkSessionV1114) {
+    delete vehicle.savWorkSessionV1114;
+  }
+
   logAction(isNew ? 'SAV créé' : 'SAV modifié', vehicle, null, `Prévu ${fmt(vehicle.savEstimated)} • Réel ${fmt(vehicle.savActual)}`);
   closeModal();
   save();
@@ -2644,14 +2986,34 @@ function renderByOFV5() {
 function real() {
   normalizeAll();
   setHead('Réalisation');
+
   const active = activeNormalVehicles();
-  if (!active.length) {
-    document.getElementById('view').innerHTML = '<div class="card">Aucun véhicule actif avec OF à réaliser.</div>';
+  const activeSAV = activeVehicles().filter(vehicle => isSAV(vehicle) && !vehicle.savDone);
+
+  if (!active.length && !activeSAV.length) {
+    document.getElementById('view').innerHTML = '<div class="card">Aucun véhicule ou SAV actif à réaliser.</div>';
     return;
   }
-  state.realModeV3 = state.realModeV3 || 'of';
-  const tabs = `<div class="realModeTabs" style="display:flex;gap:10px;margin-bottom:14px"><button class="${state.realModeV3 === 'vin' ? 'active' : ''}" onclick="setRealModeV5('vin')">Par VIN</button><button class="${state.realModeV3 === 'of' ? 'active' : ''}" onclick="setRealModeV5('of')">Par OF</button></div>`;
-  document.getElementById('view').innerHTML = tabs + (state.realModeV3 === 'of' ? renderByOFV5() : renderByVinV5(active));
+
+  state.realModeV3 = state.realModeV3 || (active.length ? 'of' : 'sav');
+
+  if (!active.length && (state.realModeV3 === 'of' || state.realModeV3 === 'vin')) {
+    state.realModeV3 = 'sav';
+  }
+
+  const tabs = `<div class="realModeTabs" style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+    <button class="${state.realModeV3 === 'vin' ? 'active' : ''}" onclick="setRealModeV5('vin')" ${!active.length ? 'disabled' : ''}>Par VIN</button>
+    <button class="${state.realModeV3 === 'of' ? 'active' : ''}" onclick="setRealModeV5('of')" ${!active.length ? 'disabled' : ''}>Par OF</button>
+    <button class="${state.realModeV3 === 'sav' ? 'active' : ''}" onclick="setRealModeV5('sav')">SAV (${activeSAV.length})</button>
+  </div>`;
+
+  let content = '';
+  if (state.realModeV3 === 'sav') content = renderSAVRealizationV1114();
+  else if (state.realModeV3 === 'of') content = renderByOFV5();
+  else content = renderByVinV5(active);
+
+  document.getElementById('view').innerHTML = tabs + content;
+
   if (state.realModeV3 === 'of') renderOFListV5();
 }
 
@@ -2809,9 +3171,37 @@ function vehicleDetail() {
   }
   if (isSAV(vehicle)) {
     setHead('SAV ' + vehicle.vin);
-    const back = vehicle.archived ? `<button class="alt" onclick="page='archives';render()">← Retour archives</button>` : `<button class="alt" onclick="page='dash';render()">← Retour tableau de bord</button>`;
-    const actions = vehicle.archived ? `<button class="good" onclick="restoreVehicle('${vehicle.id}')">Restaurer</button>` : `<button onclick="openSAV('${vehicle.id}')">Modifier SAV</button><button class="warn" onclick="archiveVehicle('${vehicle.id}')">Archiver</button>`;
-    document.getElementById('view').innerHTML = `<div class="toolbar">${back}${actions}</div><br><div class="grid cards"><div class="card vehicleBanner" style="--vehColor:${vehicleColor(vehicle)}"><b>Référence</b><div class="kpi">${colorDot(vehicle)}${escHtml(vehicle.vin)}</div><div class="muted">${escHtml(vehicle.client || '')}</div></div><div class="card"><b>Temps prévu</b><div class="kpi">${fmt(vehicle.savEstimated || 0)}</div></div><div class="card"><b>Temps réel</b><div class="kpi">${fmt(vehicle.savActual || 0)}</div></div><div class="card"><b>Statut</b><div class="kpi">${vehicle.archived ? 'Archivé' : (vehicle.savDone ? 'Terminé' : 'En cours')}</div></div></div><br><div class="card"><b>Commentaire / travail réalisé</b><br><br><div class="savcomment">${escHtml(vehicle.savComment || 'Aucun commentaire.')}</div></div>`;
+
+    const back = vehicle.archived
+      ? `<button class="alt" onclick="page='archives';render()">← Retour archives</button>`
+      : `<button class="alt" onclick="page='dash';render()">← Retour tableau de bord</button>`;
+
+    const actions = vehicle.archived
+      ? `<button class="good" onclick="restoreVehicle('${vehicle.id}')">Restaurer</button>`
+      : `<button onclick="openSAV('${vehicle.id}')">Modifier SAV</button>
+         <button class="alt" onclick="openVehicleTimesV1112('${vehicle.id}')">⏱ Temps SAV</button>
+         <button class="warn" onclick="archiveVehicle('${vehicle.id}')">Archiver</button>`;
+
+    const actual = savActualHoursNowV1114(vehicle);
+    const status = savWorkStatusV1114(vehicle);
+    const worker = status.person ? status.person : '-';
+
+    document.getElementById('view').innerHTML = `
+      <div class="toolbar">${back}${actions}</div><br>
+      <div class="grid cards">
+        <div class="card vehicleBanner" style="--vehColor:${vehicleColor(vehicle)}">
+          <b>Référence</b>
+          <div class="kpi">${colorDot(vehicle)}${escHtml(vehicle.vin)}</div>
+          <div class="muted">${escHtml(vehicle.client || '')}</div>
+        </div>
+        <div class="card"><b>Temps prévu</b><div class="kpi">${fmtHoursMinutesV11122(vehicle.savEstimated || 0)}</div></div>
+        <div class="card"><b>Temps réel</b><div class="kpi">${fmtHoursMinutesV11122(actual)}</div></div>
+        <div class="card"><b>Statut</b><div style="margin-top:12px">${savWorkStatusHtmlV1114(vehicle)}</div></div>
+        <div class="card"><b>Personne</b><div class="kpi">${escHtml(worker)}</div></div>
+      </div>
+      <br>
+      ${!vehicle.archived && !vehicle.savDone ? `<div class="card"><div class="toolbar">${savWorkButtonsV1114(vehicle)}<button class="alt" onclick="page='real';state.realModeV3='sav';render()">Ouvrir dans Réalisation</button></div></div><br>` : ''}
+      <div class="card"><b>Commentaire / travail réalisé</b><br><br><div class="savcomment">${escHtml(vehicle.savComment || 'Aucun commentaire.')}</div></div>`;
     return;
   }
   setHead('Véhicule ' + vehicle.vin);
@@ -3880,7 +4270,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.13,
+      version: 11.14,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
