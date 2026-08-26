@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.14.2 Sécurité Réalisation</title>
+<title>ELITT - Suivi OF - V11.14.3 Statut Pause Dashboard</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -439,10 +439,28 @@ function normalizeWorkSessionV1111(of) {
   }
 }
 
-// Compte le nombre d'OF réellement en cours sur un véhicule.
+// Compte le nombre total d'OF démarrés sur un véhicule, qu'ils soient en cours ou en pause.
 function inProgressCountV1111(vehicle) {
   if (!vehicle || isSAV(vehicle)) return 0;
   return (vehicle.ofs || []).filter(of => !!activeWorkSessionV1111(of)).length;
+}
+
+// Compte uniquement les OF sur lesquels une personne travaille réellement maintenant.
+function runningOFCountV11143(vehicle) {
+  if (!vehicle || isSAV(vehicle)) return 0;
+  return (vehicle.ofs || []).filter(of => {
+    const session = activeWorkSessionV1111(of);
+    return !!session && !session.pausedAt;
+  }).length;
+}
+
+// Compte uniquement les OF actuellement mis en pause.
+function pausedOFCountV11143(vehicle) {
+  if (!vehicle || isSAV(vehicle)) return 0;
+  return (vehicle.ofs || []).filter(of => {
+    const session = activeWorkSessionV1111(of);
+    return !!session && !!session.pausedAt;
+  }).length;
 }
 
 // Compte tous les OF réellement en cours sur l'ensemble des véhicules actifs.
@@ -2192,9 +2210,21 @@ function phaseProgressHtmlV5(vehicle) {
     '</div>';
   });
 
-  const current = inProgressCountV1111(vehicle);
-  if (current > 0) {
-    html += '<div class="inProgressBadgeV1111" style="margin-top:2px">▶ ' + current + ' OF en cours</div>';
+  const running = runningOFCountV11143(vehicle);
+  const paused = pausedOFCountV11143(vehicle);
+
+  if (running > 0 || paused > 0) {
+    html += '<div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:2px">';
+
+    if (running > 0) {
+      html += '<div class="inProgressBadgeV1111">▶ ' + running + ' OF en cours</div>';
+    }
+
+    if (paused > 0) {
+      html += '<div class="pausedBadgeV1113">⏸ ' + paused + ' OF en pause</div>';
+    }
+
+    html += '</div>';
   }
 
   return '<div style="min-width:220px">' + html + '</div>';
@@ -4283,7 +4313,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.142,
+      version: 11.143,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
