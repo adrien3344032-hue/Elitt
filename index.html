@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.14.4 Correction annulation démarrage</title>
+<title>ELITT - Suivi OF - V11.15 Notifications</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -173,6 +173,70 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
 /* Mise en page des boutons de sauvegarde placés dans la barre Firebase. */
 .fbTopbarActions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
 .fbTopbarActions button{margin:0}
+
+/* V11.15 : cloche et panneau de notifications synchronisées avec Firebase */
+.notificationBellButtonV1115{position:relative;display:inline-flex;align-items:center;gap:7px}
+.notificationBellIconV1115{font-size:16px;line-height:1}
+.notificationBadgeV1115{
+  min-width:20px;height:20px;padding:0 5px;border-radius:999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#dc2626;color:#fff;font-size:11px;font-weight:950;
+  border:2px solid #0b1728;box-shadow:0 2px 8px rgba(220,38,38,.35)
+}
+.notificationBadgeV1115.empty{display:none}
+.notificationPanelV1115{
+  position:fixed;top:68px;right:18px;z-index:4500;
+  width:min(430px,calc(100vw - 24px));max-height:min(72vh,720px);
+  display:none;grid-template-rows:auto minmax(0,1fr) auto;
+  overflow:hidden;background:#0d1d33;border:1px solid #29486f;
+  border-radius:18px;box-shadow:0 24px 70px rgba(0,0,0,.45)
+}
+.notificationPanelV1115.open{display:grid}
+.notificationPanelHeadV1115{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:15px 16px;border-bottom:1px solid #203b5d;background:#102440
+}
+.notificationPanelHeadV1115 h3{margin:0;font-size:17px}
+.notificationPanelHeadV1115 .muted{font-size:11px;margin-top:3px}
+.notificationPanelCloseV1115{
+  width:32px;height:32px;padding:0!important;border-radius:10px!important;
+  display:inline-flex;align-items:center;justify-content:center;font-size:18px
+}
+.notificationListV1115{overflow:auto;padding:8px}
+.notificationEmptyV1115{padding:30px 18px;text-align:center;color:var(--muted)}
+.notificationItemV1115{
+  width:100%;display:grid;grid-template-columns:38px minmax(0,1fr);gap:10px;
+  text-align:left;padding:11px;border:0;border-radius:13px;margin:0 0 5px;
+  background:transparent;color:var(--text);cursor:pointer
+}
+.notificationItemV1115:hover{background:#142b49}
+.notificationItemV1115.unread{background:#132e50}
+.notificationItemV1115.unread:hover{background:#17375f}
+.notificationIconV1115{
+  width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:17px;font-weight:900;border:1px solid #31557f
+}
+.notificationIconV1115.blocked{background:#4c1820;color:#fecaca}
+.notificationIconV1115.unblocked,.notificationIconV1115.finished{background:#123d2b;color:#bbf7d0}
+.notificationIconV1115.started,.notificationIconV1115.resumed{background:#123c5c;color:#bae6fd}
+.notificationIconV1115.paused{background:#4a3410;color:#fde68a}
+.notificationIconV1115.cancelled{background:#293548;color:#dbeafe}
+.notificationContentV1115{min-width:0}
+.notificationTitleV1115{font-weight:900;font-size:13px;line-height:1.25}
+.notificationMetaV1115{font-size:12px;color:#c8dbf5;margin-top:3px;line-height:1.35}
+.notificationDetailV1115{
+  font-size:11px;color:var(--muted);margin-top:4px;line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
+}
+.notificationDateV1115{font-size:10px;color:#7f9abd;margin-top:5px}
+.notificationPanelFootV1115{
+  padding:10px 14px;border-top:1px solid #203b5d;
+  color:var(--muted);font-size:10px;text-align:center;background:#0b192d
+}
+@media(max-width:700px){
+  .notificationBellButtonV1115 .notificationBellLabelV1115{display:none}
+  .notificationPanelV1115{top:62px;right:8px;width:calc(100vw - 16px)}
+}
 
 @media(max-width:1150px){
   body.publicGlobalModeV117 main{padding:14px}
@@ -1192,6 +1256,12 @@ function normalizeAll() {
   state.partsCatalogV8 = state.partsCatalogV8 || { Renault: [], Mercedes: [], MAN: [], Autre: [] };
   state.progressEventsV6 = Array.isArray(state.progressEventsV6) ? state.progressEventsV6 : [];
   state.workTimesV1112 = Array.isArray(state.workTimesV1112) ? state.workTimesV1112 : [];
+  state.notificationsV1115 = Array.isArray(state.notificationsV1115) ? state.notificationsV1115 : [];
+  // On garde les 300 notifications les plus récentes afin de ne pas alourdir le document Firebase.
+  state.notificationsV1115 = state.notificationsV1115
+    .filter(item => item && item.id && item.at)
+    .sort((a, b) => new Date(b.at) - new Date(a.at))
+    .slice(0, 300);
   const colors = ['#3b82f6', '#22c55e', '#f97316', '#a855f7', '#ef4444', '#14b8a6', '#eab308', '#ec4899'];
   state.vehicles.forEach((vehicle, index) => {
     vehicle.ofs = Array.isArray(vehicle.ofs) ? vehicle.ofs : [];
@@ -1549,6 +1619,9 @@ function render() {
     detail: vehicleDetail
   };
   (views[page] || dash)();
+  if (typeof renderNotificationBellV1115 === 'function') {
+    renderNotificationBellV1115();
+  }
 }
 
 // Met à jour le titre principal de la page.
@@ -1583,19 +1656,298 @@ function initModalBackdrop() {
   });
 }
 
+// Clé locale contenant les notifications déjà vues sur ce navigateur.
+const NOTIFICATION_READ_KEY_V1115 = 'suivi_of_notifications_read_v1115';
+
+// Retourne l'ensemble des identifiants de notifications déjà vues sur ce poste.
+function notificationReadIdsV1115() {
+  try {
+    const values = JSON.parse(localStorage.getItem(NOTIFICATION_READ_KEY_V1115) || '[]');
+    return new Set(Array.isArray(values) ? values : []);
+  } catch (error) {
+    return new Set();
+  }
+}
+
+// Enregistre localement les notifications considérées comme vues sans modifier les autres postes.
+function saveNotificationReadIdsV1115(ids) {
+  try {
+    localStorage.setItem(
+      NOTIFICATION_READ_KEY_V1115,
+      JSON.stringify(Array.from(ids).slice(-600))
+    );
+  } catch (error) {}
+}
+
+// Retourne les notifications de la plus récente à la plus ancienne.
+function notificationsV1115() {
+  state.notificationsV1115 = Array.isArray(state.notificationsV1115) ? state.notificationsV1115 : [];
+  return state.notificationsV1115
+    .slice()
+    .sort((a, b) => new Date(b.at) - new Date(a.at));
+}
+
+// Traduit une action métier en type de notification visible dans la cloche.
+function notificationTypeFromActionV1115(action) {
+  const map = {
+    'OF bloqué': 'blocked',
+    'OF bloqué (multi-VIN)': 'blocked',
+    'OF débloqué': 'unblocked',
+    'OF débuté': 'started',
+    'OF mis en pause': 'paused',
+    'OF repris': 'resumed',
+    'OF terminé': 'finished',
+    'Démarrage OF annulé': 'cancelled',
+    'SAV débuté': 'started',
+    'SAV mis en pause': 'paused',
+    'SAV repris': 'resumed',
+    'SAV terminé': 'finished',
+    'Démarrage SAV annulé': 'cancelled'
+  };
+  return map[action] || '';
+}
+
+// Retourne la personne la plus pertinente pour une notification.
+function notificationPersonV1115(vehicle, of) {
+  const ofSession = of?.workSessionV1111;
+  const savSession = vehicle?.savWorkSessionV1114;
+  return ofSession?.person || savSession?.person || of?.doneBy || state.realPerson || '';
+}
+
+// Ajoute une notification globale ; elle sera synchronisée avec les autres postes via Firebase.
+function createNotificationV1115(action, vehicle, of, detail = '', personOverride = '') {
+  const type = notificationTypeFromActionV1115(action);
+  if (!type) return;
+
+  state.notificationsV1115 = Array.isArray(state.notificationsV1115) ? state.notificationsV1115 : [];
+
+  const cleanAction = action === 'OF bloqué (multi-VIN)' ? 'OF bloqué' : action;
+  const item = {
+    id: uid(),
+    at: new Date().toISOString(),
+    type,
+    action: cleanAction,
+    vehicleId: vehicle?.id || '',
+    vin: vehicle?.vin || '',
+    ofId: of?.id || '',
+    ofName: of?.name || (isSAV(vehicle) ? 'SAV' : ''),
+    person: personOverride || notificationPersonV1115(vehicle, of),
+    detail: detail || ''
+  };
+
+  state.notificationsV1115.unshift(item);
+  state.notificationsV1115 = state.notificationsV1115.slice(0, 300);
+}
+
+// Retourne l'icône correspondant au type d'une notification.
+function notificationIconV1115(type, action = '') {
+  if (action.startsWith('SAV')) {
+    if (type === 'paused') return '⏸';
+    if (type === 'resumed') return '▶';
+    if (type === 'finished') return '✓';
+    if (type === 'cancelled') return '↩';
+    return '🛠';
+  }
+  if (type === 'blocked') return '⛔';
+  if (type === 'unblocked') return '✓';
+  if (type === 'started') return '▶';
+  if (type === 'paused') return '⏸';
+  if (type === 'resumed') return '↻';
+  if (type === 'finished') return '✓';
+  return '↩';
+}
+
+// Formate la date d'une notification de façon compacte.
+function notificationDateLabelV1115(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '-';
+  return date.toLocaleString('fr-FR', {
+    day: '2-digit',
+    month: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
+// Retourne le nombre de notifications non lues sur ce navigateur.
+function unreadNotificationCountV1115() {
+  const read = notificationReadIdsV1115();
+  return notificationsV1115().reduce((count, item) => count + (read.has(item.id) ? 0 : 1), 0);
+}
+
+// Met à jour uniquement le compteur rouge de la cloche.
+function renderNotificationBadgeV1115() {
+  const badge = document.getElementById('notificationBadgeV1115');
+  if (!badge) return;
+
+  const count = unreadNotificationCountV1115();
+  badge.textContent = count > 99 ? '99+' : String(count);
+  badge.classList.toggle('empty', count === 0);
+}
+
+// Crée le panneau flottant de notifications s'il n'existe pas encore.
+function ensureNotificationPanelV1115() {
+  if (document.getElementById('notificationPanelV1115')) return;
+
+  const panel = document.createElement('div');
+  panel.id = 'notificationPanelV1115';
+  panel.className = 'notificationPanelV1115';
+  panel.innerHTML = `
+    <div class="notificationPanelHeadV1115">
+      <div>
+        <h3>🔔 Notifications</h3>
+        <div class="muted">Activité récente de production</div>
+      </div>
+      <button class="small alt notificationPanelCloseV1115" type="button" onclick="closeNotificationsV1115()">×</button>
+    </div>
+    <div class="notificationListV1115" id="notificationListV1115"></div>
+    <div class="notificationPanelFootV1115">L'ouverture de la cloche marque les notifications comme lues sur ce poste, sans supprimer l'historique.</div>
+  `;
+
+  panel.addEventListener('click', event => event.stopPropagation());
+  document.body.appendChild(panel);
+
+  if (!window._notificationOutsideHandlerV1115) {
+    window._notificationOutsideHandlerV1115 = true;
+    document.addEventListener('click', event => {
+      const currentPanel = document.getElementById('notificationPanelV1115');
+      const bell = document.getElementById('notificationBellV1115');
+      if (!currentPanel?.classList.contains('open')) return;
+      if (currentPanel.contains(event.target) || bell?.contains(event.target)) return;
+      closeNotificationsV1115();
+    });
+  }
+}
+
+// Génère le contenu du panneau, avec les éléments encore non lus légèrement surlignés.
+function renderNotificationPanelV1115(readSnapshot = null) {
+  ensureNotificationPanelV1115();
+
+  const list = document.getElementById('notificationListV1115');
+  if (!list) return;
+
+  const read = readSnapshot || notificationReadIdsV1115();
+  const rows = notificationsV1115().slice(0, 50);
+
+  if (!rows.length) {
+    list.innerHTML = `<div class="notificationEmptyV1115">
+      <div style="font-size:30px;margin-bottom:8px">🔔</div>
+      Aucune notification pour le moment.
+    </div>`;
+    return;
+  }
+
+  list.innerHTML = rows.map(item => {
+    const unread = !read.has(item.id);
+    const meta = [
+      item.vin ? `VIN ${item.vin}` : '',
+      item.ofName || '',
+      item.person || ''
+    ].filter(Boolean).join(' • ');
+
+    return `<button type="button"
+      class="notificationItemV1115 ${unread ? 'unread' : ''}"
+      onclick="openNotificationTargetV1115('${item.id}')">
+      <span class="notificationIconV1115 ${escHtml(item.type)}">${notificationIconV1115(item.type, item.action || '')}</span>
+      <span class="notificationContentV1115">
+        <span class="notificationTitleV1115">${escHtml(item.action || 'Notification')}</span>
+        ${meta ? `<span class="notificationMetaV1115">${escHtml(meta)}</span>` : ''}
+        ${item.detail ? `<span class="notificationDetailV1115">${escHtml(item.detail)}</span>` : ''}
+        <span class="notificationDateV1115">${escHtml(notificationDateLabelV1115(item.at))}</span>
+      </span>
+    </button>`;
+  }).join('');
+}
+
+// Marque toutes les notifications actuellement reçues comme lues uniquement sur ce poste.
+function markNotificationsReadV1115() {
+  const read = notificationReadIdsV1115();
+  notificationsV1115().forEach(item => read.add(item.id));
+  saveNotificationReadIdsV1115(read);
+  renderNotificationBadgeV1115();
+}
+
+// Ouvre ou ferme la cloche ; les nouveaux éléments restent surlignés pendant cette première ouverture.
+function toggleNotificationsV1115() {
+  ensureNotificationPanelV1115();
+  const panel = document.getElementById('notificationPanelV1115');
+  if (!panel) return;
+
+  const opening = !panel.classList.contains('open');
+
+  if (!opening) {
+    closeNotificationsV1115();
+    return;
+  }
+
+  const readBeforeOpen = notificationReadIdsV1115();
+  renderNotificationPanelV1115(readBeforeOpen);
+  panel.classList.add('open');
+  markNotificationsReadV1115();
+}
+
+// Ferme le panneau de notifications.
+function closeNotificationsV1115() {
+  document.getElementById('notificationPanelV1115')?.classList.remove('open');
+}
+
+// Ouvre la page la plus pertinente lorsqu'on clique sur une notification.
+function openNotificationTargetV1115(notificationId) {
+  const item = notificationsV1115().find(row => row.id === notificationId);
+  if (!item) return;
+
+  closeNotificationsV1115();
+
+  if (item.type === 'blocked') {
+    page = 'blocked';
+    render();
+    return;
+  }
+
+  if (item.vehicleId && state.vehicles.some(vehicle => vehicle.id === item.vehicleId)) {
+    openVehicleDetail(item.vehicleId);
+    return;
+  }
+
+  page = 'history';
+  render();
+}
+
+// Rafraîchit la cloche et, si le panneau est ouvert, son contenu.
+function renderNotificationBellV1115() {
+  renderNotificationBadgeV1115();
+
+  const panel = document.getElementById('notificationPanelV1115');
+  if (panel?.classList.contains('open')) {
+    renderNotificationPanelV1115();
+  }
+}
+
 // Ajoute une action dans l'historique général et limite cet historique aux 500 dernières lignes.
 function logAction(action, vehicle, of, detail = '') {
   state.history = Array.isArray(state.history) ? state.history : [];
+
+  const person =
+    of?.workSessionV1111?.person ||
+    vehicle?.savWorkSessionV1114?.person ||
+    of?.doneBy ||
+    state.realPerson ||
+    '';
+
   state.history.unshift({
     date: new Date().toISOString(),
     action,
     vin: vehicle?.vin || '',
     of: of?.name || '',
     desc: of?.desc || '',
-    person: of?.doneBy || state.realPerson || '',
+    person,
     detail
   });
+
   state.history = state.history.slice(0, 500);
+
+  // Seules les actions importantes reconnues sont envoyées vers la cloche.
+  createNotificationV1115(action, vehicle, of, detail, person);
 }
 
 // Affiche les dernières actions réalisées dans le logiciel.
@@ -4329,7 +4681,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.144,
+      version: 11.15,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -4497,16 +4849,28 @@ initApp();
     bar.innerHTML = `
       <div class="fbStatus"><span id="fbDot" class="fbDot"></span><span id="fbStatusText">Connexion Firebase...</span></div>
       <div class="fbTopbarActions">
+        <button class="small alt notificationBellButtonV1115" id="notificationBellV1115" type="button" title="Notifications">
+          <span class="notificationBellIconV1115">🔔</span>
+          <span class="notificationBellLabelV1115">Notifications</span>
+          <span class="notificationBadgeV1115 empty" id="notificationBadgeV1115">0</span>
+        </button>
         <button class="small alt" id="fbForceSave">Forcer sauvegarde</button>
         <button class="small alt" id="fbBackupData">Sauvegarder données</button>
         <button class="small alt" id="fbRestoreData">Restaurer données</button>
         <button class="small bad" id="fbLogout">Déconnexion</button>
       </div>`;
     main.prepend(bar);
+    document.getElementById('notificationBellV1115').onclick = event => {
+      event.stopPropagation();
+      toggleNotificationsV1115();
+    };
     document.getElementById('fbForceSave').onclick = () => pushFirebaseNow(true);
     document.getElementById('fbBackupData').onclick = () => backupAllV37();
     document.getElementById('fbRestoreData').onclick = () => restoreAllV37();
     document.getElementById('fbLogout').onclick = () => auth.signOut();
+
+    ensureNotificationPanelV1115();
+    renderNotificationBellV1115();
   }
 
   // Applique au site les données reçues depuis Firestore puis exécute la migration de compatibilité.
