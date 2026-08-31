@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.15 Notifications</title>
+<title>ELITT - Suivi OF - V11.16 Comptes utilisateurs</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -184,6 +184,19 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
   border:2px solid #0b1728;box-shadow:0 2px 8px rgba(220,38,38,.35)
 }
 .notificationBadgeV1115.empty{display:none}
+.connectedPersonBadgeV1116{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 10px;border-radius:999px;
+  background:#102d4c;border:1px solid #2b557f;
+  color:#dbeafe;font-size:12px;font-weight:900;white-space:nowrap
+}
+.connectedPersonBadgeV1116 strong{color:#fff}
+.connectedPersonInlineV1116{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 11px;border-radius:12px;
+  background:#10253f;border:1px solid #29486f;
+  font-weight:850;color:#dbeafe
+}
 .notificationPanelV1115{
   position:fixed;top:68px;right:18px;z-index:4500;
   width:min(430px,calc(100vw - 24px));max-height:min(72vh,720px);
@@ -826,6 +839,86 @@ function timesPageV1112() {
     <br>${table}`;
 }
 
+// Correspondance entre les comptes Firebase atelier et les personnes du site.
+const USER_EMAIL_PERSON_V1116 = Object.freeze({
+  'david@elitt.com': 'David',
+  'dimitri@elitt.com': 'Dimitri',
+  'priscilla@elitt.com': 'Priscilla',
+  'olivier@elitt.com': 'Olivier',
+  'julien@elitt.com': 'Julien',
+  'pierre@elitt.com': 'Pierre',
+  'adrien@elitt.com': 'Adrien'
+});
+
+// Retourne le prénom officiel associé à une adresse e-mail Firebase.
+function personFromEmailV1116(email) {
+  const value = String(email || '').trim().toLowerCase();
+  if (!value) return '';
+
+  if (USER_EMAIL_PERSON_V1116[value]) return USER_EMAIL_PERSON_V1116[value];
+
+  // Compatibilité : tout futur compte prenom@elitt.com reçoit automatiquement Prénom.
+  if (value.endsWith('@elitt.com')) {
+    const local = value.split('@')[0].trim();
+    if (local) return local.charAt(0).toUpperCase() + local.slice(1).toLowerCase();
+  }
+
+  // Ancien compte admin conservé pour ne pas bloquer l'accès historique.
+  if (value === 'admin@suivi-of.local') return 'Administrateur';
+
+  return '';
+}
+
+// Retrouve dans la page Personnes la même personne sans tenir compte des majuscules/minuscules.
+function matchingPersonNameV1116(name) {
+  const wanted = String(name || '').trim().toLocaleLowerCase('fr-FR');
+  if (!wanted) return '';
+
+  const match = (state.people || []).find(person =>
+    String(personName(person) || '').trim().toLocaleLowerCase('fr-FR') === wanted
+  );
+
+  return match ? personName(match) : name;
+}
+
+// Retourne la personne actuellement authentifiée par Firebase.
+function connectedPersonV1116() {
+  const raw = window.SUIVI_OF_CONNECTED_PERSON_V1116 || '';
+  return raw ? matchingPersonNameV1116(raw) : '';
+}
+
+// Retourne l'identité à utiliser pour toute action de production.
+function operationalPersonV1116() {
+  return connectedPersonV1116() || state.realPerson || '';
+}
+
+// Force la personne active locale sur l'utilisateur authentifié sans modifier les OF déjà en cours ou en pause.
+function applyConnectedPersonV1116() {
+  const connected = connectedPersonV1116();
+  if (connected) state.realPerson = connected;
+  return connected;
+}
+
+// Génère le petit affichage de l'utilisateur connecté à la place des anciens menus Personne.
+function connectedPersonInlineHtmlV1116() {
+  const person = operationalPersonV1116();
+  return `<span class="connectedPersonInlineV1116">👤 Connecté : <strong>${escHtml(person || 'Non identifié')}</strong></span>`;
+}
+
+// Vérifie que l'utilisateur connecté est bien propriétaire d'une session déjà démarrée.
+function canControlWorkSessionV1116(session, label = 'cet OF') {
+  const current = operationalPersonV1116();
+  if (!current) {
+    alert("Aucun utilisateur connecté n'a été identifié.");
+    return false;
+  }
+  if (session?.person && session.person !== current) {
+    alert(`${label} a été démarré par ${session.person}.\n\nTu es connecté en tant que ${current}.`);
+    return false;
+  }
+  return true;
+}
+
 // Retourne le libellé court de l'heure de démarrage d'un OF.
 function workStartTimeLabelV1111(startedAt) {
   const date = new Date(startedAt);
@@ -855,9 +948,9 @@ function startOFWorkV1111(vehicleId, ofId) {
     return;
   }
 
-  const person = state.realPerson || '';
+  const person = operationalPersonV1116();
   if (!person) {
-    alert('Choisis une personne avant de démarrer cet OF.');
+    alert("Utilisateur connecté non reconnu. Reconnecte-toi avec ton compte Firebase.");
     return;
   }
 
@@ -893,6 +986,8 @@ function pauseOFWorkV1113(vehicleId, ofId) {
     return;
   }
 
+  if (!canControlWorkSessionV1116(session, 'Cet OF')) return;
+
   const beforeSnapshot = progressSnapshot(vehicle);
   const now = new Date().toISOString();
 
@@ -920,10 +1015,7 @@ function resumeOFWorkV1113(vehicleId, ofId) {
     return;
   }
 
-  if (state.realPerson && state.realPerson !== session.person) {
-    const ok = confirm(`Cet OF a été démarré par ${session.person}.\n\nLe reprendre au nom de ${session.person} ?`);
-    if (!ok) return;
-  }
+  if (!canControlWorkSessionV1116(session, 'Cet OF')) return;
 
   const beforeSnapshot = progressSnapshot(vehicle);
   const now = new Date().toISOString();
@@ -958,10 +1050,7 @@ function finishOFWorkV1111(vehicleId, ofId) {
     return;
   }
 
-  if (state.realPerson && state.realPerson !== session.person) {
-    const ok = confirm(`Cet OF a été démarré par ${session.person}.\n\nLe terminer au nom de ${session.person} ?`);
-    if (!ok) return;
-  }
+  if (!canControlWorkSessionV1116(session, 'Cet OF')) return;
 
   const total = qtyTotalV5(of);
   const nextDone = Math.min(total, qtyDoneV5(of) + 1);
@@ -986,6 +1075,7 @@ async function cancelOFWorkV1111(vehicleId, ofId) {
   const session = activeWorkSessionV1111(of);
   if (!vehicle || !of || !session) return;
 
+  if (!canControlWorkSessionV1116(session, 'Cet OF')) return;
   if (!confirm(`Annuler le démarrage de ${of.name} par ${session.person} ?`)) return;
 
   const beforeSnapshot = progressSnapshot(vehicle);
@@ -1242,6 +1332,12 @@ function normalizePeople() {
     return person;
   });
 
+  const connected = typeof connectedPersonV1116 === 'function' ? connectedPersonV1116() : '';
+  if (connected) {
+    state.realPerson = connected;
+    return;
+  }
+
   const validNames = new Set(state.people.map(person => personName(person)).filter(Boolean));
   if (!state.realPerson || !validNames.has(state.realPerson)) {
     state.realPerson = state.people[0] ? personName(state.people[0]) : '';
@@ -1380,9 +1476,9 @@ function startSAVWorkV1114(vehicleId) {
     return;
   }
 
-  const person = state.realPerson || '';
+  const person = operationalPersonV1116();
   if (!person) {
-    alert('Choisis une personne avant de démarrer le SAV.');
+    alert("Utilisateur connecté non reconnu. Reconnecte-toi avec ton compte Firebase.");
     return;
   }
 
@@ -1415,6 +1511,8 @@ function pauseSAVWorkV1114(vehicleId) {
     return;
   }
 
+  if (!canControlWorkSessionV1116(session, 'Ce SAV')) return;
+
   const now = new Date().toISOString();
   session.pausedAt = now;
 
@@ -1437,10 +1535,7 @@ function resumeSAVWorkV1114(vehicleId) {
     return;
   }
 
-  if (state.realPerson && state.realPerson !== session.person) {
-    const ok = confirm(`Ce SAV a été démarré par ${session.person}.\n\nLe reprendre au nom de ${session.person} ?`);
-    if (!ok) return;
-  }
+  if (!canControlWorkSessionV1116(session, 'Ce SAV')) return;
 
   const now = new Date().toISOString();
   const pausedAt = new Date(session.pausedAt);
@@ -1465,6 +1560,7 @@ function cancelSAVWorkV1114(vehicleId) {
   const session = savWorkSessionV1114(vehicle);
   if (!vehicle || !session) return;
 
+  if (!canControlWorkSessionV1116(session, 'Ce SAV')) return;
   if (!confirm(`Annuler le démarrage du SAV ${vehicle.vin} par ${session.person} ?`)) return;
 
   const duration = workSessionDurationLabelV1113(session);
@@ -1489,10 +1585,7 @@ function finishSAVWorkV1114(vehicleId) {
     return;
   }
 
-  if (state.realPerson && state.realPerson !== session.person) {
-    const ok = confirm(`Ce SAV a été démarré par ${session.person}.\n\nLe terminer au nom de ${session.person} ?`);
-    if (!ok) return;
-  }
+  if (!canControlWorkSessionV1116(session, 'Ce SAV')) return;
 
   const now = new Date().toISOString();
   const actualMinutes = workSessionActiveMinutesV1113(session, now);
@@ -1541,11 +1634,7 @@ function savWorkButtonsV1114(vehicle) {
 
 // Affiche les SAV actifs dans Réalisation avec sélection de personne et commandes de chronométrage.
 function renderSAVRealizationV1114() {
-  if (!state.realPerson && state.people[0]) state.realPerson = personName(state.people[0]);
-
-  const peopleOptions = state.people
-    .map(person => `<option value="${escHtml(personName(person))}" ${state.realPerson === personName(person) ? 'selected' : ''}>${escHtml(personName(person))}</option>`)
-    .join('');
+  applyConnectedPersonV1116();
 
   const savs = activeVehicles()
     .filter(vehicle => isSAV(vehicle) && !vehicle.savDone)
@@ -1555,8 +1644,8 @@ function renderSAVRealizationV1114() {
     );
 
   const personBar = `<div class="card"><div class="toolbar filterbar">
-    <label>Personne <select id="realPersonSavV1114" onchange="state.realPerson=this.value;save()">${peopleOptions}</select></label>
-    <span class="muted">Sélectionne la personne, puis démarre le SAV concerné.</span>
+    ${connectedPersonInlineHtmlV1116()}
+    <span class="muted">Les actions SAV sont automatiquement attribuées au compte connecté.</span>
   </div></div>`;
 
   if (!savs.length) {
@@ -1711,7 +1800,7 @@ function notificationTypeFromActionV1115(action) {
 function notificationPersonV1115(vehicle, of) {
   const ofSession = of?.workSessionV1111;
   const savSession = vehicle?.savWorkSessionV1114;
-  return ofSession?.person || savSession?.person || of?.doneBy || state.realPerson || '';
+  return ofSession?.person || savSession?.person || of?.doneBy || operationalPersonV1116() || state.realPerson || '';
 }
 
 // Ajoute une notification globale ; elle sera synchronisée avec les autres postes via Firebase.
@@ -1931,6 +2020,7 @@ function logAction(action, vehicle, of, detail = '') {
     of?.workSessionV1111?.person ||
     vehicle?.savWorkSessionV1114?.person ||
     of?.doneBy ||
+    operationalPersonV1116() ||
     state.realPerson ||
     '';
 
@@ -3124,8 +3214,8 @@ function addQtyDoneV5(vehicleId, ofId, amount = 1, personOverride = '') {
   normalizeQtyOFV5(of);
 
   const workSession = activeWorkSessionV1111(of);
-  const person = personOverride || workSession?.person || state.realPerson || of.doneBy || '';
-  if (!person) { alert('Choisis une personne avant de valider.'); return qtyDoneV5(of); }
+  const person = personOverride || operationalPersonV1116() || workSession?.person || of.doneBy || '';
+  if (!person) { alert("Utilisateur connecté non reconnu."); return qtyDoneV5(of); }
 
   const beforeSnapshot = progressSnapshot(vehicle);
   const before = qtyDoneV5(of);
@@ -3183,7 +3273,7 @@ function removeQtyDoneV5(vehicleId, ofId) {
   const before = qtyDoneV5(of);
   if (before <= 0) return;
   const beforeSnapshot = progressSnapshot(vehicle);
-  const person = of.doneBy || state.realPerson || '';
+  const person = operationalPersonV1116() || of.doneBy || '';
   of.completedQty = Math.max(0, before - 1);
   of.status = of.completedQty >= qtyTotalV5(of) ? 'Fait' : 'À faire';
   of.blockReason = '';
@@ -3362,10 +3452,9 @@ function setRealModeV5(mode) {
 // Construit le contenu du mode Réalisation Par VIN.
 function renderByVinV5(active) {
   if (!active.some(vehicle => vehicle.id === state.realVin)) state.realVin = active[0].id;
-  if (!state.realPerson && state.people[0]) state.realPerson = personName(state.people[0]);
+  applyConnectedPersonV1116();
   state.realFilter = state.realFilter || 'Tous';
   const vehicleOptions = active.map(vehicle => `<option value="${vehicle.id}" ${state.realVin === vehicle.id ? 'selected' : ''}>${escHtml(vehicle.vin)} • ${escHtml(vehicle.brand || '')}</option>`).join('');
-  const personOptions = state.people.map(person => `<option ${state.realPerson === personName(person) ? 'selected' : ''}>${escHtml(personName(person))}</option>`).join('');
   const filters = ['Tous', 'En cours', 'Fabrication', 'Prémontage', 'Pose', 'Essais', 'Autre', 'Bloqué'];
   const filterOptions = filters.map(filter => `<option ${state.realFilter === filter ? 'selected' : ''}>${escHtml(filter)}</option>`).join('');
   const vehicle = active.find(item => item.id === state.realVin);
@@ -3376,7 +3465,7 @@ function renderByVinV5(active) {
   list.sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
   return `<div class="card"><div class="toolbar filterbar">
     <label>VIN <select id="realVin" onchange="state.realVin=this.value;save()">${vehicleOptions}</select></label>
-    <label>Personne <select id="realPerson" onchange="state.realPerson=this.value;save()">${personOptions}</select></label>
+    ${connectedPersonInlineHtmlV1116()}
     <label>Filtre <select id="realFilter" onchange="state.realFilter=this.value;save()">${filterOptions}</select></label>
   </div></div><br>${realVinTableV5(vehicle, list)}`;
 }
@@ -3503,11 +3592,10 @@ function openBulkOFV5(encodedKey) {
   window._bulkV5Selected = new Set();
   const group = currentBulkGroupV5();
   if (!group) return;
-  if (!state.realPerson && state.people[0]) state.realPerson = personName(state.people[0]);
-  const peopleOptions = (state.people || []).map(person => `<option value="${escHtml(personName(person))}" ${state.realPerson === personName(person) ? 'selected' : ''}>${escHtml(personName(person))}</option>`).join('');
+  applyConnectedPersonV1116();
   openModal('Validation sur plusieurs VIN', `<div class="bulkSummaryV3"><h3>${escHtml(group.name)}</h3><div class="muted">${escHtml(group.desc || '')} • ${escHtml(group.category)} • ${fmt(group.time)} par réalisation</div><div class="muted" style="margin-top:6px"><b>${group.doneUnits}/${group.totalUnits} réalisations faites</b> • ${group.totalUnits - group.doneUnits} restantes • ${group.finishedVehicles}/${group.vehicles} VIN terminés</div></div>
     <div class="bulkToolsV3" style="display:flex;flex-wrap:wrap;gap:10px"><button class="small alt" onclick="bulkSelectModeV5('all')">Tout sélectionner</button><button class="small alt" onclick="bulkSelectModeV5('todo')">Sélectionner les À faire</button><button class="small alt" onclick="bulkSelectModeV5('none')">Tout enlever</button></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px"><label>Personne<select id="bulkPersonV5">${peopleOptions}</select></label><label>Quantité faite par VIN<input type="number" id="bulkQtyAmountV5" min="1" step="1" value="1" oninput="refreshBulkV5()"></label></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px"><div>${connectedPersonInlineHtmlV1116()}</div><label>Quantité faite par VIN<input type="number" id="bulkQtyAmountV5" min="1" step="1" value="1" oninput="refreshBulkV5()"></label></div>
     <div id="vinChoiceGridV5" class="vinChoiceGridV3" style="display:flex;flex-wrap:wrap;gap:10px;margin:12px 0"></div>
     <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px"><span id="bulkCountV5" class="count">0 VIN sélectionné</span><button class="alt" style="margin-left:15px" onclick="closeModal()">Annuler</button><button id="bulkValidateV5" class="good" style="margin-left:10px" onclick="validateBulkV5()">✅ Valider +1 sur 0 VIN</button></div>`);
   refreshBulkV5();
@@ -3517,7 +3605,7 @@ function openBulkOFV5(encodedKey) {
 function validateBulkV5() {
   const group = currentBulkGroupV5();
   const ids = Array.from(window._bulkV5Selected || []);
-  const person = document.getElementById('bulkPersonV5')?.value || state.realPerson || '';
+  const person = operationalPersonV1116();
   const amount = Math.max(1, Math.floor(Number(document.getElementById('bulkQtyAmountV5')?.value) || 1));
   if (!group) return;
   if (!ids.length) { alert('Sélectionne au moins un VIN.'); return; }
@@ -3986,16 +4074,13 @@ function blockOF(vehicleId, ofId, backToReal = false) {
   const vehicle = state.vehicles.find(item => item.id === vehicleId);
   const of = vehicle?.ofs.find(item => item.id === ofId);
   if (!vehicle || !of) return;
-  if (backToReal && !state.realPerson) { alert('Choisis une personne avant de bloquer l’OF.'); return; }
+  applyConnectedPersonV1116();
+  if (backToReal && !operationalPersonV1116()) { alert("Utilisateur connecté non reconnu."); return; }
   const parts = partsForOF(vehicle.brand, of.name);
-  const peopleOptions = (state.people || []).map(person => {
-    const name = personName(person);
-    return `<option value="${escHtml(name)}" ${state.realPerson === name ? 'selected' : ''}>${escHtml(name)}</option>`;
-  }).join('');
   window._singleBlock = { vehicleId, ofId, parts, backToReal };
   openModal('Bloquer OF — ' + of.name, `<div class="blockFormV9">
     <div class="full"><h3>${escHtml(vehicle.vin)} • ${escHtml(of.name)}</h3><div class="muted">${escHtml(of.desc || '')} • ${qtyDoneV5(of)}/${qtyTotalV5(of)} réalisé(s)</div>${piecesPreview(parts)}</div>
-    <label>Personne<select id="blockPerson">${peopleOptions}</select></label>
+    <div>${connectedPersonInlineHtmlV1116()}</div>
     <label>Motif<select id="blockMode"><option value="piece" ${parts.length ? '' : 'disabled'}>Pièce manquante</option><option value="other" ${parts.length ? '' : 'selected'}>Autre motif</option></select></label>
     <div id="blockPartsMulti" class="full">
       <b>Pièces manquantes</b>
@@ -4021,7 +4106,7 @@ function confirmSingleBlock() {
   const vehicle = state.vehicles.find(item => item.id === context?.vehicleId);
   const of = vehicle?.ofs.find(item => item.id === context?.ofId);
   if (!vehicle || !of) return;
-  const person = document.getElementById('blockPerson')?.value || state.realPerson || '';
+  const person = operationalPersonV1116();
   const mode = document.getElementById('blockMode')?.value || 'other';
   const comment = (document.getElementById('blockComment')?.value || '').trim();
   const selectedParts = mode === 'piece' ? selectedSingleBlockParts() : [];
@@ -4105,17 +4190,13 @@ function openBulkBlockV7(encodedKey) {
   const sample = rows[0].of;
   const parts = partsUnion(rows);
   window._bulkBlockParts = parts;
-  if (!state.realPerson && state.people[0]) state.realPerson = personName(state.people[0]);
-  const peopleOptions = (state.people || []).map(person => {
-    const name = personName(person);
-    return `<option value="${escHtml(name)}" ${state.realPerson === name ? 'selected' : ''}>${escHtml(name)}</option>`;
-  }).join('');
+  applyConnectedPersonV1116();
   const blocked = rows.filter(item => item.of.status === 'Bloqué').length;
   const defaultQuantity = parts.length ? Math.max(1, Number(parts[0].quantity) || 1) : 1;
   openModal('Blocage sur plusieurs VIN', `<div class="bulkBlockLayoutV9">
     <div><h3>⛔ ${escHtml(sample.name)} — blocage groupé</h3><div class="muted">${escHtml(sample.desc || '')} • ${escHtml(sample.category || '')} • ${blocked} VIN déjà bloqué${blocked > 1 ? 's' : ''}</div>${piecesPreview(parts)}</div>
     <div class="bulkBlockFormV9" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
-      <label>Personne<select id="bulkPersonV9">${peopleOptions}</select></label>
+      <div>${connectedPersonInlineHtmlV1116()}</div>
       <label>Motif<select id="bulkModeV9"><option value="piece" ${parts.length ? '' : 'disabled'}>Pièce manquante</option><option value="other" ${parts.length ? '' : 'selected'}>Autre motif</option></select></label>
       <label id="bulkPartLabelV9">Pièce manquante<select id="bulkPartV9">${partOptions(parts)}</select></label>
       <label id="bulkQtyLabelV9">Qté manquante / VIN<input type="number" min="1" step="1" id="bulkQtyV9" value="${defaultQuantity}"></label>
@@ -4150,7 +4231,7 @@ function openBulkBlockV7(encodedKey) {
 // Applique le même blocage à tous les VIN sélectionnés dans la fenêtre de blocage multiple.
 function validateBulkBlock() {
   const ids = Array.from(window._bulkBlockSelected || []);
-  const person = document.getElementById('bulkPersonV9')?.value || state.realPerson || '';
+  const person = operationalPersonV1116();
   const mode = document.getElementById('bulkModeV9')?.value || 'other';
   const part = window._bulkBlockParts?.[Number(document.getElementById('bulkPartV9')?.value || 0)] || null;
   const missing = Math.max(1, Math.floor(Number(document.getElementById('bulkQtyV9')?.value) || 1));
@@ -4280,13 +4361,16 @@ function unblockOF(vehicleId, ofId) {
   const of = vehicle?.ofs.find(item => item.id === ofId);
   if (!vehicle || !of || !confirm('Débloquer cet OF et le remettre à faire ?')) return;
   const beforeSnapshot = progressSnapshot(vehicle);
+  const person = operationalPersonV1116();
+  if (!person) { alert("Utilisateur connecté non reconnu."); return; }
+  state.realPerson = person;
   of.status = qtyDoneV5(of) >= qtyTotalV5(of) ? 'Fait' : 'À faire';
   of.blockReason = '';
   delete of.blockDetailsV8;
   of.doneAt = '';
   if (of.status !== 'Fait') of.doneBy = '';
   logAction('OF débloqué', vehicle, of, '');
-  recordProgressEvent(vehicle, of, 0, state.realPerson || '', 'deblocage', 'OF débloqué', beforeSnapshot);
+  recordProgressEvent(vehicle, of, 0, person, 'deblocage', 'OF débloqué', beforeSnapshot);
   save();
   page = 'blocked';
   render();
@@ -4640,11 +4724,12 @@ initApp();
   `;
   document.head.appendChild(css);
 
-  // Transforme l'identifiant court "admin" en adresse Firebase tout en acceptant aussi une adresse e-mail complète.
+  // Transforme un prénom en adresse Firebase @elitt.com, tout en gardant la compatibilité avec l'ancien compte admin.
   function emailFromLogin(login){
-    const value = (login || '').trim();
+    const value = (login || '').trim().toLowerCase();
     if(value.includes('@')) return value;
-    return value.toLowerCase() + '@suivi-of.local';
+    if(value === 'admin') return 'admin@suivi-of.local';
+    return value + '@elitt.com';
   }
 
   // Récupère les bases Excel conservées séparément dans le navigateur pour les inclure dans Firebase.
@@ -4681,7 +4766,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.15,
+      version: 11.16,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -4803,12 +4888,12 @@ initApp();
       <div class="fbBox">
         <img src="logo_elitt.png" alt="Logo">
         <h2>Connexion Suivi OF</h2>
-        <p>Connecte-toi pour charger les camions depuis Firebase.</p>
-        <label>Identifiant<input id="fbLoginId" autocomplete="username" value="admin"></label>
+        <p>Connecte-toi avec ton compte personnel. Toutes les actions seront automatiquement enregistrées à ton nom.</p>
+        <label>Identifiant ou e-mail<input id="fbLoginId" autocomplete="username" placeholder="Ex : Adrien ou adrien@elitt.com"></label>
         <label>Mot de passe<input id="fbLoginPass" type="password" autocomplete="current-password" placeholder="Mot de passe Firebase"></label>
         <button id="fbLoginBtn" style="width:100%;margin-top:10px">Se connecter</button>
         <div id="fbError" class="fbError"></div>
-        <div class="fbHelp">L'identifiant <b>admin</b> correspond au compte Firebase <b>admin@suivi-of.local</b>.</div>
+        <div class="fbHelp">Tu peux saisir uniquement ton prénom : <b>Adrien</b> correspond automatiquement à <b>adrien@elitt.com</b>.</div>
       </div>`;
     document.body.appendChild(overlay);
     overlay.querySelector('#fbLoginBtn').onclick = doLogin;
@@ -4847,7 +4932,11 @@ initApp();
     bar.id = 'fbTopbar';
     bar.className = 'fbTopbar';
     bar.innerHTML = `
-      <div class="fbStatus"><span id="fbDot" class="fbDot"></span><span id="fbStatusText">Connexion Firebase...</span></div>
+      <div class="fbStatus">
+        <span id="fbDot" class="fbDot"></span>
+        <span id="fbStatusText">Connexion Firebase...</span>
+        <span class="connectedPersonBadgeV1116" id="fbConnectedPersonV1116" style="display:none">👤 <strong></strong></span>
+      </div>
       <div class="fbTopbarActions">
         <button class="small alt notificationBellButtonV1115" id="notificationBellV1115" type="button" title="Notifications">
           <span class="notificationBellIconV1115">🔔</span>
@@ -4882,6 +4971,11 @@ initApp();
       setBasesPayload(data.basesExcel || {});
       if(typeof migrateStateV10 === 'function') migrateStateV10();
       else if(typeof normalizeAll === 'function') normalizeAll();
+
+      if(typeof applyConnectedPersonV1116 === 'function') {
+        applyConnectedPersonV1116();
+      }
+
       localStorage.setItem(LS, JSON.stringify(state));
       lastRemoteDataJSON = JSON.stringify({state:data.state, basesExcel:data.basesExcel || {}});
       render();
@@ -4963,11 +5057,39 @@ initApp();
         currentUser = user;
         const login = document.getElementById('fbLogin');
         if(user){
+          const connectedName =
+            (typeof window.personFromEmailV1116 === 'function'
+              ? window.personFromEmailV1116(user.email || '')
+              : '') || '';
+
+          window.SUIVI_OF_CONNECTED_EMAIL_V1116 = user.email || '';
+          window.SUIVI_OF_CONNECTED_PERSON_V1116 = connectedName;
+
+          if(typeof applyConnectedPersonV1116 === 'function') {
+            applyConnectedPersonV1116();
+            try { localStorage.setItem(LS, JSON.stringify(state)); } catch(e) {}
+          }
+
           login.classList.add('hidden');
-          setStatus('Connecté : ' + (user.email || 'admin'), 'ok');
+          setStatus('Connecté Firebase', 'ok');
+
+          const badge = document.getElementById('fbConnectedPersonV1116');
+          if(badge){
+            const strong = badge.querySelector('strong');
+            if(strong) strong.textContent = connectedName || (user.email || 'Utilisateur');
+            badge.style.display = 'inline-flex';
+          }
+
           startSnapshot();
         }else{
+          window.SUIVI_OF_CONNECTED_EMAIL_V1116 = '';
+          window.SUIVI_OF_CONNECTED_PERSON_V1116 = '';
+
           if(unsubscribeSnapshot) unsubscribeSnapshot();
+
+          const badge = document.getElementById('fbConnectedPersonV1116');
+          if(badge) badge.style.display = 'none';
+
           login.classList.remove('hidden');
           setStatus('Déconnecté', '');
         }
