@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.16 Comptes utilisateurs</title>
+<title>ELITT - Suivi OF - V11.17 Droits administrateur</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -191,6 +191,16 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
   color:#dbeafe;font-size:12px;font-weight:900;white-space:nowrap
 }
 .connectedPersonBadgeV1116 strong{color:#fff}
+.adminRoleBadgeV1117{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 8px;border-radius:999px;
+  background:#4a2f08;border:1px solid #8a6118;
+  color:#fde68a;font-size:10px;font-weight:950;letter-spacing:.3px
+}
+.adminRestrictedHintV1117{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--muted);font-size:11px;font-weight:700
+}
 .connectedPersonInlineV1116{
   display:inline-flex;align-items:center;gap:8px;
   padding:8px 11px;border-radius:12px;
@@ -320,7 +330,7 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
 
 </style>
 </head>
-<body><div class="app"><aside><div class="brand"><img class="logo" src="logo_elitt.png" alt="Elitt"></div><nav id="nav"></nav></aside><main><header><div><h1 id="title"></h1><p id="subtitle"></p></div><div class="mainHeaderActions"><div class="headerGroup"><button onclick="openVehicle()">+ Véhicule</button><button class="good" onclick="openSAV()">+ SAV</button></div><div class="headerGroup"><button class="alt" onclick="openExcelImport()">Bases OF + pièces</button><button class="alt" onclick="openGlobalTrackingQRV117()">▦ QR Suivi global</button></div></div></header><section id="view"></section></main></div>
+<body><div class="app"><aside><div class="brand"><img class="logo" src="logo_elitt.png" alt="Elitt"></div><nav id="nav"></nav></aside><main><header><div><h1 id="title"></h1><p id="subtitle"></p></div><div class="mainHeaderActions"><div class="headerGroup" data-admin-only-v1117><button onclick="openVehicle()">+ Véhicule</button><button class="good" onclick="openSAV()">+ SAV</button></div><div class="headerGroup"><button class="alt" data-admin-only-v1117 onclick="openExcelImport()">Bases OF + pièces</button><button class="alt" onclick="openGlobalTrackingQRV117()">▦ QR Suivi global</button></div></div></header><section id="view"></section></main></div>
 <div class="modal" id="modal"><div class="dialog"><h2 id="modalTitle"></h2><div id="modalBody"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -709,6 +719,7 @@ function addWorkTimeRecordV1112(vehicle, of, session, finishedAt, quantityNumber
 
 // Supprime définitivement une ligne de temps erronée sans modifier l'avancement, la quantité réalisée ni l'historique de production.
 function deleteWorkTimeV1112(id) {
+  if (!requireAdminV1117('la suppression des temps OF/SAV')) return;
   const item = (state.workTimesV1112 || []).find(row => row.id === id);
   if (!item || !confirm(`Supprimer ce temps chronométré ?\n\n${item.person} • ${item.vin} • ${item.ofName}`)) return;
 
@@ -806,7 +817,7 @@ function timesPageV1112() {
           </td>
           <td>${escHtml(deltaDisplay)}</td>
           <td>${workPerformanceBadgeV1112(item.durationMinutes, item.plannedMinutes)}</td>
-          <td><button class="small bad" onclick="deleteWorkTimeV1112('${item.id}')">Suppr.</button></td>
+          <td>${isAdminV1117() ? `<button class="small bad" onclick="deleteWorkTimeV1112('${item.id}')">Suppr.</button>` : '<span class="muted">—</span>'}</td>
         </tr>`;
       }).join('')}</tbody></table></div>`
     : '<div class="card">Aucun temps chronométré avec ces filtres. Les validations faites uniquement avec « Fait +1 » n’ont pas de durée.</div>';
@@ -879,6 +890,49 @@ function matchingPersonNameV1116(name) {
   );
 
   return match ? personName(match) : name;
+}
+
+// Adresse e-mail du seul compte administrateur du site.
+const ADMIN_EMAIL_V1117 = 'olivier@elitt.com';
+
+// Retourne l'adresse e-mail Firebase actuellement connectée.
+function connectedEmailV1117() {
+  return String(window.SUIVI_OF_CONNECTED_EMAIL_V1116 || '').trim().toLowerCase();
+}
+
+// Indique si l'utilisateur actuel possède les privilèges administrateur.
+function isAdminV1117() {
+  return connectedEmailV1117() === ADMIN_EMAIL_V1117;
+}
+
+// Bloque une fonction réservée à Olivier si un autre compte essaie de l'appeler directement.
+function requireAdminV1117(action = 'cette action') {
+  if (isAdminV1117()) return true;
+  alert(`Accès réservé à l'administrateur Olivier.\n\nTu ne peux pas utiliser ${action} avec ce compte.`);
+  return false;
+}
+
+// Indique les pages qui doivent être totalement invisibles aux comptes atelier.
+function adminOnlyPageV1117(pageKey) {
+  return ['people', 'archives', 'detail'].includes(pageKey);
+}
+
+// Applique les droits visuels après connexion ou changement de compte.
+function applyRoleUiV1117() {
+  const admin = isAdminV1117();
+
+  document.querySelectorAll('[data-admin-only-v1117]').forEach(element => {
+    element.style.display = admin ? '' : 'none';
+  });
+
+  const badge = document.getElementById('adminRoleBadgeV1117');
+  if (badge) badge.style.display = admin ? 'inline-flex' : 'none';
+
+  // Si un utilisateur non admin se retrouve sur une page de gestion après un changement de compte,
+  // on le renvoie immédiatement au tableau de bord.
+  if (!admin && adminOnlyPageV1117(page)) {
+    page = 'dash';
+  }
 }
 
 // Retourne la personne actuellement authentifiée par Firebase.
@@ -1667,7 +1721,7 @@ function renderSAVRealizationV1114() {
       <td><b>${fmtHoursMinutesV11122(actual)}</b></td>
       <td>${savWorkStatusHtmlV1114(vehicle)}</td>
       <td>${worker}</td>
-      <td class="actions">${savWorkButtonsV1114(vehicle)}<button class="small alt" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button></td>
+      <td class="actions">${savWorkButtonsV1114(vehicle)}${isAdminV1117() ? `<button class="small alt" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button>` : ''}</td>
     </tr>`;
   }).join('');
 
@@ -1689,13 +1743,18 @@ function save() {
 // Construit les boutons du menu latéral et met en évidence la page active.
 function renderNav() {
   const nav = document.getElementById('nav');
-  nav.innerHTML = pages.map(([key, label]) =>
+  const visiblePages = isAdminV1117()
+    ? pages
+    : pages.filter(([key]) => !['people', 'archives'].includes(key));
+
+  nav.innerHTML = visiblePages.map(([key, label]) =>
     `<button class="${page === key ? 'active' : ''}" onclick="page='${key}';render()">${escHtml(label)}</button>`
   ).join('');
 }
 
 // Affiche la page correspondant au menu sélectionné.
 function render() {
+  if (!isAdminV1117() && adminOnlyPageV1117(page)) page = 'dash';
   renderNav();
   const views = {
     dash,
@@ -1711,6 +1770,7 @@ function render() {
   if (typeof renderNotificationBellV1115 === 'function') {
     renderNotificationBellV1115();
   }
+  applyRoleUiV1117();
 }
 
 // Met à jour le titre principal de la page.
@@ -1994,7 +2054,12 @@ function openNotificationTargetV1115(notificationId) {
   }
 
   if (item.vehicleId && state.vehicles.some(vehicle => vehicle.id === item.vehicleId)) {
-    openVehicleDetail(item.vehicleId);
+    if (isAdminV1117()) {
+      openVehicleDetail(item.vehicleId);
+    } else {
+      page = 'dash';
+      render();
+    }
     return;
   }
 
@@ -2516,6 +2581,7 @@ function printGlobalTrackingQRV117() {
 
 // Ouvre une fenêtre contenant le QR Code permanent de la fiche VIN publique.
 function openVehicleQRV115(vehicleId) {
+  if (!requireAdminV1117('le QR individuel d’un véhicule')) return;
   const vehicle = state.vehicles.find(item => item.id === vehicleId);
   if (!vehicle || isSAV(vehicle)) return;
   const hadPublicId = !!vehicle.publicIdV116;
@@ -2701,11 +2767,13 @@ function vehicleTable(list, estimates = null, isArchive = false) {
     const sav = isSAV(vehicle);
     const blocked = sav ? 0 : blockedCount(vehicle);
     const archivedDate = vehicle.archivedAt ? new Date(vehicle.archivedAt).toLocaleDateString('fr-FR') : '-';
-    const actions = isArchive
-      ? `<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="restoreVehicle('${vehicle.id}')">Restaurer</button><button class="small bad" onclick="delVehicle('${vehicle.id}')">Suppr.</button>`
-      : sav
-        ? `<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="openSAV('${vehicle.id}')">Modifier SAV</button><button class="small warn" onclick="archiveVehicle('${vehicle.id}')">Archiver</button><button class="small bad" onclick="delVehicle('${vehicle.id}')">Suppr.</button>`
-        : `<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="openVehicle('${vehicle.id}')">Modifier</button><button class="small warn" onclick="archiveVehicle('${vehicle.id}')">Archiver</button><button class="small bad" onclick="delVehicle('${vehicle.id}')">Suppr.</button>`;
+    const actions = !isAdminV1117()
+      ? `<span class="adminRestrictedHintV1117">🔒 Gestion admin</span>`
+      : isArchive
+        ? `<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="restoreVehicle('${vehicle.id}')">Restaurer</button><button class="small bad" onclick="delVehicle('${vehicle.id}')">Suppr.</button>`
+        : sav
+          ? `<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="openSAV('${vehicle.id}')">Modifier SAV</button><button class="small warn" onclick="archiveVehicle('${vehicle.id}')">Archiver</button><button class="small bad" onclick="delVehicle('${vehicle.id}')">Suppr.</button>`
+          : `<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="openVehicle('${vehicle.id}')">Modifier</button><button class="small warn" onclick="archiveVehicle('${vehicle.id}')">Archiver</button><button class="small bad" onclick="delVehicle('${vehicle.id}')">Suppr.</button>`;
     const savStatus = sav ? savWorkStatusV1114(vehicle) : null;
     const options = sav
       ? `<span class="savbadge ${vehicle.savDone ? 'savdone' : ''}">SAV • ${escHtml(savStatus.label)}</span>${savStatus.person ? `<div class="muted" style="margin-top:5px">${escHtml(savStatus.person)}</div>` : ''}`
@@ -2762,6 +2830,7 @@ function dash() {
 
 // Ouvre la fiche détaillée d'un véhicule ou d'un SAV.
 function openVehicleDetail(id) {
+  if (!requireAdminV1117('l’ouverture détaillée des véhicules et SAV')) return;
   state.detailVin = id;
   page = 'detail';
   render();
@@ -2895,6 +2964,7 @@ function syncVehicleOFs(vehicle, includeBase, options) {
 
 // Ouvre la fenêtre de création ou de modification d'un véhicule classique.
 function openVehicle(id) {
+  if (!requireAdminV1117('la création ou modification des véhicules')) return;
   const existing = id ? state.vehicles.find(vehicle => vehicle.id === id) : null;
   const vehicle = existing || {
     id: '', vin: '', brand: 'Renault', client: 'SDIS 33', type: 'CCF', priority: 1,
@@ -2928,6 +2998,7 @@ function openVehicle(id) {
 
 // Enregistre un véhicule et génère ou synchronise ses OF automatiques si nécessaire.
 function saveVehicle(id) {
+  if (!requireAdminV1117('la création ou modification des véhicules')) return;
   const isNew = !id;
   let vehicle = id ? state.vehicles.find(item => item.id === id) : null;
   if (!vehicle) {
@@ -2971,6 +3042,7 @@ function saveVehicle(id) {
 
 // Supprime définitivement un véhicule ou un SAV après confirmation.
 function delVehicle(id) {
+  if (!requireAdminV1117('la suppression des véhicules ou SAV')) return;
   const vehicle = state.vehicles.find(item => item.id === id);
   if (!vehicle || !confirm('Supprimer ce véhicule ?')) return;
   const publicId = vehicle.publicIdV116 || '';
@@ -2984,6 +3056,7 @@ function delVehicle(id) {
 
 // Ouvre la fenêtre de création ou de modification d'un SAV.
 function openSAV(id) {
+  if (!requireAdminV1117('la création ou modification des SAV')) return;
   const vehicle = id ? state.vehicles.find(item => item.id === id) : {
     id: '', vin: '', brand: 'SAV', client: 'SDIS 33', type: 'SAV', priority: 1,
     color: '#ef4444', savEstimated: 1, savActual: 0, savComment: '', savDone: false, isSAV: true
@@ -3018,6 +3091,7 @@ function nextSAVReference(excludeVehicleId = '') {
 
 // Enregistre les informations d'un SAV sans créer d'OF.
 function saveSAV(id) {
+  if (!requireAdminV1117('la création ou modification des SAV')) return;
   const isNew = !id;
   let vehicle = id ? state.vehicles.find(item => item.id === id) : null;
   if (!vehicle) {
@@ -3071,6 +3145,7 @@ function insertOrMoveOF(vehicle, of, targetOrder, isNew) {
 
 // Ouvre la fenêtre permettant d'ajouter ou modifier un OF avec son temps et sa quantité.
 function openOF(vehicleId, ofId) {
+  if (!requireAdminV1117('la création ou modification des OF')) return;
   let vehicle = vehicleId ? state.vehicles.find(item => item.id === vehicleId) : activeNormalVehicles()[0];
   if (!vehicle) { alert('Crée d’abord un véhicule.'); return; }
   let of = ofId ? vehicle.ofs.find(item => item.id === ofId) : {
@@ -3098,6 +3173,7 @@ function openOF(vehicleId, ofId) {
 
 // Enregistre un OF et marque automatiquement les nouveaux OF créés à la main comme manuels.
 function saveOF(ofId) {
+  if (!requireAdminV1117('la création ou modification des OF')) return;
   const destination = state.vehicles.find(item => item.id === document.getElementById('ov').value);
   if (!destination) return;
   const oldVehicle = state.vehicles.find(vehicle => (vehicle.ofs || []).some(of => of.id === ofId));
@@ -3130,6 +3206,7 @@ function saveOF(ofId) {
 
 // Supprime un OF précis d'un véhicule et renumérote les OF restants.
 function delOF(vehicleId, ofId) {
+  if (!requireAdminV1117('la suppression des OF')) return;
   const vehicle = state.vehicles.find(item => item.id === vehicleId);
   const of = vehicle?.ofs.find(item => item.id === ofId);
   if (!vehicle || !of || !confirm('Supprimer cet OF ?')) return;
@@ -3661,6 +3738,7 @@ function detailTableV5(vehicle) {
 
 // Affiche la fiche détaillée d'un camion ou d'un SAV et donne accès à la courbe d'avancement pour les camions.
 function vehicleDetail() {
+  if (!requireAdminV1117('l’ouverture détaillée des véhicules et SAV')) { page = 'dash'; render(); return; }
   normalizeAll();
   const vehicle = state.vehicles.find(item => item.id === state.detailVin) || activeVehicles()[0] || archivedVehicles()[0];
   if (!vehicle) {
@@ -3795,6 +3873,7 @@ function setTimelineModeV6(mode) {
 
 // Ouvre la fenêtre de courbe et d'historique détaillé d'un véhicule.
 function openVehicleTimelineV6(vehicleId) {
+  if (!requireAdminV1117('la fiche détaillée et l’historique d’un véhicule')) return;
   const vehicle = state.vehicles.find(item => item.id === vehicleId);
   if (!vehicle || isSAV(vehicle)) return;
   window._timelineVehicleV6 = vehicleId;
@@ -3919,6 +3998,7 @@ function partsForOF(brand, ofName) {
 
 // Ouvre la fenêtre de chargement des trois bases Excel et de leurs feuilles PIECES_OF.
 function openExcelImport() {
+  if (!requireAdminV1117('la modification des bases OF et pièces')) return;
   const counts = ['Renault', 'Mercedes', 'MAN'].map(brand => `${brand} : ${templateForBrand(brand).length} OF • ${(state.partsCatalogV8?.[brand] || []).length} lignes pièces`).join('<br>');
   openModal('Bases OF + pièces Excel', `<div class="form">
     <div class="full card" style="margin:0;padding:12px"><b>Feuille PIECES_OF</b><div class="muted" style="margin-top:7px">Chaque Excel peut contenir une deuxième feuille PIECES_OF : OF, Référence pièce, Désignation, Quantité par OF, Commentaire.</div></div>
@@ -3932,6 +4012,7 @@ function openExcelImport() {
 
 // Charge les fichiers Excel sélectionnés, conserve les bases et ne modifie pas les véhicules déjà créés.
 async function importExcelBases() {
+  if (!requireAdminV1117('la modification des bases OF et pièces')) return;
   try {
     const files = [
       ['Renault', document.getElementById('excelRenault')?.files?.[0]],
@@ -4399,6 +4480,7 @@ function archiveFilteredVehicles() {
 
 // Affiche la page Archives avec ses compteurs et son filtre.
 function archivesPage() {
+  if (!requireAdminV1117('l’accès aux archives')) { page = 'dash'; render(); return; }
   normalizeAll();
   setHead('Archives');
   const all = archivedVehicles();
@@ -4410,6 +4492,7 @@ function archivesPage() {
 
 // Archive un véhicule ou un SAV et le retire du tableau de bord principal.
 function archiveVehicle(id) {
+  if (!requireAdminV1117('l’archivage des véhicules et SAV')) return;
   const vehicle = state.vehicles.find(item => item.id === id);
   if (!vehicle) return;
   const message = isSAV(vehicle)
@@ -4427,6 +4510,7 @@ function archiveVehicle(id) {
 
 // Restaure un véhicule ou un SAV archivé dans le tableau de bord principal.
 function restoreVehicle(id) {
+  if (!requireAdminV1117('la restauration des archives')) return;
   const vehicle = state.vehicles.find(item => item.id === id);
   if (!vehicle) return;
   if (!confirm(isSAV(vehicle) ? 'Restaurer ce SAV dans le tableau de bord ?' : 'Restaurer ce véhicule dans le tableau de bord ?')) return;
@@ -4450,6 +4534,7 @@ function personRow(person) {
 
 // Affiche la page de gestion des personnes, horaires et congés.
 function people() {
+  if (!requireAdminV1117('la gestion des personnes')) { page = 'dash'; render(); return; }
   normalizeAll();
   setHead('Personnes');
   document.getElementById('view').innerHTML = `<div class="card"><div class="toolbar"><input id="pname" placeholder="Nom personne"><button onclick="addPerson()">Ajouter</button></div></div><br><div class="tablewrap"><table><thead><tr><th>Personne</th><th>Contrat</th><th>Heures</th><th>Congés</th><th>Actions</th></tr></thead><tbody>${state.people.map(personRow).join('')}</tbody></table></div>`;
@@ -4457,6 +4542,7 @@ function people() {
 
 // Ajoute une nouvelle personne avec un horaire 39 h par défaut.
 function addPerson() {
+  if (!requireAdminV1117('l’ajout de personnes')) return;
   const input = document.getElementById('pname');
   const name = input?.value.trim() || '';
   if (!name || state.people.some(person => personName(person) === name)) return;
@@ -4466,6 +4552,7 @@ function addPerson() {
 
 // Supprime une personne après confirmation et bascule automatiquement la personne active vers une personne encore disponible.
 function removePerson(id) {
+  if (!requireAdminV1117('la suppression de personnes')) return;
   const person = state.people.find(item => item.id === id);
   if (!person || !confirm('Supprimer ' + personName(person) + ' ?')) return;
 
@@ -4481,6 +4568,7 @@ function removePerson(id) {
 
 // Ouvre la fenêtre permettant de modifier les créneaux horaires d'une personne.
 function editPerson(id) {
+  if (!requireAdminV1117('la modification des créneaux')) return;
   const person = state.people.find(item => item.id === id);
   if (!person) return;
   const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
@@ -4508,6 +4596,7 @@ function applyModeSchedule() {
 
 // Enregistre le nom, le contrat et les créneaux personnalisés d'une personne et met à jour la sélection active si son nom change.
 function savePersonSchedule(id) {
+  if (!requireAdminV1117('la modification des créneaux')) return;
   const person = state.people.find(item => item.id === id);
   if (!person) return;
 
@@ -4537,6 +4626,7 @@ function savePersonSchedule(id) {
 
 // Ouvre la fenêtre permettant d'ajouter une période de congé à une personne.
 function openVacation(id) {
+  if (!requireAdminV1117('la gestion des congés')) return;
   const person = state.people.find(item => item.id === id);
   if (!person) return;
   openModal('Congés - ' + personName(person), `<div class="form"><label>Début<input type="date" id="vacStart"></label><label>Fin<input type="date" id="vacEnd"></label><div class="full card" style="margin:0;padding:12px"><b>Congés enregistrés</b><br><br>${vacationsHtml(person)}</div><div class="full actions"><button onclick="addVacation('${id}')">Ajouter congé</button><button class="alt" onclick="closeModal()">Fermer</button></div></div>`);
@@ -4544,6 +4634,7 @@ function openVacation(id) {
 
 // Ajoute une période de congé après vérification des dates.
 function addVacation(id) {
+  if (!requireAdminV1117('la gestion des congés')) return;
   const person = state.people.find(item => item.id === id);
   if (!person) return;
   const start = document.getElementById('vacStart').value;
@@ -4559,6 +4650,7 @@ function addVacation(id) {
 
 // Supprime une période de congé précise d'une personne.
 function removeVacation(personId, vacationId) {
+  if (!requireAdminV1117('la gestion des congés')) return;
   const person = state.people.find(item => item.id === personId);
   if (!person) return;
   person.vacations = personVacations(person).filter(vacation => vacation.id !== vacationId);
@@ -4570,6 +4662,7 @@ function removeVacation(personId, vacationId) {
 
 // Crée une sauvegarde JSON complète comprenant l'état, les bases Excel et le catalogue de pièces.
 function backupAllV37() {
+  if (!requireAdminV1117('la sauvegarde JSON complète')) return;
   try {
     const payload = {
       app: 'ELITT Suivi OF',
@@ -4596,6 +4689,7 @@ function backupAllV37() {
 
 // Ouvre un fichier de sauvegarde JSON et restaure toutes les données compatibles avec les anciennes versions.
 function restoreAllV37() {
+  if (!requireAdminV1117('la restauration JSON complète')) return;
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = '.json,application/json';
@@ -4766,7 +4860,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.16,
+      version: 11.17,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -4936,6 +5030,7 @@ initApp();
         <span id="fbDot" class="fbDot"></span>
         <span id="fbStatusText">Connexion Firebase...</span>
         <span class="connectedPersonBadgeV1116" id="fbConnectedPersonV1116" style="display:none">👤 <strong></strong></span>
+        <span class="adminRoleBadgeV1117" id="adminRoleBadgeV1117" style="display:none">👑 ADMIN</span>
       </div>
       <div class="fbTopbarActions">
         <button class="small alt notificationBellButtonV1115" id="notificationBellV1115" type="button" title="Notifications">
@@ -4943,9 +5038,9 @@ initApp();
           <span class="notificationBellLabelV1115">Notifications</span>
           <span class="notificationBadgeV1115 empty" id="notificationBadgeV1115">0</span>
         </button>
-        <button class="small alt" id="fbForceSave">Forcer sauvegarde</button>
-        <button class="small alt" id="fbBackupData">Sauvegarder données</button>
-        <button class="small alt" id="fbRestoreData">Restaurer données</button>
+        <button class="small alt" id="fbForceSave" data-admin-only-v1117>Forcer sauvegarde</button>
+        <button class="small alt" id="fbBackupData" data-admin-only-v1117>Sauvegarder données</button>
+        <button class="small alt" id="fbRestoreData" data-admin-only-v1117>Restaurer données</button>
         <button class="small bad" id="fbLogout">Déconnexion</button>
       </div>`;
     main.prepend(bar);
@@ -4960,6 +5055,7 @@ initApp();
 
     ensureNotificationPanelV1115();
     renderNotificationBellV1115();
+    applyRoleUiV1117();
   }
 
   // Applique au site les données reçues depuis Firestore puis exécute la migration de compatibilité.
@@ -5080,6 +5176,8 @@ initApp();
             badge.style.display = 'inline-flex';
           }
 
+          applyRoleUiV1117();
+          render();
           startSnapshot();
         }else{
           window.SUIVI_OF_CONNECTED_EMAIL_V1116 = '';
@@ -5092,6 +5190,7 @@ initApp();
 
           login.classList.remove('hidden');
           setStatus('Déconnecté', '');
+          applyRoleUiV1117();
         }
       });
     }catch(e){
