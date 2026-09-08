@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.17.1 Rôles utilisateurs</title>
+<title>ELITT - Suivi OF - V11.19 Graphique temps zoom</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -200,6 +200,37 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
 .adminRestrictedHintV1117{
   display:inline-flex;align-items:center;gap:6px;
   color:var(--muted);font-size:11px;font-weight:700
+}
+
+/* V11.19 : commandes de zoom et navigation du graphique d'avancement */
+.timelineControlsV1119{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;margin:12px 0 8px
+}
+.timelineZoomButtonsV1119{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.timelineZoomInfoV1119{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 10px;border-radius:999px;
+  background:#10253f;border:1px solid #29486f;
+  color:#cfe2ff;font-size:11px;font-weight:850
+}
+.timelinePanWrapV1119{
+  display:grid;grid-template-columns:auto minmax(180px,360px) auto;
+  align-items:center;gap:9px;flex:1;min-width:min(100%,360px)
+}
+.timelinePanWrapV1119 input[type="range"]{width:100%;margin:0}
+.timelinePeriodV1119{
+  font-size:11px;color:var(--muted);text-align:right;margin-top:5px
+}
+.timelineChartScrollV1119{overflow:auto}
+.timelineChartSvgV1119{
+  min-width:760px;width:100%;
+  background:#081830;border:1px solid var(--line);border-radius:14px
+}
+@media(max-width:700px){
+  .timelinePanWrapV1119{grid-template-columns:auto 1fr auto;min-width:100%}
+  .timelineControlsV1119{align-items:stretch}
+  .timelinePeriodV1119{text-align:left}
 }
 .connectedPersonInlineV1116{
   display:inline-flex;align-items:center;gap:8px;
@@ -903,7 +934,7 @@ const USERS_ROLES = {
   'julien@elitt.com': 'user',
   'david@elitt.com': 'user',
   'dimitri@elitt.com': 'user',
-  'priscilla@elitt.com': 'admin',
+  'priscilla@elitt.com': 'user',
   'pierre@elitt.com': 'user'
 };
 
@@ -995,6 +1026,37 @@ function canControlWorkSessionV1116(session, label = 'cet OF') {
   return true;
 }
 
+// Marque un OF comme modifié pour arbitrer correctement les sauvegardes venant de plusieurs ordinateurs.
+function touchOFV1118(of, at = new Date().toISOString()) {
+  if (!of) return '';
+  of.syncUpdatedAtV1118 = at;
+  return at;
+}
+
+// Marque un SAV comme modifié pour protéger son chrono et son statut entre plusieurs ordinateurs.
+function touchSAVV1118(vehicle, at = new Date().toISOString()) {
+  if (!vehicle) return '';
+  vehicle.savSyncUpdatedAtV1118 = at;
+  return at;
+}
+
+// Sauvegarde immédiatement une action de production critique et bloque temporairement l'application d'un ancien snapshot Firebase.
+async function saveCriticalV1118() {
+  try { localStorage.setItem(LS, JSON.stringify(state)); } catch (error) { console.error(error); }
+  render();
+
+  window.SUIVI_OF_LOCAL_PENDING_V1118 = true;
+  try {
+    if (typeof window.requestFirebaseSave === 'function') {
+      await window.requestFirebaseSave(true);
+    }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    window.SUIVI_OF_LOCAL_PENDING_V1118 = false;
+  }
+}
+
 // Retourne le libellé court de l'heure de démarrage d'un OF.
 function workStartTimeLabelV1111(startedAt) {
   const date = new Date(startedAt);
@@ -1039,11 +1101,12 @@ function startOFWorkV1111(vehicleId, ofId) {
     pausedTotalMs: 0
   };
   of.status = 'En cours';
+  touchOFV1118(of, now);
   state.realPerson = person;
 
   logAction('OF débuté', vehicle, of, `${person} • réalisation ${qtyDoneV5(of) + 1}/${qtyTotalV5(of)}`);
   recordProgressEvent(vehicle, of, 0, person, 'start', 'OF débuté', beforeSnapshot, now);
-  save();
+  saveCriticalV1118();
 }
 
 // Met en pause une réalisation sans la terminer et sans augmenter la quantité réalisée.
@@ -1069,10 +1132,11 @@ function pauseOFWorkV1113(vehicleId, ofId) {
 
   session.pausedAt = now;
   of.status = 'En pause';
+  touchOFV1118(of, now);
 
   logAction('OF mis en pause', vehicle, of, `${session.person} • temps travaillé ${workSessionDurationLabelV1113(session, now)}`);
   recordProgressEvent(vehicle, of, 0, session.person, 'pause', 'OF mis en pause', beforeSnapshot, now);
-  save();
+  saveCriticalV1118();
 }
 
 // Relance une réalisation en pause en reprenant le chronomètre à partir de maintenant.
@@ -1104,11 +1168,12 @@ function resumeOFWorkV1113(vehicleId, ofId) {
 
   session.pausedAt = '';
   of.status = 'En cours';
+  touchOFV1118(of, now);
   state.realPerson = session.person;
 
   logAction('OF repris', vehicle, of, `${session.person} • temps travaillé ${workSessionDurationLabelV1113(session, now)}`);
   recordProgressEvent(vehicle, of, 0, session.person, 'resume', 'OF repris', beforeSnapshot, now);
-  save();
+  saveCriticalV1118();
 }
 
 // Termine la réalisation actuellement démarrée et ajoute exactement +1 à la quantité faite.
@@ -1160,6 +1225,7 @@ async function cancelOFWorkV1111(vehicleId, ofId) {
   // La session est réellement supprimée de l'OF avant toute sauvegarde.
   delete of.workSessionV1111;
   of.status = qtyRemainingV5(of) <= 0 ? 'Fait' : 'À faire';
+  touchOFV1118(of);
 
   logAction('Démarrage OF annulé', vehicle, of, `${session.person} • après ${duration}`);
   recordProgressEvent(vehicle, of, 0, session.person, 'cancel', 'Démarrage annulé', beforeSnapshot);
@@ -1566,10 +1632,11 @@ function startSAVWorkV1114(vehicleId) {
     pausedAt: '',
     pausedTotalMs: 0
   };
+  touchSAVV1118(vehicle, now);
 
   state.realPerson = person;
   logAction('SAV débuté', vehicle, { name: 'SAV', doneBy: person }, `${person} • ${workStartTimeLabelV1111(now)}`);
-  save();
+  saveCriticalV1118();
 }
 
 // Met le chronomètre d'un SAV en pause sans comptabiliser cette période dans le temps réel.
@@ -1591,9 +1658,10 @@ function pauseSAVWorkV1114(vehicleId) {
 
   const now = new Date().toISOString();
   session.pausedAt = now;
+  touchSAVV1118(vehicle, now);
 
   logAction('SAV mis en pause', vehicle, { name: 'SAV', doneBy: session.person }, `${session.person} • ${workSessionDurationLabelV1113(session, now)} travaillé`);
-  save();
+  saveCriticalV1118();
 }
 
 // Reprend le chronomètre d'un SAV en pause.
@@ -1624,10 +1692,11 @@ function resumeSAVWorkV1114(vehicleId) {
   }
 
   session.pausedAt = '';
+  touchSAVV1118(vehicle, now);
   state.realPerson = session.person;
 
   logAction('SAV repris', vehicle, { name: 'SAV', doneBy: session.person }, `${session.person} • ${workSessionDurationLabelV1113(session, now)} travaillé`);
-  save();
+  saveCriticalV1118();
 }
 
 // Annule un démarrage de SAV sans ajouter de temps réel.
@@ -1641,9 +1710,10 @@ function cancelSAVWorkV1114(vehicleId) {
 
   const duration = workSessionDurationLabelV1113(session);
   delete vehicle.savWorkSessionV1114;
+  touchSAVV1118(vehicle);
 
   logAction('Démarrage SAV annulé', vehicle, { name: 'SAV', doneBy: session.person }, `${session.person} • après ${duration}`);
-  save();
+  saveCriticalV1118();
 }
 
 // Termine un SAV, ajoute automatiquement son temps travaillé au temps réel et l'enregistre dans Temps OF.
@@ -1672,6 +1742,7 @@ function finishSAVWorkV1114(vehicleId) {
   vehicle.savActual = previousActual + actualMinutes / 60;
   vehicle.savDone = true;
   vehicle.savDoneAt = now;
+  touchSAVV1118(vehicle, now);
 
   addWorkTimeRecordV1112(vehicle, savPseudoOFV1114(vehicle), session, now, 1);
 
@@ -1685,7 +1756,7 @@ function finishSAVWorkV1114(vehicleId) {
     `${person} • ${workMinutesLabelV1112(actualMinutes)} travaillé${pausedMinutes ? ` • ${workMinutesLabelV1112(pausedMinutes)} de pause` : ''}`
   );
 
-  save();
+  saveCriticalV1118();
 }
 
 // Génère les boutons Débuter / Pause / Reprendre / Terminer d'un SAV.
@@ -3332,6 +3403,7 @@ function addQtyDoneV5(vehicleId, ofId, amount = 1, personOverride = '') {
   of.blockReason = '';
   delete of.blockDetailsV8;
   if (workSession) delete of.workSessionV1111;
+  touchOFV1118(of, now);
 
   state.realPerson = person;
 
@@ -3344,7 +3416,7 @@ function addQtyDoneV5(vehicleId, ofId, amount = 1, personOverride = '') {
     recordProgressEvent(vehicle, of, added, person, 'realisation', `+${added} réalisation${added > 1 ? 's' : ''}`, beforeSnapshot, now);
   }
 
-  save();
+  saveCriticalV1118();
   return after;
 }
 
@@ -3381,9 +3453,10 @@ function removeQtyDoneV5(vehicleId, ofId) {
     of.doneBy = '';
     of.doneAt = '';
   }
+  touchOFV1118(of);
   logAction('Quantité OF corrigée', vehicle, of, `-1 • ${of.completedQty}/${qtyTotalV5(of)}`);
   recordProgressEvent(vehicle, of, -1, person, 'correction', 'Correction de quantité', beforeSnapshot);
-  save();
+  saveCriticalV1118();
 }
 
 // Génère la pastille de statut d'un OF avec son éventuelle raison de blocage.
@@ -3726,6 +3799,7 @@ function validateBulkV5() {
     of.blockReason = '';
     delete of.blockDetailsV8;
     of.status = after >= qtyTotalV5(of) ? 'Fait' : 'À faire';
+    touchOFV1118(of, of.doneAt);
     units += added;
     vehicles++;
     logAction('OF fait (multi-VIN quantité)', vehicle, of, `+${added} • ${after}/${qtyTotalV5(of)} • ${person}`);
@@ -3735,7 +3809,7 @@ function validateBulkV5() {
   logAction('Validation multi-VIN quantité terminée', null, null, `${group.name} • ${units} réalisation(s) • ${vehicles} VIN • ${person}`);
   closeModal();
   state.realModeV3 = 'of';
-  save();
+  saveCriticalV1118();
 }
 
 // Génère le tableau complet des OF visible lorsqu'on ouvre un VIN.
@@ -3838,24 +3912,187 @@ function progressMetric(event, mode) {
   return mode === 'Global' ? Number(event.progress?.global) || 0 : Number(event.progress?.[mode]) || 0;
 }
 
-// Génère un graphique SVG simple de l'évolution du pourcentage dans le temps.
+// Formate une graduation de l'axe du temps selon l'étendue actuellement affichée.
+function timelineAxisDateLabelV1119(timestamp, spanMs) {
+  const date = new Date(timestamp);
+  if (Number.isNaN(date.getTime())) return '-';
+
+  if (spanMs <= 24 * 3600000) {
+    return date.toLocaleString('fr-FR', {
+      day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+    });
+  }
+
+  if (spanMs <= 7 * 24 * 3600000) {
+    return date.toLocaleString('fr-FR', {
+      day: '2-digit', month: '2-digit', hour: '2-digit'
+    });
+  }
+
+  if (spanMs <= 120 * 24 * 3600000) {
+    return date.toLocaleDateString('fr-FR', {
+      day: '2-digit', month: '2-digit'
+    });
+  }
+
+  return date.toLocaleDateString('fr-FR', {
+    month: '2-digit', year: 'numeric'
+  });
+}
+
+// Retourne la fenêtre temporelle visible en fonction du zoom et du déplacement horizontal.
+function timelineVisibleRangeV1119(events) {
+  const timestamps = events
+    .map(event => new Date(event.at).getTime())
+    .filter(Number.isFinite)
+    .sort((a, b) => a - b);
+
+  if (!timestamps.length) {
+    const now = Date.now();
+    return { start: now - 3600000, end: now + 3600000, fullStart: now - 3600000, fullEnd: now + 3600000 };
+  }
+
+  let fullStart = timestamps[0];
+  let fullEnd = timestamps[timestamps.length - 1];
+
+  // Une seule activité doit quand même donner une vraie barre de temps lisible.
+  if (fullEnd - fullStart < 10 * 60000) {
+    const center = (fullStart + fullEnd) / 2;
+    fullStart = center - 30 * 60000;
+    fullEnd = center + 30 * 60000;
+  }
+
+  const fullSpan = Math.max(60000, fullEnd - fullStart);
+  const zoom = Math.max(1, Number(window._timelineZoomV1119) || 1);
+  const visibleSpan = Math.max(60000, fullSpan / zoom);
+
+  if (zoom <= 1) {
+    return { start: fullStart, end: fullEnd, fullStart, fullEnd };
+  }
+
+  const pan = Math.max(0, Math.min(1, Number(window._timelinePanV1119) || 0));
+  const availableShift = Math.max(0, fullSpan - visibleSpan);
+  const start = fullStart + availableShift * pan;
+  const end = start + visibleSpan;
+
+  return { start, end, fullStart, fullEnd };
+}
+
+// Génère un graphique SVG avec une vraie échelle de dates et un zoom temporel.
 function timelineChartSvg(vehicle, mode) {
   const events = vehicleProgressEvents(vehicle.id);
   if (!events.length) return '<div class="card">Pas encore d’événement d’avancement pour ce véhicule.</div>';
-  const width = 900, height = 260, left = 46, right = 18, top = 18, bottom = 42;
+
+  const range = timelineVisibleRangeV1119(events);
+  const width = 980, height = 330, left = 54, right = 22, top = 18, bottom = 78;
   const plotW = width - left - right, plotH = height - top - bottom;
-  const points = events.map((event, index) => {
-    const x = events.length === 1 ? left + plotW / 2 : left + (index / (events.length - 1)) * plotW;
-    const y = top + plotH - progressMetric(event, mode) / 100 * plotH;
-    return { x, y, event };
-  });
-  const polyline = points.map(point => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(' ');
-  const grid = [0, 25, 50, 75, 100].map(value => {
-    const y = top + plotH - value / 100 * plotH;
-    return `<line x1="${left}" y1="${y}" x2="${left + plotW}" y2="${y}" stroke="#284262" stroke-width="1"/><text x="8" y="${y + 4}" fill="#9cb2d1" font-size="11">${value}%</text>`;
+  const span = Math.max(1, range.end - range.start);
+
+  const xForTime = timestamp =>
+    left + ((timestamp - range.start) / span) * plotW;
+
+  const yForValue = value =>
+    top + plotH - (Math.max(0, Math.min(100, Number(value) || 0)) / 100) * plotH;
+
+  // Les graduations horizontales représentent le pourcentage.
+  const horizontalGrid = [0, 25, 50, 75, 100].map(value => {
+    const y = yForValue(value);
+    return `<line x1="${left}" y1="${y}" x2="${left + plotW}" y2="${y}" stroke="#284262" stroke-width="1"/>
+      <text x="10" y="${y + 4}" fill="#9cb2d1" font-size="11">${value}%</text>`;
   }).join('');
-  const dots = points.map(point => `<circle cx="${point.x}" cy="${point.y}" r="4" fill="#38bdf8"><title>${escHtml(fmtProgressDate(point.event.at))} • ${progressMetric(point.event, mode)}%</title></circle>`).join('');
-  return `<div style="overflow:auto"><svg viewBox="0 0 ${width} ${height}" style="min-width:760px;width:100%;background:#081830;border:1px solid var(--line);border-radius:14px">${grid}<polyline points="${polyline}" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>${dots}</svg></div>`;
+
+  // Les graduations verticales représentent maintenant de vraies dates/heures.
+  const tickCount = 6;
+  const timeGrid = Array.from({ length: tickCount }, (_, index) => {
+    const ratio = index / (tickCount - 1);
+    const timestamp = range.start + span * ratio;
+    const x = left + plotW * ratio;
+    const label = timelineAxisDateLabelV1119(timestamp, span);
+    const anchor = index === 0 ? 'start' : index === tickCount - 1 ? 'end' : 'middle';
+
+    return `<line x1="${x}" y1="${top}" x2="${x}" y2="${top + plotH}" stroke="#1d3654" stroke-width="1" stroke-dasharray="3 5"/>
+      <text x="${x}" y="${top + plotH + 24}" text-anchor="${anchor}" fill="#a9bdd9" font-size="11">${escHtml(label)}</text>`;
+  }).join('');
+
+  // Événements réellement présents dans la fenêtre.
+  const visibleEvents = events.filter(event => {
+    const time = new Date(event.at).getTime();
+    return Number.isFinite(time) && time >= range.start && time <= range.end;
+  });
+
+  // On garde la dernière valeur connue juste avant la fenêtre pour assurer la continuité de la courbe après zoom.
+  const before = events
+    .filter(event => new Date(event.at).getTime() < range.start)
+    .sort((a, b) => new Date(a.at) - new Date(b.at))
+    .pop();
+
+  const linePoints = [];
+
+  if (before) {
+    linePoints.push({
+      x: left,
+      y: yForValue(progressMetric(before, mode)),
+      event: before,
+      synthetic: true
+    });
+  }
+
+  visibleEvents.forEach(event => {
+    const time = new Date(event.at).getTime();
+    linePoints.push({
+      x: xForTime(time),
+      y: yForValue(progressMetric(event, mode)),
+      event,
+      synthetic: false
+    });
+  });
+
+  // Si aucun événement n'est visible mais qu'on connaît la dernière valeur, on trace une ligne horizontale.
+  if (!visibleEvents.length && before) {
+    linePoints.push({
+      x: left + plotW,
+      y: yForValue(progressMetric(before, mode)),
+      event: before,
+      synthetic: true
+    });
+  }
+
+  // Courbe en escalier : l'avancement change au moment précis de chaque événement.
+  let path = '';
+  linePoints.forEach((point, index) => {
+    if (index === 0) {
+      path += `M ${point.x.toFixed(1)} ${point.y.toFixed(1)}`;
+      return;
+    }
+
+    const previous = linePoints[index - 1];
+    path += ` H ${point.x.toFixed(1)} V ${point.y.toFixed(1)}`;
+  });
+
+  const dots = linePoints
+    .filter(point => !point.synthetic)
+    .map(point => {
+      const value = progressMetric(point.event, mode);
+      return `<circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="4.5" fill="#38bdf8" stroke="#081830" stroke-width="2">
+        <title>${escHtml(fmtProgressDate(point.event.at))} • ${value}% • ${escHtml(point.event.ofName || progressKindLabel(point.event))}</title>
+      </circle>`;
+    })
+    .join('');
+
+  const emptyWindow = !linePoints.length
+    ? `<text x="${left + plotW / 2}" y="${top + plotH / 2}" text-anchor="middle" fill="#9cb2d1" font-size="14">Aucune activité dans cette période</text>`
+    : '';
+
+  return `<div class="timelineChartScrollV1119">
+    <svg viewBox="0 0 ${width} ${height}" class="timelineChartSvgV1119">
+      ${horizontalGrid}
+      ${timeGrid}
+      <text x="${left + plotW / 2}" y="${height - 14}" text-anchor="middle" fill="#8da8cc" font-size="11">Temps</text>
+      ${path ? `<path d="${path}" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>` : ''}
+      ${dots}
+      ${emptyWindow}
+    </svg>
+  </div>`;
 }
 
 // Résume le nombre de réalisations enregistrées par personne sur un véhicule.
@@ -3876,14 +4113,116 @@ function timelineHistoryTable(vehicle) {
   return `<div class="tablewrap"><table><thead><tr><th>Date</th><th>Type</th><th>OF</th><th>Personne</th><th>Variation</th><th>Après</th><th>Détail</th></tr></thead><tbody>${events.map(event => `<tr><td>${escHtml(fmtProgressDate(event.at))}</td><td>${escHtml(progressKindLabel(event))}</td><td><b>${escHtml(event.ofName || '-')}</b><div class="muted">${escHtml(event.category || '')}</div></td><td>${escHtml(event.person || '-')}</td><td><b>${event.qtyDelta > 0 ? '+' : ''}${event.qtyDelta || 0}</b></td><td>${event.qtyTotal ? `${event.qtyAfter}/${event.qtyTotal}` : '-'}</td><td class="desc">${escHtml(event.note || '')}</td></tr>`).join('')}</tbody></table></div>`;
 }
 
-// Affiche tout le contenu de la fenêtre d'historique graphique pour le véhicule sélectionné.
+// Affiche tout le contenu de la fenêtre d'historique graphique avec barre de temps, zoom et déplacement horizontal.
 function renderTimelineBodyV6(vehicle) {
   const mode = window._timelineModeV6 || 'Global';
   const events = vehicleProgressEvents(vehicle.id);
   const first = events[0], last = events[events.length - 1];
   const body = document.getElementById('timelineBodyV6');
   if (!body) return;
-  body.innerHTML = `<div class="toolbar" style="margin-bottom:12px">${['Global', 'Fabrication', 'Prémontage', 'Pose'].map(item => `<button class="small ${mode === item ? '' : 'alt'}" onclick="setTimelineModeV6('${item}')">${escHtml(item)}</button>`).join('')}</div><div class="card"><b>${escHtml(mode)} : ${mode === 'Global' ? pct(vehicle) : phaseStatsV5(vehicle, mode).pct}%</b><div class="muted" style="margin-top:6px">${first ? `Première activité : ${escHtml(fmtProgressDate(first.at))}` : 'Pas encore commencé'}${last && last !== first ? ` • Dernière activité : ${escHtml(fmtProgressDate(last.at))}` : ''}</div><br>${timelineChartSvg(vehicle, mode)}</div><br><div class="card"><b>Qui a réalisé quoi</b><div style="margin-top:8px">${timelinePeopleSummary(vehicle)}</div></div><br><div class="card"><b>Historique détaillé</b><div class="muted" style="margin:5px 0 9px">Les réalisations, corrections, blocages et déblocages sont conservés à partir du suivi détaillé.</div>${timelineHistoryTable(vehicle)}</div>`;
+
+  window._timelineZoomV1119 = Math.max(1, Number(window._timelineZoomV1119) || 1);
+  window._timelinePanV1119 = Math.max(0, Math.min(1, Number(window._timelinePanV1119) || 0));
+
+  const range = events.length ? timelineVisibleRangeV1119(events) : null;
+  const zoom = window._timelineZoomV1119;
+  const panDisabled = zoom <= 1 ? 'disabled' : '';
+
+  const periodText = range
+    ? `${fmtProgressDate(new Date(range.start).toISOString())} → ${fmtProgressDate(new Date(range.end).toISOString())}`
+    : 'Aucune période disponible';
+
+  const phaseButtons = ['Global', 'Fabrication', 'Prémontage', 'Pose']
+    .map(item => `<button class="small ${mode === item ? '' : 'alt'}" onclick="setTimelineModeV6('${item}')">${escHtml(item)}</button>`)
+    .join('');
+
+  body.innerHTML = `
+    <div class="toolbar" style="margin-bottom:12px">${phaseButtons}</div>
+
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div>
+          <b>${escHtml(mode)} : ${mode === 'Global' ? pct(vehicle) : phaseStatsV5(vehicle, mode).pct}%</b>
+          <div class="muted" style="margin-top:6px">
+            ${first ? `Première activité : ${escHtml(fmtProgressDate(first.at))}` : 'Pas encore commencé'}
+            ${last && last !== first ? ` • Dernière activité : ${escHtml(fmtProgressDate(last.at))}` : ''}
+          </div>
+        </div>
+        <span class="timelineZoomInfoV1119">🔍 Zoom ×${zoom}</span>
+      </div>
+
+      <div class="timelineControlsV1119">
+        <div class="timelineZoomButtonsV1119">
+          <button class="small alt" onclick="changeTimelineZoomV1119(-1)" ${zoom <= 1 ? 'disabled' : ''}>− Dézoomer</button>
+          <button class="small alt" onclick="changeTimelineZoomV1119(1)" ${zoom >= 16 ? 'disabled' : ''}>+ Zoomer</button>
+          <button class="small alt" onclick="resetTimelineZoomV1119()" ${zoom <= 1 ? 'disabled' : ''}>Tout voir</button>
+        </div>
+
+        <div class="timelinePanWrapV1119">
+          <span>◀</span>
+          <input type="range" min="0" max="100" step="1"
+            value="${Math.round(window._timelinePanV1119 * 100)}"
+            ${panDisabled}
+            oninput="setTimelinePanV1119(this.value)">
+          <span>▶</span>
+        </div>
+      </div>
+
+      <div class="timelinePeriodV1119">Période affichée : ${escHtml(periodText)}</div>
+      <br>
+      ${timelineChartSvg(vehicle, mode)}
+    </div>
+
+    <br>
+    <div class="card">
+      <b>Qui a réalisé quoi</b>
+      <div style="margin-top:8px">${timelinePeopleSummary(vehicle)}</div>
+    </div>
+
+    <br>
+    <div class="card">
+      <b>Historique détaillé</b>
+      <div class="muted" style="margin:5px 0 9px">Les réalisations, corrections, blocages et déblocages sont conservés à partir du suivi détaillé.</div>
+      ${timelineHistoryTable(vehicle)}
+    </div>`;
+}
+
+// Modifie le niveau de zoom temporel du graphique par paliers ×1, ×2, ×4, ×8 et ×16.
+function changeTimelineZoomV1119(direction) {
+  const levels = [1, 2, 4, 8, 16];
+  const current = Math.max(1, Number(window._timelineZoomV1119) || 1);
+  let index = levels.indexOf(current);
+  if (index < 0) index = 0;
+
+  index = Math.max(0, Math.min(levels.length - 1, index + (direction > 0 ? 1 : -1)));
+  window._timelineZoomV1119 = levels[index];
+
+  // Au premier zoom, on se place sur la période la plus récente, souvent la plus utile à l'atelier.
+  if (window._timelineZoomV1119 > 1 && current === 1) {
+    window._timelinePanV1119 = 1;
+  }
+
+  if (window._timelineZoomV1119 === 1) {
+    window._timelinePanV1119 = 0;
+  }
+
+  const vehicle = state.vehicles.find(item => item.id === window._timelineVehicleV6);
+  if (vehicle) renderTimelineBodyV6(vehicle);
+}
+
+// Déplace la fenêtre temporelle visible de la date la plus ancienne vers la plus récente.
+function setTimelinePanV1119(value) {
+  window._timelinePanV1119 = Math.max(0, Math.min(1, (Number(value) || 0) / 100));
+  const vehicle = state.vehicles.find(item => item.id === window._timelineVehicleV6);
+  if (vehicle) renderTimelineBodyV6(vehicle);
+}
+
+// Remet le graphique sur toute la période historique disponible.
+function resetTimelineZoomV1119() {
+  window._timelineZoomV1119 = 1;
+  window._timelinePanV1119 = 0;
+  const vehicle = state.vehicles.find(item => item.id === window._timelineVehicleV6);
+  if (vehicle) renderTimelineBodyV6(vehicle);
 }
 
 // Change la phase affichée dans la courbe d'avancement.
@@ -3900,6 +4239,8 @@ function openVehicleTimelineV6(vehicleId) {
   if (!vehicle || isSAV(vehicle)) return;
   window._timelineVehicleV6 = vehicleId;
   window._timelineModeV6 = 'Global';
+  window._timelineZoomV1119 = 1;
+  window._timelinePanV1119 = 0;
   openModal('📈 Avancement dans le temps — ' + vehicle.vin, '<div id="timelineBodyV6"></div>');
   document.querySelector('#modal .dialog')?.classList.add('timelineDialogV6');
   renderTimelineBodyV6(vehicle);
@@ -4225,11 +4566,12 @@ function confirmSingleBlock() {
   of.blockDetailsV8 = mode === 'piece' ? multiPartsBlockDetails(selectedParts, comment) : { type: 'other', comment };
   of.doneBy = person;
   of.doneAt = new Date().toISOString();
+  touchOFV1118(of, of.doneAt);
   state.realPerson = person;
   logAction('OF bloqué', vehicle, of, reason);
   recordProgressEvent(vehicle, of, 0, person, 'blocage', reason, beforeSnapshot);
   closeModal();
-  save();
+  saveCriticalV1118();
   if (context.backToReal) real();
 }
 
@@ -4358,6 +4700,7 @@ function validateBulkBlock() {
     of.blockDetailsV8 = blockDetails(mode, part, missing, comment);
     of.doneBy = person;
     of.doneAt = now;
+    touchOFV1118(of, now);
     logAction('OF bloqué (multi-VIN)', vehicle, of, reason + ' • ' + person);
     recordProgressEvent(vehicle, of, 0, person, 'blocage', reason, beforeSnapshot, now);
     count++;
@@ -4366,7 +4709,7 @@ function validateBulkBlock() {
   logAction('Blocage multi-VIN terminé', null, null, `${count} VIN • ${person} • ${reason}`);
   closeModal();
   state.realModeV3 = 'of';
-  save();
+  saveCriticalV1118();
 }
 
 // Regroupe les OF bloqués identiques afin de n'afficher qu'une seule ligne par OF dans la page OF bloqués.
@@ -4472,9 +4815,10 @@ function unblockOF(vehicleId, ofId) {
   delete of.blockDetailsV8;
   of.doneAt = '';
   if (of.status !== 'Fait') of.doneBy = '';
+  touchOFV1118(of);
   logAction('OF débloqué', vehicle, of, '');
   recordProgressEvent(vehicle, of, 0, person, 'deblocage', 'OF débloqué', beforeSnapshot);
-  save();
+  saveCriticalV1118();
   page = 'blocked';
   render();
 }
@@ -4825,6 +5169,7 @@ initApp();
   let saveTimer = null;
   let unsubscribeSnapshot = null;
   let lastRemoteDataJSON = '';
+  let deferredRemotePayloadV1118 = null;
   const lastPublicPayloadJSONV116 = new Map();
   let lastPublicGlobalJSONV117 = '';
 
@@ -4882,7 +5227,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.171,
+      version: 11.19,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -4962,6 +5307,102 @@ initApp();
     if(dot) dot.className = 'fbDot ' + (kind || '');
   }
 
+  // Convertit un timestamp ISO en valeur numérique comparable.
+  function syncTimeV1118(value){
+    const time = new Date(value || 0).getTime();
+    return Number.isFinite(time) ? time : 0;
+  }
+
+  // Copie les champs de production d'un OF lorsque sa version distante est plus récente.
+  function copyCriticalOFFromV1118(target, source){
+    const keys = [
+      'completedQty', 'status', 'doneBy', 'doneAt', 'blockReason',
+      'blockDetailsV8', 'workSessionV1111', 'syncUpdatedAtV1118'
+    ];
+    keys.forEach(key => {
+      if(Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+      else delete target[key];
+    });
+  }
+
+  // Copie les champs de chrono/statut d'un SAV lorsque sa version distante est plus récente.
+  function copyCriticalSAVFromV1118(target, source){
+    const keys = ['savActual','savDone','savDoneAt','savWorkSessionV1114','savSyncUpdatedAtV1118'];
+    keys.forEach(key => {
+      if(Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+      else delete target[key];
+    });
+  }
+
+  // Fusionne les événements identifiés afin que deux ordinateurs ne suppriment pas mutuellement leurs historiques.
+  function mergeArrayByIdV1118(remoteList, localList, limit, dateKey){
+    const map = new Map();
+    [...(remoteList || []), ...(localList || [])].forEach(item => {
+      if(item && item.id) map.set(item.id, item);
+    });
+    return Array.from(map.values())
+      .sort((a,b) => new Date(a?.[dateKey] || 0) - new Date(b?.[dateKey] || 0))
+      .slice(-limit);
+  }
+
+  // Fusionne l'historique textuel général qui ne possède pas encore d'identifiant propre.
+  function mergeHistoryV1118(remoteList, localList){
+    const map = new Map();
+    [...(remoteList || []), ...(localList || [])].forEach(item => {
+      if(!item) return;
+      const key = [item.date||'',item.action||'',item.vin||'',item.of||'',item.person||'',item.detail||''].join('||');
+      map.set(key, item);
+    });
+    return Array.from(map.values())
+      .sort((a,b) => new Date(b.date || 0) - new Date(a.date || 0))
+      .slice(0,500);
+  }
+
+  // Fusionne la dernière donnée Firestore avec l'état local en donnant priorité à l'OF/SAV modifié le plus récemment.
+  function mergeCriticalStateV1118(remoteState, localState){
+    const result = JSON.parse(JSON.stringify(localState || {}));
+    const remote = remoteState || {};
+    const remoteVehicles = new Map((remote.vehicles || []).map(vehicle => [vehicle.id, vehicle]));
+
+    (result.vehicles || []).forEach(localVehicle => {
+      const remoteVehicle = remoteVehicles.get(localVehicle.id);
+      if(!remoteVehicle) return;
+
+      if(localVehicle.isSAV === true || remoteVehicle.isSAV === true){
+        if(syncTimeV1118(remoteVehicle.savSyncUpdatedAtV1118) > syncTimeV1118(localVehicle.savSyncUpdatedAtV1118)){
+          copyCriticalSAVFromV1118(localVehicle, remoteVehicle);
+        }
+        return;
+      }
+
+      const remoteOFs = new Map((remoteVehicle.ofs || []).map(of => [of.id, of]));
+      (localVehicle.ofs || []).forEach(localOF => {
+        const remoteOF = remoteOFs.get(localOF.id);
+        if(!remoteOF) return;
+        if(syncTimeV1118(remoteOF.syncUpdatedAtV1118) > syncTimeV1118(localOF.syncUpdatedAtV1118)){
+          copyCriticalOFFromV1118(localOF, remoteOF);
+        }
+      });
+    });
+
+    result.progressEventsV6 = mergeArrayByIdV1118(remote.progressEventsV6, result.progressEventsV6, 10000, 'at');
+    result.notificationsV1115 = mergeArrayByIdV1118(remote.notificationsV1115, result.notificationsV1115, 300, 'at');
+    result.workTimesV1112 = mergeArrayByIdV1118(remote.workTimesV1112, result.workTimesV1112, 10000, 'finishedAt');
+    result.history = mergeHistoryV1118(remote.history, result.history);
+
+    return result;
+  }
+
+  // Prépare le document final écrit dans la transaction Firestore.
+  function mergePayloadForSaveV1118(remotePayload, localPayload){
+    if(!remotePayload?.state) return localPayload;
+    return {
+      ...localPayload,
+      state: mergeCriticalStateV1118(remotePayload.state, localPayload.state),
+      basesExcel: localPayload.basesExcel || remotePayload.basesExcel || {}
+    };
+  }
+
   // Programme une sauvegarde Firebase avec un petit délai afin de regrouper plusieurs changements rapprochés.
   function queueFirebaseSave(){
     if(!fbReady || !currentUser || applyingRemote || !db) return;
@@ -4969,22 +5410,49 @@ initApp();
     saveTimer = setTimeout(() => pushFirebaseNow(false), FIREBASE_SAVE_DELAY);
   }
 
-  // Envoie immédiatement les données vers Firestore ; force=true envoie même si le contenu n'a pas changé.
+  // Enregistre dans une transaction afin qu'une machine avec un état ancien ne puisse plus annuler une Pause/Reprise récente.
   async function pushFirebaseNow(force = false){
-    if(!fbReady || !currentUser || !db) return;
+    if(!fbReady || !currentUser || !db) return null;
+
+    const localStableJSON = JSON.stringify(stableDataFromCurrent());
+    if(!force && localStableJSON === lastRemoteDataJSON) return null;
+
+    const reference = db.collection(FIREBASE_DOC_COLLECTION).doc(FIREBASE_DOC_ID);
+
     try{
-      const stableJSON = JSON.stringify(stableDataFromCurrent());
-      if(!force && stableJSON === lastRemoteDataJSON) return;
+      clearTimeout(saveTimer);
+      saveTimer = null;
       setStatus('Sauvegarde...', '');
-      const payload = payloadFromCurrent();
-      await db.collection(FIREBASE_DOC_COLLECTION).doc(FIREBASE_DOC_ID).set(payload, {merge:true});
+
+      const localPayload = payloadFromCurrent();
+
+      const committedPayload = await db.runTransaction(async transaction => {
+        const snapshot = await transaction.get(reference);
+        const remotePayload = snapshot.exists ? snapshot.data() : null;
+        const payload = mergePayloadForSaveV1118(remotePayload, localPayload);
+        payload.updatedAt = new Date().toISOString();
+        transaction.set(reference, payload, {merge:true});
+        return payload;
+      });
+
+      // On remet le navigateur exactement sur la version validée par la transaction.
+      if(committedPayload?.state) applyRemotePayload(committedPayload, true);
+
+      deferredRemotePayloadV1118 = null;
       await syncPublicVinDocumentsV116();
-      lastRemoteDataJSON = stableJSON;
+
+      lastRemoteDataJSON = JSON.stringify({
+        state: committedPayload?.state || state,
+        basesExcel: committedPayload?.basesExcel || getBasesPayload()
+      });
+
       setStatus('Sauvegardé Firebase', 'ok');
+      return committedPayload;
     }catch(e){
       console.error(e);
       setStatus('Erreur sauvegarde Firebase', 'bad');
       alert('Erreur sauvegarde Firebase : ' + e.message);
+      throw e;
     }
   }
 
@@ -5081,8 +5549,16 @@ initApp();
   }
 
   // Applique au site les données reçues depuis Firestore puis exécute la migration de compatibilité.
-  function applyRemotePayload(data){
+  function applyRemotePayload(data, force = false){
     if(!data || !data.state || !Array.isArray(data.state.vehicles)) return;
+
+    // Pendant une sauvegarde critique, un ancien snapshot reçu en retard est mis de côté au lieu d'écraser l'action locale.
+    if(!force && window.SUIVI_OF_LOCAL_PENDING_V1118 === true){
+      deferredRemotePayloadV1118 = data;
+      setStatus('Sauvegarde locale prioritaire...', '');
+      return;
+    }
+
     applyingRemote = true;
     try{
       state = data.state;
