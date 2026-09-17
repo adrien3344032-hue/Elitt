@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.19 Graphique temps zoom</title>
+<title>ELITT - Suivi OF - V11.20 Synchronisation multi-utilisateurs</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -426,6 +426,56 @@ let state = (() => {
   };
 })();
 
+// -----------------------------------------------------------------------------
+// V11.20 - ÉTAT LOCAL DE L'INTERFACE
+// Ces champs appartiennent uniquement au navigateur courant et ne sont jamais
+// envoyés à Firebase. Deux utilisateurs peuvent ainsi consulter des pages,
+// VIN, onglets et filtres différents sans se piloter mutuellement.
+// -----------------------------------------------------------------------------
+const LOCAL_UI_STATE_KEYS_V1120 = [
+  'realModeV3',
+  'realVin',
+  'realFilter',
+  'realPerson',
+  'ofSearchV5',
+  'ofPhaseV5',
+  'ofStatusV5',
+  'timePersonFilterV1112',
+  'timeVinFilterV1112',
+  'timeCategoryFilterV1112',
+  'timeSearchV1112',
+  'archiveFilter',
+  'detailVin'
+];
+
+function captureLocalUiStateV1120(source = state) {
+  const ui = {};
+  LOCAL_UI_STATE_KEYS_V1120.forEach(key => {
+    if (Object.prototype.hasOwnProperty.call(source || {}, key)) ui[key] = source[key];
+  });
+  return ui;
+}
+
+function restoreLocalUiStateV1120(target, ui) {
+  if (!target || !ui) return target;
+  LOCAL_UI_STATE_KEYS_V1120.forEach(key => {
+    if (Object.prototype.hasOwnProperty.call(ui, key)) target[key] = ui[key];
+  });
+  return target;
+}
+
+function sharedStateV1120(source = state) {
+  const copy = JSON.parse(JSON.stringify(source || {}));
+  LOCAL_UI_STATE_KEYS_V1120.forEach(key => delete copy[key]);
+  return copy;
+}
+
+function saveLocalOnlyV1120() {
+  try { localStorage.setItem(LS, JSON.stringify(state)); }
+  catch (error) { console.error(error); }
+  render();
+}
+
 // Échappe du texte avant de l'insérer dans du HTML afin d'éviter de casser l'affichage.
 function escHtml(value) {
   return String(value ?? '')
@@ -756,7 +806,7 @@ function deleteWorkTimeV1112(id) {
 
   state.workTimesMigrationDoneV1112 = true;
   state.workTimesV1112 = state.workTimesV1112.filter(row => row.id !== id);
-  save();
+  saveSharedDataV1120();
 }
 
 // Ouvre la page Temps OF directement filtrée sur un VIN.
@@ -1040,12 +1090,18 @@ function touchSAVV1118(vehicle, at = new Date().toISOString()) {
   return at;
 }
 
-// Sauvegarde immédiatement une action de production critique et bloque temporairement l'application d'un ancien snapshot Firebase.
+// Sauvegarde immédiatement une vraie modification métier.
+// Le compteur protège aussi plusieurs clics rapprochés : Pause puis Reprendre, par exemple.
 async function saveCriticalV1118() {
-  try { localStorage.setItem(LS, JSON.stringify(state)); } catch (error) { console.error(error); }
+  window.SUIVI_OF_PENDING_WRITES_V1120 =
+    Math.max(0, Number(window.SUIVI_OF_PENDING_WRITES_V1120) || 0) + 1;
+  window.SUIVI_OF_LOCAL_PENDING_V1118 = true;
+
+  try { localStorage.setItem(LS, JSON.stringify(state)); }
+  catch (error) { console.error(error); }
+
   render();
 
-  window.SUIVI_OF_LOCAL_PENDING_V1118 = true;
   try {
     if (typeof window.requestFirebaseSave === 'function') {
       await window.requestFirebaseSave(true);
@@ -1053,8 +1109,15 @@ async function saveCriticalV1118() {
   } catch (error) {
     console.error(error);
   } finally {
-    window.SUIVI_OF_LOCAL_PENDING_V1118 = false;
+    window.SUIVI_OF_PENDING_WRITES_V1120 =
+      Math.max(0, (Number(window.SUIVI_OF_PENDING_WRITES_V1120) || 1) - 1);
+    window.SUIVI_OF_LOCAL_PENDING_V1118 =
+      window.SUIVI_OF_PENDING_WRITES_V1120 > 0;
   }
+}
+
+function saveSharedDataV1120() {
+  return saveCriticalV1118();
 }
 
 // Retourne le libellé court de l'heure de démarrage d'un OF.
@@ -1230,20 +1293,8 @@ async function cancelOFWorkV1111(vehicleId, ofId) {
   logAction('Démarrage OF annulé', vehicle, of, `${session.person} • après ${duration}`);
   recordProgressEvent(vehicle, of, 0, session.person, 'cancel', 'Démarrage annulé', beforeSnapshot);
 
-  // Sauvegarde locale immédiate pour que même un rafraîchissement conserve l'annulation.
-  localStorage.setItem(LS, JSON.stringify(state));
-  render();
-
-  // Pour cette action critique, on n'attend pas le délai habituel de 650 ms :
-  // on attend la confirmation d'écriture Firebase avant de considérer l'annulation terminée.
-  if (typeof window.requestFirebaseSave === 'function') {
-    try {
-      await window.requestFirebaseSave(true);
-    } catch (error) {
-      console.error(error);
-      alert("L'annulation est enregistrée localement, mais la sauvegarde Firebase a échoué. Utilise « Forcer sauvegarde » avant d'actualiser.");
-    }
-  }
+  // Même mécanisme que les autres actions critiques.
+  await saveSharedDataV1120();
 }
 
 // Met un OF ancien au format quantité actuel sans perdre son statut ni son avancement.
@@ -1827,10 +1878,10 @@ function renderSAVRealizationV1114() {
     </div>`;
 }
 
-// Enregistre l'état dans le navigateur puis rafraîchit l'écran ; Firebase enrichit cette fonction au chargement.
+// Enregistre uniquement les préférences locales du navigateur.
+// Changer de page, de VIN, de filtre ou d'onglet ne déclenche plus d'écriture Firebase.
 function save() {
-  localStorage.setItem(LS, JSON.stringify(state));
-  render();
+  saveLocalOnlyV1120();
 }
 
 // Construit les boutons du menu latéral et met en évidence la page active.
@@ -2641,7 +2692,7 @@ function renderPublicGlobalDataV117(data) {
 // Ouvre la fenêtre contenant le QR Code permanent du tableau public global de production.
 function openGlobalTrackingQRV117() {
   const link = globalTrackingLinkV117();
-  if (typeof window.requestFirebaseSave === 'function') window.requestFirebaseSave(true);
+  if (typeof window.requestPublicSyncV1120 === 'function') window.requestPublicSyncV1120();
   openModal('QR Code - Suivi global', `<div class="qrWrapV115">
     <div class="muted" style="text-align:center">Ce QR Code ouvre la page publique de suivi de tous les camions actifs. Il reste toujours identique et les avancements se mettent à jour automatiquement.</div>
     <div id="qrGlobalV117" class="qrBoxV115"></div>
@@ -2682,9 +2733,8 @@ function openVehicleQRV115(vehicleId) {
   if (!hadPublicId) {
     try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {}
     if (typeof window.requestFirebaseSave === 'function') window.requestFirebaseSave(true);
-  } else if (typeof window.requestFirebaseSave === 'function') {
-    // Une sauvegarde forcée garantit que la fiche publique existe avant l'impression du QR.
-    window.requestFirebaseSave(true);
+  } else if (typeof window.requestPublicSyncV1120 === 'function') {
+    window.requestPublicSyncV1120();
   }
   openModal('QR Code - VIN ' + vehicle.vin, `<div class="qrWrapV115">
     <div class="muted" style="text-align:center">Ce QR Code ouvre une fiche VIN publique en lecture seule. Il reste identique pendant toute la vie du camion et les données s’actualisent automatiquement.</div>
@@ -3130,7 +3180,7 @@ function saveVehicle(id) {
   logAction(isNew ? 'Véhicule créé' : 'Véhicule modifié', vehicle, null, '');
   state.realVin = vehicle.id;
   closeModal();
-  save();
+  saveSharedDataV1120();
 }
 
 // Supprime définitivement un véhicule ou un SAV après confirmation.
@@ -3143,7 +3193,7 @@ function delVehicle(id) {
   state.vehicles = state.vehicles.filter(item => item.id !== id);
   if (state.detailVin === id) state.detailVin = '';
   if (state.realVin === id) state.realVin = '';
-  save();
+  saveSharedDataV1120();
   if (publicId && typeof window.deletePublicVinV116 === 'function') window.deletePublicVinV116(publicId);
 }
 
@@ -3214,7 +3264,7 @@ function saveSAV(id) {
 
   logAction(isNew ? 'SAV créé' : 'SAV modifié', vehicle, null, `Prévu ${fmt(vehicle.savEstimated)} • Réel ${fmt(vehicle.savActual)}`);
   closeModal();
-  save();
+  saveSharedDataV1120();
 }
 
 // Réordonne proprement les OF d'un véhicule de 1 à N.
@@ -3294,7 +3344,7 @@ function saveOF(ofId) {
   insertOrMoveOF(destination, of, Number(document.getElementById('oo').value) || 1, isNew || movedVehicle);
   logAction(isNew ? 'OF ajouté' : 'OF modifié', destination, of, `Quantité ${qtyTotalV5(of)} • ordre ${of.order}`);
   closeModal();
-  save();
+  saveSharedDataV1120();
 }
 
 // Supprime un OF précis d'un véhicule et renumérote les OF restants.
@@ -3306,7 +3356,7 @@ function delOF(vehicleId, ofId) {
   logAction('OF supprimé', vehicle, of, '');
   vehicle.ofs = vehicle.ofs.filter(item => item.id !== ofId);
   normalizeOrders(vehicle);
-  save();
+  saveSharedDataV1120();
 }
 
 // Retourne un instantané des pourcentages utiles à la courbe d'avancement d'un véhicule.
@@ -4389,7 +4439,7 @@ async function importExcelBases() {
     savePartsCatalog();
     logAction('Bases OF + pièces chargées', null, null, results.map(result => `${result.brand} : ${result.ofs} OF / ${result.parts} pièces`).join(' • '));
     closeModal();
-    save();
+    saveSharedDataV1120();
     alert('Import terminé :\n' + results.map(result => `${result.brand} : ${result.ofs} OF / ${result.parts} lignes pièces`).join('\n'));
   } catch (e) {
     alert('Import impossible : ' + e.message);
@@ -4871,7 +4921,7 @@ function archiveVehicle(id) {
   vehicle.archivedAt = new Date().toISOString();
   logAction(isSAV(vehicle) ? 'SAV archivé' : 'Véhicule archivé', vehicle, null, '');
   if (state.realVin === id) state.realVin = '';
-  save();
+  saveSharedDataV1120();
 }
 
 // Restaure un véhicule ou un SAV archivé dans le tableau de bord principal.
@@ -4883,7 +4933,7 @@ function restoreVehicle(id) {
   vehicle.archived = false;
   vehicle.archivedAt = '';
   logAction(isSAV(vehicle) ? 'SAV restauré' : 'Véhicule restauré', vehicle, null, '');
-  save();
+  saveSharedDataV1120();
 }
 
 // Génère les pastilles des congés enregistrés d'une personne.
@@ -4913,7 +4963,7 @@ function addPerson() {
   const name = input?.value.trim() || '';
   if (!name || state.people.some(person => personName(person) === name)) return;
   state.people.push({ id: uid(), name, mode: '39h', schedule: defaultSchedule('39h'), vacations: [] });
-  save();
+  saveSharedDataV1120();
 }
 
 // Supprime une personne après confirmation et bascule automatiquement la personne active vers une personne encore disponible.
@@ -4929,7 +4979,7 @@ function removePerson(id) {
     state.realPerson = state.people[0] ? personName(state.people[0]) : '';
   }
 
-  save();
+  saveSharedDataV1120();
 }
 
 // Ouvre la fenêtre permettant de modifier les créneaux horaires d'une personne.
@@ -4987,7 +5037,7 @@ function savePersonSchedule(id) {
   if (state.realPerson === oldName) state.realPerson = newName;
 
   closeModal();
-  save();
+  saveSharedDataV1120();
 }
 
 // Ouvre la fenêtre permettant d'ajouter une période de congé à une personne.
@@ -5011,7 +5061,7 @@ function addVacation(id) {
   logAction('Congé ajouté', null, null, personName(person) + ' : ' + new Date(start).toLocaleDateString('fr-FR') + ' → ' + new Date(end).toLocaleDateString('fr-FR'));
   closeModal();
   page = 'people';
-  save();
+  saveSharedDataV1120();
 }
 
 // Supprime une période de congé précise d'une personne.
@@ -5023,7 +5073,7 @@ function removeVacation(personId, vacationId) {
   logAction('Congé supprimé', null, null, personName(person));
   closeModal();
   page = 'people';
-  save();
+  saveSharedDataV1120();
 }
 
 // Crée une sauvegarde JSON complète comprenant l'état, les bases Excel et le catalogue de pièces.
@@ -5217,7 +5267,7 @@ initApp();
   // Construit la partie stable des données utilisées pour savoir si une vraie modification doit être envoyée.
   function stableDataFromCurrent(){
     return {
-      state,
+      state: sharedStateV1120(state),
       basesExcel: getBasesPayload()
     };
   }
@@ -5227,7 +5277,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.19,
+      version: 11.20,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -5261,6 +5311,11 @@ initApp();
     }
     if(jobs.length) await Promise.all(jobs);
   }
+
+  // Met à jour uniquement les pages QR publiques, sans réécrire le document privé principal.
+  window.requestPublicSyncV1120 = function requestPublicSyncV1120(){
+    return syncPublicVinDocumentsV116();
+  };
 
   // Supprime la fiche VIN publique lorsqu'un véhicule ayant un QR est supprimé du logiciel.
   window.deletePublicVinV116 = async function deletePublicVinV116(publicId){
@@ -5395,11 +5450,20 @@ initApp();
 
   // Prépare le document final écrit dans la transaction Firestore.
   function mergePayloadForSaveV1118(remotePayload, localPayload){
-    if(!remotePayload?.state) return localPayload;
-    return {
+    const cleanLocalPayload = {
       ...localPayload,
-      state: mergeCriticalStateV1118(remotePayload.state, localPayload.state),
-      basesExcel: localPayload.basesExcel || remotePayload.basesExcel || {}
+      state: sharedStateV1120(localPayload?.state || {})
+    };
+
+    if(!remotePayload?.state) return cleanLocalPayload;
+
+    return {
+      ...cleanLocalPayload,
+      state: mergeCriticalStateV1118(
+        sharedStateV1120(remotePayload.state),
+        cleanLocalPayload.state
+      ),
+      basesExcel: cleanLocalPayload.basesExcel || remotePayload.basesExcel || {}
     };
   }
 
@@ -5548,21 +5612,38 @@ initApp();
     applyRoleUiV1117();
   }
 
-  // Applique au site les données reçues depuis Firestore puis exécute la migration de compatibilité.
+  // Applique les données métier Firebase sans jamais toucher à la navigation/filtres du navigateur courant.
   function applyRemotePayload(data, force = false){
     if(!data || !data.state || !Array.isArray(data.state.vehicles)) return;
 
-    // Pendant une sauvegarde critique, un ancien snapshot reçu en retard est mis de côté au lieu d'écraser l'action locale.
     if(!force && window.SUIVI_OF_LOCAL_PENDING_V1118 === true){
       deferredRemotePayloadV1118 = data;
       setStatus('Sauvegarde locale prioritaire...', '');
       return;
     }
 
+    const localUi = captureLocalUiStateV1120(state);
+    const incomingSharedState = sharedStateV1120(data.state);
+    const incomingStableJSON = JSON.stringify({
+      state: incomingSharedState,
+      basesExcel: data.basesExcel || {}
+    });
+
+    const currentStableJSON = JSON.stringify(stableDataFromCurrent());
+
+    // Firestore renvoie aussi nos propres écritures. Si rien de métier n'a changé,
+    // on ne rerend pas toute la page et on n'interrompt pas l'utilisateur.
+    if(!force && incomingStableJSON === currentStableJSON){
+      lastRemoteDataJSON = incomingStableJSON;
+      setStatus('Synchronisé Firebase', 'ok');
+      return;
+    }
+
     applyingRemote = true;
     try{
-      state = data.state;
+      state = restoreLocalUiStateV1120(incomingSharedState, localUi);
       setBasesPayload(data.basesExcel || {});
+
       if(typeof migrateStateV10 === 'function') migrateStateV10();
       else if(typeof normalizeAll === 'function') normalizeAll();
 
@@ -5571,10 +5652,10 @@ initApp();
       }
 
       localStorage.setItem(LS, JSON.stringify(state));
-      lastRemoteDataJSON = JSON.stringify({state:data.state, basesExcel:data.basesExcel || {}});
+      lastRemoteDataJSON = incomingStableJSON;
       render();
       applyVehicleDeepLinkV115();
-      setStatus('Données chargées Firebase', 'ok');
+      setStatus('Données mises à jour Firebase', 'ok');
     }finally{
       applyingRemote = false;
     }
@@ -5597,25 +5678,21 @@ initApp();
     });
   }
 
-  // Remplace la sauvegarde locale simple par une sauvegarde locale + une synchronisation Firebase différée.
+  // V11.20 : save() est strictement local.
   function installSaveBridge(){
     if(typeof save !== 'function') return;
-    // Nouvelle version de save : conserve la sauvegarde locale puis programme la synchronisation Firebase.
-    save = function saveWithFirebase(){
+    save = function saveLocalInterfaceOnly(){
       localStorage.setItem(LS, JSON.stringify(state));
-      if(!applyingRemote) queueFirebaseSave();
       render();
     };
   }
 
-  // Ajoute une synchronisation Firebase lorsqu'une nouvelle base Excel est conservée localement.
+  // Les bases sont stockées localement ici. L'import/restauration déclenche explicitement Firebase.
   function installBasesBridge(){
     if(typeof savePersistedBases !== 'function') return;
     const localSaveBases = savePersistedBases;
-    // Nouvelle version de savePersistedBases : conserve la base locale puis programme la synchronisation Firebase.
-    savePersistedBases = function savePersistedBasesWithFirebase(){
+    savePersistedBases = function savePersistedBasesLocalOnly(){
       localSaveBases();
-      if(!applyingRemote) queueFirebaseSave();
     };
   }
 
