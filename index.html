@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.21 Sauvegarde groupée</title>
+<title>ELITT - Suivi OF - V11.22 Notes véhicules</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -221,6 +221,29 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
 .timelinePanWrapV1119 input[type="range"]{width:100%;margin:0}
 .timelinePeriodV1119{
   font-size:11px;color:var(--muted);text-align:right;margin-top:5px
+}
+
+/* V11.22 : notes partagées par véhicule */
+.vehicleNoteBadgeV1122{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:6px;padding:3px 7px;border-radius:999px;
+  background:#3b2d0e;border:1px solid #7a5b16;
+  color:#fde68a;font-size:10px;font-weight:900;
+  cursor:pointer
+}
+.vehicleNoteBadgeV1122:hover{filter:brightness(1.12)}
+.vehicleNoteModalV1122 textarea{
+  width:100%;min-height:220px;resize:vertical;
+  background:#071427;color:#eef6ff;border:1px solid var(--line);
+  border-radius:12px;padding:12px;box-sizing:border-box;
+  font:inherit;line-height:1.45
+}
+.vehicleNoteMetaV1122{
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  color:var(--muted);font-size:11px;margin-top:7px
+}
+.vehicleNoteActionsV1122{
+  display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:14px
 }
 .timelineChartScrollV1119{overflow:auto}
 .timelineChartSvgV1119{
@@ -2994,6 +3017,129 @@ function phaseProgressHtmlV5(vehicle) {
   return '<div style="min-width:220px">' + html + '</div>';
 }
 
+// -----------------------------------------------------------------------------
+// V11.22 - NOTES PARTAGÉES PAR VÉHICULE
+// Tous les utilisateurs connectés peuvent consulter et modifier la note.
+// La note est synchronisée avec les données métier et profite de la sauvegarde
+// groupée Firebase de la V11.21.
+// -----------------------------------------------------------------------------
+const VEHICLE_NOTE_MAX_LENGTH_V1122 = 5000;
+
+function vehicleNoteTextV1122(vehicle) {
+  return String(vehicle?.noteTextV1122 || '');
+}
+
+function vehicleHasNoteV1122(vehicle) {
+  return vehicleNoteTextV1122(vehicle).trim().length > 0;
+}
+
+function vehicleNoteEditorPersonV1122() {
+  if (typeof operationalPersonV1116 === 'function') {
+    const person = operationalPersonV1116();
+    if (person) return person;
+  }
+  if (typeof connectedPersonV1116 === 'function') {
+    const person = connectedPersonV1116();
+    if (person) return person;
+  }
+  return 'Utilisateur';
+}
+
+function vehicleNoteDateV1122(value) {
+  if (!value) return 'Jamais modifiée';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return 'Date inconnue';
+  return date.toLocaleString('fr-FR', {
+    day: '2-digit', month: '2-digit', year: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  });
+}
+
+function updateVehicleNoteCounterV1122() {
+  const field = document.getElementById('vehicleNoteTextV1122');
+  const counter = document.getElementById('vehicleNoteCounterV1122');
+  if (!field || !counter) return;
+  counter.textContent = `${field.value.length}/${VEHICLE_NOTE_MAX_LENGTH_V1122}`;
+}
+
+function openVehicleNoteV1122(vehicleId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId);
+  if (!vehicle || isSAV(vehicle)) return;
+
+  const note = vehicleNoteTextV1122(vehicle);
+  const updatedBy = String(vehicle.noteUpdatedByV1122 || '').trim();
+  const updatedAt = vehicle.noteUpdatedAtV1122 || '';
+
+  openModal(
+    'Note - VIN ' + (vehicle.vin || ''),
+    `<div class="vehicleNoteModalV1122">
+      <div class="muted" style="margin-bottom:8px">
+        Note partagée entre les utilisateurs pour ce véhicule.
+      </div>
+
+      <textarea id="vehicleNoteTextV1122"
+        maxlength="${VEHICLE_NOTE_MAX_LENGTH_V1122}"
+        placeholder="Ex : pièce à vérifier, modification demandée, point à ne pas oublier..."
+        oninput="updateVehicleNoteCounterV1122()">${escHtml(note)}</textarea>
+
+      <div class="vehicleNoteMetaV1122">
+        <span>
+          ${updatedAt
+            ? `Dernière modification : ${escHtml(vehicleNoteDateV1122(updatedAt))}${updatedBy ? ` par ${escHtml(updatedBy)}` : ''}`
+            : 'Aucune note enregistrée pour le moment.'}
+        </span>
+        <span id="vehicleNoteCounterV1122">${note.length}/${VEHICLE_NOTE_MAX_LENGTH_V1122}</span>
+      </div>
+
+      <div class="vehicleNoteActionsV1122">
+        ${vehicleHasNoteV1122(vehicle)
+          ? `<button class="small bad" onclick="clearVehicleNoteV1122('${vehicle.id}')">Effacer la note</button>`
+          : ''}
+        <button class="small alt" onclick="closeModal()">Annuler</button>
+        <button class="small good" onclick="saveVehicleNoteV1122('${vehicle.id}')">Enregistrer</button>
+      </div>
+    </div>`
+  );
+
+  setTimeout(() => {
+    const field = document.getElementById('vehicleNoteTextV1122');
+    if (field) {
+      field.focus();
+      field.setSelectionRange(field.value.length, field.value.length);
+    }
+  }, 0);
+}
+
+function saveVehicleNoteV1122(vehicleId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId);
+  const field = document.getElementById('vehicleNoteTextV1122');
+  if (!vehicle || !field || isSAV(vehicle)) return;
+
+  const value = String(field.value || '').slice(0, VEHICLE_NOTE_MAX_LENGTH_V1122);
+  const now = new Date().toISOString();
+
+  vehicle.noteTextV1122 = value;
+  vehicle.noteUpdatedAtV1122 = now;
+  vehicle.noteUpdatedByV1122 = vehicleNoteEditorPersonV1122();
+
+  closeModal();
+  saveSharedDataV1120();
+}
+
+function clearVehicleNoteV1122(vehicleId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId);
+  if (!vehicle || isSAV(vehicle)) return;
+
+  if (!confirm('Effacer complètement la note de ce véhicule ?')) return;
+
+  vehicle.noteTextV1122 = '';
+  vehicle.noteUpdatedAtV1122 = new Date().toISOString();
+  vehicle.noteUpdatedByV1122 = vehicleNoteEditorPersonV1122();
+
+  closeModal();
+  saveSharedDataV1120();
+}
+
 // Compte les OF actuellement bloqués d'un véhicule.
 function blockedCount(vehicle) {
   return (vehicle.ofs || []).filter(of => of.status === 'Bloqué').length;
@@ -3007,13 +3153,17 @@ function vehicleTable(list, estimates = null, isArchive = false) {
     const sav = isSAV(vehicle);
     const blocked = sav ? 0 : blockedCount(vehicle);
     const archivedDate = vehicle.archivedAt ? new Date(vehicle.archivedAt).toLocaleDateString('fr-FR') : '-';
+    const noteButton = (!sav && !isArchive)
+      ? `<button class="small ${vehicleHasNoteV1122(vehicle) ? 'warn' : 'alt'}" onclick="openVehicleNoteV1122('${vehicle.id}')">📝 Note</button>`
+      : '';
+
     const actions = !isAdminV1117()
-      ? `<span class="adminRestrictedHintV1117">🔒 Gestion admin</span>`
+      ? `${noteButton}<span class="adminRestrictedHintV1117">🔒 Gestion admin</span>`
       : isArchive
         ? `<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="restoreVehicle('${vehicle.id}')">Restaurer</button><button class="small bad" onclick="delVehicle('${vehicle.id}')">Suppr.</button>`
         : sav
           ? `<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="openSAV('${vehicle.id}')">Modifier SAV</button><button class="small warn" onclick="archiveVehicle('${vehicle.id}')">Archiver</button><button class="small bad" onclick="delVehicle('${vehicle.id}')">Suppr.</button>`
-          : `<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="openVehicle('${vehicle.id}')">Modifier</button><button class="small warn" onclick="archiveVehicle('${vehicle.id}')">Archiver</button><button class="small bad" onclick="delVehicle('${vehicle.id}')">Suppr.</button>`;
+          : `${noteButton}<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="openVehicle('${vehicle.id}')">Modifier</button><button class="small warn" onclick="archiveVehicle('${vehicle.id}')">Archiver</button><button class="small bad" onclick="delVehicle('${vehicle.id}')">Suppr.</button>`;
     const savStatus = sav ? savWorkStatusV1114(vehicle) : null;
     const options = sav
       ? `<span class="savbadge ${vehicle.savDone ? 'savdone' : ''}">SAV • ${escHtml(savStatus.label)}</span>${savStatus.person ? `<div class="muted" style="margin-top:5px">${escHtml(savStatus.person)}</div>` : ''}`
@@ -3031,7 +3181,13 @@ function vehicleTable(list, estimates = null, isArchive = false) {
             : '<div class="muted">temps réel / prévu</div>')
         : '<div class="muted">hors week-end et fériés</div>';
     return `<tr class="vehicleRow ${blocked ? 'blockedrow' : ''}" style="--vehColor:${escHtml(vehicleColor(vehicle))}">
-      <td><div class="vinbox">${colorDot(vehicle)}<b>${escHtml(vehicle.vin)}</b></div><div class="muted">${escHtml(vehicle.type || 'CCF')}${vehicle.archived ? ' • Archivé' : ''}</div></td>
+      <td>
+        <div class="vinbox">${colorDot(vehicle)}<b>${escHtml(vehicle.vin)}</b></div>
+        <div class="muted">${escHtml(vehicle.type || 'CCF')}${vehicle.archived ? ' • Archivé' : ''}</div>
+        ${(!sav && vehicleHasNoteV1122(vehicle))
+          ? `<span class="vehicleNoteBadgeV1122" onclick="openVehicleNoteV1122('${vehicle.id}')">📝 Note enregistrée</span>`
+          : ''}
+      </td>
       <td>${sav ? 'SAV' : escHtml(vehicle.brand || '-')}</td>
       <td>${escHtml(vehicle.client || '-')}</td>
       <td>${options}</td>
@@ -5374,7 +5530,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.21,
+      version: 11.22,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -5561,6 +5717,17 @@ initApp();
     (result.vehicles || []).forEach(localVehicle => {
       const remoteVehicle = remoteVehicles.get(localVehicle.id);
       if(!remoteVehicle) return;
+
+      // V11.22 : protège aussi les notes contre un poste qui posséderait
+      // encore une ancienne version du véhicule.
+      const localNoteTime = syncTimeV1118(localVehicle.noteUpdatedAtV1122);
+      const remoteNoteTime = syncTimeV1118(remoteVehicle.noteUpdatedAtV1122);
+
+      if(remoteNoteTime > localNoteTime){
+        localVehicle.noteTextV1122 = remoteVehicle.noteTextV1122 || '';
+        localVehicle.noteUpdatedAtV1122 = remoteVehicle.noteUpdatedAtV1122 || '';
+        localVehicle.noteUpdatedByV1122 = remoteVehicle.noteUpdatedByV1122 || '';
+      }
 
       if(localVehicle.isSAV === true || remoteVehicle.isSAV === true){
         if(syncTimeV1118(remoteVehicle.savSyncUpdatedAtV1118) > syncTimeV1118(localVehicle.savSyncUpdatedAtV1118)){
