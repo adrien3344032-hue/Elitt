@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.22 Notes véhicules</title>
+<title>ELITT - Suivi OF - V11.23 Mode écran atelier</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -245,6 +245,102 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
 .vehicleNoteActionsV1122{
   display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:14px
 }
+
+/* V11.23 : mode écran atelier */
+.workshopToolbarV1123{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;flex-wrap:wrap;margin-bottom:14px
+}
+.workshopTitleBlockV1123{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.workshopClockV1123{
+  font-size:28px;font-weight:950;letter-spacing:.5px;color:#fff
+}
+.workshopDateV1123{font-size:12px;color:var(--muted);margin-top:2px}
+.workshopKpisV1123{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:10px;margin-bottom:12px
+}
+.workshopKpiV1123{
+  background:#0a1d36;border:1px solid var(--line);border-radius:14px;
+  padding:10px 12px;min-width:0
+}
+.workshopKpiV1123 b{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.workshopKpiV1123 strong{display:block;font-size:24px;line-height:1.05;margin-top:3px}
+.workshopGridV1123{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px
+}
+.workshopCardV1123{
+  position:relative;background:#08182e;border:1px solid #29405f;
+  border-radius:16px;padding:13px;overflow:hidden;min-height:215px;
+  box-shadow:0 8px 24px rgba(0,0,0,.13)
+}
+.workshopCardV1123:before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--vehColor,#3b82f6)
+}
+.workshopCardHeadV1123{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:10px;margin-bottom:10px
+}
+.workshopVinV1123{font-size:23px;font-weight:950;line-height:1}
+.workshopClientV1123{font-size:12px;color:var(--muted);margin-top:4px}
+.workshopBadgesV1123{
+  display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap
+}
+.workshopPhaseV1123{margin-top:7px}
+.workshopPhaseTopV1123{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  font-size:11px;margin-bottom:3px
+}
+.workshopPhaseTopV1123 b{font-size:11px}
+.workshopPhaseV1123 .progress{height:7px}
+.workshopPeopleV1123{
+  display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;min-height:24px
+}
+.workshopPersonV1123{
+  padding:4px 7px;border-radius:999px;background:#12335a;border:1px solid #285181;
+  font-size:10px;font-weight:850;color:#dbeafe
+}
+.workshopPersonV1123.paused{
+  background:#4b3510;border-color:#7a5a1b;color:#fde68a
+}
+.workshopFooterV1123{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:10px;margin-top:10px
+}
+.workshopSmallV1123{font-size:10px;color:var(--muted)}
+.workshopNoteV1123{
+  margin-top:9px;padding:7px 8px;border-radius:10px;
+  background:#3b2d0e;border:1px solid #6f5618;color:#fde68a;
+  font-size:10px;line-height:1.3
+}
+.workshopEmptyV1123{
+  padding:40px;text-align:center;border:1px dashed var(--line);border-radius:16px;color:var(--muted)
+}
+.workshopSavCardV1123{
+  background:#241327;border-color:#5b2d62
+}
+.workshopFullscreenV1123 aside,
+.workshopFullscreenV1123 main>header{display:none!important}
+.workshopFullscreenV1123 .app{display:block!important}
+.workshopFullscreenV1123 main{margin:0!important;padding:12px!important;width:100%!important;max-width:none!important}
+.workshopFullscreenV1123 #view{max-width:none!important}
+.workshopFullscreenV1123 .workshopGridV1123{gap:10px}
+.workshopFullscreenV1123 .workshopCardV1123{min-height:205px}
+.workshopFullscreenV1123 .workshopToolbarV1123{
+  position:sticky;top:0;z-index:10;background:#071427;padding:8px 0 10px
+}
+@media(min-width:1800px){
+  .workshopGridV1123{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:1250px){
+  .workshopGridV1123{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .workshopKpisV1123{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:760px){
+  .workshopGridV1123{grid-template-columns:1fr}
+  .workshopKpisV1123{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .workshopClockV1123{font-size:23px}
+}
 .timelineChartScrollV1119{overflow:auto}
 .timelineChartSvgV1119{
   min-width:760px;width:100%;
@@ -418,6 +514,7 @@ window.ELITT_V10_SCHEMA = 10;
 // Liste des pages réellement utilisées dans le menu de gauche.
 const pages = [
   ['dash', 'Tableau de bord'],
+  ['workshop', 'Écran atelier'],
   ['real', 'Réalisation'],
   ['blocked', 'OF bloqués'],
   ['times', 'Temps OF'],
@@ -1985,9 +2082,15 @@ function renderNav() {
 // Affiche la page correspondant au menu sélectionné.
 function render() {
   if (!isAdminV1117() && adminOnlyPageV1117(page)) page = 'dash';
+
+  if (page !== 'workshop' && document.body.classList.contains('workshopFullscreenV1123')) {
+    document.body.classList.remove('workshopFullscreenV1123');
+  }
+
   renderNav();
   const views = {
     dash,
+    workshop: workshopPageV1123,
     real,
     blocked: blockedPage,
     times: timesPageV1112,
@@ -3200,6 +3303,247 @@ function vehicleTable(list, estimates = null, isArchive = false) {
       <td class="actions">${actions}</td>
     </tr>`;
   }).join('')}</tbody></table></div>`;
+}
+
+// -----------------------------------------------------------------------------
+// V11.23 - MODE ÉCRAN ATELIER
+// Vue de supervision en lecture seule, conçue pour un écran/TV dans l'atelier.
+// Elle reste synchronisée en temps réel grâce au snapshot Firebase existant.
+// -----------------------------------------------------------------------------
+
+function workshopClockTextV1123() {
+  const now = new Date();
+  return {
+    time: now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+    date: now.toLocaleDateString('fr-FR', {
+      weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
+    })
+  };
+}
+
+function updateWorkshopClockV1123() {
+  const values = workshopClockTextV1123();
+  const time = document.getElementById('workshopClockV1123');
+  const date = document.getElementById('workshopDateV1123');
+  if (time) time.textContent = values.time;
+  if (date) date.textContent = values.date;
+}
+
+if (!window.__workshopClockTimerV1123) {
+  window.__workshopClockTimerV1123 = setInterval(updateWorkshopClockV1123, 15000);
+}
+
+function workshopPeopleV1123(vehicle) {
+  if (!vehicle || isSAV(vehicle)) {
+    const status = vehicle ? savWorkStatusV1114(vehicle) : null;
+    if (!status || !status.person) return [];
+    return [{
+      person: status.person,
+      paused: status.key === 'paused',
+      label: status.label
+    }];
+  }
+
+  return (vehicle.ofs || [])
+    .map(of => {
+      const session = activeWorkSessionV1111(of);
+      if (!session) return null;
+      return {
+        person: session.person,
+        paused: !!session.pausedAt,
+        label: `${of.name || 'OF'}`
+      };
+    })
+    .filter(Boolean);
+}
+
+function workshopPhaseRowV1123(vehicle, category) {
+  const stats = phaseStatsV5(vehicle, category);
+  return `<div class="workshopPhaseV1123">
+    <div class="workshopPhaseTopV1123">
+      <b>${escHtml(category)}</b>
+      <span>${stats.hoursPct}% • ${fmtHoursMinutesV11122(stats.doneHours)} / ${fmtHoursMinutesV11122(stats.totalHours)}</span>
+    </div>
+    <div class="progress"><div class="bar" style="width:${stats.hoursPct}%"></div></div>
+  </div>`;
+}
+
+function workshopVehicleCardV1123(vehicle, estimates) {
+  const sav = isSAV(vehicle);
+  const blocked = sav ? 0 : blockedCount(vehicle);
+  const running = sav ? 0 : runningOFCountV11143(vehicle);
+  const paused = sav ? 0 : pausedOFCountV11143(vehicle);
+  const people = workshopPeopleV1123(vehicle);
+  const estimate = estimates?.[vehicle.id] || null;
+  const note = sav ? '' : vehicleNoteTextV1122(vehicle).trim();
+  const deadline = sav
+    ? null
+    : deadlineInfoV115(vehicle, estimate, false);
+
+  const badges = sav
+    ? (() => {
+        const status = savWorkStatusV1114(vehicle);
+        return `<span class="savWorkBadgeV1114 ${status.key}">${status.key === 'running' ? '▶ ' : status.key === 'paused' ? '⏸ ' : status.key === 'done' ? '✓ ' : ''}${escHtml(status.label)}</span>`;
+      })()
+    : `${running ? `<span class="inProgressBadgeV1111">▶ ${running} en cours</span>` : ''}
+       ${paused ? `<span class="pausedBadgeV1113">⏸ ${paused} pause</span>` : ''}
+       ${blocked ? `<span class="deadlineBadge late">⚠ ${blocked} bloqué${blocked > 1 ? 's' : ''}</span>` : ''}
+       ${deadline ? `<span class="deadlineBadge ${deadline.className}">${escHtml(deadline.label)}</span>` : ''}`;
+
+  const personHtml = people.length
+    ? people.slice(0, 5).map(item =>
+        `<span class="workshopPersonV1123 ${item.paused ? 'paused' : ''}">
+          ${item.paused ? '⏸' : '▶'} ${escHtml(item.person)} • ${escHtml(item.label)}
+        </span>`
+      ).join('')
+    : `<span class="workshopSmallV1123">Personne en cours sur ce véhicule</span>`;
+
+  const progressHtml = sav
+    ? `<div class="workshopPhaseV1123">
+        <div class="workshopPhaseTopV1123">
+          <b>SAV</b>
+          <span>${pct(vehicle)}% • ${fmtHoursMinutesV11122(savActualHoursNowV1114(vehicle))} / ${fmtHoursMinutesV11122(Math.max(0, Number(vehicle.savEstimated) || 0))}</span>
+        </div>
+        <div class="progress"><div class="bar" style="width:${pct(vehicle)}%"></div></div>
+      </div>`
+    : ['Fabrication', 'Prémontage', 'Pose'].map(category => workshopPhaseRowV1123(vehicle, category)).join('');
+
+  const footerLeft = sav
+    ? `Reste ${fmt(remain(vehicle))}`
+    : `Reste ${fmt(remain(vehicle))} • ${doneUnitsV5(vehicle)}/${totalUnitsV5(vehicle)} réalisations`;
+
+  const footerRight = sav
+    ? ''
+    : (vehicle.targetDate
+        ? `Objectif ${escHtml(targetDateLabelV115(vehicle.targetDate))}`
+        : (estimate ? `Fin estimée ${escHtml(fmtDate(estimate))}` : 'Fin estimée —'));
+
+  return `<article class="workshopCardV1123 ${sav ? 'workshopSavCardV1123' : ''}" style="--vehColor:${escHtml(vehicleColor(vehicle))}">
+    <div class="workshopCardHeadV1123">
+      <div>
+        <div class="workshopVinV1123">${sav ? 'SAV ' : 'VIN '}${escHtml(vehicle.vin || '-')}</div>
+        <div class="workshopClientV1123">${escHtml(vehicle.client || '-')} ${sav ? '' : '• ' + escHtml(vehicle.brand || '-')}</div>
+      </div>
+      <div class="workshopBadgesV1123">${badges}</div>
+    </div>
+
+    ${progressHtml}
+
+    <div class="workshopPeopleV1123">${personHtml}</div>
+
+    ${note
+      ? `<div class="workshopNoteV1123">📝 ${escHtml(note.length > 150 ? note.slice(0, 150) + '…' : note)}</div>`
+      : ''}
+
+    <div class="workshopFooterV1123">
+      <div class="workshopSmallV1123">${footerLeft}</div>
+      <div class="workshopSmallV1123" style="text-align:right">${footerRight}</div>
+    </div>
+  </article>`;
+}
+
+async function toggleWorkshopFullscreenV1123() {
+  const entering = !document.body.classList.contains('workshopFullscreenV1123');
+
+  if (entering) {
+    document.body.classList.add('workshopFullscreenV1123');
+    try {
+      if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+        await document.documentElement.requestFullscreen();
+      }
+    } catch (error) {
+      console.warn('Plein écran navigateur indisponible.', error);
+    }
+  } else {
+    document.body.classList.remove('workshopFullscreenV1123');
+    try {
+      if (document.fullscreenElement && document.exitFullscreen) {
+        await document.exitFullscreen();
+      }
+    } catch (error) {
+      console.warn('Sortie plein écran impossible.', error);
+    }
+  }
+
+  render();
+}
+
+function leaveWorkshopV1123() {
+  document.body.classList.remove('workshopFullscreenV1123');
+
+  if (document.fullscreenElement && document.exitFullscreen) {
+    document.exitFullscreen().catch(() => {});
+  }
+
+  page = 'dash';
+  render();
+}
+
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement) {
+    document.body.classList.remove('workshopFullscreenV1123');
+    if (page === 'workshop') render();
+  }
+});
+
+function workshopPageV1123() {
+  normalizeAll();
+  setHead('Écran atelier', 'Vue supervision en temps réel');
+
+  const active = activeVehicles()
+    .slice()
+    .sort((a, b) => {
+      if (isSAV(a) !== isSAV(b)) return isSAV(a) ? 1 : -1;
+      return (Number(a.priority) || 1) - (Number(b.priority) || 1)
+        || String(a.vin || '').localeCompare(String(b.vin || ''));
+    });
+
+  const estimates = estimateVehiclesActive();
+  const normal = active.filter(vehicle => !isSAV(vehicle));
+  const savs = active.filter(vehicle => isSAV(vehicle));
+
+  const running = normal.reduce((sum, vehicle) => sum + runningOFCountV11143(vehicle), 0);
+  const paused = normal.reduce((sum, vehicle) => sum + pausedOFCountV11143(vehicle), 0);
+  const blocked = normal.reduce((sum, vehicle) => sum + blockedCount(vehicle), 0);
+  const values = workshopClockTextV1123();
+
+  const cards = [
+    ...normal.map(vehicle => workshopVehicleCardV1123(vehicle, estimates)),
+    ...savs.map(vehicle => workshopVehicleCardV1123(vehicle, estimates))
+  ].join('');
+
+  document.getElementById('view').innerHTML = `
+    <div class="workshopToolbarV1123">
+      <div class="workshopTitleBlockV1123">
+        <div>
+          <div class="workshopClockV1123" id="workshopClockV1123">${escHtml(values.time)}</div>
+          <div class="workshopDateV1123" id="workshopDateV1123">${escHtml(values.date)}</div>
+        </div>
+        <span class="muted">Mise à jour automatique avec Firebase</span>
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="alt" onclick="toggleWorkshopFullscreenV1123()">
+          ${document.body.classList.contains('workshopFullscreenV1123') ? '⤢ Quitter plein écran' : '⛶ Plein écran'}
+        </button>
+        ${document.body.classList.contains('workshopFullscreenV1123')
+          ? `<button class="bad" onclick="leaveWorkshopV1123()">Quitter écran atelier</button>`
+          : ''}
+      </div>
+    </div>
+
+    <div class="workshopKpisV1123">
+      <div class="workshopKpiV1123"><b>Camions actifs</b><strong>${normal.length}</strong></div>
+      <div class="workshopKpiV1123"><b>OF en cours</b><strong>${running}</strong></div>
+      <div class="workshopKpiV1123"><b>OF en pause</b><strong>${paused}</strong></div>
+      <div class="workshopKpiV1123"><b>OF bloqués</b><strong>${blocked}</strong></div>
+      <div class="workshopKpiV1123"><b>SAV actifs</b><strong>${savs.length}</strong></div>
+    </div>
+
+    ${active.length
+      ? `<div class="workshopGridV1123">${cards}</div>`
+      : `<div class="workshopEmptyV1123">Aucun véhicule actif à afficher.</div>`}
+  `;
 }
 
 // Affiche le tableau de bord avec les compteurs et les véhicules actifs.
@@ -5530,7 +5874,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.22,
+      version: 11.23,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
