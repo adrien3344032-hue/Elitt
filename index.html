@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.20.1 QR fiabilité</title>
+<title>ELITT - Suivi OF - V11.21 Sauvegarde groupée</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -984,7 +984,7 @@ const USERS_ROLES = {
   'julien@elitt.com': 'user',
   'david@elitt.com': 'user',
   'dimitri@elitt.com': 'user',
-  'priscilla@elitt.com': 'admin',
+  'priscilla@elitt.com': 'user',
   'pierre@elitt.com': 'user'
 };
 
@@ -1090,30 +1090,92 @@ function touchSAVV1118(vehicle, at = new Date().toISOString()) {
   return at;
 }
 
-// Sauvegarde immédiatement une vraie modification métier.
-// Le compteur protège aussi plusieurs clics rapprochés : Pause puis Reprendre, par exemple.
-async function saveCriticalV1118() {
-  window.SUIVI_OF_PENDING_WRITES_V1120 =
-    Math.max(0, Number(window.SUIVI_OF_PENDING_WRITES_V1120) || 0) + 1;
-  window.SUIVI_OF_LOCAL_PENDING_V1118 = true;
+// -----------------------------------------------------------------------------
+// V11.21 - SAUVEGARDE FIREBASE GROUPÉE
+// Les actions sont instantanées à l'écran et dans le stockage local.
+// Firebase est contacté 5 secondes après la DERNIÈRE action. Chaque nouveau
+// clic repousse le délai : plusieurs validations successives = une seule
+// transaction Firestore.
+// -----------------------------------------------------------------------------
+const FIREBASE_BATCH_DELAY_V1121 = 5000;
 
-  try { localStorage.setItem(LS, JSON.stringify(state)); }
-  catch (error) { console.error(error); }
+let firebaseBatchTimerV1121 = null;
+let firebaseBatchPromiseV1121 = null;
+let firebaseBatchResolveV1121 = null;
+let firebaseBatchRejectV1121 = null;
 
-  render();
+function setFirebasePendingStatusV1121() {
+  const status = document.getElementById('fbStatusText');
+  if (status) status.textContent = 'Modifications en attente...';
+}
+
+// Envoie immédiatement le lot actuellement en attente.
+async function flushSharedDataV1121() {
+  if (firebaseBatchTimerV1121) {
+    clearTimeout(firebaseBatchTimerV1121);
+    firebaseBatchTimerV1121 = null;
+  }
+
+  if (!window.SUIVI_OF_LOCAL_PENDING_V1118) return true;
+
+  const resolve = firebaseBatchResolveV1121;
+  const reject = firebaseBatchRejectV1121;
+
+  firebaseBatchPromiseV1121 = null;
+  firebaseBatchResolveV1121 = null;
+  firebaseBatchRejectV1121 = null;
 
   try {
     if (typeof window.requestFirebaseSave === 'function') {
       await window.requestFirebaseSave(true);
     }
+
+    window.SUIVI_OF_PENDING_WRITES_V1120 = 0;
+    window.SUIVI_OF_LOCAL_PENDING_V1118 = false;
+
+    if (resolve) resolve(true);
+    return true;
   } catch (error) {
     console.error(error);
-  } finally {
-    window.SUIVI_OF_PENDING_WRITES_V1120 =
-      Math.max(0, (Number(window.SUIVI_OF_PENDING_WRITES_V1120) || 1) - 1);
-    window.SUIVI_OF_LOCAL_PENDING_V1118 =
-      window.SUIVI_OF_PENDING_WRITES_V1120 > 0;
+    window.SUIVI_OF_LOCAL_PENDING_V1118 = true;
+    if (reject) reject(error);
+    throw error;
   }
+}
+
+// Programme ou reprogramme la sauvegarde du lot.
+function queueSharedDataSaveV1121() {
+  window.SUIVI_OF_PENDING_WRITES_V1120 =
+    Math.max(0, Number(window.SUIVI_OF_PENDING_WRITES_V1120) || 0) + 1;
+  window.SUIVI_OF_LOCAL_PENDING_V1118 = true;
+
+  setFirebasePendingStatusV1121();
+
+  if (!firebaseBatchPromiseV1121) {
+    firebaseBatchPromiseV1121 = new Promise((resolve, reject) => {
+      firebaseBatchResolveV1121 = resolve;
+      firebaseBatchRejectV1121 = reject;
+    });
+    firebaseBatchPromiseV1121.catch(() => {});
+  }
+
+  if (firebaseBatchTimerV1121) clearTimeout(firebaseBatchTimerV1121);
+
+  firebaseBatchTimerV1121 = setTimeout(() => {
+    flushSharedDataV1121().catch(() => {});
+  }, FIREBASE_BATCH_DELAY_V1121);
+
+  return firebaseBatchPromiseV1121;
+}
+
+// Une vraie modification est enregistrée immédiatement en local,
+// puis ajoutée au lot Firebase.
+function saveCriticalV1118() {
+  try { localStorage.setItem(LS, JSON.stringify(state)); }
+  catch (error) { console.error(error); }
+
+  render();
+  return queueSharedDataSaveV1121();
 }
 
 function saveSharedDataV1120() {
@@ -1293,8 +1355,9 @@ async function cancelOFWorkV1111(vehicleId, ofId) {
   logAction('Démarrage OF annulé', vehicle, of, `${session.person} • après ${duration}`);
   recordProgressEvent(vehicle, of, 0, session.person, 'cancel', 'Démarrage annulé', beforeSnapshot);
 
-  // Même mécanisme que les autres actions critiques.
-  await saveSharedDataV1120();
+  // L'annulation reste une action rare : on vide immédiatement le lot après l'avoir enregistrée.
+  saveSharedDataV1120();
+  await flushSharedDataV1121();
 }
 
 // Met un OF ancien au format quantité actuel sans perdre son statut ni son avancement.
@@ -2749,7 +2812,9 @@ async function openVehicleQRV115(vehicleId) {
     if (!hadPublicId) {
       // Le nouvel identifiant permanent du QR doit d'abord être enregistré dans les données privées.
       try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {}
-      if (typeof window.requestFirebaseSave === 'function') {
+      if (window.SUIVI_OF_LOCAL_PENDING_V1118) {
+        await flushSharedDataV1121();
+      } else if (typeof window.requestFirebaseSave === 'function') {
         await window.requestFirebaseSave(true);
       }
     }
@@ -5309,7 +5374,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.201,
+      version: 11.21,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -5676,10 +5741,35 @@ initApp();
       event.stopPropagation();
       toggleNotificationsV1115();
     };
-    document.getElementById('fbForceSave').onclick = () => pushFirebaseNow(true);
+    document.getElementById('fbForceSave').onclick = async () => {
+      try {
+        if (window.SUIVI_OF_LOCAL_PENDING_V1118) {
+          await flushSharedDataV1121();
+        } else {
+          await pushFirebaseNow(true);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
     document.getElementById('fbBackupData').onclick = () => backupAllV37();
     document.getElementById('fbRestoreData').onclick = () => restoreAllV37();
-    document.getElementById('fbLogout').onclick = () => auth.signOut();
+    document.getElementById('fbLogout').onclick = async () => {
+      try {
+        if (window.SUIVI_OF_LOCAL_PENDING_V1118) {
+          await flushSharedDataV1121();
+        }
+      } catch (error) {
+        console.error(error);
+        const leave = confirm(
+          "La sauvegarde Firebase n'a pas pu être confirmée.\n\n" +
+          "Veux-tu quand même te déconnecter ?"
+        );
+        if (!leave) return;
+      }
+
+      await auth.signOut();
+    };
 
     ensureNotificationPanelV1115();
     renderNotificationBellV1115();
@@ -5851,6 +5941,15 @@ initApp();
 
   installSaveBridge();
   installBasesBridge();
+
+  // Évite une perte si la page est fermée pendant les 5 secondes d'attente.
+  window.addEventListener('beforeunload', event => {
+    if (window.SUIVI_OF_LOCAL_PENDING_V1118) {
+      event.preventDefault();
+      event.returnValue = '';
+    }
+  });
+
   window.addEventListener('load', initFirebase);
 })();
 
