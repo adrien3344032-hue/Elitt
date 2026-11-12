@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.23 Mode écran atelier</title>
+<title>ELITT - Suivi OF - V11.24 Planification</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -316,6 +316,106 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
 .workshopEmptyV1123{
   padding:40px;text-align:center;border:1px dashed var(--line);border-radius:16px;color:var(--muted)
 }
+
+/* V11.24 : planification et planning utilisateurs */
+.planningAdminTopV1124{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px
+}
+.planningStepV1124{
+  background:#0a1d36;border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:12px
+}
+.planningStepV1124 h3{margin:0 0 8px;font-size:15px}
+.planningVinGridV1124{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px
+}
+.planningVinChoiceV1124{
+  display:flex;align-items:center;gap:8px;padding:9px 10px;border:1px solid #29405f;
+  border-radius:11px;background:#08182e;cursor:pointer
+}
+.planningVinChoiceV1124:hover{border-color:#41658f}
+.planningVinChoiceV1124 input{margin:0}
+.planningOfPickerV1124{max-height:430px;overflow:auto;border:1px solid var(--line);border-radius:12px}
+.planningOfRowV1124{
+  display:grid;grid-template-columns:34px 90px minmax(130px,1.2fr) minmax(120px,1fr) 100px 105px;
+  gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid #17304e;font-size:11px
+}
+.planningOfRowV1124:last-child{border-bottom:0}
+.planningOfRowV1124.header{
+  position:sticky;top:0;z-index:2;background:#10253f;font-weight:900;color:#cfe2ff
+}
+.planningAssignedV1124{
+  display:inline-flex;padding:3px 6px;border-radius:999px;background:#12335a;border:1px solid #285181;
+  color:#dbeafe;font-size:9px;font-weight:850
+}
+.planningTeamGridV1124{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:12px
+}
+.planningPersonCardV1124{
+  background:#08182e;border:1px solid #29405f;border-radius:15px;overflow:hidden
+}
+.planningPersonHeadV1124{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 12px;
+  background:#0d2340;border-bottom:1px solid #29405f
+}
+.planningPersonHeadV1124 strong{font-size:15px}
+.planningPersonStatsV1124{font-size:10px;color:var(--muted)}
+.planningTaskV1124{
+  display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:9px;align-items:center;
+  padding:9px 10px;border-bottom:1px solid #17304e
+}
+.planningTaskV1124:last-child{border-bottom:0}
+.planningOrderV1124{
+  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:#12335a;border:1px solid #285181;font-weight:950;color:#dbeafe
+}
+.planningTaskTitleV1124{font-size:12px;font-weight:900}
+.planningTaskSubV1124{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.35}
+.planningTaskActionsV1124{display:flex;align-items:center;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.planningTaskActionsV1124 select{max-width:110px;padding:5px 6px;font-size:10px}
+.planningStatusV1124{
+  display:inline-flex;padding:3px 7px;border-radius:999px;font-size:9px;font-weight:900;border:1px solid transparent
+}
+.planningStatusV1124.todo{background:#10253f;color:#cfe2ff;border-color:#29486f}
+.planningStatusV1124.running{background:#083b2c;color:#bbf7d0;border-color:#176a4e}
+.planningStatusV1124.paused{background:#4b3510;color:#fde68a;border-color:#7a5a1b}
+.planningStatusV1124.blocked{background:#4a1720;color:#fecdd3;border-color:#7f2938}
+.planningStatusV1124.done{background:#173525;color:#bbf7d0;border-color:#2d6a47}
+.planningStatusV1124.missing{background:#3c2730;color:#fbcfe8;border-color:#6c3a4f}
+.myPlanningKpisV1124{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px
+}
+.myPlanningListV1124{display:flex;flex-direction:column;gap:9px}
+.myPlanningTaskV1124{
+  display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:12px;align-items:center;
+  background:#08182e;border:1px solid #29405f;border-radius:14px;padding:11px 12px;
+  position:relative;overflow:hidden
+}
+.myPlanningTaskV1124:before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--vehColor,#3b82f6)
+}
+.myPlanningTaskV1124.next{
+  border-color:#4f7eb1;box-shadow:0 0 0 1px rgba(79,126,177,.22)
+}
+.myPlanningOrderV1124{
+  font-size:22px;font-weight:950;color:#dbeafe;text-align:center
+}
+.myPlanningNextV1124{
+  display:inline-flex;margin-top:5px;padding:3px 7px;border-radius:999px;
+  background:#143c66;color:#dbeafe;border:1px solid #2e6698;font-size:9px;font-weight:950
+}
+.planningEmptyV1124{
+  padding:32px;text-align:center;border:1px dashed var(--line);border-radius:14px;color:var(--muted)
+}
+@media(max-width:950px){
+  .planningOfRowV1124{grid-template-columns:30px 75px minmax(120px,1fr) 90px}
+  .planningOfRowV1124 .hideSmallV1124{display:none}
+  .planningTeamGridV1124{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+  .myPlanningKpisV1124{grid-template-columns:1fr}
+  .myPlanningTaskV1124{grid-template-columns:42px minmax(0,1fr)}
+  .myPlanningTaskV1124>div:last-child{grid-column:2}
+}
 .workshopSavCardV1123{
   background:#241327;border-color:#5b2d62
 }
@@ -515,6 +615,7 @@ window.ELITT_V10_SCHEMA = 10;
 const pages = [
   ['dash', 'Tableau de bord'],
   ['workshop', 'Écran atelier'],
+  ['planning', 'Planning'],
   ['real', 'Réalisation'],
   ['blocked', 'OF bloqués'],
   ['times', 'Temps OF'],
@@ -1104,7 +1205,7 @@ const USERS_ROLES = {
   'julien@elitt.com': 'user',
   'david@elitt.com': 'user',
   'dimitri@elitt.com': 'user',
-  'priscilla@elitt.com': 'admin',
+  'priscilla@elitt.com': 'user',
   'pierre@elitt.com': 'user'
 };
 
@@ -1137,7 +1238,7 @@ function requireAdminV1117(action = 'cette action') {
 
 // Indique les pages qui doivent être totalement invisibles aux comptes atelier.
 function adminOnlyPageV1117(pageKey) {
-  return ['people', 'archives', 'detail'].includes(pageKey);
+  return ['people', 'archives', 'detail', 'planadmin'].includes(pageKey);
 }
 
 // Applique les droits visuels après connexion ou changement de compte.
@@ -1729,6 +1830,8 @@ function normalizeAll() {
   state.progressEventsV6 = Array.isArray(state.progressEventsV6) ? state.progressEventsV6 : [];
   state.workTimesV1112 = Array.isArray(state.workTimesV1112) ? state.workTimesV1112 : [];
   state.notificationsV1115 = Array.isArray(state.notificationsV1115) ? state.notificationsV1115 : [];
+  state.planningV1124 = Array.isArray(state.planningV1124) ? state.planningV1124 : [];
+  normalizePlanningV1124();
   // On garde les 300 notifications les plus récentes afin de ne pas alourdir le document Firebase.
   state.notificationsV1115 = state.notificationsV1115
     .filter(item => item && item.id && item.at)
@@ -2091,6 +2194,8 @@ function render() {
   const views = {
     dash,
     workshop: workshopPageV1123,
+    planning: planningPageV1124,
+    planadmin: planningAdminPageV1124,
     real,
     blocked: blockedPage,
     times: timesPageV1112,
@@ -3306,6 +3411,541 @@ function vehicleTable(list, estimates = null, isArchive = false) {
 }
 
 // -----------------------------------------------------------------------------
+// V11.24 - PLANIFICATION DES OF
+// L'admin attribue un OF à une seule personne et définit son ordre de travail.
+// Le planning ne verrouille pas la Réalisation : il sert d'organisation.
+// Le statut affiché est toujours dérivé de l'OF réel.
+// -----------------------------------------------------------------------------
+
+function normalizePlanningV1124() {
+  state.planningV1124 = Array.isArray(state.planningV1124) ? state.planningV1124 : [];
+
+  const seen = new Set();
+  state.planningV1124 = state.planningV1124
+    .filter(item => item && item.id && item.vehicleId && item.ofId && item.person)
+    .sort((a, b) => new Date(b.updatedAt || b.assignedAt || 0) - new Date(a.updatedAt || a.assignedAt || 0))
+    .filter(item => {
+      const key = `${item.vehicleId}||${item.ofId}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+  const people = [...new Set(state.planningV1124.map(item => item.person))];
+  people.forEach(person => renumberPlanningForPersonV1124(person, false));
+}
+
+function touchPlanningV1124(at = new Date().toISOString()) {
+  state.planningSyncUpdatedAtV1124 = at;
+  return at;
+}
+
+function planningAssignmentsV1124() {
+  normalizePlanningV1124();
+  return state.planningV1124;
+}
+
+function planningTargetV1124(item) {
+  const vehicle = state.vehicles.find(vehicle => vehicle.id === item?.vehicleId);
+  const of = vehicle?.ofs?.find(of => of.id === item?.ofId);
+  return { vehicle, of };
+}
+
+function planningStatusV1124(item) {
+  const { vehicle, of } = planningTargetV1124(item);
+
+  if (!vehicle || !of) {
+    return { key: 'missing', label: 'Indisponible' };
+  }
+
+  if (qtyRemainingV5(of) <= 0) {
+    return { key: 'done', label: '✓ Fait' };
+  }
+
+  if (of.status === 'Bloqué') {
+    return { key: 'blocked', label: '⚠ Bloqué' };
+  }
+
+  const session = activeWorkSessionV1111(of);
+  if (session?.pausedAt) {
+    return { key: 'paused', label: `⏸ Pause • ${session.person}` };
+  }
+  if (session) {
+    return { key: 'running', label: `▶ En cours • ${session.person}` };
+  }
+
+  return { key: 'todo', label: 'À faire' };
+}
+
+function planningRemainingHoursV1124(item) {
+  const { of } = planningTargetV1124(item);
+  if (!of) return 0;
+  return Math.max(0, Number(of.time) || 0) * qtyRemainingV5(of);
+}
+
+function planningPersonNamesV1124() {
+  return (state.people || [])
+    .map(personName)
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b, 'fr'));
+}
+
+function nextPlanningOrderV1124(person) {
+  const items = planningAssignmentsV1124().filter(item => item.person === person);
+  return items.reduce((max, item) => Math.max(max, Number(item.order) || 0), 0) + 1;
+}
+
+function renumberPlanningForPersonV1124(person, touch = true) {
+  const list = (state.planningV1124 || [])
+    .filter(item => item.person === person)
+    .sort((a, b) => (Number(a.order) || 999999) - (Number(b.order) || 999999)
+      || new Date(a.assignedAt || 0) - new Date(b.assignedAt || 0));
+
+  list.forEach((item, index) => item.order = index + 1);
+  if (touch && list.length) touchPlanningV1124();
+}
+
+function planningSelectedVinsV1124() {
+  if (!(window._planningSelectedVinsV1124 instanceof Set)) {
+    window._planningSelectedVinsV1124 = new Set();
+  }
+  return window._planningSelectedVinsV1124;
+}
+
+function togglePlanningVinV1124(vehicleId, checked) {
+  const selected = planningSelectedVinsV1124();
+  if (checked) selected.add(vehicleId);
+  else selected.delete(vehicleId);
+  renderPlanningOFPickerV1124();
+}
+
+function selectAllPlanningVinsV1124(checked) {
+  const selected = planningSelectedVinsV1124();
+  selected.clear();
+  if (checked) {
+    activeNormalVehicles().forEach(vehicle => selected.add(vehicle.id));
+  }
+  document.querySelectorAll('.planningVinCheckV1124').forEach(input => {
+    input.checked = checked;
+  });
+  renderPlanningOFPickerV1124();
+}
+
+function planningOFPickerHtmlV1124() {
+  const selected = planningSelectedVinsV1124();
+  const vehicles = activeNormalVehicles().filter(vehicle => selected.has(vehicle.id));
+
+  if (!vehicles.length) {
+    return `<div class="planningEmptyV1124">Sélectionne un ou plusieurs VIN pour afficher leurs OF.</div>`;
+  }
+
+  const currentAssignments = new Map(
+    planningAssignmentsV1124().map(item => [`${item.vehicleId}||${item.ofId}`, item])
+  );
+
+  const rows = [];
+  vehicles
+    .slice()
+    .sort((a, b) => (Number(a.priority) || 1) - (Number(b.priority) || 1)
+      || String(a.vin || '').localeCompare(String(b.vin || '')))
+    .forEach(vehicle => {
+      (vehicle.ofs || [])
+        .slice()
+        .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0))
+        .forEach(of => {
+          const key = `${vehicle.id}||${of.id}`;
+          const assignment = currentAssignments.get(key);
+          const done = qtyRemainingV5(of) <= 0;
+          const disabled = done ? 'disabled' : '';
+          const assignedHtml = assignment
+            ? `<span class="planningAssignedV1124">👤 ${escHtml(assignment.person)} • #${Number(assignment.order) || '-'}</span>`
+            : '<span class="muted">Non attribué</span>';
+
+          rows.push(`<div class="planningOfRowV1124">
+            <div><input class="planningOfCheckV1124" type="checkbox" value="${escHtml(key)}" ${disabled}></div>
+            <div><b>${escHtml(vehicle.vin || '-')}</b></div>
+            <div>
+              <b>${escHtml(of.name || 'OF')}</b>
+              <div class="muted">${escHtml(of.desc || '')}</div>
+            </div>
+            <div>${escHtml(of.category || '-')}</div>
+            <div class="hideSmallV1124">${fmtHoursMinutesV11122((Number(of.time) || 0) * qtyRemainingV5(of))}</div>
+            <div class="hideSmallV1124">${done ? '<span class="planningStatusV1124 done">✓ Fait</span>' : assignedHtml}</div>
+          </div>`);
+        });
+    });
+
+  return `<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px">
+      <label style="display:flex;align-items:center;gap:7px">
+        <input type="checkbox" onchange="selectAllPlanningOFsV1124(this.checked)"> Tout sélectionner les OF à faire
+      </label>
+      <span class="muted">${vehicles.length} VIN sélectionné${vehicles.length > 1 ? 's' : ''}</span>
+    </div>
+    <div class="planningOfPickerV1124">
+      <div class="planningOfRowV1124 header">
+        <div></div><div>VIN</div><div>OF</div><div>Phase</div><div class="hideSmallV1124">Restant</div><div class="hideSmallV1124">Attribution</div>
+      </div>
+      ${rows.join('')}
+    </div>`;
+}
+
+function renderPlanningOFPickerV1124() {
+  const box = document.getElementById('planningOfPickerV1124');
+  if (box) box.innerHTML = planningOFPickerHtmlV1124();
+}
+
+function selectAllPlanningOFsV1124(checked) {
+  document.querySelectorAll('.planningOfCheckV1124:not(:disabled)').forEach(input => {
+    input.checked = checked;
+  });
+}
+
+function assignSelectedPlanningV1124() {
+  if (!requireAdminV1117('la planification des OF')) return;
+
+  const person = String(document.getElementById('planningPersonV1124')?.value || '').trim();
+  if (!person) {
+    alert('Sélectionne une personne.');
+    return;
+  }
+
+  const selectedKeys = Array.from(document.querySelectorAll('.planningOfCheckV1124:checked'))
+    .map(input => input.value)
+    .filter(Boolean);
+
+  if (!selectedKeys.length) {
+    alert('Sélectionne au moins un OF.');
+    return;
+  }
+
+  const now = new Date().toISOString();
+  const admin = operationalPersonV1116() || 'Administrateur';
+  let nextOrder = nextPlanningOrderV1124(person);
+  let added = 0;
+  let reassigned = 0;
+
+  selectedKeys.forEach(key => {
+    const [vehicleId, ofId] = key.split('||');
+    const vehicle = state.vehicles.find(item => item.id === vehicleId);
+    const of = vehicle?.ofs?.find(item => item.id === ofId);
+    if (!vehicle || !of || qtyRemainingV5(of) <= 0) return;
+
+    let item = state.planningV1124.find(row => row.vehicleId === vehicleId && row.ofId === ofId);
+
+    if (item) {
+      if (item.person !== person) {
+        const oldPerson = item.person;
+        item.person = person;
+        item.order = nextOrder++;
+        item.updatedAt = now;
+        item.assignedBy = admin;
+        renumberPlanningForPersonV1124(oldPerson, false);
+        reassigned++;
+      }
+    } else {
+      state.planningV1124.push({
+        id: uid(),
+        vehicleId,
+        ofId,
+        person,
+        order: nextOrder++,
+        assignedAt: now,
+        updatedAt: now,
+        assignedBy: admin
+      });
+      added++;
+    }
+  });
+
+  renumberPlanningForPersonV1124(person, false);
+  touchPlanningV1124(now);
+
+  logAction(
+    'Planification OF',
+    null,
+    null,
+    `${person} • ${added} ajouté${added > 1 ? 's' : ''}${reassigned ? ` • ${reassigned} réattribué${reassigned > 1 ? 's' : ''}` : ''}`
+  );
+
+  saveSharedDataV1120();
+}
+
+function movePlanningAssignmentV1124(id, delta) {
+  if (!requireAdminV1117('la modification de l’ordre du planning')) return;
+
+  const item = state.planningV1124.find(row => row.id === id);
+  if (!item) return;
+
+  const list = state.planningV1124
+    .filter(row => row.person === item.person)
+    .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
+
+  const index = list.findIndex(row => row.id === id);
+  const targetIndex = index + delta;
+  if (index < 0 || targetIndex < 0 || targetIndex >= list.length) return;
+
+  const target = list[targetIndex];
+  const currentOrder = item.order;
+  item.order = target.order;
+  target.order = currentOrder;
+
+  const now = new Date().toISOString();
+  item.updatedAt = now;
+  target.updatedAt = now;
+  touchPlanningV1124(now);
+  saveSharedDataV1120();
+}
+
+function removePlanningAssignmentV1124(id) {
+  if (!requireAdminV1117('la suppression d’une tâche du planning')) return;
+  const item = state.planningV1124.find(row => row.id === id);
+  if (!item) return;
+
+  const person = item.person;
+  state.planningV1124 = state.planningV1124.filter(row => row.id !== id);
+  renumberPlanningForPersonV1124(person, false);
+  touchPlanningV1124();
+  saveSharedDataV1120();
+}
+
+function reassignPlanningV1124(id, newPerson) {
+  if (!requireAdminV1117('la réattribution du planning')) return;
+
+  const item = state.planningV1124.find(row => row.id === id);
+  newPerson = String(newPerson || '').trim();
+  if (!item || !newPerson || item.person === newPerson) return;
+
+  const oldPerson = item.person;
+  item.person = newPerson;
+  item.order = nextPlanningOrderV1124(newPerson);
+  item.updatedAt = new Date().toISOString();
+  item.assignedBy = operationalPersonV1116() || item.assignedBy || 'Administrateur';
+
+  renumberPlanningForPersonV1124(oldPerson, false);
+  renumberPlanningForPersonV1124(newPerson, false);
+  touchPlanningV1124(item.updatedAt);
+  saveSharedDataV1120();
+}
+
+function cleanupCompletedPlanningV1124() {
+  if (!requireAdminV1117('le nettoyage du planning')) return;
+
+  const completedIds = new Set(
+    state.planningV1124
+      .filter(item => planningStatusV1124(item).key === 'done' || planningStatusV1124(item).key === 'missing')
+      .map(item => item.id)
+  );
+
+  if (!completedIds.size) {
+    alert('Aucune tâche terminée ou indisponible à retirer.');
+    return;
+  }
+
+  if (!confirm(`Retirer ${completedIds.size} tâche${completedIds.size > 1 ? 's' : ''} terminée${completedIds.size > 1 ? 's' : ''} / indisponible${completedIds.size > 1 ? 's' : ''} du planning ?`)) return;
+
+  state.planningV1124 = state.planningV1124.filter(item => !completedIds.has(item.id));
+  planningPersonNamesV1124().forEach(person => renumberPlanningForPersonV1124(person, false));
+  touchPlanningV1124();
+  saveSharedDataV1120();
+}
+
+function planningPersonCardV1124(person) {
+  const items = planningAssignmentsV1124()
+    .filter(item => item.person === person)
+    .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
+
+  const pending = items.filter(item => planningStatusV1124(item).key !== 'done');
+  const hours = pending.reduce((sum, item) => sum + planningRemainingHoursV1124(item), 0);
+  const people = planningPersonNamesV1124();
+
+  const rows = items.length ? items.map((item, index) => {
+    const { vehicle, of } = planningTargetV1124(item);
+    const status = planningStatusV1124(item);
+
+    return `<div class="planningTaskV1124">
+      <div class="planningOrderV1124">${Number(item.order) || index + 1}</div>
+      <div>
+        <div class="planningTaskTitleV1124">
+          VIN ${escHtml(vehicle?.vin || '—')} • ${escHtml(of?.name || 'OF introuvable')}
+        </div>
+        <div class="planningTaskSubV1124">
+          ${of ? `${escHtml(of.category || '-')} • ${fmtHoursMinutesV11122(planningRemainingHoursV1124(item))} restant • ${qtyDoneV5(of)}/${qtyTotalV5(of)} réalisé` : 'Cette tâche ne correspond plus à un OF existant.'}
+        </div>
+        <div style="margin-top:5px"><span class="planningStatusV1124 ${status.key}">${escHtml(status.label)}</span></div>
+      </div>
+      <div class="planningTaskActionsV1124">
+        <button class="small alt" onclick="movePlanningAssignmentV1124('${item.id}',-1)" ${index === 0 ? 'disabled' : ''}>↑</button>
+        <button class="small alt" onclick="movePlanningAssignmentV1124('${item.id}',1)" ${index === items.length - 1 ? 'disabled' : ''}>↓</button>
+        <select onchange="reassignPlanningV1124('${item.id}',this.value)">
+          ${people.map(name => `<option value="${escHtml(name)}" ${name === person ? 'selected' : ''}>${escHtml(name)}</option>`).join('')}
+        </select>
+        <button class="small bad" onclick="removePlanningAssignmentV1124('${item.id}')">Retirer</button>
+      </div>
+    </div>`;
+  }).join('') : `<div class="planningEmptyV1124" style="margin:10px">Aucune tâche planifiée.</div>`;
+
+  return `<section class="planningPersonCardV1124">
+    <div class="planningPersonHeadV1124">
+      <div>
+        <strong>👤 ${escHtml(person)}</strong>
+        <div class="planningPersonStatsV1124">${pending.length} à faire • ${fmtHoursMinutesV11122(hours)} restant</div>
+      </div>
+      <span class="planningAssignedV1124">${items.length} tâche${items.length > 1 ? 's' : ''}</span>
+    </div>
+    ${rows}
+  </section>`;
+}
+
+function planningAdminPageV1124() {
+  if (!requireAdminV1117('la planification des OF')) {
+    page = 'dash';
+    render();
+    return;
+  }
+
+  normalizeAll();
+  setHead('Planification', 'Attribuer des OF et définir l’ordre de travail');
+
+  const selectedVins = planningSelectedVinsV1124();
+  const people = planningPersonNamesV1124();
+  const active = activeNormalVehicles();
+
+  document.getElementById('view').innerHTML = `
+    <div class="planningAdminTopV1124">
+      <div class="muted">Sélectionne les VIN, les OF, puis la personne. L’ordre est ensuite modifiable par personne.</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="alt" onclick="page='planning';render()">Voir mon planning</button>
+        <button class="bad" onclick="cleanupCompletedPlanningV1124()">Nettoyer terminés</button>
+      </div>
+    </div>
+
+    <div class="planningStepV1124">
+      <h3>1. Sélectionner les VIN</h3>
+      <div style="margin-bottom:8px">
+        <label style="display:inline-flex;align-items:center;gap:7px">
+          <input type="checkbox" onchange="selectAllPlanningVinsV1124(this.checked)"> Tous les VIN actifs
+        </label>
+      </div>
+      <div class="planningVinGridV1124">
+        ${active.map(vehicle => `
+          <label class="planningVinChoiceV1124">
+            <input class="planningVinCheckV1124" type="checkbox"
+              ${selectedVins.has(vehicle.id) ? 'checked' : ''}
+              onchange="togglePlanningVinV1124('${vehicle.id}',this.checked)">
+            ${colorDot(vehicle)}
+            <span><b>${escHtml(vehicle.vin || '-')}</b><br><span class="muted">${escHtml(vehicle.brand || '-')}</span></span>
+          </label>`).join('')}
+      </div>
+    </div>
+
+    <div class="planningStepV1124">
+      <h3>2. Sélectionner les OF</h3>
+      <div id="planningOfPickerV1124">${planningOFPickerHtmlV1124()}</div>
+    </div>
+
+    <div class="planningStepV1124">
+      <h3>3. Attribuer à une personne</h3>
+      <div class="toolbar">
+        <select id="planningPersonV1124">
+          <option value="">— Choisir une personne —</option>
+          ${people.map(name => `<option value="${escHtml(name)}">${escHtml(name)}</option>`).join('')}
+        </select>
+        <button onclick="assignSelectedPlanningV1124()">Ajouter / attribuer au planning</button>
+      </div>
+      <div class="muted" style="margin-top:7px">
+        Si un OF est déjà attribué à quelqu’un d’autre, il sera réattribué à la personne choisie.
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:18px 0 10px">
+      <h2 style="margin:0;font-size:18px">Planning de l’équipe</h2>
+      <span class="muted">↑ / ↓ modifie l’ordre propre à chaque personne</span>
+    </div>
+
+    <div class="planningTeamGridV1124">
+      ${people.map(planningPersonCardV1124).join('')}
+    </div>
+  `;
+}
+
+function openPlannedOFInRealizationV1124(vehicleId) {
+  const vehicle = state.vehicles.find(item => item.id === vehicleId);
+  if (!vehicle) return;
+
+  state.realVin = vehicleId;
+  state.realModeV3 = 'vin';
+  page = 'real';
+  render();
+}
+
+function planningPageV1124() {
+  normalizeAll();
+
+  const person = operationalPersonV1116();
+  setHead('Planning', person ? `Travail attribué à ${person}` : 'Travail attribué');
+
+  if (!person) {
+    document.getElementById('view').innerHTML = `<div class="planningEmptyV1124">Utilisateur connecté non identifié.</div>`;
+    return;
+  }
+
+  const allItems = planningAssignmentsV1124()
+    .filter(item => item.person === person)
+    .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
+
+  const pendingItems = allItems.filter(item => planningStatusV1124(item).key !== 'done');
+  const doneItems = allItems.filter(item => planningStatusV1124(item).key === 'done');
+  const blockedCount = pendingItems.filter(item => planningStatusV1124(item).key === 'blocked').length;
+  const remainingHours = pendingItems.reduce((sum, item) => sum + planningRemainingHoursV1124(item), 0);
+
+  const firstPendingId = pendingItems[0]?.id || '';
+
+  const taskHtml = allItems.length ? allItems.map(item => {
+    const { vehicle, of } = planningTargetV1124(item);
+    const status = planningStatusV1124(item);
+    const isNext = item.id === firstPendingId;
+    const done = status.key === 'done';
+
+    return `<div class="myPlanningTaskV1124 ${isNext ? 'next' : ''}" style="--vehColor:${escHtml(vehicleColor(vehicle))}">
+      <div class="myPlanningOrderV1124">#${Number(item.order) || '-'}</div>
+      <div>
+        <div style="font-size:14px;font-weight:950">
+          VIN ${escHtml(vehicle?.vin || '—')} • ${escHtml(of?.name || 'OF introuvable')}
+        </div>
+        <div class="muted" style="margin-top:4px">
+          ${of
+            ? `${escHtml(of.category || '-')} • ${escHtml(of.desc || '')}${of.desc ? ' • ' : ''}${fmtHoursMinutesV11122(planningRemainingHoursV1124(item))} restant • ${qtyDoneV5(of)}/${qtyTotalV5(of)}`
+            : 'Cette tâche n’est plus disponible.'}
+        </div>
+        <div style="margin-top:7px">
+          <span class="planningStatusV1124 ${status.key}">${escHtml(status.label)}</span>
+          ${isNext ? `<span class="myPlanningNextV1124">★ Prochaine tâche</span>` : ''}
+        </div>
+      </div>
+      <div>
+        ${vehicle && of && !done
+          ? `<button class="small good" onclick="openPlannedOFInRealizationV1124('${vehicle.id}')">Ouvrir Réalisation</button>`
+          : ''}
+      </div>
+    </div>`;
+  }).join('') : `<div class="planningEmptyV1124">Aucune tâche ne t’a encore été attribuée.</div>`;
+
+  document.getElementById('view').innerHTML = `
+    ${isAdminV1117() ? `<div class="toolbar" style="justify-content:flex-end;margin-bottom:12px">
+      <button onclick="page='planadmin';render()">⚙ Gérer la planification</button>
+    </div>` : ''}
+
+    <div class="myPlanningKpisV1124">
+      <div class="card"><b>À faire</b><div class="kpi">${pendingItems.length}</div><div class="muted">${doneItems.length} terminé${doneItems.length > 1 ? 's' : ''}</div></div>
+      <div class="card"><b>Temps restant</b><div class="kpi">${fmtHoursMinutesV11122(remainingHours)}</div></div>
+      <div class="card"><b>Bloqués</b><div class="kpi">${blockedCount}</div></div>
+    </div>
+
+    <div class="myPlanningListV1124">${taskHtml}</div>
+  `;
+}
+
+// -----------------------------------------------------------------------------
 // V11.23 - MODE ÉCRAN ATELIER
 // Vue de supervision en lecture seule, conçue pour un écran/TV dans l'atelier.
 // Elle reste synchronisée en temps réel grâce au snapshot Firebase existant.
@@ -3558,6 +4198,9 @@ function dash() {
   const savInProgress = totalSAVInProgressV1114();
 
   document.getElementById('view').innerHTML = `
+    ${isAdminV1117() ? `<div class="toolbar" style="justify-content:flex-end;margin-bottom:12px">
+      <button onclick="page='planadmin';render()">📋 Planification</button>
+    </div>` : ''}
     <div class="grid cards dashboardKpisV1111">
       <div class="card"><b>Véhicules actifs</b><div class="kpi">${active.length}</div><div class="muted">Archivés : ${archivedVehicles().length}</div></div>
       <div class="card"><b>OF total</b><div class="kpi">${total}</div></div>
@@ -5874,7 +6517,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.23,
+      version: 11.24,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -6089,6 +6732,13 @@ initApp();
         }
       });
     });
+
+    // V11.24 : le planning est une donnée partagée administrée séparément.
+    // La version ayant le timestamp de planification le plus récent gagne.
+    if(syncTimeV1118(remote.planningSyncUpdatedAtV1124) > syncTimeV1118(result.planningSyncUpdatedAtV1124)){
+      result.planningV1124 = JSON.parse(JSON.stringify(remote.planningV1124 || []));
+      result.planningSyncUpdatedAtV1124 = remote.planningSyncUpdatedAtV1124 || '';
+    }
 
     result.progressEventsV6 = mergeArrayByIdV1118(remote.progressEventsV6, result.progressEventsV6, 10000, 'at');
     result.notificationsV1115 = mergeArrayByIdV1118(remote.notificationsV1115, result.notificationsV1115, 300, 'at');
