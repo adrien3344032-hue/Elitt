@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.30 Double interface</title>
+<title>ELITT - Suivi OF - V11.31 Interface Pro réelle</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -849,6 +849,191 @@ body.publicGlobalModeV117.professionalThemeV1130{
   body.professionalThemeV1130 header{padding:13px}
 }
 
+/* ==========================================================================
+   V11.31 - VRAI TABLEAU DE BORD PROFESSIONNEL
+   Le mode Actuel conserve l'affichage historique.
+   Le mode Pro utilise les mêmes données mais une structure réellement différente.
+   ========================================================================== */
+body.professionalThemeV1130 .proDashV1131{display:grid;gap:14px}
+body.professionalThemeV1130 .proKpisV1131{
+  display:grid;grid-template-columns:repeat(6,minmax(150px,1fr));gap:12px
+}
+body.professionalThemeV1130 .proKpiV1131{
+  background:#fff;border:1px solid #dbe3eb;border-radius:12px;padding:14px 15px;
+  box-shadow:0 3px 12px rgba(29,48,70,.055);min-width:0
+}
+body.professionalThemeV1130 .proKpiHeadV1131{
+  display:flex;align-items:center;gap:9px;color:#4b5d73;font-size:12px;font-weight:800
+}
+body.professionalThemeV1130 .proKpiIconV1131{
+  width:30px;height:30px;border-radius:9px;background:#e8f2fc;color:#0b66c3;
+  display:grid;place-items:center;font-size:16px;flex:0 0 auto
+}
+body.professionalThemeV1130 .proKpiValueV1131{
+  font-size:27px;font-weight:900;color:#172033;margin-top:9px;line-height:1
+}
+body.professionalThemeV1130 .proKpiSubV1131{font-size:11px;color:#7a899b;margin-top:7px}
+
+body.professionalThemeV1130 .proOverviewV1131{
+  display:grid;grid-template-columns:.9fr 1.35fr 1fr;gap:12px
+}
+body.professionalThemeV1130 .proPanelV1131{
+  background:#fff;border:1px solid #dbe3eb;border-radius:12px;padding:15px;
+  box-shadow:0 3px 12px rgba(29,48,70,.05);min-width:0
+}
+body.professionalThemeV1130 .proPanelTitleV1131{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  font-size:14px;font-weight:900;color:#18253a;margin-bottom:13px
+}
+body.professionalThemeV1130 .proDonutWrapV1131{
+  display:flex;align-items:center;justify-content:center;gap:24px;min-height:168px
+}
+body.professionalThemeV1130 .proDonutV1131{
+  --p:0;
+  width:132px;height:132px;border-radius:50%;
+  background:conic-gradient(#358ecb calc(var(--p)*1%),#e6edf4 0);
+  position:relative;display:grid;place-items:center;flex:0 0 auto
+}
+body.professionalThemeV1130 .proDonutV1131::before{
+  content:"";position:absolute;inset:17px;border-radius:50%;background:#fff;
+  box-shadow:inset 0 0 0 1px #edf1f5
+}
+body.professionalThemeV1130 .proDonutV1131 strong{
+  position:relative;z-index:1;font-size:25px;color:#172033
+}
+body.professionalThemeV1130 .proDonutLegendV1131{display:grid;gap:8px;min-width:120px}
+body.professionalThemeV1130 .proLegendLineV1131{
+  display:flex;justify-content:space-between;gap:14px;font-size:11px;color:#65768b
+}
+body.professionalThemeV1130 .proLegendLineV1131 b{color:#26374d}
+
+body.professionalThemeV1130 .proPhaseSummaryV1131{display:grid;gap:12px}
+body.professionalThemeV1130 .proPhaseLineV1131{display:grid;grid-template-columns:100px 1fr 90px;gap:10px;align-items:center}
+body.professionalThemeV1130 .proPhaseLabelV1131{font-size:11px;font-weight:850;color:#34475f}
+body.professionalThemeV1130 .proPhaseTrackV1131{
+  height:11px;background:#e6edf4;border-radius:999px;overflow:hidden;border:1px solid #dce5ed
+}
+body.professionalThemeV1130 .proPhaseFillV1131{
+  height:100%;border-radius:999px;background:linear-gradient(90deg,#4aa25d,#7bb84d)
+}
+body.professionalThemeV1130 .proPhaseNumbersV1131{
+  text-align:right;font-size:10px;color:#66798e;font-weight:750
+}
+
+body.professionalThemeV1130 .proSituationGridV1131{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px
+}
+body.professionalThemeV1130 .proSituationV1131{
+  background:#f7f9fb;border:1px solid #e0e7ee;border-radius:10px;padding:12px
+}
+body.professionalThemeV1130 .proSituationV1131 span{font-size:10px;color:#748497;font-weight:750}
+body.professionalThemeV1130 .proSituationV1131 strong{display:block;font-size:23px;margin-top:5px;color:#172033}
+body.professionalThemeV1130 .proSituationV1131.alert strong{color:#bd3948}
+body.professionalThemeV1130 .proSituationV1131.pause strong{color:#b77910}
+body.professionalThemeV1130 .proSituationV1131.run strong{color:#227b49}
+body.professionalThemeV1130 .proSituationV1131.plan strong{color:#286ca7}
+
+body.professionalThemeV1130 .proVehicleHeaderV1131{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap
+}
+body.professionalThemeV1130 .proVehicleTitleV1131{
+  display:flex;align-items:center;gap:9px;font-size:18px;font-weight:900;color:#18253a
+}
+body.professionalThemeV1130 .proVehicleToolsV1131{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap
+}
+body.professionalThemeV1130 .proSearchV1131{
+  width:min(330px,75vw);padding:9px 11px!important
+}
+
+body.professionalThemeV1130 .proVehicleTableWrapV1131{
+  overflow:auto;background:#fff;border:1px solid #d7e1ea;border-radius:12px;
+  box-shadow:0 3px 12px rgba(29,48,70,.045)
+}
+body.professionalThemeV1130 .proVehicleTableV1131{
+  min-width:1500px;width:100%;border-collapse:separate;border-spacing:0
+}
+body.professionalThemeV1130 .proVehicleTableV1131 th{
+  position:sticky;top:0;z-index:1;background:#eef3f7;color:#40536a;
+  padding:10px 9px;font-size:10px;border-bottom:1px solid #d3dee8;
+  letter-spacing:.035em
+}
+body.professionalThemeV1130 .proVehicleTableV1131 td{
+  padding:11px 9px;border-bottom:1px solid #e6ebf1;font-size:11px;vertical-align:middle
+}
+body.professionalThemeV1130 .proVehicleTableV1131 tbody tr:hover td{background:#f8fafc}
+body.professionalThemeV1130 .proVinCellV1131{
+  display:flex;align-items:center;gap:8px;min-width:88px
+}
+body.professionalThemeV1130 .proVinDotV1131{
+  width:9px;height:9px;border-radius:50%;flex:0 0 auto;box-shadow:0 0 0 3px rgba(0,0,0,.035)
+}
+body.professionalThemeV1130 .proVinMainV1131{font-size:12px;font-weight:900;color:#19283c}
+body.professionalThemeV1130 .proVinSubV1131{font-size:9px;color:#7c8b9d;margin-top:2px}
+body.professionalThemeV1130 .proOptionsV1131{display:flex;gap:4px;flex-wrap:wrap;max-width:170px}
+body.professionalThemeV1130 .proOptionsV1131 .optionchip{
+  background:#edf3f8!important;color:#334a63!important;border:1px solid #d6e1eb!important;
+  font-size:9px!important;padding:3px 6px!important
+}
+
+body.professionalThemeV1130 .proPhaseCellV1131{min-width:145px}
+body.professionalThemeV1130 .proPhaseCellTopV1131{
+  display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:5px
+}
+body.professionalThemeV1130 .proPhasePctV1131{font-weight:900;color:#25394f}
+body.professionalThemeV1130 .proPhaseHoursV1131{font-size:9px;color:#718196;white-space:nowrap}
+body.professionalThemeV1130 .proMiniTrackV1131{
+  height:7px;background:#e4ebf1;border-radius:999px;overflow:hidden
+}
+body.professionalThemeV1130 .proMiniFillV1131{
+  height:100%;border-radius:999px;background:linear-gradient(90deg,#3f9d52,#79b74c)
+}
+body.professionalThemeV1130 .proMiniSubV1131{font-size:9px;color:#7a899a;margin-top:4px}
+
+body.professionalThemeV1130 .proOverallV1131{
+  display:flex;align-items:center;gap:8px;min-width:105px
+}
+body.professionalThemeV1130 .proOverallV1131 .progress{min-width:65px;height:7px}
+body.professionalThemeV1130 .proOverallV1131 b{font-size:11px}
+
+body.professionalThemeV1130 .proStatusV1131{
+  display:inline-flex;align-items:center;padding:4px 7px;border-radius:999px;
+  border:1px solid;font-size:9px;font-weight:900;white-space:nowrap
+}
+body.professionalThemeV1130 .proStatusV1131.run{background:#eaf6ee;border-color:#b9ddc6;color:#226d42}
+body.professionalThemeV1130 .proStatusV1131.pause{background:#fff4df;border-color:#ecd39c;color:#845c13}
+body.professionalThemeV1130 .proStatusV1131.blocked{background:#fdecee;border-color:#efbec4;color:#933845}
+body.professionalThemeV1130 .proStatusV1131.plan{background:#eaf2fb;border-color:#c3d8ee;color:#245e95}
+body.professionalThemeV1130 .proStatusV1131.done{background:#ecf6ee;border-color:#c1dfc9;color:#34704a}
+body.professionalThemeV1130 .proStatusV1131.todo{background:#f1f4f7;border-color:#dce3ea;color:#56687d}
+
+body.professionalThemeV1130 .proPriorityV1131{
+  min-width:27px;height:27px;border-radius:50%;display:inline-grid;place-items:center;
+  background:#edf2f6;border:1px solid #d8e1e9;color:#43566c;font-weight:900
+}
+body.professionalThemeV1130 .proPriorityV1131.high{
+  background:#fff0e9;border-color:#f1c5b1;color:#a64b29
+}
+body.professionalThemeV1130 .proActionWrapV1131{display:flex;gap:5px;flex-wrap:wrap;min-width:150px}
+body.professionalThemeV1130 .proActionWrapV1131 button{
+  padding:6px 8px;font-size:9px;border-radius:7px
+}
+body.professionalThemeV1130 .proNoDataV1131{
+  padding:36px;text-align:center;color:#738196
+}
+
+@media(max-width:1450px){
+  body.professionalThemeV1130 .proKpisV1131{grid-template-columns:repeat(3,minmax(150px,1fr))}
+  body.professionalThemeV1130 .proOverviewV1131{grid-template-columns:1fr 1fr}
+  body.professionalThemeV1130 .proOverviewV1131 .proPanelV1131:last-child{grid-column:1/-1}
+}
+@media(max-width:850px){
+  body.professionalThemeV1130 .proKpisV1131{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.professionalThemeV1130 .proOverviewV1131{grid-template-columns:1fr}
+  body.professionalThemeV1130 .proOverviewV1131 .proPanelV1131:last-child{grid-column:auto}
+  body.professionalThemeV1130 .proDonutWrapV1131{flex-direction:column}
+}
+
 </style>
 </head>
 <body><div class="app"><aside><div class="brand"><img class="logo" src="logo_elitt.png" alt="Elitt"></div><nav id="nav"></nav></aside><main><header><div><h1 id="title"></h1><p id="subtitle"></p></div><div class="mainHeaderActions"><div class="themeSwitchWrapV1130" title="Changer uniquement l'apparence du site"><span class="themeSwitchLabelV1130">Actuel</span><button type="button" id="themeSwitchV1130" class="themeSwitchV1130" onclick="toggleProfessionalThemeV1130()" aria-label="Basculer entre l'interface actuelle et l'interface professionnelle"></button><span id="themeSwitchModeV1130" class="themeSwitchModeV1130">Actuel</span></div><div class="headerGroup" data-admin-only-v1117><button class="alt" onclick="page='planadmin';render()">📋 Planification</button><button onclick="openVehicle()">+ Véhicule</button><button class="good" onclick="openSAV()">+ SAV</button></div><div class="headerGroup"><button class="alt" data-admin-only-v1117 onclick="openExcelImport()">Bases OF + pièces</button><button class="alt" onclick="openGlobalTrackingQRV117()">▦ QR Suivi global</button></div></div></header><section id="view"></section></main></div>
@@ -911,6 +1096,10 @@ function toggleProfessionalThemeV1130() {
   }
 
   updateThemeSwitchV1130();
+
+  // Le mode Pro utilise une structure de dashboard réellement différente.
+  // On rerend la page courante sans toucher aux données.
+  if (typeof render === 'function') render();
 }
 
 // Clé principale utilisée pour conserver l'état du logiciel dans le navigateur.
@@ -4875,7 +5064,289 @@ function workshopPageV1123() {
 }
 
 // Affiche le tableau de bord avec les compteurs et les véhicules actifs.
+
+// -----------------------------------------------------------------------------
+// V11.31 - TABLEAU DE BORD PROFESSIONNEL
+// Les calculs utilisent exclusivement les données réelles déjà présentes.
+// Aucun exemple / aucune donnée fictive n'est injecté.
+// -----------------------------------------------------------------------------
+
+function proPhaseCellV1131(vehicle, category) {
+  const stats = phaseStatsV5(vehicle, category);
+  const pctValue = Math.max(0, Math.min(100, stats.hoursPct || 0));
+
+  return `<div class="proPhaseCellV1131">
+    <div class="proPhaseCellTopV1131">
+      <span class="proPhasePctV1131">${pctValue}%</span>
+      <span class="proPhaseHoursV1131">${fmtHoursMinutesV11122(stats.doneHours)} / ${fmtHoursMinutesV11122(stats.totalHours)}</span>
+    </div>
+    <div class="proMiniTrackV1131"><div class="proMiniFillV1131" style="width:${pctValue}%"></div></div>
+    <div class="proMiniSubV1131">${stats.done}/${stats.total} réalisations • reste ${fmtHoursMinutesV11122(stats.remainingHours)}</div>
+  </div>`;
+}
+
+function proVehicleStatusV1131(vehicle) {
+  if (remain(vehicle) <= 0) return { key: 'done', label: '✓ Terminé' };
+
+  const blocked = blockedCount(vehicle);
+  if (blocked > 0) return { key: 'blocked', label: `⚠ ${blocked} bloqué${blocked > 1 ? 's' : ''}` };
+
+  const paused = pausedOFCountV11143(vehicle);
+  if (paused > 0) return { key: 'pause', label: `Ⅱ ${paused} en pause` };
+
+  const running = runningOFCountV11143(vehicle);
+  if (running > 0) return { key: 'run', label: `▶ ${running} en cours` };
+
+  const plannedCount = (state.planningV1124 || []).filter(item =>
+    item.vehicleId === vehicle.id &&
+    planningTargetV1124(item).of &&
+    planningStatusV1124(item).key === 'todo'
+  ).length;
+
+  if (plannedCount > 0) return { key: 'plan', label: `▣ ${plannedCount} planifié${plannedCount > 1 ? 's' : ''}` };
+
+  return { key: 'todo', label: 'À faire' };
+}
+
+function proDashboardFilterV1131() {
+  const query = String(document.getElementById('proDashSearchV1131')?.value || '').trim().toLowerCase();
+  const rows = Array.from(document.querySelectorAll('#proDashVehicleBodyV1131 tr[data-search-v1131]'));
+
+  rows.forEach(row => {
+    const haystack = String(row.getAttribute('data-search-v1131') || '').toLowerCase();
+    row.style.display = !query || haystack.includes(query) ? '' : 'none';
+  });
+
+  const shown = rows.filter(row => row.style.display !== 'none').length;
+  const counter = document.getElementById('proDashCountV1131');
+  if (counter) counter.textContent = `${shown} véhicule${shown > 1 ? 's' : ''}`;
+}
+
+function proDashboardVehicleRowV1131(vehicle, estimates) {
+  const status = proVehicleStatusV1131(vehicle);
+  const priority = Number(vehicle.priority) || 1;
+  const noteButton = `<button class="${vehicleHasNoteV1122(vehicle) ? 'warn' : 'alt'}" onclick="openVehicleNoteV1122('${vehicle.id}')">📝 Note</button>`;
+
+  const actions = !isAdminV1117()
+    ? `${noteButton}`
+    : `${noteButton}<button class="good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="alt" onclick="openVehicle('${vehicle.id}')">Modifier</button>`;
+
+  const options = vehicleOptionsHtml(vehicle);
+  const overall = Math.max(0, Math.min(100, pct(vehicle)));
+  const estimated = remain(vehicle) > 0 ? fmtDate(estimates[vehicle.id]) : 'Terminé';
+
+  const searchable = [
+    vehicle.vin, vehicle.brand, vehicle.client, vehicle.type,
+    ...(vehicle.options || [])
+  ].join(' ');
+
+  return `<tr data-search-v1131="${escHtml(searchable)}">
+    <td>
+      <div class="proVinCellV1131">
+        <span class="proVinDotV1131" style="background:${escHtml(vehicleColor(vehicle))}"></span>
+        <div>
+          <div class="proVinMainV1131">${escHtml(vehicle.vin)}</div>
+          <div class="proVinSubV1131">${escHtml(vehicle.type || 'CCF')}</div>
+        </div>
+      </div>
+    </td>
+    <td><b>${escHtml(vehicle.brand || '-')}</b></td>
+    <td>${escHtml(vehicle.client || '-')}</td>
+    <td><div class="proOptionsV1131">${options}</div></td>
+    <td><span class="proPriorityV1131 ${priority === 1 ? 'high' : ''}">${priority}</span></td>
+    <td>${proPhaseCellV1131(vehicle, 'Fabrication')}</td>
+    <td>${proPhaseCellV1131(vehicle, 'Prémontage')}</td>
+    <td>${proPhaseCellV1131(vehicle, 'Pose')}</td>
+    <td>${proPhaseCellV1131(vehicle, 'Essais')}</td>
+    <td>
+      <div class="proOverallV1131">
+        <div class="progress"><div class="bar" style="width:${overall}%"></div></div>
+        <b>${overall}%</b>
+      </div>
+    </td>
+    <td><span class="proStatusV1131 ${status.key}">${escHtml(status.label)}</span></td>
+    <td><b>${fmt(remain(vehicle))}</b></td>
+    <td>${deadlineHtmlV115(vehicle, estimates[vehicle.id], false)}</td>
+    <td><b>${escHtml(estimated)}</b><div class="muted">hors week-end et fériés</div></td>
+    <td><div class="proActionWrapV1131">${actions}</div></td>
+  </tr>`;
+}
+
+function dashProfessionalV1131() {
+  normalizeAll();
+
+  const vehicles = activeNormalVehicles();
+  const savs = activeVehicles().filter(vehicle => isSAV(vehicle));
+  const estimates = estimateVehiclesActive();
+
+  const allOFs = vehicles.flatMap(vehicle => vehicle.ofs || []);
+  const totalOF = allOFs.length;
+  const doneOFCount = vehicles.reduce((sum, vehicle) => sum + doneOf(vehicle), 0);
+  const running = vehicles.reduce((sum, vehicle) => sum + runningOFCountV11143(vehicle), 0);
+  const paused = vehicles.reduce((sum, vehicle) => sum + pausedOFCountV11143(vehicle), 0);
+  const blocked = vehicles.reduce((sum, vehicle) => sum + blockedCount(vehicle), 0);
+  const remainingHours = vehicles.reduce((sum, vehicle) => sum + remain(vehicle), 0);
+  const savInProgress = savs.filter(vehicle => {
+    const status = savWorkStatusV1114(vehicle);
+    return status.key === 'running' || status.key === 'paused';
+  }).length;
+
+  const categories = ['Fabrication', 'Prémontage', 'Pose', 'Essais'];
+  const phaseTotals = categories.map(category => {
+    const stats = vehicles.reduce((acc, vehicle) => {
+      const s = phaseStatsV5(vehicle, category);
+      acc.doneHours += s.doneHours;
+      acc.totalHours += s.totalHours;
+      return acc;
+    }, { doneHours: 0, totalHours: 0 });
+
+    return {
+      category,
+      doneHours: phaseTotals.doneHours,
+      totalHours: phaseTotals.totalHours
+    };
+  });
+
+  // Recalcule sans dépendance externe : le champ précédent est uniquement écrasé ci-dessous.
+  phaseTotals.forEach(item => {
+    item.pct = item.totalHours ? Math.round(item.doneHours / item.totalHours * 100) : 0;
+  });
+
+  const totalHours = phaseTotals.reduce((sum, item) => sum + item.totalHours, 0);
+  const doneHours = phaseTotals.reduce((sum, item) => sum + item.doneHours, 0);
+  const globalPct = totalHours ? Math.round(doneHours / totalHours * 100) : 0;
+
+  const plannedPending = (state.planningV1124 || []).filter(item => {
+    const status = planningStatusV1124(item);
+    return status.key === 'todo';
+  }).length;
+
+  setHead('Tableau de bord', 'Vue d’ensemble de la production');
+
+  document.getElementById('view').innerHTML = `
+    <div class="proDashV1131">
+
+      <div class="proKpisV1131">
+        <div class="proKpiV1131">
+          <div class="proKpiHeadV1131"><span class="proKpiIconV1131">🚒</span>Véhicules en production</div>
+          <div class="proKpiValueV1131">${vehicles.length}</div>
+          <div class="proKpiSubV1131">${archivedVehicles().filter(v => !isSAV(v)).length} archivés</div>
+        </div>
+        <div class="proKpiV1131">
+          <div class="proKpiHeadV1131"><span class="proKpiIconV1131">▶</span>OF en cours</div>
+          <div class="proKpiValueV1131">${running}</div>
+          <div class="proKpiSubV1131">${totalOF} OF au total</div>
+        </div>
+        <div class="proKpiV1131">
+          <div class="proKpiHeadV1131"><span class="proKpiIconV1131">Ⅱ</span>OF en pause</div>
+          <div class="proKpiValueV1131">${paused}</div>
+          <div class="proKpiSubV1131">${blocked} OF bloqué${blocked > 1 ? 's' : ''}</div>
+        </div>
+        <div class="proKpiV1131">
+          <div class="proKpiHeadV1131"><span class="proKpiIconV1131">✓</span>OF terminés</div>
+          <div class="proKpiValueV1131">${doneOFCount}</div>
+          <div class="proKpiSubV1131">${totalOF ? Math.round(doneOFCount / totalOF * 100) : 0}% des lignes OF</div>
+        </div>
+        <div class="proKpiV1131">
+          <div class="proKpiHeadV1131"><span class="proKpiIconV1131">⏱</span>Temps restant</div>
+          <div class="proKpiValueV1131">${fmtHoursMinutesV11122(remainingHours)}</div>
+          <div class="proKpiSubV1131">hors week-end et fériés</div>
+        </div>
+        <div class="proKpiV1131">
+          <div class="proKpiHeadV1131"><span class="proKpiIconV1131">🛠</span>SAV en cours</div>
+          <div class="proKpiValueV1131">${savInProgress}</div>
+          <div class="proKpiSubV1131">${savs.length} SAV actifs</div>
+        </div>
+      </div>
+
+      <div class="proOverviewV1131">
+        <div class="proPanelV1131">
+          <div class="proPanelTitleV1131"><span>Avancement global</span><span class="muted">heures</span></div>
+          <div class="proDonutWrapV1131">
+            <div class="proDonutV1131" style="--p:${globalPct}"><strong>${globalPct}%</strong></div>
+            <div class="proDonutLegendV1131">
+              <div class="proLegendLineV1131"><span>Réalisé</span><b>${fmtHoursMinutesV11122(doneHours)}</b></div>
+              <div class="proLegendLineV1131"><span>Restant</span><b>${fmtHoursMinutesV11122(Math.max(0,totalHours-doneHours))}</b></div>
+              <div class="proLegendLineV1131"><span>Total</span><b>${fmtHoursMinutesV11122(totalHours)}</b></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="proPanelV1131">
+          <div class="proPanelTitleV1131"><span>Avancement par phase</span><span class="muted">${vehicles.length} véhicules</span></div>
+          <div class="proPhaseSummaryV1131">
+            ${phaseTotals.map(item => `
+              <div class="proPhaseLineV1131">
+                <div class="proPhaseLabelV1131">${escHtml(item.category)}</div>
+                <div class="proPhaseTrackV1131"><div class="proPhaseFillV1131" style="width:${item.pct}%"></div></div>
+                <div class="proPhaseNumbersV1131">${item.pct}% • ${fmtHoursMinutesV11122(item.doneHours)}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="proPanelV1131">
+          <div class="proPanelTitleV1131"><span>Situation atelier</span><span class="muted">temps réel</span></div>
+          <div class="proSituationGridV1131">
+            <div class="proSituationV1131 run"><span>OF en cours</span><strong>${running}</strong></div>
+            <div class="proSituationV1131 pause"><span>OF en pause</span><strong>${paused}</strong></div>
+            <div class="proSituationV1131 alert"><span>OF bloqués</span><strong>${blocked}</strong></div>
+            <div class="proSituationV1131 plan"><span>OF planifiés</span><strong>${plannedPending}</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proVehicleHeaderV1131">
+        <div class="proVehicleTitleV1131">🚒 Suivi des véhicules <span class="muted">(${vehicles.length})</span></div>
+        <div class="proVehicleToolsV1131">
+          <input id="proDashSearchV1131" class="proSearchV1131" type="search"
+            placeholder="Rechercher un VIN, une marque, un client..."
+            oninput="proDashboardFilterV1131()">
+          <span id="proDashCountV1131" class="pill">${vehicles.length} véhicule${vehicles.length > 1 ? 's' : ''}</span>
+        </div>
+      </div>
+
+      <div class="proVehicleTableWrapV1131">
+        ${vehicles.length ? `
+          <table class="proVehicleTableV1131">
+            <thead>
+              <tr>
+                <th>VIN</th>
+                <th>Marque</th>
+                <th>Client</th>
+                <th>Options</th>
+                <th>Priorité</th>
+                <th>Fabrication</th>
+                <th>Prémontage</th>
+                <th>Pose</th>
+                <th>Essais</th>
+                <th>Global</th>
+                <th>Statut</th>
+                <th>Restant</th>
+                <th>Objectif</th>
+                <th>Fin estimée</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="proDashVehicleBodyV1131">
+              ${vehicles.map(vehicle => proDashboardVehicleRowV1131(vehicle, estimates)).join('')}
+            </tbody>
+          </table>
+        ` : `<div class="proNoDataV1131">Aucun véhicule actif.</div>`}
+      </div>
+    </div>
+  `;
+}
+// Le routeur du dashboard choisit la structure selon le bouton Actuel / Pro.
 function dash() {
+  if (document.body.classList.contains('professionalThemeV1130')) {
+    dashProfessionalV1131();
+  } else {
+    dashLegacyV1131();
+  }
+}
+
+function dashLegacyV1131() {
   normalizeAll();
   const active = activeVehicles();
   setHead('Tableau de bord');
@@ -7229,7 +7700,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.30,
+      version: 11.31,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
