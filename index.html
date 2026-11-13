@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.29 Ajout Maël Lucas</title>
+<title>ELITT - Suivi OF - V11.30 Double interface</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -608,9 +608,250 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
   .mainHeaderActions{justify-content:flex-start}
 }
 
+/* ==========================================================================
+   V11.30 - MODE GRAPHIQUE PROFESSIONNEL
+   Ce bloc est volontairement isolé sous body.professionalThemeV1130.
+   La version historique reste donc intégralement disponible.
+   ========================================================================== */
+
+.themeSwitchWrapV1130{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:4px 5px 4px 9px;border-radius:12px;
+  border:1px solid var(--line);background:var(--panel);
+  white-space:nowrap
+}
+.themeSwitchLabelV1130{font-size:11px;font-weight:850;color:var(--muted)}
+.themeSwitchV1130{
+  position:relative;width:46px;height:26px;padding:0!important;border:0!important;
+  border-radius:999px!important;background:#314764!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+  flex:0 0 auto
+}
+.themeSwitchV1130::after{
+  content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;
+  border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.25);
+  transition:transform .18s ease
+}
+body.professionalThemeV1130 .themeSwitchV1130{background:#0b67c2!important}
+body.professionalThemeV1130 .themeSwitchV1130::after{transform:translateX(20px)}
+.themeSwitchModeV1130{font-size:11px;font-weight:900;min-width:52px}
+
+/* Base */
+body.professionalThemeV1130{
+  --bg:#f3f6f9;
+  --panel:#ffffff;
+  --panel2:#f8fafc;
+  --text:#172033;
+  --muted:#66758a;
+  --line:#d9e2ec;
+  --blue:#0b66c3;
+  --green:#2e8b57;
+  --red:#cf3f4f;
+  --orange:#d89013;
+  --pill:#edf3f8;
+  background:#f3f6f9;
+  color:#172033;
+  font-family:"Segoe UI",Arial,sans-serif
+}
+body.professionalThemeV1130 .app{background:#f3f6f9}
+body.professionalThemeV1130 main{background:#f3f6f9}
+body.professionalThemeV1130 aside{
+  background:linear-gradient(180deg,#132a43 0%,#0f2238 100%);
+  border-right:1px solid #17324f;
+  box-shadow:3px 0 14px rgba(23,42,66,.08)
+}
+body.professionalThemeV1130 .brand{
+  padding-bottom:17px;border-bottom:1px solid rgba(255,255,255,.10)
+}
+body.professionalThemeV1130 .logo{
+  filter:brightness(0) invert(1);
+  opacity:.98
+}
+body.professionalThemeV1130 nav button{
+  color:#dbe6f1;border-radius:9px;margin:3px 0;padding:10px 12px;
+  font-weight:700;transition:none
+}
+body.professionalThemeV1130 nav button:hover{
+  background:#193957;color:#fff
+}
+body.professionalThemeV1130 nav button.active{
+  background:#0b66c3;color:#fff;
+  box-shadow:inset 3px 0 0 #7cc0ff,0 5px 14px rgba(2,74,145,.18)
+}
+
+/* Header */
+body.professionalThemeV1130 header{
+  background:#fff;border:1px solid #dce4ec;border-radius:14px;
+  padding:17px 18px;margin-bottom:16px;
+  box-shadow:0 3px 12px rgba(36,54,78,.055)
+}
+body.professionalThemeV1130 header h1{color:#152033;font-size:26px}
+body.professionalThemeV1130 header p{color:#738196}
+body.professionalThemeV1130 .mainHeaderActions{gap:9px}
+body.professionalThemeV1130 .headerGroup{gap:8px}
+body.professionalThemeV1130 button{
+  border-radius:9px;box-shadow:none;font-weight:750
+}
+body.professionalThemeV1130 button.alt{
+  background:#eef3f8;color:#29415c;border:1px solid #d3dee9
+}
+body.professionalThemeV1130 button.alt:hover{background:#e5edf5}
+body.professionalThemeV1130 button.good{background:#2e8b57;color:#fff}
+body.professionalThemeV1130 button.warn{background:#e9a42c;color:#172033}
+body.professionalThemeV1130 button.bad{background:#c94654;color:#fff}
+
+/* Cartes / tableaux */
+body.professionalThemeV1130 .card{
+  background:#fff;border:1px solid #dbe3eb;border-radius:13px;
+  box-shadow:0 3px 12px rgba(29,48,70,.06);
+  color:#172033
+}
+body.professionalThemeV1130 .kpi{color:#172033}
+body.professionalThemeV1130 .muted{color:#708095}
+body.professionalThemeV1130 .tablewrap{
+  background:#fff;border:1px solid #d8e1ea;border-radius:12px;
+  box-shadow:0 2px 8px rgba(29,48,70,.035)
+}
+body.professionalThemeV1130 table{background:#fff;color:#172033}
+body.professionalThemeV1130 th{
+  background:#eef3f7;color:#43546a;border-bottom:1px solid #d5dee8;
+  letter-spacing:.035em;font-weight:800
+}
+body.professionalThemeV1130 td{
+  color:#233149;border-bottom:1px solid #e5ebf1
+}
+body.professionalThemeV1130 tbody tr:hover td{background:#f8fafc}
+body.professionalThemeV1130 .pill{
+  background:#edf3f8;color:#33465d;border:1px solid #dce5ee
+}
+body.professionalThemeV1130 .progress{
+  background:#e5ebf1;border:1px solid #dde5ed
+}
+body.professionalThemeV1130 .bar{
+  background:linear-gradient(90deg,#43a047,#72b748)
+}
+
+/* Formulaires */
+body.professionalThemeV1130 input,
+body.professionalThemeV1130 select,
+body.professionalThemeV1130 textarea{
+  background:#fff;color:#172033;border:1px solid #cfd9e4;border-radius:9px
+}
+body.professionalThemeV1130 input:focus,
+body.professionalThemeV1130 select:focus,
+body.professionalThemeV1130 textarea:focus{
+  outline:none;border-color:#5a9bd6;box-shadow:0 0 0 3px rgba(11,102,195,.10)
+}
+body.professionalThemeV1130 label{color:#34465d}
+body.professionalThemeV1130 .checkrow{
+  background:#f8fafc;border-color:#d6e0e9
+}
+
+/* Modales */
+body.professionalThemeV1130 .modal{background:rgba(21,32,51,.42)}
+body.professionalThemeV1130 .dialog{
+  background:#fff;color:#172033;border:1px solid #d8e1ea;
+  box-shadow:0 22px 60px rgba(22,37,56,.22)
+}
+body.professionalThemeV1130 .dialog h2{color:#172033}
+
+/* Firebase / compte / notifications */
+body.professionalThemeV1130 #fbTopbar{
+  background:#fff!important;color:#172033!important;
+  border-color:#d9e2ec!important;
+  box-shadow:0 2px 10px rgba(29,48,70,.05)
+}
+body.professionalThemeV1130 .connectedPersonBadgeV1116{
+  background:#edf3f8;border-color:#cbd8e5;color:#33465d
+}
+body.professionalThemeV1130 .connectedPersonBadgeV1116 strong{color:#172033}
+body.professionalThemeV1130 .adminRoleBadgeV1117{
+  background:#fff4dd;border-color:#e8c879;color:#775315
+}
+body.professionalThemeV1130 .notificationBadgeV1115{border-color:#fff}
+body.professionalThemeV1130 .notificationPanelV1115{
+  background:#fff;border-color:#d8e1ea;box-shadow:0 24px 65px rgba(22,37,56,.20)
+}
+body.professionalThemeV1130 .notificationPanelHeadV1115{
+  background:#eef3f7;border-color:#d8e1ea
+}
+body.professionalThemeV1130 .notificationItemV1115{color:#172033}
+
+/* Planning */
+body.professionalThemeV1130 .planningOfPickerV1124,
+body.professionalThemeV1130 .planningPersonCardV1124{
+  background:#fff!important;border-color:#dbe3eb!important
+}
+body.professionalThemeV1130 .planningOfRowV1124{
+  border-color:#e1e8ef!important
+}
+body.professionalThemeV1130 .planningStatusV1124.todo{
+  background:#edf3f8;color:#43566e;border-color:#d8e2eb
+}
+body.professionalThemeV1130 .plannedBadgeV11241{
+  background:#e7f0fa;color:#195a99;border-color:#b9d2eb
+}
+body.professionalThemeV1130 .plannedByV11241{color:#526b87}
+
+/* Dashboard / véhicule */
+body.professionalThemeV1130 .vehicleBanner{
+  background:#fff!important
+}
+body.professionalThemeV1130 .phaseProgressV5,
+body.professionalThemeV1130 .phaseProgressTrackV5{
+  background:#e5ebf1!important
+}
+body.professionalThemeV1130 .phaseProgressFillV5{
+  background:linear-gradient(90deg,#3e9d4d,#79b84b)!important
+}
+
+/* Timeline */
+body.professionalThemeV1130 .timelineChartSvgV1119{
+  background:#fff;border-color:#d7e1ea
+}
+body.professionalThemeV1130 .timelineDialogV6{
+  background:#fff
+}
+
+/* Atelier */
+body.professionalThemeV1130 .workshopShellV1123,
+body.professionalThemeV1130 .workshopCardV1123,
+body.professionalThemeV1130 .workshopKpiV1123{
+  background:#fff!important;color:#172033!important;border-color:#dbe3eb!important
+}
+
+/* États colorés : sobres, corporate */
+body.professionalThemeV1130 .timeBadgeV1112.good{
+  background:#eaf6ee!important;color:#27643e!important;border-color:#bcdcc7!important
+}
+body.professionalThemeV1130 .timeBadgeV1112.warn{
+  background:#fff5df!important;color:#815c18!important;border-color:#ead29c!important
+}
+body.professionalThemeV1130 .timeBadgeV1112.bad{
+  background:#fdecee!important;color:#8d3440!important;border-color:#edbdc3!important
+}
+
+/* Scrollbars discrètes */
+body.professionalThemeV1130 *{
+  scrollbar-color:#b7c5d4 #eef3f7
+}
+
+/* Le mode public QR conserve son affichage historique pour éviter toute régression */
+body.publicVinModeV116.professionalThemeV1130,
+body.publicGlobalModeV117.professionalThemeV1130{
+  --bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;
+  --muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;
+  --red:#ef4444;--orange:#f59e0b;--pill:#18375f
+}
+
+@media(max-width:900px){
+  .themeSwitchWrapV1130{width:100%;justify-content:center}
+  body.professionalThemeV1130 header{padding:13px}
+}
+
 </style>
 </head>
-<body><div class="app"><aside><div class="brand"><img class="logo" src="logo_elitt.png" alt="Elitt"></div><nav id="nav"></nav></aside><main><header><div><h1 id="title"></h1><p id="subtitle"></p></div><div class="mainHeaderActions"><div class="headerGroup" data-admin-only-v1117><button class="alt" onclick="page='planadmin';render()">📋 Planification</button><button onclick="openVehicle()">+ Véhicule</button><button class="good" onclick="openSAV()">+ SAV</button></div><div class="headerGroup"><button class="alt" data-admin-only-v1117 onclick="openExcelImport()">Bases OF + pièces</button><button class="alt" onclick="openGlobalTrackingQRV117()">▦ QR Suivi global</button></div></div></header><section id="view"></section></main></div>
+<body><div class="app"><aside><div class="brand"><img class="logo" src="logo_elitt.png" alt="Elitt"></div><nav id="nav"></nav></aside><main><header><div><h1 id="title"></h1><p id="subtitle"></p></div><div class="mainHeaderActions"><div class="themeSwitchWrapV1130" title="Changer uniquement l'apparence du site"><span class="themeSwitchLabelV1130">Actuel</span><button type="button" id="themeSwitchV1130" class="themeSwitchV1130" onclick="toggleProfessionalThemeV1130()" aria-label="Basculer entre l'interface actuelle et l'interface professionnelle"></button><span id="themeSwitchModeV1130" class="themeSwitchModeV1130">Actuel</span></div><div class="headerGroup" data-admin-only-v1117><button class="alt" onclick="page='planadmin';render()">📋 Planification</button><button onclick="openVehicle()">+ Véhicule</button><button class="good" onclick="openSAV()">+ SAV</button></div><div class="headerGroup"><button class="alt" data-admin-only-v1117 onclick="openExcelImport()">Bases OF + pièces</button><button class="alt" onclick="openGlobalTrackingQRV117()">▦ QR Suivi global</button></div></div></header><section id="view"></section></main></div>
 <div class="modal" id="modal"><div class="dialog"><h2 id="modalTitle"></h2><div id="modalBody"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -628,6 +869,49 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
   précisément son rôle.
   ============================================================================
 */
+
+// -----------------------------------------------------------------------------
+// V11.30 - SÉLECTEUR D'INTERFACE
+// Ce réglage est purement VISUEL et LOCAL au navigateur.
+// Il n'est jamais inclus dans state et n'est donc jamais envoyé à Firebase.
+// -----------------------------------------------------------------------------
+const THEME_KEY_V1130 = 'suivi_of_theme_v1130';
+
+function professionalThemeEnabledV1130() {
+  try {
+    return localStorage.getItem(THEME_KEY_V1130) === 'professional';
+  } catch (error) {
+    return false;
+  }
+}
+
+function updateThemeSwitchV1130() {
+  const enabled = document.body.classList.contains('professionalThemeV1130');
+  const label = document.getElementById('themeSwitchModeV1130');
+  const button = document.getElementById('themeSwitchV1130');
+
+  if (label) label.textContent = enabled ? 'Pro' : 'Actuel';
+  if (button) button.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+}
+
+function applySavedThemeV1130() {
+  const enabled = professionalThemeEnabledV1130();
+  document.body.classList.toggle('professionalThemeV1130', enabled);
+  updateThemeSwitchV1130();
+}
+
+function toggleProfessionalThemeV1130() {
+  const enabled = !document.body.classList.contains('professionalThemeV1130');
+  document.body.classList.toggle('professionalThemeV1130', enabled);
+
+  try {
+    localStorage.setItem(THEME_KEY_V1130, enabled ? 'professional' : 'current');
+  } catch (error) {
+    console.error(error);
+  }
+
+  updateThemeSwitchV1130();
+}
 
 // Clé principale utilisée pour conserver l'état du logiciel dans le navigateur.
 const LS = 'suivi_of_simple_d14_v2';
@@ -6945,7 +7229,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.29,
+      version: 11.30,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -7665,7 +7949,10 @@ initApp();
     }
   });
 
-  window.addEventListener('load', initFirebase);
+  window.addEventListener('load', () => {
+  applySavedThemeV1130();
+  initFirebase();
+});
 })();
 
 </script>
