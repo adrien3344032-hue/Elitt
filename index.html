@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V12.3 PRO Dark</title>
+<title>ELITT - Suivi OF - V12.4 Atelier Pro</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -1765,6 +1765,449 @@ body.v12-pro ::-webkit-scrollbar-thumb{
 }
 body.v12-pro ::-webkit-scrollbar-thumb:hover{
   background:#526a82;
+}
+
+/* ==========================================================================
+   V12.4 - ÉCRAN ATELIER PRO + FINITIONS DASHBOARD
+   ========================================================================== */
+
+/* Dashboard : la cellule Global reprend exactement le gabarit d'une phase. */
+body.v12-pro .v12-global-cell{
+  min-width:138px;
+}
+body.v12-pro .v12-global-cell .v12-progress{
+  height:9px;
+}
+body.v12-pro .v12-global-cell .v12-progress>span{
+  background:linear-gradient(90deg,#4089c5,#66a5da)!important;
+}
+
+/* ---------- Écran atelier Pro ---------- */
+body.v12-pro .v124-workshop{
+  display:grid;
+  gap:14px;
+  min-width:0;
+}
+body.v12-pro .v124-workshop-top{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
+body.v12-pro .v124-clock-block{
+  display:flex;
+  align-items:flex-end;
+  gap:18px;
+  min-width:0;
+}
+body.v12-pro .v124-clock{
+  font-size:34px;
+  line-height:1;
+  font-weight:950;
+  color:#fff;
+  letter-spacing:-.02em;
+}
+body.v12-pro .v124-date{
+  font-size:11px;
+  color:#91a2b5;
+  margin-top:5px;
+  text-transform:capitalize;
+}
+body.v12-pro .v124-sync{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  font-size:10px;
+  color:#8dd2a5;
+  font-weight:800;
+  padding-bottom:4px;
+}
+body.v12-pro .v124-sync::before{
+  content:"";
+  width:8px;height:8px;border-radius:50%;
+  background:#43b76d;
+  box-shadow:0 0 0 3px rgba(67,183,109,.10);
+}
+body.v12-pro .v124-workshop-actions{
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+}
+body.v12-pro .v124-fullscreen{
+  min-height:38px;
+}
+
+/* KPI supervision */
+body.v12-pro .v124-workshop-kpis{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(155px,1fr));
+  gap:10px;
+}
+body.v12-pro .v124-workshop-kpi{
+  position:relative;
+  overflow:hidden;
+  min-height:88px;
+  padding:13px 15px;
+  background:#162433;
+  border:1px solid #2c3e52;
+  border-radius:12px;
+  box-shadow:0 5px 16px rgba(0,0,0,.16);
+}
+body.v12-pro .v124-workshop-kpi::before{
+  content:"";
+  position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:#4d8bc4;
+}
+body.v12-pro .v124-workshop-kpi.pause::before{background:#d49a36}
+body.v12-pro .v124-workshop-kpi.sav::before{background:#8a68b4}
+body.v12-pro .v124-workshop-kpi.risk::before{background:#d75a67}
+body.v12-pro .v124-workshop-kpi .label{
+  font-size:10px;
+  color:#9bacbd;
+  font-weight:800;
+}
+body.v12-pro .v124-workshop-kpi strong{
+  display:block;
+  font-size:27px;
+  color:#fff;
+  line-height:1;
+  margin-top:9px;
+}
+body.v12-pro .v124-workshop-kpi small{
+  display:block;
+  margin-top:7px;
+  color:#708399;
+  font-size:9px;
+}
+
+/* Tabs / filtres */
+body.v12-pro .v124-workshop-controls{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:10px 11px;
+  background:#142130;
+  border:1px solid #293c50;
+  border-radius:12px;
+}
+body.v12-pro .v124-workshop-tabs{
+  display:flex;gap:7px;align-items:center;flex-wrap:wrap;
+}
+body.v12-pro .v124-workshop-tabs button{
+  background:#213247!important;
+  color:#cdd9e5!important;
+  border:1px solid #334960!important;
+  min-height:36px;
+  padding:8px 13px;
+  font-size:10px;
+}
+body.v12-pro .v124-workshop-tabs button.active{
+  background:#276da8!important;
+  border-color:#4287bd!important;
+  color:#fff!important;
+}
+body.v12-pro .v124-workshop-filters{
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+}
+body.v12-pro .v124-workshop-filters label{
+  display:flex;align-items:center;gap:6px;
+  font-size:9px;color:#8295aa;font-weight:800;
+}
+body.v12-pro .v124-workshop-filters select{
+  min-width:120px;
+  height:35px;
+  padding:6px 9px;
+  font-size:10px;
+}
+
+/* Grille véhicules : 4x2 en grand écran */
+body.v12-pro .v124-vehicle-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:11px;
+}
+body.v12-pro .v124-vehicle-card{
+  --status-color:#3f9a64;
+  position:relative;
+  min-width:0;
+  min-height:255px;
+  padding:13px 14px 12px;
+  background:linear-gradient(180deg,#172635 0%,#14212f 100%);
+  border:1px solid #2c4156;
+  border-radius:13px;
+  box-shadow:0 7px 22px rgba(0,0,0,.18);
+  overflow:hidden;
+}
+body.v12-pro .v124-vehicle-card::before{
+  content:"";
+  position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--status-color);
+}
+body.v12-pro .v124-vehicle-card.status-ok{--status-color:#40ae69}
+body.v12-pro .v124-vehicle-card.status-run{--status-color:#4a90d3}
+body.v12-pro .v124-vehicle-card.status-pause{--status-color:#d89b34}
+body.v12-pro .v124-vehicle-card.status-risk{--status-color:#d89b34}
+body.v12-pro .v124-vehicle-card.status-blocked{--status-color:#dc5664}
+body.v12-pro .v124-vehicle-card.status-late{--status-color:#dc5664}
+
+body.v12-pro .v124-card-head{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:10px;margin-bottom:10px;
+}
+body.v12-pro .v124-vin{
+  font-size:18px;font-weight:950;color:#fff;line-height:1.05;
+}
+body.v12-pro .v124-vin-sub{
+  color:#8fa1b4;font-size:9.5px;margin-top:4px;
+}
+body.v12-pro .v124-card-badges{
+  display:flex;justify-content:flex-end;align-items:center;
+  gap:5px;flex-wrap:wrap;max-width:55%;
+}
+body.v12-pro .v124-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:4px 7px;border-radius:999px;
+  border:1px solid #3c536b;
+  background:#233448;color:#d7e3ee;
+  font-size:8.5px;font-weight:900;white-space:nowrap;
+}
+body.v12-pro .v124-badge.ok{
+  background:#173a29;border-color:#2a6445;color:#96d9ad;
+}
+body.v12-pro .v124-badge.run{
+  background:#1b3653;border-color:#315b7d;color:#9dccf3;
+}
+body.v12-pro .v124-badge.pause,
+body.v12-pro .v124-badge.risk{
+  background:#3d2e17;border-color:#70531f;color:#e7b85c;
+}
+body.v12-pro .v124-badge.blocked,
+body.v12-pro .v124-badge.late{
+  background:#402128;border-color:#78404a;color:#f0a0a9;
+}
+
+/* Phases atelier */
+body.v12-pro .v124-phases{
+  display:grid;gap:7px;
+}
+body.v12-pro .v124-phase{
+  display:grid;grid-template-columns:78px minmax(0,1fr) auto;
+  gap:8px;align-items:center;
+}
+body.v12-pro .v124-phase-name{
+  font-size:9.5px;color:#d7e1ea;font-weight:850;
+}
+body.v12-pro .v124-phase-track{
+  height:7px;border-radius:999px;background:#293b4d;overflow:hidden;
+}
+body.v12-pro .v124-phase-fill{
+  height:100%;border-radius:999px;
+  background:linear-gradient(90deg,#438e60,#70b780);
+}
+body.v12-pro .v124-phase-value{
+  min-width:31px;text-align:right;
+  font-size:9px;color:#f0f4f8;font-weight:850;
+}
+
+/* Travail / planification */
+body.v12-pro .v124-work-line{
+  min-height:31px;
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  margin-top:10px;padding-top:9px;
+  border-top:1px solid #293b4d;
+}
+body.v12-pro .v124-person-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 8px;border-radius:8px;
+  background:#203850;border:1px solid #345773;
+  color:#cbe0f2;font-size:9px;font-weight:850;
+}
+body.v12-pro .v124-person-pill.paused{
+  background:#3c2d17;border-color:#6f511e;color:#e9bd68;
+}
+body.v12-pro .v124-empty-work{
+  color:#76899d;font-size:9px;
+}
+body.v12-pro .v124-next-task{
+  margin-top:7px;padding:7px 8px;
+  border-radius:8px;
+  background:#1e2c3c;border:1px solid #304459;
+  color:#aebdcb;font-size:8.8px;line-height:1.3;
+}
+body.v12-pro .v124-next-task b{color:#e4ebf2}
+
+/* Pied carte */
+body.v12-pro .v124-card-footer{
+  display:grid;grid-template-columns:1fr auto;gap:10px;
+  align-items:end;margin-top:9px;
+  color:#8294a7;font-size:8.8px;
+}
+body.v12-pro .v124-card-footer strong{
+  color:#e4eaf0;font-size:9.5px;
+}
+body.v12-pro .v124-card-footer .right{text-align:right}
+
+/* Note véhicule */
+body.v12-pro .v124-note{
+  margin-top:7px;padding:6px 8px;
+  border-radius:7px;background:#322a17;border:1px solid #5a4822;
+  color:#ddc586;font-size:8.5px;line-height:1.25;
+}
+
+/* SAV séparé */
+body.v12-pro .v124-sav-zone{
+  display:grid;gap:9px;
+}
+body.v12-pro .v124-section-title{
+  display:flex;align-items:center;gap:8px;
+  color:#dbe5ee;font-size:11px;font-weight:900;
+}
+body.v12-pro .v124-section-title::after{
+  content:"";height:1px;flex:1;background:#283b4e;
+}
+body.v12-pro .v124-sav-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+}
+body.v12-pro .v124-sav-card{
+  display:grid;grid-template-columns:minmax(170px,.7fr) minmax(240px,1.3fr) auto;
+  gap:16px;align-items:center;
+  padding:13px 15px;
+  background:#172536;border:1px solid #4b3a68;border-left:3px solid #8967b3;
+  border-radius:12px;
+}
+body.v12-pro .v124-sav-name{font-size:16px;font-weight:950;color:#fff}
+body.v12-pro .v124-sav-client{font-size:9px;color:#8f9fb0;margin-top:3px}
+body.v12-pro .v124-sav-status{margin-top:8px}
+body.v12-pro .v124-sav-progress .v124-phase-track{height:9px}
+body.v12-pro .v124-sav-progress-head{
+  display:flex;justify-content:space-between;gap:10px;
+  margin-bottom:6px;font-size:9px;color:#98a9ba;
+}
+body.v12-pro .v124-sav-progress-head b{color:#f2f5f8}
+body.v12-pro .v124-sav-right{
+  text-align:right;color:#94a5b7;font-size:9px;
+}
+
+/* ---------- Vue charge atelier ---------- */
+body.v12-pro .v124-load-view{
+  display:grid;gap:12px;
+}
+body.v12-pro .v124-phase-load-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
+}
+body.v12-pro .v124-phase-load{
+  background:#172536;border:1px solid #2b4055;border-radius:12px;
+  padding:13px;
+}
+body.v12-pro .v124-phase-load-head{
+  display:flex;justify-content:space-between;gap:10px;align-items:center;
+  margin-bottom:11px;
+}
+body.v12-pro .v124-phase-load-head b{
+  font-size:13px;color:#fff;
+}
+body.v12-pro .v124-phase-load-head span{
+  font-size:9px;color:#8fa2b5;
+}
+body.v12-pro .v124-load-number{
+  font-size:27px;font-weight:950;color:#fff;line-height:1;
+}
+body.v12-pro .v124-load-number small{
+  font-size:9px;color:#8295a8;font-weight:700;
+}
+body.v12-pro .v124-load-meta{
+  margin-top:10px;display:grid;gap:6px;
+  font-size:9px;color:#8ea0b2;
+}
+body.v12-pro .v124-load-meta strong{color:#dde6ef}
+body.v12-pro .v124-active-list{
+  margin-top:10px;padding-top:9px;border-top:1px solid #293c50;
+  display:grid;gap:5px;
+}
+body.v12-pro .v124-active-item{
+  display:flex;justify-content:space-between;gap:7px;
+  font-size:8.5px;color:#9eafbf;
+}
+body.v12-pro .v124-active-item b{color:#e7edf3}
+
+body.v12-pro .v124-team-load{
+  display:grid;grid-template-columns:1.1fr .9fr;gap:10px;
+}
+body.v12-pro .v124-team-panel{
+  background:#172536;border:1px solid #2b4055;border-radius:12px;padding:13px;
+}
+body.v12-pro .v124-team-title{
+  font-size:12px;font-weight:900;color:#fff;margin-bottom:11px;
+}
+body.v12-pro .v124-team-list{
+  display:grid;gap:7px;
+}
+body.v12-pro .v124-team-row{
+  display:grid;grid-template-columns:110px 1fr auto;gap:9px;align-items:center;
+  padding:8px 9px;border-radius:8px;background:#142130;border:1px solid #26394c;
+}
+body.v12-pro .v124-team-name{
+  font-size:9.5px;color:#e4ebf2;font-weight:850;
+}
+body.v12-pro .v124-team-task{
+  font-size:8.5px;color:#91a2b4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+body.v12-pro .v124-team-hours{
+  font-size:9px;color:#cfd9e3;font-weight:850;
+}
+body.v12-pro .v124-plan-list{
+  display:grid;gap:7px;
+}
+body.v12-pro .v124-plan-row{
+  display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:center;
+  padding:8px;border-radius:8px;background:#142130;border:1px solid #26394c;
+}
+body.v12-pro .v124-plan-order{
+  width:26px;height:26px;border-radius:50%;
+  display:grid;place-items:center;
+  background:#203b57;border:1px solid #345b78;
+  color:#d6e8f7;font-size:9px;font-weight:950;
+}
+body.v12-pro .v124-plan-main{
+  font-size:9px;color:#dce5ed;font-weight:850;
+}
+body.v12-pro .v124-plan-sub{
+  margin-top:2px;font-size:8px;color:#7f92a5;
+}
+body.v12-pro .v124-plan-person{
+  font-size:8.5px;color:#a8bacb;
+}
+
+/* Plein écran atelier Pro */
+body.v12-pro.workshopFullscreenV1123 #view{
+  padding:14px 16px 18px!important;
+}
+body.v12-pro.workshopFullscreenV1123 .v124-vehicle-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+body.v12-pro.workshopFullscreenV1123 .v124-vehicle-card{
+  min-height:235px;
+}
+
+/* Responsive */
+@media(max-width:1500px){
+  body.v12-pro .v124-vehicle-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  body.v12-pro .v124-workshop-kpis{grid-template-columns:repeat(3,minmax(155px,1fr))}
+  body.v12-pro .v124-phase-load-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:1100px){
+  body.v12-pro .v124-vehicle-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.v12-pro .v124-team-load{grid-template-columns:1fr}
+  body.v12-pro .v124-sav-grid{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  body.v12-pro .v124-workshop-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.v12-pro .v124-vehicle-grid,
+  body.v12-pro .v124-phase-load-grid{grid-template-columns:1fr}
+  body.v12-pro .v124-sav-card{grid-template-columns:1fr}
+  body.v12-pro .v124-sav-right{text-align:left}
+  body.v12-pro .v124-clock{font-size:27px}
 }
 
 </style>
@@ -8930,7 +9373,7 @@ initApp();
     const note=`<button class="small ${vehicleHasNoteV1122(vehicle)?'warn':'alt'}" onclick="openVehicleNoteV1122('${vehicle.id}')">Note</button>`;
     const actions=isAdminV1117()?`${note}<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="openVehicle('${vehicle.id}')">Modifier</button>`:note;
     const search=[vehicle.vin,vehicle.brand,vehicle.client,vehicle.type,...(vehicle.selectedOptions||[])].join(' ').toLowerCase();
-    return `<tr data-v12-search="${escHtml(search)}"><td><div class="v12-vin"><span class="v12-vin-dot" style="background:${escHtml(vehicleColor(vehicle))}"></span><div><b>${escHtml(vehicle.vin)}</b><small>${escHtml(vehicle.type||'CCF')}</small></div></div></td><td><b>${escHtml(vehicle.brand||'-')}</b></td><td>${escHtml(vehicle.client||'-')}</td><td><div class="optionchips">${vehicleOptionsHtml(vehicle)}</div></td><td><span class="v12-priority ${pri===1?'high':''}">${pri}</span></td><td>${phaseCellV12(vehicle,'Fabrication')}</td><td>${phaseCellV12(vehicle,'Prémontage')}</td><td>${phaseCellV12(vehicle,'Pose')}</td><td>${phaseCellV12(vehicle,'Essais')}</td><td><div style="min-width:100px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><b>${overall}%</b></div><div class="v12-progress"><span style="width:${overall}%"></span></div></div></td><td><span class="v12-status ${status.key}">${escHtml(status.label)}</span></td><td><b>${fmt(remain(vehicle))}</b></td><td>${deadlineHtmlV115(vehicle,estimates[vehicle.id],false)}</td><td><b>${remain(vehicle)>0?escHtml(fmtDate(estimates[vehicle.id])):'Terminé'}</b><div class="muted">hors week-end et fériés</div></td><td><div class="actions wrap">${actions}</div></td></tr>`;
+    return `<tr data-v12-search="${escHtml(search)}"><td><div class="v12-vin"><span class="v12-vin-dot" style="background:${escHtml(vehicleColor(vehicle))}"></span><div><b>${escHtml(vehicle.vin)}</b><small>${escHtml(vehicle.type||'CCF')}</small></div></div></td><td><b>${escHtml(vehicle.brand||'-')}</b></td><td>${escHtml(vehicle.client||'-')}</td><td><div class="optionchips">${vehicleOptionsHtml(vehicle)}</div></td><td><span class="v12-priority ${pri===1?'high':''}">${pri}</span></td><td>${phaseCellV12(vehicle,'Fabrication')}</td><td>${phaseCellV12(vehicle,'Prémontage')}</td><td>${phaseCellV12(vehicle,'Pose')}</td><td>${phaseCellV12(vehicle,'Essais')}</td><td><div class="v12-phase-cell v12-global-cell"><div class="v12-phase-cell-top"><b>${overall}%</b><span>Global</span></div><div class="v12-progress"><span style="width:${overall}%"></span></div><small>${doneUnitsV5(vehicle)}/${totalUnitsV5(vehicle)} réalisations</small></div></td><td><span class="v12-status ${status.key}">${escHtml(status.label)}</span></td><td><b>${fmt(remain(vehicle))}</b></td><td>${deadlineHtmlV115(vehicle,estimates[vehicle.id],false)}</td><td><b>${remain(vehicle)>0?escHtml(fmtDate(estimates[vehicle.id])):'Terminé'}</b><div class="muted">hors week-end et fériés</div></td><td><div class="actions wrap">${actions}</div></td></tr>`;
   }
 
   function filterDashboardV12(){
@@ -8953,7 +9396,7 @@ initApp();
       <div class="v12-kpi-grid">
         ${kpi('V','Véhicules en production',vehicles.length,`${archivedVehicles().filter(v=>!isSAV(v)).length} archivés`)}
         ${kpi('▶','OF en cours',running,`${fmtInt(ofs.length)} OF au total`)}
-        ${kpi('Ⅱ','OF en pause',paused,`${blocked} bloqué${blocked>1?'s':''}`)}
+        ${kpi('Ⅱ','OF en pause / bloqués',paused+blocked,`${paused} en pause • ${blocked} bloqué${blocked>1?'s':''}`)}
         ${kpi('✓','OF terminés',done,`${ofs.length?Math.round(done/ofs.length*100):0}% des lignes OF`)}
         ${kpi('H','Temps restant',fmtHoursMinutesV11122(remainH),'hors week-end et fériés')}
         ${kpi('SAV','SAV en cours',savRunning,`${savs.length} SAV actif${savs.length>1?'s':''}`)}
@@ -8968,6 +9411,422 @@ initApp();
   }
 
   function kpi(icon,label,value,sub){return `<div class="v12-kpi"><div class="v12-kpi-head"><span class="v12-kpi-icon">${icon}</span>${label}</div><div class="v12-kpi-value">${value}</div><div class="v12-kpi-sub">${sub||''}</div></div>`;}
+
+
+  // ---------------------------------------------------------------------------
+  // V12.4 - ÉCRAN ATELIER PRO
+  // ---------------------------------------------------------------------------
+  let workshopViewV124 = window._workshopViewV124 || 'vehicles';
+  let workshopBrandV124 = window._workshopBrandV124 || 'all';
+  let workshopStatusFilterV124 = window._workshopStatusFilterV124 || 'all';
+
+  function setWorkshopViewV124(mode){
+    workshopViewV124 = mode === 'load' ? 'load' : 'vehicles';
+    window._workshopViewV124 = workshopViewV124;
+    proWorkshopV124();
+  }
+  window.setWorkshopViewV124 = setWorkshopViewV124;
+
+  function setWorkshopBrandV124(value){
+    workshopBrandV124 = value || 'all';
+    window._workshopBrandV124 = workshopBrandV124;
+    proWorkshopV124();
+  }
+  window.setWorkshopBrandV124 = setWorkshopBrandV124;
+
+  function setWorkshopStatusFilterV124(value){
+    workshopStatusFilterV124 = value || 'all';
+    window._workshopStatusFilterV124 = workshopStatusFilterV124;
+    proWorkshopV124();
+  }
+  window.setWorkshopStatusFilterV124 = setWorkshopStatusFilterV124;
+
+  function workshopDeadlineV124(vehicle, estimates){
+    const estimate = estimates?.[vehicle.id] || null;
+    return deadlineInfoV115(vehicle, estimate, false);
+  }
+
+  function workshopStatusV124(vehicle, estimates){
+    const blocked = blockedCount(vehicle);
+    const paused = pausedOFCountV11143(vehicle);
+    const running = runningOFCountV11143(vehicle);
+    const deadline = workshopDeadlineV124(vehicle, estimates);
+
+    if(blocked > 0) return {key:'blocked', label:`${blocked} bloqué${blocked>1?'s':''}`, deadline};
+    if(deadline.className === 'late') return {key:'late', label:'En retard', deadline};
+    if(paused > 0) return {key:'pause', label:`${paused} pause${paused>1?'s':''}`, deadline};
+    if(deadline.className === 'risk') return {key:'risk', label:'Risque de retard', deadline};
+    if(running > 0) return {key:'run', label:`${running} en cours`, deadline};
+    return {key:'ok', label:deadline.label === 'Dans les temps' ? 'Dans les temps' : 'À suivre', deadline};
+  }
+
+  function workshopFilterMatchV124(vehicle, estimates){
+    if(workshopBrandV124 !== 'all' && String(vehicle.brand || '') !== workshopBrandV124) return false;
+
+    if(workshopStatusFilterV124 === 'all') return true;
+    const status = workshopStatusV124(vehicle, estimates).key;
+
+    if(workshopStatusFilterV124 === 'paused') {
+      return pausedOFCountV11143(vehicle) > 0 || blockedCount(vehicle) > 0;
+    }
+    if(workshopStatusFilterV124 === 'risk') {
+      return ['risk','late'].includes(status);
+    }
+    if(workshopStatusFilterV124 === 'running') {
+      return runningOFCountV11143(vehicle) > 0;
+    }
+    if(workshopStatusFilterV124 === 'blocked') {
+      return blockedCount(vehicle) > 0;
+    }
+    if(workshopStatusFilterV124 === 'ok') {
+      return status === 'ok';
+    }
+    return true;
+  }
+
+  function workshopPhaseProV124(vehicle, category){
+    const s = phaseStatsV5(vehicle, category);
+    const p = Math.max(0, Math.min(100, Number(s.hoursPct) || 0));
+    return `<div class="v124-phase">
+      <div class="v124-phase-name">${escHtml(category)}</div>
+      <div class="v124-phase-track"><div class="v124-phase-fill" style="width:${p}%"></div></div>
+      <div class="v124-phase-value">${p}%</div>
+    </div>`;
+  }
+
+  function currentWorkshopPeopleV124(vehicle){
+    return (vehicle.ofs || [])
+      .map(of => {
+        const session = activeWorkSessionV1111(of);
+        if(!session) return null;
+        return {
+          person: session.person,
+          paused: !!session.pausedAt,
+          of: of.name || 'OF',
+          category: of.category || ''
+        };
+      })
+      .filter(Boolean);
+  }
+
+  function nextPlannedTaskForVehicleV124(vehicle){
+    return (state.planningV1124 || [])
+      .filter(item => item.vehicleId === vehicle.id && planningStatusV1124(item).key === 'todo')
+      .sort((a,b) => (Number(a.order)||9999) - (Number(b.order)||9999))[0] || null;
+  }
+
+  function workshopCardProV124(vehicle, estimates){
+    const st = workshopStatusV124(vehicle, estimates);
+    const people = currentWorkshopPeopleV124(vehicle);
+    const planned = nextPlannedTaskForVehicleV124(vehicle);
+    const plannedTarget = planned ? planningTargetV1124(planned) : null;
+    const note = vehicleNoteTextV1122(vehicle).trim();
+    const deadline = st.deadline;
+
+    const statusBadges = [];
+    if(pausedOFCountV11143(vehicle) > 0) {
+      const n = pausedOFCountV11143(vehicle);
+      statusBadges.push(`<span class="v124-badge pause">Ⅱ ${n} pause${n>1?'s':''}</span>`);
+    }
+    if(blockedCount(vehicle) > 0) {
+      const n = blockedCount(vehicle);
+      statusBadges.push(`<span class="v124-badge blocked">⚠ ${n} bloqué${n>1?'s':''}</span>`);
+    }
+    if(runningOFCountV11143(vehicle) > 0) {
+      const n = runningOFCountV11143(vehicle);
+      statusBadges.push(`<span class="v124-badge run">▶ ${n} en cours</span>`);
+    }
+
+    if(deadline?.className === 'risk') {
+      statusBadges.push(`<span class="v124-badge risk">Risque de retard</span>`);
+    } else if(deadline?.className === 'late') {
+      statusBadges.push(`<span class="v124-badge late">En retard</span>`);
+    } else if(deadline?.className === 'ok') {
+      statusBadges.push(`<span class="v124-badge ok">Dans les temps</span>`);
+    }
+
+    const personHtml = people.length
+      ? people.slice(0,3).map(item =>
+          `<span class="v124-person-pill ${item.paused?'paused':''}">
+            ${item.paused?'Ⅱ':'▶'} ${escHtml(item.person)} • ${escHtml(item.of)}
+          </span>`
+        ).join('')
+      : `<span class="v124-empty-work">Aucune personne en cours sur ce véhicule</span>`;
+
+    const nextTask = planned && plannedTarget?.of
+      ? `<div class="v124-next-task"><b>Prochaine tâche :</b> ${escHtml(plannedTarget.of.name || 'OF')} • ${escHtml(plannedTarget.of.desc || plannedTarget.of.category || '')}${planned.person ? ` • ${escHtml(planned.person)}` : ''}</div>`
+      : '';
+
+    const target = vehicle.targetDate
+      ? targetDateLabelV115(vehicle.targetDate)
+      : 'Non défini';
+
+    const estimated = estimates?.[vehicle.id]
+      ? fmtDate(estimates[vehicle.id])
+      : '—';
+
+    return `<article class="v124-vehicle-card status-${st.key}">
+      <div class="v124-card-head">
+        <div>
+          <div class="v124-vin">VIN ${escHtml(vehicle.vin || '-')}</div>
+          <div class="v124-vin-sub">${escHtml(vehicle.brand || '-')} • ${escHtml(vehicle.client || '-')}</div>
+        </div>
+        <div class="v124-card-badges">${statusBadges.join('')}</div>
+      </div>
+
+      <div class="v124-phases">
+        ${['Fabrication','Prémontage','Pose','Essais'].map(cat => workshopPhaseProV124(vehicle,cat)).join('')}
+      </div>
+
+      <div class="v124-work-line">${personHtml}</div>
+      ${nextTask}
+
+      ${note ? `<div class="v124-note">📝 ${escHtml(note.length > 90 ? note.slice(0,90)+'…' : note)}</div>` : ''}
+
+      <div class="v124-card-footer">
+        <div>
+          <strong>Reste : ${fmt(remain(vehicle))}</strong>
+          <div>${doneUnitsV5(vehicle)}/${totalUnitsV5(vehicle)} réalisations</div>
+        </div>
+        <div class="right">
+          <strong>Objectif : ${escHtml(target)}</strong>
+          <div>Fin estimée : ${escHtml(estimated)}</div>
+        </div>
+      </div>
+    </article>`;
+  }
+
+  function workshopSavCardV124(vehicle){
+    const status = savWorkStatusV1114(vehicle);
+    const person = status.person || '';
+    const estimated = Math.max(0, Number(vehicle.savEstimated) || 0);
+    const actual = savActualHoursNowV1114(vehicle);
+    const progress = estimated > 0 ? Math.min(100, Math.round(actual / estimated * 100)) : (vehicle.savDone ? 100 : 0);
+
+    return `<article class="v124-sav-card">
+      <div>
+        <div class="v124-sav-name">SAV ${escHtml(vehicle.vin || '-')}</div>
+        <div class="v124-sav-client">${escHtml(vehicle.client || '-')}</div>
+        <div class="v124-sav-status">
+          <span class="v124-badge ${status.key === 'running' ? 'run' : status.key === 'paused' ? 'pause' : status.key === 'done' ? 'ok' : ''}">
+            ${status.key === 'running' ? '▶ ' : status.key === 'paused' ? 'Ⅱ ' : status.key === 'done' ? '✓ ' : ''}${escHtml(status.label)}
+          </span>
+          ${person ? `<span class="v124-person-pill ${status.key==='paused'?'paused':''}" style="margin-left:5px">${escHtml(person)}</span>` : ''}
+        </div>
+      </div>
+
+      <div class="v124-sav-progress">
+        <div class="v124-sav-progress-head"><span>Avancement SAV</span><b>${progress}% • ${fmtHoursMinutesV11122(actual)} / ${fmtHoursMinutesV11122(estimated)}</b></div>
+        <div class="v124-phase-track"><div class="v124-phase-fill" style="width:${progress}%"></div></div>
+      </div>
+
+      <div class="v124-sav-right"><strong>Reste ${fmt(remain(vehicle))}</strong></div>
+    </article>`;
+  }
+
+  function phaseActiveItemsV124(category, vehicles){
+    const rows = [];
+    vehicles.forEach(vehicle => {
+      (vehicle.ofs || []).forEach(of => {
+        if(String(of.category || '') !== category) return;
+        const session = activeWorkSessionV1111(of);
+        if(!session) return;
+        rows.push({vehicle,of,session});
+      });
+    });
+    return rows;
+  }
+
+  function phaseRemainingHoursV124(category, vehicles){
+    return vehicles.reduce((sum,vehicle) => {
+      return sum + (vehicle.ofs || [])
+        .filter(of => String(of.category || '') === category)
+        .reduce((s,of) => s + Math.max(0,Number(of.time)||0) * qtyRemainingV5(of),0);
+    },0);
+  }
+
+  function workshopLoadPhaseV124(category, vehicles){
+    const active = phaseActiveItemsV124(category,vehicles);
+    const persons = [...new Set(active.map(x => x.session.person).filter(Boolean))];
+    const remainH = phaseRemainingHoursV124(category,vehicles);
+
+    return `<div class="v124-phase-load">
+      <div class="v124-phase-load-head"><b>${escHtml(category)}</b><span>${persons.length} personne${persons.length>1?'s':''}</span></div>
+      <div class="v124-load-number">${active.length} <small>OF actif${active.length>1?'s':''}</small></div>
+      <div class="v124-load-meta">
+        <div>Temps restant : <strong>${fmtHoursMinutesV11122(remainH)}</strong></div>
+        <div>Personnes : <strong>${persons.length ? escHtml(persons.join(', ')) : 'Aucune'}</strong></div>
+      </div>
+      <div class="v124-active-list">
+        ${active.length
+          ? active.slice(0,5).map(x => `<div class="v124-active-item"><span>${escHtml(x.vehicle.vin)} • ${escHtml(x.of.name || 'OF')}</span><b>${escHtml(x.session.person || '')}</b></div>`).join('')
+          : `<div class="v124-active-item"><span>Aucun OF actuellement démarré</span></div>`}
+      </div>
+    </div>`;
+  }
+
+  function workshopTeamLoadV124(vehicles){
+    const rows = [];
+    vehicles.forEach(vehicle => {
+      (vehicle.ofs || []).forEach(of => {
+        const session = activeWorkSessionV1111(of);
+        if(!session) return;
+        rows.push({
+          person:session.person,
+          vehicle,
+          of,
+          paused:!!session.pausedAt
+        });
+      });
+    });
+
+    const unique = new Map();
+    rows.forEach(row => {
+      const key = row.person || '—';
+      if(!unique.has(key)) unique.set(key,[]);
+      unique.get(key).push(row);
+    });
+
+    if(!unique.size) {
+      return `<div class="v124-empty-work">Aucune personne n'a actuellement d'OF démarré.</div>`;
+    }
+
+    return [...unique.entries()].map(([person,items]) => {
+      const first = items[0];
+      return `<div class="v124-team-row">
+        <div class="v124-team-name">${escHtml(person)}</div>
+        <div class="v124-team-task">${first.paused?'Ⅱ Pause':'▶ En cours'} • VIN ${escHtml(first.vehicle.vin)} • ${escHtml(first.of.name || 'OF')} • ${escHtml(first.of.category || '')}</div>
+        <div class="v124-team-hours">${items.length} OF</div>
+      </div>`;
+    }).join('');
+  }
+
+  function workshopPlanningLoadV124(){
+    const items = (state.planningV1124 || [])
+      .filter(item => planningStatusV1124(item).key === 'todo')
+      .slice()
+      .sort((a,b) => String(a.person||'').localeCompare(String(b.person||''),'fr') || (Number(a.order)||9999)-(Number(b.order)||9999))
+      .slice(0,12);
+
+    if(!items.length) return `<div class="v124-empty-work">Aucune tâche planifiée en attente.</div>`;
+
+    return items.map(item => {
+      const target = planningTargetV1124(item);
+      return `<div class="v124-plan-row">
+        <div class="v124-plan-order">${Number(item.order)||'-'}</div>
+        <div>
+          <div class="v124-plan-main">${target.vehicle ? `VIN ${escHtml(target.vehicle.vin)}` : 'VIN —'} • ${target.of ? escHtml(target.of.name || 'OF') : 'OF indisponible'}</div>
+          <div class="v124-plan-sub">${target.of ? escHtml(target.of.desc || target.of.category || '') : ''}</div>
+        </div>
+        <div class="v124-plan-person">${escHtml(item.person || '—')}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function workshopLoadViewV124(vehicles){
+    return `<div class="v124-load-view">
+      <div class="v124-phase-load-grid">
+        ${['Fabrication','Prémontage','Pose','Essais'].map(cat => workshopLoadPhaseV124(cat,vehicles)).join('')}
+      </div>
+      <div class="v124-team-load">
+        <div class="v124-team-panel">
+          <div class="v124-team-title">Équipe actuellement en activité</div>
+          <div class="v124-team-list">${workshopTeamLoadV124(vehicles)}</div>
+        </div>
+        <div class="v124-team-panel">
+          <div class="v124-team-title">Prochaines tâches planifiées</div>
+          <div class="v124-plan-list">${workshopPlanningLoadV124()}</div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function proWorkshopV124(){
+    normalizeAll();
+    setHead('Écran atelier','Vue supervision de la production en temps réel');
+
+    const active = activeVehicles()
+      .slice()
+      .sort((a,b) => {
+        if(isSAV(a)!==isSAV(b)) return isSAV(a)?1:-1;
+        return (Number(a.priority)||1)-(Number(b.priority)||1)
+          || String(a.vin||'').localeCompare(String(b.vin||''));
+      });
+
+    const vehicles = active.filter(v => !isSAV(v));
+    const savs = active.filter(isSAV);
+    const estimates = estimateVehiclesActive();
+
+    const running = vehicles.reduce((n,v)=>n+runningOFCountV11143(v),0);
+    const paused = vehicles.reduce((n,v)=>n+pausedOFCountV11143(v),0);
+    const blocked = vehicles.reduce((n,v)=>n+blockedCount(v),0);
+    const risk = vehicles.filter(v => {
+      const d = workshopDeadlineV124(v,estimates);
+      return d.className === 'risk' || d.className === 'late';
+    }).length;
+
+    const brands = [...new Set(vehicles.map(v=>String(v.brand||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'fr'));
+    const filteredVehicles = vehicles.filter(v => workshopFilterMatchV124(v,estimates));
+    const values = workshopClockTextV1123();
+
+    document.getElementById('view').innerHTML = `<div class="v124-workshop">
+      <div class="v124-workshop-top">
+        <div class="v124-clock-block">
+          <div>
+            <div class="v124-clock" id="workshopClockV1123">${escHtml(values.time)}</div>
+            <div class="v124-date" id="workshopDateV1123">${escHtml(values.date)}</div>
+          </div>
+          <div class="v124-sync">Synchronisé Firebase</div>
+        </div>
+        <div class="v124-workshop-actions">
+          <button class="alt v124-fullscreen" onclick="toggleWorkshopFullscreenV1123()">
+            ${document.body.classList.contains('workshopFullscreenV1123')?'⤢ Quitter plein écran':'⛶ Plein écran'}
+          </button>
+          ${document.body.classList.contains('workshopFullscreenV1123')?`<button class="bad" onclick="leaveWorkshopV1123()">Quitter écran atelier</button>`:''}
+        </div>
+      </div>
+
+      <div class="v124-workshop-kpis">
+        <div class="v124-workshop-kpi"><div class="label">Camions actifs</div><strong>${vehicles.length}</strong><small>${filteredVehicles.length} affiché${filteredVehicles.length>1?'s':''}</small></div>
+        <div class="v124-workshop-kpi"><div class="label">OF en cours</div><strong>${running}</strong><small>sessions réellement démarrées</small></div>
+        <div class="v124-workshop-kpi pause"><div class="label">OF en pause / bloqués</div><strong>${paused+blocked}</strong><small>${paused} en pause • ${blocked} bloqué${blocked>1?'s':''}</small></div>
+        <div class="v124-workshop-kpi sav"><div class="label">SAV actifs</div><strong>${savs.length}</strong><small>${savs.filter(v=>['running','paused'].includes(savWorkStatusV1114(v).key)).length} démarré${savs.length>1?'s':''}</small></div>
+        <div class="v124-workshop-kpi risk"><div class="label">Véhicules à risque</div><strong>${risk}</strong><small>risque ou retard objectif</small></div>
+      </div>
+
+      <div class="v124-workshop-controls">
+        <div class="v124-workshop-tabs">
+          <button class="${workshopViewV124==='vehicles'?'active':''}" onclick="setWorkshopViewV124('vehicles')">🚒 Vue véhicules</button>
+          <button class="${workshopViewV124==='load'?'active':''}" onclick="setWorkshopViewV124('load')">▥ Vue charge atelier</button>
+        </div>
+
+        ${workshopViewV124==='vehicles' ? `<div class="v124-workshop-filters">
+          <label>Marque
+            <select onchange="setWorkshopBrandV124(this.value)">
+              <option value="all"${workshopBrandV124==='all'?' selected':''}>Toutes</option>
+              ${brands.map(brand=>`<option value="${escHtml(brand)}"${workshopBrandV124===brand?' selected':''}>${escHtml(brand)}</option>`).join('')}
+            </select>
+          </label>
+          <label>Statut
+            <select onchange="setWorkshopStatusFilterV124(this.value)">
+              <option value="all"${workshopStatusFilterV124==='all'?' selected':''}>Tous</option>
+              <option value="running"${workshopStatusFilterV124==='running'?' selected':''}>En cours</option>
+              <option value="paused"${workshopStatusFilterV124==='paused'?' selected':''}>Pause / bloqué</option>
+              <option value="risk"${workshopStatusFilterV124==='risk'?' selected':''}>Risque / retard</option>
+              <option value="ok"${workshopStatusFilterV124==='ok'?' selected':''}>Dans les temps</option>
+            </select>
+          </label>
+        </div>` : ''}
+      </div>
+
+      ${workshopViewV124 === 'vehicles'
+        ? `${filteredVehicles.length
+            ? `<div class="v124-vehicle-grid">${filteredVehicles.map(v=>workshopCardProV124(v,estimates)).join('')}</div>`
+            : `<div class="v12-card"><div class="v124-empty-work">Aucun véhicule ne correspond aux filtres.</div></div>`}
+           ${savs.length ? `<div class="v124-sav-zone"><div class="v124-section-title">SAV actifs</div><div class="v124-sav-grid">${savs.map(workshopSavCardV124).join('')}</div></div>` : ''}`
+        : workshopLoadViewV124(vehicles)}
+    </div>`;
+  }
 
   function prependRealSummary(){
     const view=document.getElementById('view'); if(!view)return;
@@ -9010,7 +9869,7 @@ initApp();
     if(!isAdminV1117()&&adminOnlyPageV1117(page))page='dash';
     if(page!=='workshop'&&document.body.classList.contains('workshopFullscreenV1123'))document.body.classList.remove('workshopFullscreenV1123');
     renderProNav();
-    const map={dash:proDashboard,workshop:()=>decorateFallback(legacy.workshop),planning:proPlanningUser,planadmin:proPlanningAdmin,real:proReal,blocked:proBlocked,times:proTimes,history:proHistory,people:proPeople,archives:()=>decorateFallback(legacy.archives),detail:()=>decorateFallback(legacy.detail)};
+    const map={dash:proDashboard,workshop:proWorkshopV124,planning:proPlanningUser,planadmin:proPlanningAdmin,real:proReal,blocked:proBlocked,times:proTimes,history:proHistory,people:proPeople,archives:()=>decorateFallback(legacy.archives),detail:()=>decorateFallback(legacy.detail)};
     (map[page]||proDashboard)();
     if(typeof renderNotificationBellV1115==='function')renderNotificationBellV1115();
     applyRoleUiV1117();
@@ -9025,6 +9884,7 @@ initApp();
   if(legacy.planadmin) planningAdminPageV1124=function(){return isPro()?proPlanningAdmin():legacy.planadmin();};
   if(legacy.planning) planningPageV1124=function(){return isPro()?proPlanningUser():legacy.planning();};
   if(legacy.dash) dash=function(){return isPro()?proDashboard():legacy.dash();};
+  if(legacy.workshop) workshopPageV1123=function(){return isPro()?proWorkshopV124():legacy.workshop();};
 
   if(legacy.render){render=function(){return isPro()?proRender():legacy.render();};}
 
