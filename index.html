@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V12 BETA PRO</title>
+<title>ELITT - Suivi OF - V12.1 BETA PRO</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -607,6 +607,178 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
   .publicGlobalMetricV117 .value{font-size:15px}
   .mainHeaderActions{justify-content:flex-start}
 }
+
+</style>
+<style id="v12ProCss">
+.v12-css-probe{--v12-css-loaded:1}
+:root{
+  --v12-navy:#142a43;
+  --v12-navy-2:#0f2136;
+  --v12-blue:#0b67c2;
+  --v12-blue-2:#2e86d1;
+  --v12-bg:#f4f6f8;
+  --v12-panel:#ffffff;
+  --v12-panel-soft:#f8fafc;
+  --v12-text:#182338;
+  --v12-muted:#6f7f93;
+  --v12-line:#dce4ec;
+  --v12-green:#328a55;
+  --v12-orange:#d89416;
+  --v12-red:#c94a57;
+  --v12-shadow:0 3px 13px rgba(30,49,73,.065);
+}
+
+/* ----- switch ----- */
+.v12-ui-switch{display:inline-flex;align-items:center;gap:7px;padding:5px 7px 5px 10px;background:#fff;border:1px solid #d6e0e9;border-radius:10px;box-shadow:0 2px 6px rgba(23,41,64,.04);white-space:nowrap}
+.v12-ui-switch .v12-label{font-size:10px;font-weight:800;color:#6f7f93}
+.v12-ui-switch button{width:42px!important;height:23px!important;min-width:42px!important;padding:0!important;border-radius:999px!important;background:#b7c4d1!important;position:relative!important;box-shadow:none!important;border:0!important}
+.v12-ui-switch button::after{content:"";position:absolute;left:3px;top:3px;width:17px;height:17px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:transform .18s ease}
+body.v12-pro .v12-ui-switch button{background:#0b67c2!important}
+body.v12-pro .v12-ui-switch button::after{transform:translateX(19px)}
+.v12-ui-switch .v12-state{font-size:10px;font-weight:900;color:#34475f;min-width:28px}
+
+/* ----- whole pro shell ----- */
+body.v12-pro{--bg:var(--v12-bg);--panel:#fff;--panel2:#f7f9fb;--text:var(--v12-text);--muted:var(--v12-muted);--line:var(--v12-line);--blue:var(--v12-blue);--green:var(--v12-green);--red:var(--v12-red);--orange:var(--v12-orange);--pill:#eef3f7;background:var(--v12-bg);color:var(--v12-text);font-family:"Segoe UI",Inter,Arial,sans-serif}
+body.v12-pro .app{grid-template-columns:225px minmax(0,1fr);background:var(--v12-bg)}
+body.v12-pro aside{background:linear-gradient(180deg,var(--v12-navy),var(--v12-navy-2));border-right:1px solid #193651;padding:18px 14px;height:100vh;box-shadow:3px 0 14px rgba(24,43,65,.08)}
+body.v12-pro .brand{padding:0 7px 16px;margin-bottom:15px;border-bottom:1px solid rgba(255,255,255,.11)}
+body.v12-pro .logo{width:145px;filter:brightness(0) invert(1);opacity:.98}
+body.v12-pro nav{display:grid;gap:3px}
+body.v12-pro nav button{width:100%;margin:0;padding:10px 11px;border-radius:8px;background:transparent!important;color:#d9e5ef!important;font-weight:700!important;display:flex;align-items:center;gap:10px;border:1px solid transparent!important;box-shadow:none!important}
+body.v12-pro nav button:hover{background:#1a3a58!important;border-color:#21496d!important}
+body.v12-pro nav button.active{background:#0b67c2!important;color:#fff!important;border-color:#1c79d3!important;box-shadow:inset 3px 0 0 #8bc8ff!important}
+body.v12-pro .v12-nav-icon{width:20px;text-align:center;opacity:.96;font-size:14px}
+body.v12-pro .v12-nav-label{font-size:13px}
+body.v12-pro main{padding:0;background:var(--v12-bg);min-width:0}
+
+/* firebase top bar */
+body.v12-pro #fbTopbar{background:#fff!important;border-color:#d9e2eb!important;color:#2b3c52!important;padding:8px 14px!important;box-shadow:0 1px 5px rgba(28,45,67,.04)!important}
+body.v12-pro #fbTopbar button{border-radius:8px!important;box-shadow:none!important}
+body.v12-pro .connectedPersonBadgeV1116{background:#eef3f7;border-color:#d1dce7;color:#42546a}
+body.v12-pro .connectedPersonBadgeV1116 strong{color:#1c2c41}
+body.v12-pro .adminRoleBadgeV1117{background:#fff4da;border-color:#ead18e;color:#76531a}
+
+/* top page header */
+body.v12-pro main>header{margin:12px 14px 0;padding:15px 16px;background:#fff;border:1px solid var(--v12-line);border-radius:12px;box-shadow:var(--v12-shadow);align-items:center}
+body.v12-pro main>header h1{font-size:22px;margin:0 0 3px;color:#17243a;letter-spacing:-.01em}
+body.v12-pro main>header p{font-size:12px;color:#738298}
+body.v12-pro .mainHeaderActions{gap:7px}
+body.v12-pro .headerGroup{gap:7px}
+body.v12-pro button{border-radius:8px;font-weight:750;box-shadow:none}
+body.v12-pro button.alt{background:#eef3f7;color:#2d435d;border:1px solid #d2dde8}
+body.v12-pro button.good{background:#328a55}
+body.v12-pro button.warn{background:#e39a1e;color:#1f2b3b}
+body.v12-pro button.bad{background:#c94a57}
+body.v12-pro #view{padding:14px;min-width:0}
+
+/* generic professional components */
+body.v12-pro .v12-page{display:grid;gap:13px}
+body.v12-pro .v12-card{background:#fff;border:1px solid var(--v12-line);border-radius:12px;box-shadow:var(--v12-shadow);padding:14px;min-width:0}
+body.v12-pro .v12-card-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px;font-size:14px;font-weight:900;color:#1c2b3f}
+body.v12-pro .v12-card-title small{color:#7d8b9d;font-weight:650;font-size:10px}
+body.v12-pro .v12-kpi-grid{display:grid;grid-template-columns:repeat(6,minmax(145px,1fr));gap:10px}
+body.v12-pro .v12-kpi{background:#fff;border:1px solid var(--v12-line);border-radius:11px;box-shadow:var(--v12-shadow);padding:13px 14px;min-width:0}
+body.v12-pro .v12-kpi-head{display:flex;align-items:center;gap:8px;color:#52647a;font-size:11px;font-weight:800}
+body.v12-pro .v12-kpi-icon{width:29px;height:29px;border-radius:8px;background:#eaf3fc;color:#0b67c2;display:grid;place-items:center;font-size:14px;flex:0 0 auto}
+body.v12-pro .v12-kpi-value{font-size:25px;font-weight:900;color:#17243a;margin-top:8px;line-height:1}
+body.v12-pro .v12-kpi-sub{font-size:10px;color:#8290a2;margin-top:6px}
+body.v12-pro .v12-grid-3{display:grid;grid-template-columns:.9fr 1.35fr 1fr;gap:10px}
+body.v12-pro .v12-grid-2{display:grid;grid-template-columns:1.35fr .9fr;gap:10px}
+body.v12-pro .v12-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+body.v12-pro .v12-search{background:#fff!important;border:1px solid #cfd9e4!important;color:#1f2d40!important;border-radius:8px!important;padding:9px 11px!important;min-width:250px}
+body.v12-pro .v12-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border-radius:999px;background:#eef3f7;border:1px solid #d9e3ec;color:#3d526c;font-size:9px;font-weight:800}
+body.v12-pro .v12-chip.blue{background:#e8f1fb;border-color:#c9dcef;color:#245e95}
+body.v12-pro .v12-chip.green{background:#eaf6ee;border-color:#c0dfca;color:#2f7148}
+body.v12-pro .v12-chip.orange{background:#fff4df;border-color:#ead19a;color:#815b16}
+body.v12-pro .v12-chip.red{background:#fdecee;border-color:#edbec4;color:#8f3945}
+
+/* tables */
+body.v12-pro .v12-table-wrap{overflow:auto;background:#fff;border:1px solid #d8e1ea;border-radius:11px;box-shadow:var(--v12-shadow)}
+body.v12-pro .v12-table{width:100%;border-collapse:separate;border-spacing:0;min-width:1100px;background:#fff}
+body.v12-pro .v12-table th{background:#eef3f7;color:#45576c;font-size:9px;letter-spacing:.045em;text-transform:uppercase;padding:9px 9px;border-bottom:1px solid #d5dee7;position:sticky;top:0;z-index:1}
+body.v12-pro .v12-table td{font-size:10px;color:#26374c;padding:10px 9px;border-bottom:1px solid #e6ebf0;vertical-align:middle}
+body.v12-pro .v12-table tbody tr:hover td{background:#fafbfd}
+body.v12-pro .v12-progress{height:7px;background:#e5ebf1;border-radius:999px;overflow:hidden;border:1px solid #dde5ec}
+body.v12-pro .v12-progress>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#3b95d0,#176fb5)}
+body.v12-pro .v12-progress.green>span{background:linear-gradient(90deg,#4b9f5b,#79b54e)}
+
+/* dashboard */
+body.v12-pro .v12-donut-wrap{min-height:160px;display:flex;align-items:center;justify-content:center;gap:24px}
+body.v12-pro .v12-donut{--p:0;width:126px;height:126px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#2f8ccc calc(var(--p)*1%),#e6edf3 0);position:relative}
+body.v12-pro .v12-donut::before{content:"";position:absolute;inset:17px;background:#fff;border-radius:50%;box-shadow:inset 0 0 0 1px #edf1f5}
+body.v12-pro .v12-donut strong{position:relative;font-size:24px;color:#17243a;z-index:1}
+body.v12-pro .v12-legend{display:grid;gap:7px;min-width:120px}
+body.v12-pro .v12-legend-row{display:flex;justify-content:space-between;gap:14px;color:#6d7d90;font-size:10px}
+body.v12-pro .v12-legend-row b{color:#2b3c51}
+body.v12-pro .v12-phase-list{display:grid;gap:10px}
+body.v12-pro .v12-phase-row{display:grid;grid-template-columns:92px 1fr 95px;gap:8px;align-items:center}
+body.v12-pro .v12-phase-row label{font-size:10px;font-weight:850;color:#3a4f66}
+body.v12-pro .v12-phase-row small{text-align:right;font-size:9px;color:#718196}
+body.v12-pro .v12-situation{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+body.v12-pro .v12-situation>div{background:#f7f9fb;border:1px solid #e0e7ee;border-radius:9px;padding:11px}
+body.v12-pro .v12-situation span{font-size:9px;color:#7b899a;font-weight:800}
+body.v12-pro .v12-situation strong{display:block;font-size:22px;margin-top:4px}
+body.v12-pro .v12-situation .run strong{color:#247a49}.v12-situation .pause strong{color:#b67610}.v12-situation .block strong{color:#bb3d49}.v12-situation .plan strong{color:#26689e}
+body.v12-pro .v12-vehicle-table{min-width:1600px}
+body.v12-pro .v12-vin{display:flex;align-items:center;gap:7px}.v12-vin-dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}.v12-vin b{font-size:11px}.v12-vin small{display:block;color:#8290a0;font-size:8px;margin-top:2px}
+body.v12-pro .v12-phase-cell{min-width:138px}.v12-phase-cell-top{display:flex;justify-content:space-between;gap:7px;margin-bottom:4px}.v12-phase-cell-top b{font-size:10px}.v12-phase-cell-top span{font-size:8px;color:#76869a}.v12-phase-cell small{display:block;font-size:8px;color:#7b899b;margin-top:4px}
+body.v12-pro .v12-status{display:inline-flex;align-items:center;padding:4px 7px;border-radius:999px;border:1px solid;font-size:8px;font-weight:900;white-space:nowrap}.v12-status.run{background:#eaf6ee;border-color:#badeca;color:#296e45}.v12-status.pause{background:#fff4df;border-color:#ecd39b;color:#805b17}.v12-status.blocked{background:#fdecee;border-color:#efbec4;color:#8e3945}.v12-status.plan{background:#e8f1fb;border-color:#c4d8ed;color:#245f96}.v12-status.todo{background:#f1f4f7;border-color:#dde4ea;color:#5f7083}.v12-status.done{background:#ebf6ee;border-color:#c1dfc9;color:#347049}
+body.v12-pro .v12-priority{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#edf2f6;border:1px solid #d8e1e9;font-size:9px;font-weight:900}.v12-priority.high{background:#fff0e9;border-color:#f0c3ae;color:#a54c2b}
+
+/* legacy content restyled when reused */
+body.v12-pro .card{background:#fff;border-color:#dbe3eb;border-radius:11px;box-shadow:var(--v12-shadow);color:#1d2b40}
+body.v12-pro .tablewrap{background:#fff;border-color:#d8e1ea;border-radius:11px;box-shadow:var(--v12-shadow)}
+body.v12-pro table{background:#fff;color:#26374c}
+body.v12-pro th{background:#eef3f7;color:#45576c;border-color:#d5dee7;font-size:9px}
+body.v12-pro td{color:#26374c;border-color:#e5ebf0}
+body.v12-pro tbody tr:hover td{background:#fafbfd}
+body.v12-pro .muted{color:#748498}
+body.v12-pro input,body.v12-pro select,body.v12-pro textarea{background:#fff;color:#1f2d40;border-color:#ced9e4;border-radius:8px}
+body.v12-pro label{color:#34475e}
+body.v12-pro .pill{background:#eef3f7;color:#40536b;border:1px solid #dae4ed}
+body.v12-pro .progress{background:#e6ebf1;border:1px solid #dde5ec}.v12-pro .bar{background:linear-gradient(90deg,#4b9f5b,#7ab44e)}
+body.v12-pro .dialog{background:#fff;color:#1b2a3e;border-color:#d8e1ea;box-shadow:0 24px 60px rgba(24,42,65,.22)}
+body.v12-pro .modal{background:rgba(24,42,65,.42)}
+
+/* realization */
+body.v12-pro .v12-real-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:12px}
+body.v12-pro .v12-mini-kpi{background:#fff;border:1px solid #dce4ec;border-radius:10px;padding:11px 12px;box-shadow:var(--v12-shadow)}
+body.v12-pro .v12-mini-kpi span{font-size:9px;color:#778699;font-weight:800}.v12-mini-kpi b{display:block;font-size:20px;color:#1d2b3f;margin-top:4px}
+body.v12-pro .realModeTabs{background:#fff;border:1px solid #dbe3eb;border-radius:11px;padding:7px!important;box-shadow:var(--v12-shadow);margin-bottom:10px!important}
+body.v12-pro .realModeTabs button{background:#eef3f7!important;color:#40546c!important;border:1px solid transparent!important}.v12-pro .realModeTabs button.active{background:#0b67c2!important;color:#fff!important}
+body.v12-pro .filterbar{gap:8px}.v12-pro .filterbar label{font-size:10px}.v12-pro .filterbar input{min-width:260px}
+
+/* planning */
+body.v12-pro .planningAdminTopV1124{background:#fff;border:1px solid #dbe3eb;border-radius:11px;padding:12px 14px;box-shadow:var(--v12-shadow);margin-bottom:10px}
+body.v12-pro .planningStepV1124{background:#fff!important;border:1px solid #dbe3eb!important;border-radius:11px!important;padding:14px!important;box-shadow:var(--v12-shadow);margin-bottom:10px!important}
+body.v12-pro .planningStepV1124 h3{font-size:14px;color:#1c2c40;margin:0 0 12px}
+body.v12-pro .planningVinChoiceV1124{background:#f8fafc!important;border-color:#dce5ed!important;color:#26384d!important;border-radius:9px!important}
+body.v12-pro .planningOfRowV1124{border-color:#e3e9ef!important;background:#fff!important}.v12-pro .planningOfRowV1124:hover{background:#f8fafc!important}
+body.v12-pro .planningPersonCardV1124,.v12-pro .myPlanningTaskV1124{background:#fff!important;border-color:#dce4ec!important;box-shadow:var(--v12-shadow)}
+body.v12-pro .planningStatusV1124.todo{background:#eaf2fb!important;color:#245f96!important;border-color:#c7dbee!important}
+body.v12-pro .plannedBadgeV11241{background:#e8f1fb!important;color:#245f96!important;border-color:#c2d8ec!important}
+
+/* people */
+body.v12-pro .v12-people-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+body.v12-pro .v12-person{background:#fff;border:1px solid #dce4ec;border-radius:11px;padding:13px;box-shadow:var(--v12-shadow)}
+body.v12-pro .v12-person-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}.v12-person-avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#e8f1fb;color:#1d63a0;font-weight:900}.v12-person-name{font-size:13px;font-weight:900;color:#1e2d42}.v12-person-role{font-size:9px;color:#7b899a;margin-top:2px}
+body.v12-pro .v12-person-stats{display:grid;grid-template-columns:1fr 1fr;gap:7px}.v12-person-stat{background:#f8fafc;border:1px solid #e3e9ef;border-radius:8px;padding:8px}.v12-person-stat span{font-size:8px;color:#7b899a;display:block}.v12-person-stat b{font-size:11px;color:#26394f}.v12-person-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.v12-person-actions button{padding:6px 8px;font-size:9px}
+
+/* history */
+body.v12-pro .v12-timeline{display:grid;gap:0}.v12-history-item{display:grid;grid-template-columns:18px 150px minmax(0,1fr);gap:10px;position:relative;padding:10px 0}.v12-history-item:not(:last-child)::before{content:"";position:absolute;left:8px;top:24px;bottom:-10px;width:1px;background:#dce5ed}.v12-history-dot{width:17px;height:17px;border-radius:50%;background:#e8f1fb;border:4px solid #fff;box-shadow:0 0 0 1px #bad2e8;margin-top:2px}.v12-history-time{font-size:9px;color:#7d8b9b}.v12-history-main{font-size:10px;color:#2a3c52}.v12-history-main b{font-size:11px;color:#1c2b40}
+
+/* status overview */
+body.v12-pro .v12-alert-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:12px}
+body.v12-pro .v12-alert-summary>div{background:#fff;border:1px solid #dce4ec;border-radius:10px;padding:11px;box-shadow:var(--v12-shadow)}.v12-alert-summary span{font-size:9px;color:#7d8b9d}.v12-alert-summary b{display:block;font-size:20px;margin-top:4px;color:#1e2d42}
+
+/* workshop, archive, detail fallback */
+body.v12-pro .workshopShellV1123,body.v12-pro .workshopCardV1123,body.v12-pro .workshopKpiV1123{background:#fff!important;color:#1e2d42!important;border-color:#dce4ec!important}
+body.v12-pro .timelineChartSvgV1119{background:#fff;border-color:#d8e1ea}
+
+@media(max-width:1450px){body.v12-pro .v12-kpi-grid{grid-template-columns:repeat(3,minmax(145px,1fr))}body.v12-pro .v12-grid-3{grid-template-columns:1fr 1fr}body.v12-pro .v12-grid-3>.v12-card:last-child{grid-column:1/-1}body.v12-pro .v12-people-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1050px){body.v12-pro .app{grid-template-columns:190px minmax(0,1fr)}body.v12-pro .logo{width:126px}body.v12-pro .v12-grid-2,body.v12-pro .v12-grid-3{grid-template-columns:1fr}body.v12-pro .v12-grid-3>.v12-card:last-child{grid-column:auto}body.v12-pro .v12-real-summary{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){body.v12-pro .app{grid-template-columns:1fr}body.v12-pro aside{position:relative;height:auto;display:block}body.v12-pro nav{grid-template-columns:repeat(2,minmax(0,1fr))}body.v12-pro main>header{margin:8px}body.v12-pro #view{padding:8px}body.v12-pro .v12-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}body.v12-pro .v12-people-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){body.v12-pro .v12-kpi-grid,body.v12-pro .v12-real-summary,body.v12-pro .v12-people-grid,body.v12-pro .v12-alert-summary{grid-template-columns:1fr}body.v12-pro nav{grid-template-columns:1fr 1fr}.v12-ui-switch{width:100%;justify-content:center}}
 
 </style>
 </head>
@@ -3434,7 +3606,7 @@ function printVehicleQRV115(vehicleId) {
   const src = canvas ? canvas.toDataURL('image/png') : image.src;
   const popup = window.open('', '_blank', 'width=620,height=760');
   if (!popup) { alert('Le navigateur a bloqué la fenêtre d’impression.'); return; }
-  popup.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>QR VIN ${escHtml(vehicle.vin)}</title><style>body{font-family:Arial,sans-serif;text-align:center;padding:35px}h1{font-size:30px;margin:0 0 8px}p{font-size:16px;color:#444;margin:0 0 24px}img{width:320px;height:320px}small{display:block;margin-top:18px;word-break:break-all;color:#666}@media print{button{display:none}}</style><link rel="stylesheet" href="assets/pro-ui.css">
+  popup.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>QR VIN ${escHtml(vehicle.vin)}</title><style>body{font-family:Arial,sans-serif;text-align:center;padding:35px}h1{font-size:30px;margin:0 0 8px}p{font-size:16px;color:#444;margin:0 0 24px}img{width:320px;height:320px}small{display:block;margin-top:18px;word-break:break-all;color:#666}@media print{button{display:none}}</style>
 </head><body><h1>VIN ${escHtml(vehicle.vin)}</h1><p>Fiche de suivi publique en lecture seule</p><img src="${src}" alt="QR Code VIN ${escHtml(vehicle.vin)}"><small>${escHtml(vehicleDeepLinkV115(vehicle))}</small><br><button onclick="window.print()">Imprimer</button><script>setTimeout(()=>window.print(),300)<\/script></body></html>`);
   popup.document.close();
 }
@@ -7670,6 +7842,218 @@ initApp();
 })();
 
 </script>
-<script src="assets/pro-ui.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  // V12.1 : contrôle explicite du chargement de la feuille de style Pro.
+  function checkProCssV121(){
+    const probe=document.createElement('div');
+    probe.className='v12-css-probe';
+    probe.style.position='absolute';probe.style.visibility='hidden';
+    document.body.appendChild(probe);
+    const loaded=getComputedStyle(probe).getPropertyValue('--v12-css-loaded').trim()==='1';
+    probe.remove();
+    if(!loaded){
+      console.error('ELITT V12.1 : assets/pro-ui.css non chargé.');
+      const warn=document.createElement('div');
+      warn.id='v12CssWarning';
+      warn.textContent='⚠ Interface Pro : le fichier assets/pro-ui.css ne se charge pas.';
+      warn.style.cssText='position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:99999;background:#fff3cd;color:#664d03;border:1px solid #ffecb5;border-radius:8px;padding:10px 14px;font:700 13px Segoe UI,Arial;box-shadow:0 6px 20px rgba(0,0,0,.15)';
+      document.body.appendChild(warn);
+    }
+    return loaded;
+  }
+
+
+  const THEME_KEY='elitt_ui_v12_beta';
+  const publicMode=(typeof isAnyPublicRequestV117==='function'&&isAnyPublicRequestV117());
+  if(publicMode) return;
+  const legacy={
+    render: typeof render==='function'?render:null,
+    dash: typeof dash==='function'?dash:null,
+    real: typeof real==='function'?real:null,
+    planning: typeof planningPageV1124==='function'?planningPageV1124:null,
+    planadmin: typeof planningAdminPageV1124==='function'?planningAdminPageV1124:null,
+    blocked: typeof blockedPage==='function'?blockedPage:null,
+    times: typeof timesPageV1112==='function'?timesPageV1112:null,
+    history: typeof historyPage==='function'?historyPage:null,
+    people: typeof people==='function'?people:null,
+    workshop: typeof workshopPageV1123==='function'?workshopPageV1123:null,
+    archives: typeof archivesPage==='function'?archivesPage:null,
+    detail: typeof vehicleDetail==='function'?vehicleDetail:null
+  };
+
+  function isPro(){return document.body.classList.contains('v12-pro');}
+  function saveTheme(value){try{localStorage.setItem(THEME_KEY,value);}catch(e){}}
+  function loadTheme(){try{return localStorage.getItem(THEME_KEY)==='pro';}catch(e){return false;}}
+
+  function installSwitch(){
+    const actions=document.querySelector('.mainHeaderActions');
+    if(!actions||document.getElementById('v12UiSwitch')) return;
+    const wrap=document.createElement('div');
+    wrap.className='v12-ui-switch';
+    wrap.innerHTML='<span class="v12-label">Interface</span><button id="v12UiSwitch" type="button" aria-label="Basculer entre interface actuelle et interface professionnelle"></button><span id="v12UiState" class="v12-state">Actuel</span>';
+    actions.insertBefore(wrap,actions.firstChild);
+    wrap.querySelector('button').addEventListener('click',()=>{
+      document.body.classList.toggle('v12-pro');
+      saveTheme(isPro()?'pro':'current');
+      updateSwitch();
+      render();
+    });
+    updateSwitch();
+  }
+
+  function updateSwitch(){
+    const b=document.getElementById('v12UiSwitch');
+    const s=document.getElementById('v12UiState');
+    if(b)b.setAttribute('aria-pressed',isPro()?'true':'false');
+    if(s)s.textContent=isPro()?'Pro':'Actuel';
+  }
+
+  const navIcons={dash:'▦',workshop:'▣',planning:'▤',real:'⚒',blocked:'⚠',times:'◷',history:'≡',people:'👥',archives:'▰'};
+  function renderProNav(){
+    const nav=document.getElementById('nav');
+    if(!nav)return;
+    const visible=isAdminV1117()?pages:pages.filter(([key])=>!['people','archives'].includes(key));
+    nav.innerHTML=visible.map(([key,label])=>`<button class="${page===key?'active':''}" onclick="page='${key}';render()"><span class="v12-nav-icon">${navIcons[key]||'•'}</span><span class="v12-nav-label">${escHtml(label)}</span></button>`).join('');
+  }
+
+  function fmtInt(n){return new Intl.NumberFormat('fr-FR').format(Math.max(0,Number(n)||0));}
+  function normalVehicles(){return activeNormalVehicles();}
+  function allActiveOfs(){return normalVehicles().flatMap(v=>v.ofs||[]);}
+
+  function vehicleStatusV12(vehicle){
+    if(remain(vehicle)<=0)return {key:'done',label:'Terminé'};
+    const blocked=blockedCount(vehicle); if(blocked)return {key:'blocked',label:`${blocked} bloqué${blocked>1?'s':''}`};
+    const paused=pausedOFCountV11143(vehicle); if(paused)return {key:'pause',label:`${paused} en pause`};
+    const run=runningOFCountV11143(vehicle); if(run)return {key:'run',label:`${run} en cours`};
+    const planned=(state.planningV1124||[]).filter(item=>item.vehicleId===vehicle.id&&planningStatusV1124(item).key==='todo').length;
+    if(planned)return {key:'plan',label:`${planned} planifié${planned>1?'s':''}`};
+    return {key:'todo',label:'À faire'};
+  }
+
+  function phaseCellV12(vehicle,cat){
+    const s=phaseStatsV5(vehicle,cat); const p=Math.max(0,Math.min(100,s.hoursPct||0));
+    return `<div class="v12-phase-cell"><div class="v12-phase-cell-top"><b>${p}%</b><span>${fmtHoursMinutesV11122(s.doneHours)} / ${fmtHoursMinutesV11122(s.totalHours)}</span></div><div class="v12-progress green"><span style="width:${p}%"></span></div><small>${s.done}/${s.total} réalisations • reste ${fmtHoursMinutesV11122(s.remainingHours)}</small></div>`;
+  }
+
+  function dashboardRowV12(vehicle,estimates){
+    const status=vehicleStatusV12(vehicle); const overall=Math.max(0,Math.min(100,pct(vehicle))); const pri=Number(vehicle.priority)||1;
+    const note=`<button class="small ${vehicleHasNoteV1122(vehicle)?'warn':'alt'}" onclick="openVehicleNoteV1122('${vehicle.id}')">Note</button>`;
+    const actions=isAdminV1117()?`${note}<button class="small good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="small alt" onclick="openVehicle('${vehicle.id}')">Modifier</button>`:note;
+    const search=[vehicle.vin,vehicle.brand,vehicle.client,vehicle.type,...(vehicle.selectedOptions||[])].join(' ').toLowerCase();
+    return `<tr data-v12-search="${escHtml(search)}"><td><div class="v12-vin"><span class="v12-vin-dot" style="background:${escHtml(vehicleColor(vehicle))}"></span><div><b>${escHtml(vehicle.vin)}</b><small>${escHtml(vehicle.type||'CCF')}</small></div></div></td><td><b>${escHtml(vehicle.brand||'-')}</b></td><td>${escHtml(vehicle.client||'-')}</td><td><div class="optionchips">${vehicleOptionsHtml(vehicle)}</div></td><td><span class="v12-priority ${pri===1?'high':''}">${pri}</span></td><td>${phaseCellV12(vehicle,'Fabrication')}</td><td>${phaseCellV12(vehicle,'Prémontage')}</td><td>${phaseCellV12(vehicle,'Pose')}</td><td>${phaseCellV12(vehicle,'Essais')}</td><td><div style="min-width:100px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><b>${overall}%</b></div><div class="v12-progress"><span style="width:${overall}%"></span></div></div></td><td><span class="v12-status ${status.key}">${escHtml(status.label)}</span></td><td><b>${fmt(remain(vehicle))}</b></td><td>${deadlineHtmlV115(vehicle,estimates[vehicle.id],false)}</td><td><b>${remain(vehicle)>0?escHtml(fmtDate(estimates[vehicle.id])):'Terminé'}</b><div class="muted">hors week-end et fériés</div></td><td><div class="actions wrap">${actions}</div></td></tr>`;
+  }
+
+  function filterDashboardV12(){
+    const q=(document.getElementById('v12DashSearch')?.value||'').trim().toLowerCase();
+    const rows=[...document.querySelectorAll('#v12VehicleRows tr[data-v12-search]')];
+    let shown=0; rows.forEach(r=>{const ok=!q||r.dataset.v12Search.includes(q);r.style.display=ok?'':'none';if(ok)shown++;});
+    const c=document.getElementById('v12VehicleCount');if(c)c.textContent=`${shown} véhicule${shown>1?'s':''}`;
+  }
+  window.filterDashboardV12=filterDashboardV12;
+
+  function proDashboard(){
+    normalizeAll(); setHead('Tableau de bord','Vue d’ensemble de la production');
+    const vehicles=normalVehicles(); const savs=activeVehicles().filter(isSAV); const ofs=allActiveOfs(); const estimates=estimateVehiclesActive();
+    const running=vehicles.reduce((n,v)=>n+runningOFCountV11143(v),0); const paused=vehicles.reduce((n,v)=>n+pausedOFCountV11143(v),0); const blocked=vehicles.reduce((n,v)=>n+blockedCount(v),0); const done=vehicles.reduce((n,v)=>n+doneOf(v),0); const remainH=vehicles.reduce((n,v)=>n+remain(v),0);
+    const planned=(state.planningV1124||[]).filter(i=>planningStatusV1124(i).key==='todo').length;
+    const phases=['Fabrication','Prémontage','Pose','Essais'].map(cat=>{const a=vehicles.reduce((x,v)=>{const s=phaseStatsV5(v,cat);x.done+=s.doneHours;x.total+=s.totalHours;return x;},{done:0,total:0});return {cat,...a,pct:a.total?Math.round(a.done/a.total*100):0};});
+    const totalH=phases.reduce((n,x)=>n+x.total,0), doneH=phases.reduce((n,x)=>n+x.done,0), gp=totalH?Math.round(doneH/totalH*100):0;
+    const savRunning=savs.filter(v=>['running','paused'].includes(savWorkStatusV1114(v).key)).length;
+    document.getElementById('view').innerHTML=`<div class="v12-page">
+      <div class="v12-kpi-grid">
+        ${kpi('🚒','Véhicules en production',vehicles.length,`${archivedVehicles().filter(v=>!isSAV(v)).length} archivés`)}
+        ${kpi('▶','OF en cours',running,`${fmtInt(ofs.length)} OF au total`)}
+        ${kpi('Ⅱ','OF en pause',paused,`${blocked} bloqué${blocked>1?'s':''}`)}
+        ${kpi('✓','OF terminés',done,`${ofs.length?Math.round(done/ofs.length*100):0}% des lignes OF`)}
+        ${kpi('◷','Temps restant',fmtHoursMinutesV11122(remainH),'hors week-end et fériés')}
+        ${kpi('🛠','SAV en cours',savRunning,`${savs.length} SAV actif${savs.length>1?'s':''}`)}
+      </div>
+      <div class="v12-grid-3">
+        <div class="v12-card"><div class="v12-card-title"><span>Avancement global</span><small>heures OF</small></div><div class="v12-donut-wrap"><div class="v12-donut" style="--p:${gp}"><strong>${gp}%</strong></div><div class="v12-legend"><div class="v12-legend-row"><span>Réalisé</span><b>${fmtHoursMinutesV11122(doneH)}</b></div><div class="v12-legend-row"><span>Restant</span><b>${fmtHoursMinutesV11122(Math.max(0,totalH-doneH))}</b></div><div class="v12-legend-row"><span>Total</span><b>${fmtHoursMinutesV11122(totalH)}</b></div></div></div></div>
+        <div class="v12-card"><div class="v12-card-title"><span>Avancement par phase</span><small>${vehicles.length} véhicules</small></div><div class="v12-phase-list">${phases.map(x=>`<div class="v12-phase-row"><label>${x.cat}</label><div class="v12-progress green"><span style="width:${x.pct}%"></span></div><small>${x.pct}% • ${fmtHoursMinutesV11122(x.done)}</small></div>`).join('')}</div></div>
+        <div class="v12-card"><div class="v12-card-title"><span>Situation atelier</span><small>temps réel</small></div><div class="v12-situation"><div class="run"><span>OF en cours</span><strong>${running}</strong></div><div class="pause"><span>OF en pause</span><strong>${paused}</strong></div><div class="block"><span>OF bloqués</span><strong>${blocked}</strong></div><div class="plan"><span>OF planifiés</span><strong>${planned}</strong></div></div></div>
+      </div>
+      <div class="v12-card" style="padding:0;overflow:hidden"><div class="v12-card-title" style="padding:13px 14px 0"><span>Suivi des véhicules</span><div class="v12-toolbar"><input id="v12DashSearch" class="v12-search" oninput="filterDashboardV12()" placeholder="Rechercher VIN, marque, client..."><span id="v12VehicleCount" class="v12-chip blue">${vehicles.length} véhicule${vehicles.length>1?'s':''}</span></div></div><div class="v12-table-wrap" style="border:0;border-radius:0;box-shadow:none"><table class="v12-table v12-vehicle-table"><thead><tr><th>VIN</th><th>Marque</th><th>Client</th><th>Options</th><th>Priorité</th><th>Fabrication</th><th>Prémontage</th><th>Pose</th><th>Essais</th><th>Global</th><th>Statut</th><th>Restant</th><th>Objectif</th><th>Fin estimée</th><th>Actions</th></tr></thead><tbody id="v12VehicleRows">${vehicles.map(v=>dashboardRowV12(v,estimates)).join('')}</tbody></table></div></div>
+    </div>`;
+  }
+
+  function kpi(icon,label,value,sub){return `<div class="v12-kpi"><div class="v12-kpi-head"><span class="v12-kpi-icon">${icon}</span>${label}</div><div class="v12-kpi-value">${value}</div><div class="v12-kpi-sub">${sub||''}</div></div>`;}
+
+  function prependRealSummary(){
+    const view=document.getElementById('view'); if(!view)return;
+    const vehicles=normalVehicles(); const ofs=allActiveOfs();
+    const running=vehicles.reduce((n,v)=>n+runningOFCountV11143(v),0), paused=vehicles.reduce((n,v)=>n+pausedOFCountV11143(v),0), blocked=vehicles.reduce((n,v)=>n+blockedCount(v),0), remaining=vehicles.reduce((n,v)=>n+remain(v),0);
+    view.classList.add('v12-page');
+    view.insertAdjacentHTML('afterbegin',`<div class="v12-real-summary"><div class="v12-mini-kpi"><span>OF à suivre</span><b>${ofs.length}</b></div><div class="v12-mini-kpi"><span>En cours</span><b>${running}</b></div><div class="v12-mini-kpi"><span>En pause / bloqués</span><b>${paused+blocked}</b></div><div class="v12-mini-kpi"><span>Temps restant</span><b>${fmtHoursMinutesV11122(remaining)}</b></div></div>`);
+  }
+
+  function proReal(){legacy.real();prependRealSummary();}
+
+  function proPlanningAdmin(){
+    legacy.planadmin();
+    const view=document.getElementById('view'); if(!view)return; view.classList.add('v12-page');
+    view.insertAdjacentHTML('afterbegin','<div class="v12-card"><div class="v12-card-title"><span>Planification de la production</span><small>1. VIN → 2. OF → 3. personne → ordre</small></div><div class="v12-toolbar"><span class="v12-chip blue">1 Sélection VIN</span><span class="v12-chip blue">2 Sélection OF</span><span class="v12-chip blue">3 Attribution</span><span class="v12-chip">4 Ordre par personne</span></div></div>');
+  }
+
+  function proPlanningUser(){legacy.planning();const v=document.getElementById('view');if(v)v.classList.add('v12-page');}
+
+  function proPeople(){
+    if(!requireAdminV1117('la gestion des personnes')){page='dash';render();return;}
+    normalizeAll();setHead('Personnes','Équipe, horaires et disponibilités');
+    const cards=(state.people||[]).map(p=>{const name=personName(p);const hrs=hoursDaySchedule(p);const vacations=(p.vacations||[]).length;const role=Object.entries(USER_EMAIL_PERSON_V1116).find(([,n])=>n.toLowerCase()===name.toLowerCase())?.[0];const roleLabel=role?(USERS_ROLES[role]||'user'):'personne';return `<div class="v12-person"><div class="v12-person-head"><div class="v12-person-avatar">${escHtml(name.charAt(0).toUpperCase())}</div><div><div class="v12-person-name">${escHtml(name)}</div><div class="v12-person-role">${escHtml(roleLabel==='admin'?'Administrateur':roleLabel==='user'?'Utilisateur':'Personne')}</div></div></div><div class="v12-person-stats"><div class="v12-person-stat"><span>Contrat</span><b>${escHtml(p.mode||'39h')}</b></div><div class="v12-person-stat"><span>Heures / semaine</span><b>${fmt(hrs)}</b></div><div class="v12-person-stat"><span>Congés enregistrés</span><b>${vacations}</b></div><div class="v12-person-stat"><span>Planning</span><b>${(state.planningV1124||[]).filter(x=>x.person===name&&planningStatusV1124(x).key!=='done').length} tâche(s)</b></div></div><div class="v12-person-actions"><button class="alt" onclick="editPerson('${p.id}')">Créneaux</button><button class="warn" onclick="openVacation('${p.id}')">Congés</button><button class="bad" onclick="removePerson('${p.id}')">Supprimer</button></div></div>`;}).join('');
+    document.getElementById('view').innerHTML=`<div class="v12-page"><div class="v12-card"><div class="v12-toolbar"><input id="pname" class="v12-search" placeholder="Nom de la personne"><button onclick="addPerson()">+ Ajouter</button><span class="v12-chip blue">${state.people.length} personnes</span></div></div><div class="v12-people-grid">${cards}</div></div>`;
+  }
+
+  function proHistory(){
+    setHead('Historique','Journal des validations, blocages et actions');
+    const items=(state.history||[]).slice().sort((a,b)=>new Date(b.date)-new Date(a.date));
+    document.getElementById('view').innerHTML=`<div class="v12-page"><div class="v12-card"><div class="v12-card-title"><span>Historique des actions</span><small>${items.length} événement${items.length>1?'s':''}</small></div><div class="v12-timeline">${items.length?items.map(i=>`<div class="v12-history-item"><div class="v12-history-dot"></div><div class="v12-history-time">${escHtml(new Date(i.date).toLocaleString('fr-FR'))}</div><div class="v12-history-main"><b>${escHtml(i.action||'Action')}</b>${i.vin?` • ${escHtml(i.vin)}`:''}${i.of?` • ${escHtml(i.of)}`:''}${i.person?` • ${escHtml(i.person)}`:''}${i.detail?`<div class="muted" style="margin-top:3px">${escHtml(i.detail)}</div>`:''}</div></div>`).join(''):'<div class="muted">Aucun historique.</div>'}</div></div></div>`;
+  }
+
+  function proBlocked(){legacy.blocked();const v=document.getElementById('view');if(!v)return;v.classList.add('v12-page');const groups=groupedBlockedOFs();v.insertAdjacentHTML('afterbegin',`<div class="v12-alert-summary"><div><span>OF bloqués regroupés</span><b>${groups.length}</b></div><div><span>VIN concernés</span><b>${new Set(groups.flatMap(g=>g.items.map(x=>x.vehicle.id))).size}</b></div><div><span>Blocages actifs</span><b>${groups.reduce((n,g)=>n+g.items.length,0)}</b></div></div>`);}
+
+  function proTimes(){legacy.times();const v=document.getElementById('view');if(v)v.classList.add('v12-page');}
+
+  function decorateFallback(fn){fn&&fn();const v=document.getElementById('view');if(v)v.classList.add('v12-page');}
+
+  function proRender(){
+    if(!isAdminV1117()&&adminOnlyPageV1117(page))page='dash';
+    if(page!=='workshop'&&document.body.classList.contains('workshopFullscreenV1123'))document.body.classList.remove('workshopFullscreenV1123');
+    renderProNav();
+    const map={dash:proDashboard,workshop:()=>decorateFallback(legacy.workshop),planning:proPlanningUser,planadmin:proPlanningAdmin,real:proReal,blocked:proBlocked,times:proTimes,history:proHistory,people:proPeople,archives:()=>decorateFallback(legacy.archives),detail:()=>decorateFallback(legacy.detail)};
+    (map[page]||proDashboard)();
+    if(typeof renderNotificationBellV1115==='function')renderNotificationBellV1115();
+    applyRoleUiV1117();
+  }
+
+  // Keep direct calls such as setRealModeV5()->real() inside the selected UI.
+  if(legacy.real) real=function(){return isPro()?proReal():legacy.real();};
+  if(legacy.people) people=function(){return isPro()?proPeople():legacy.people();};
+  if(legacy.history) historyPage=function(){return isPro()?proHistory():legacy.history();};
+  if(legacy.blocked) blockedPage=function(){return isPro()?proBlocked():legacy.blocked();};
+  if(legacy.times) timesPageV1112=function(){return isPro()?proTimes():legacy.times();};
+  if(legacy.planadmin) planningAdminPageV1124=function(){return isPro()?proPlanningAdmin():legacy.planadmin();};
+  if(legacy.planning) planningPageV1124=function(){return isPro()?proPlanningUser():legacy.planning();};
+  if(legacy.dash) dash=function(){return isPro()?proDashboard():legacy.dash();};
+
+  if(legacy.render){render=function(){return isPro()?proRender():legacy.render();};}
+
+  // Install before Firebase auth fires its first render on window load.
+  document.body.classList.toggle('v12-pro',loadTheme());
+  installSwitch();
+  updateSwitch();
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>checkProCssV121(),{once:true});
+  }else{
+    checkProCssV121();
+  }
+
+})();
+
+</script>
 </body>
 </html>
