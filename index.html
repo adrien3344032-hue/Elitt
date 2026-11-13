@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.25 Changement de session</title>
+<title>ELITT - Suivi OF - V11.26 Sauvegarde persistante</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -1332,113 +1332,369 @@ function touchSAVV1118(vehicle, at = new Date().toISOString()) {
 }
 
 // -----------------------------------------------------------------------------
-// V11.21 - SAUVEGARDE FIREBASE GROUPÉE
-// Les actions sont instantanées à l'écran et dans le stockage local.
-// Firebase est contacté 5 secondes après la DERNIÈRE action. Chaque nouveau
-// clic repousse le délai : plusieurs validations successives = une seule
-// transaction Firestore.
+// V11.26 - FILE DE SAUVEGARDE FIREBASE PERSISTANTE
+//
+// OBJECTIF : aucune attente pour l'utilisateur.
+// - chaque action est appliquée immédiatement à l'écran ;
+// - l'état est sauvegardé immédiatement dans le navigateur ;
+// - UNE SEULE copie de l'état métier en attente est conservée par compte ;
+// - Firebase synchronise en arrière-plan après une courte période d'inactivité ;
+// - fermer / actualiser le navigateur ne perd pas le lot : il sera repris à la
+//   prochaine connexion du même compte ;
+// - si de nouveaux clics arrivent pendant une sauvegarde réseau, ils créent une
+//   version plus récente et ne peuvent pas être écrasés par l'ancien retour.
+//
+// Le système garde les noms historiques saveCriticalV1118 / saveSharedDataV1120
+// pour éviter de modifier toute la logique métier existante.
 // -----------------------------------------------------------------------------
-const FIREBASE_BATCH_DELAY_V1121 = 5000;
 
-let firebaseBatchTimerV1121 = null;
-let firebaseBatchPromiseV1121 = null;
-let firebaseBatchResolveV1121 = null;
-let firebaseBatchRejectV1121 = null;
+const PERSISTENT_SAVE_PREFIX_V1126 = 'suivi_of_pending_v1126::';
+const PERSISTENT_SAVE_IDLE_DELAY_V1126 = 1200;
+const PERSISTENT_SAVE_RETRY_MIN_V1126 = 2000;
+const PERSISTENT_SAVE_RETRY_MAX_V1126 = 30000;
 
-// Réinitialise complètement le système de sauvegarde groupée lors d'un changement
-// de compte. Une promesse/timer de l'utilisateur précédent ne doit jamais être
-// réutilisé par le compte suivant.
-function resetGroupedSaveSessionV1125() {
-  if (firebaseBatchTimerV1121) {
-    clearTimeout(firebaseBatchTimerV1121);
-    firebaseBatchTimerV1121 = null;
+let persistentSaveTimerV1126 = null;
+let persistentSaveInFlightV1126 = null;
+let persistentSaveRetryAttemptV1126 = 0;
+let persistentSaveRuntimeGenerationV1126 = 0;
+
+function persistentSaveOwnerV1126() {
+  const uid = String(window.SUIVI_OF_CONNECTED_UID_V1126 || '').trim();
+  if (uid) return uid;
+
+  const email = String(window.SUIVI_OF_CONNECTED_EMAIL_V1116 || '').trim().toLowerCase();
+  return email || '';
+}
+
+function persistentSaveKeyV1126(owner = persistentSaveOwnerV1126()) {
+  return owner ? PERSISTENT_SAVE_PREFIX_V1126 + owner : '';
+}
+
+function persistentBasesSnapshotV1126() {
+  try {
+    if (typeof BASES_LS !== 'undefined') {
+      return JSON.parse(localStorage.getItem(BASES_LS) || '{}');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  return {};
+}
+
+function readPersistentSaveV1126(owner = persistentSaveOwnerV1126()) {
+  const key = persistentSaveKeyV1126(owner);
+  if (!key) return null;
+
+  try {
+    const value = JSON.parse(localStorage.getItem(key) || 'null');
+    return value && value.owner === owner && value.payload?.state ? value : null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+function writePersistentSaveV1126(record) {
+  if (!record?.owner) return false;
+  try {
+    localStorage.setItem(persistentSaveKeyV1126(record.owner), JSON.stringify(record));
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+function removePersistentSaveV1126(owner = persistentSaveOwnerV1126()) {
+  const key = persistentSaveKeyV1126(owner);
+  if (!key) return;
+  try { localStorage.removeItem(key); } catch (error) { console.error(error); }
+}
+
+function persistentPendingCountV1126(owner = persistentSaveOwnerV1126()) {
+  return Math.max(0, Number(readPersistentSaveV1126(owner)?.actionCount) || 0);
+}
+
+function setPersistentSaveStatusV1126(mode, count = persistentPendingCountV1126()) {
+  const label = document.getElementById('fbStatusText');
+  const dot = document.getElementById('fbDot');
+  if (!label || !dot) return;
+
+  if (mode === 'saved') {
+    label.textContent = 'Sauvegardé Firebase';
+    dot.className = 'fbDot ok';
+    return;
   }
 
-  // Si une ancienne promesse existe encore, on la termine proprement.
-  if (firebaseBatchResolveV1121) {
-    try { firebaseBatchResolveV1121(false); } catch (error) {}
+  if (mode === 'syncing') {
+    label.textContent = count > 1
+      ? `Synchronisation... ${count} modifications`
+      : 'Synchronisation...';
+    dot.className = 'fbDot';
+    return;
   }
 
-  firebaseBatchPromiseV1121 = null;
-  firebaseBatchResolveV1121 = null;
-  firebaseBatchRejectV1121 = null;
+  if (mode === 'error') {
+    label.textContent = count > 0
+      ? `Connexion indisponible • ${count} modification${count > 1 ? 's' : ''} conservée${count > 1 ? 's' : ''}`
+      : 'Connexion Firebase indisponible';
+    dot.className = 'fbDot bad';
+    return;
+  }
+
+  label.textContent = count > 0
+    ? `${count} modification${count > 1 ? 's' : ''} en attente`
+    : 'Modification en attente';
+  dot.className = 'fbDot';
+}
+
+// Réinitialise seulement la partie RUNTIME. La copie persistante n'est jamais
+// supprimée lors d'une déconnexion/changement de compte.
+function resetPersistentSaveRuntimeV1126() {
+  persistentSaveRuntimeGenerationV1126 += 1;
+
+  if (persistentSaveTimerV1126) {
+    clearTimeout(persistentSaveTimerV1126);
+    persistentSaveTimerV1126 = null;
+  }
+
+  persistentSaveInFlightV1126 = null;
+  persistentSaveRetryAttemptV1126 = 0;
 
   window.SUIVI_OF_PENDING_WRITES_V1120 = 0;
   window.SUIVI_OF_LOCAL_PENDING_V1118 = false;
 }
 
-function setFirebasePendingStatusV1121() {
-  const status = document.getElementById('fbStatusText');
-  if (status) status.textContent = 'Modifications en attente...';
+// Compatibilité avec la V11.25.
+function resetGroupedSaveSessionV1125() {
+  resetPersistentSaveRuntimeV1126();
 }
 
-// Envoie immédiatement le lot actuellement en attente.
-async function flushSharedDataV1121() {
-  if (firebaseBatchTimerV1121) {
-    clearTimeout(firebaseBatchTimerV1121);
-    firebaseBatchTimerV1121 = null;
+function schedulePersistentSaveV1126(delay = PERSISTENT_SAVE_IDLE_DELAY_V1126) {
+  if (persistentSaveTimerV1126) clearTimeout(persistentSaveTimerV1126);
+
+  persistentSaveTimerV1126 = setTimeout(() => {
+    persistentSaveTimerV1126 = null;
+    flushPersistentSaveV1126().catch(() => {});
+  }, Math.max(0, Number(delay) || 0));
+}
+
+// Indique au module Firebase si une version plus récente a été créée pendant
+// l'envoi de la version actuellement en cours.
+window.persistentQueueHasNewerV1126 = function persistentQueueHasNewerV1126(owner, version) {
+  const current = readPersistentSaveV1126(owner);
+  return !!current && Number(current.version) > Number(version);
+};
+
+// Enregistre la DERNIÈRE image métier du poste dans la file persistante.
+// On ne stocke pas une liste de 50 actions : une seule image récente suffit,
+// ce qui limite fortement la taille et le nombre d'écritures locales.
+function queuePersistentSaveV1126() {
+  const owner = persistentSaveOwnerV1126();
+
+  // Normalement impossible puisque les actions métier exigent une connexion,
+  // mais on garde la donnée locale si Firebase Auth n'est pas encore disponible.
+  if (!owner) {
+    window.SUIVI_OF_LOCAL_PENDING_V1118 = true;
+    setPersistentSaveStatusV1126('pending', 1);
+    return null;
   }
 
-  if (!window.SUIVI_OF_LOCAL_PENDING_V1118) return true;
+  const previous = readPersistentSaveV1126(owner);
+  const now = new Date().toISOString();
 
-  const resolve = firebaseBatchResolveV1121;
-  const reject = firebaseBatchRejectV1121;
-
-  firebaseBatchPromiseV1121 = null;
-  firebaseBatchResolveV1121 = null;
-  firebaseBatchRejectV1121 = null;
-
-  try {
-    if (typeof window.requestFirebaseSave === 'function') {
-      await window.requestFirebaseSave(true);
+  const record = {
+    owner,
+    email: String(window.SUIVI_OF_CONNECTED_EMAIL_V1116 || '').trim().toLowerCase(),
+    version: Math.max(0, Number(previous?.version) || 0) + 1,
+    actionCount: Math.max(0, Number(previous?.actionCount) || 0) + 1,
+    createdAt: previous?.createdAt || now,
+    updatedAt: now,
+    payload: {
+      state: sharedStateV1120(state),
+      basesExcel: persistentBasesSnapshotV1126()
     }
+  };
 
+  if (!writePersistentSaveV1126(record)) {
+    setPersistentSaveStatusV1126('error', record.actionCount);
+    return record;
+  }
+
+  window.SUIVI_OF_PENDING_WRITES_V1120 = record.actionCount;
+  window.SUIVI_OF_LOCAL_PENDING_V1118 = true;
+  persistentSaveRetryAttemptV1126 = 0;
+
+  setPersistentSaveStatusV1126('pending', record.actionCount);
+  schedulePersistentSaveV1126();
+
+  return record;
+}
+
+// Effectue une synchronisation réseau du dernier lot persistant.
+// Si une nouvelle action arrive pendant l'envoi, elle reste dans localStorage
+// et un second envoi est programmé automatiquement.
+async function flushPersistentSaveV1126() {
+  if (persistentSaveInFlightV1126) return persistentSaveInFlightV1126;
+
+  const owner = persistentSaveOwnerV1126();
+  if (!owner) return false;
+
+  const record = readPersistentSaveV1126(owner);
+  if (!record) {
     window.SUIVI_OF_PENDING_WRITES_V1120 = 0;
     window.SUIVI_OF_LOCAL_PENDING_V1118 = false;
-
-    if (resolve) resolve(true);
+    setPersistentSaveStatusV1126('saved', 0);
     return true;
+  }
+
+  if (typeof window.requestFirebaseSave !== 'function') {
+    setPersistentSaveStatusV1126('pending', record.actionCount);
+    return false;
+  }
+
+  const runtimeGeneration = persistentSaveRuntimeGenerationV1126;
+  const sendingVersion = Number(record.version) || 0;
+  setPersistentSaveStatusV1126('syncing', record.actionCount);
+
+  const operation = (async () => {
+    try {
+      const committed = await window.requestFirebaseSave(
+        true,
+        record.payload,
+        {
+          silent: true,
+          persistentOwner: owner,
+          persistentVersion: sendingVersion
+        }
+      );
+
+      if (!committed) throw new Error('Sauvegarde Firebase non confirmée.');
+
+      // Si le compte a changé pendant la requête, l'ancien runtime ne touche
+      // jamais l'état du nouveau compte.
+      if (runtimeGeneration !== persistentSaveRuntimeGenerationV1126) {
+        return false;
+      }
+
+      const latest = readPersistentSaveV1126(owner);
+
+      if (latest && Number(latest.version) === sendingVersion) {
+        removePersistentSaveV1126(owner);
+        window.SUIVI_OF_PENDING_WRITES_V1120 = 0;
+        window.SUIVI_OF_LOCAL_PENDING_V1118 = false;
+        persistentSaveRetryAttemptV1126 = 0;
+        setPersistentSaveStatusV1126('saved', 0);
+      } else if (latest) {
+        // Des clics ont eu lieu pendant la sauvegarde : on ne supprime surtout
+        // pas la nouvelle version.
+        window.SUIVI_OF_PENDING_WRITES_V1120 = latest.actionCount || 1;
+        window.SUIVI_OF_LOCAL_PENDING_V1118 = true;
+        setPersistentSaveStatusV1126('pending', latest.actionCount || 1);
+        schedulePersistentSaveV1126(150);
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Synchronisation persistante Firebase :', error);
+
+      if (runtimeGeneration !== persistentSaveRuntimeGenerationV1126) {
+        return false;
+      }
+
+      const latest = readPersistentSaveV1126(owner);
+      const count = latest?.actionCount || record.actionCount || 1;
+
+      window.SUIVI_OF_PENDING_WRITES_V1120 = count;
+      window.SUIVI_OF_LOCAL_PENDING_V1118 = true;
+      setPersistentSaveStatusV1126('error', count);
+
+      // Retry exponentiel : 2 s, 4 s, 8 s... jusqu'à 30 s.
+      persistentSaveRetryAttemptV1126 += 1;
+      const retryDelay = Math.min(
+        PERSISTENT_SAVE_RETRY_MAX_V1126,
+        PERSISTENT_SAVE_RETRY_MIN_V1126 * Math.pow(2, persistentSaveRetryAttemptV1126 - 1)
+      );
+      schedulePersistentSaveV1126(retryDelay);
+      return false;
+    }
+  })();
+
+  persistentSaveInFlightV1126 = operation;
+
+  try {
+    return await operation;
+  } finally {
+    if (runtimeGeneration === persistentSaveRuntimeGenerationV1126) {
+      persistentSaveInFlightV1126 = null;
+    }
+  }
+}
+
+// Ancien nom conservé pour les rares actions qui demandent un flush immédiat
+// (annulation, QR, bouton Forcer sauvegarde).
+async function flushSharedDataV1121() {
+  if (persistentSaveTimerV1126) {
+    clearTimeout(persistentSaveTimerV1126);
+    persistentSaveTimerV1126 = null;
+  }
+  return flushPersistentSaveV1126();
+}
+
+// Au prochain login du même compte, restaure la copie locale non envoyée AVANT
+// que le snapshot Firebase ne puisse l'écraser, puis synchronise en arrière-plan.
+function recoverPersistentSaveV1126() {
+  const owner = persistentSaveOwnerV1126();
+  const record = readPersistentSaveV1126(owner);
+
+  if (!record?.payload?.state) {
+    window.SUIVI_OF_PENDING_WRITES_V1120 = 0;
+    window.SUIVI_OF_LOCAL_PENDING_V1118 = false;
+    return false;
+  }
+
+  const localUi = captureLocalUiStateV1120(state);
+
+  state = restoreLocalUiStateV1120(
+    JSON.parse(JSON.stringify(record.payload.state)),
+    localUi
+  );
+
+  try {
+    if (record.payload.basesExcel && typeof BASES_LS !== 'undefined') {
+      localStorage.setItem(BASES_LS, JSON.stringify(record.payload.basesExcel));
+      if (typeof loadPersistedBases === 'function') loadPersistedBases();
+    }
   } catch (error) {
     console.error(error);
-    window.SUIVI_OF_LOCAL_PENDING_V1118 = true;
-    if (reject) reject(error);
-    throw error;
   }
-}
 
-// Programme ou reprogramme la sauvegarde du lot.
-function queueSharedDataSaveV1121() {
-  window.SUIVI_OF_PENDING_WRITES_V1120 =
-    Math.max(0, Number(window.SUIVI_OF_PENDING_WRITES_V1120) || 0) + 1;
+  if (typeof normalizeAll === 'function') normalizeAll();
+  if (typeof applyConnectedPersonV1116 === 'function') applyConnectedPersonV1116();
+
+  try { localStorage.setItem(LS, JSON.stringify(state)); } catch (error) { console.error(error); }
+
+  window.SUIVI_OF_PENDING_WRITES_V1120 = record.actionCount || 1;
   window.SUIVI_OF_LOCAL_PENDING_V1118 = true;
 
-  setFirebasePendingStatusV1121();
+  setPersistentSaveStatusV1126('pending', record.actionCount || 1);
+  render();
+  schedulePersistentSaveV1126(250);
 
-  if (!firebaseBatchPromiseV1121) {
-    firebaseBatchPromiseV1121 = new Promise((resolve, reject) => {
-      firebaseBatchResolveV1121 = resolve;
-      firebaseBatchRejectV1121 = reject;
-    });
-    firebaseBatchPromiseV1121.catch(() => {});
-  }
-
-  if (firebaseBatchTimerV1121) clearTimeout(firebaseBatchTimerV1121);
-
-  firebaseBatchTimerV1121 = setTimeout(() => {
-    flushSharedDataV1121().catch(() => {});
-  }, FIREBASE_BATCH_DELAY_V1121);
-
-  return firebaseBatchPromiseV1121;
+  return true;
 }
 
-// Une vraie modification est enregistrée immédiatement en local,
-// puis ajoutée au lot Firebase.
+// Une modification métier est toujours instantanée : navigateur d'abord,
+// Firebase ensuite, sans attendre le réseau.
 function saveCriticalV1118() {
   try { localStorage.setItem(LS, JSON.stringify(state)); }
   catch (error) { console.error(error); }
 
+  queuePersistentSaveV1126();
   render();
-  return queueSharedDataSaveV1121();
+
+  // L'appelant n'a pas à attendre Firebase pour continuer.
+  return Promise.resolve(true);
 }
 
 function saveSharedDataV1120() {
@@ -6583,7 +6839,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.25,
+      version: 11.26,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -6841,12 +7097,20 @@ initApp();
   }
 
   // Enregistre dans une transaction afin qu'une machine avec un état ancien ne puisse plus annuler une Pause/Reprise récente.
-  async function pushFirebaseNow(force = false){
+  async function pushFirebaseNow(force = false, payloadOverride = null, options = {}){
     if(!fbReady || !currentUser || !db) return null;
 
     const saveUserUid = currentUser.uid;
     const saveGeneration = authSessionGenerationV1125;
-    const localStableJSON = JSON.stringify(stableDataFromCurrent());
+
+    const stableSource = payloadOverride
+      ? {
+          state: sharedStateV1120(payloadOverride.state || {}),
+          basesExcel: payloadOverride.basesExcel || {}
+        }
+      : stableDataFromCurrent();
+
+    const localStableJSON = JSON.stringify(stableSource);
     if(!force && localStableJSON === lastRemoteDataJSON) return null;
 
     const reference = db.collection(FIREBASE_DOC_COLLECTION).doc(FIREBASE_DOC_ID);
@@ -6856,7 +7120,15 @@ initApp();
       saveTimer = null;
       setStatus('Sauvegarde...', '');
 
-      const localPayload = payloadFromCurrent();
+      const localPayload = payloadOverride
+        ? {
+            app: 'ELITT Suivi OF Web Firebase',
+            version: 11.26,
+            updatedAt: new Date().toISOString(),
+            state: sharedStateV1120(payloadOverride.state || {}),
+            basesExcel: payloadOverride.basesExcel || {}
+          }
+        : payloadFromCurrent();
 
       const committedPayload = await db.runTransaction(async transaction => {
         // Si l'utilisateur a changé entre le clic et le début de la transaction,
@@ -6878,30 +7150,49 @@ initApp();
         return null;
       }
 
-      // On remet le navigateur exactement sur la version validée par la transaction.
-      if(committedPayload?.state) applyRemotePayload(committedPayload, true);
+      const newerPersistentVersion =
+        options?.persistentOwner &&
+        typeof window.persistentQueueHasNewerV1126 === 'function' &&
+        window.persistentQueueHasNewerV1126(
+          options.persistentOwner,
+          options.persistentVersion
+        );
+
+      // On n'applique le retour que si aucune action plus récente n'a été faite
+      // pendant la requête réseau.
+      if(!newerPersistentVersion && committedPayload?.state) {
+        applyRemotePayload(committedPayload, true);
+      }
 
       deferredRemotePayloadV1118 = null;
-      await syncPublicVinDocumentsV116();
+
+      // Les QR publics sont mis à jour uniquement lorsque ce lot est toujours
+      // le plus récent, ce qui évite des écritures inutiles.
+      if(!newerPersistentVersion) {
+        await syncPublicVinDocumentsV116();
+      }
 
       lastRemoteDataJSON = JSON.stringify({
         state: committedPayload?.state || state,
         basesExcel: committedPayload?.basesExcel || getBasesPayload()
       });
 
-      setStatus('Sauvegardé Firebase', 'ok');
+      if(!newerPersistentVersion) setStatus('Sauvegardé Firebase', 'ok');
       return committedPayload;
     }catch(e){
       console.error(e);
       setStatus('Erreur sauvegarde Firebase', 'bad');
-      alert('Erreur sauvegarde Firebase : ' + e.message);
+      if(!options?.silent) {
+        alert('Erreur sauvegarde Firebase : ' + e.message);
+      }
       throw e;
     }
   }
 
-  // Expose une demande de sauvegarde afin qu'une restauration JSON puisse être envoyée seulement après sa réussite réelle.
-  window.requestFirebaseSave = function requestFirebaseSave(force = false){
-    if(force) return pushFirebaseNow(true);
+  // Expose la sauvegarde Firebase. La file persistante peut fournir le snapshot
+  // exact qu'elle veut confirmer, sans dépendre de l'état qui continue d'évoluer à l'écran.
+  window.requestFirebaseSave = function requestFirebaseSave(force = false, payloadOverride = null, options = {}){
+    if(force || payloadOverride) return pushFirebaseNow(true, payloadOverride, options);
     queueFirebaseSave();
     return Promise.resolve();
   };
@@ -6995,17 +7286,17 @@ initApp();
     document.getElementById('fbBackupData').onclick = () => backupAllV37();
     document.getElementById('fbRestoreData').onclick = () => restoreAllV37();
     document.getElementById('fbLogout').onclick = async () => {
-      try {
-        if (window.SUIVI_OF_LOCAL_PENDING_V1118) {
-          await flushSharedDataV1121();
+      // On lance une tentative immédiate, mais on ne bloque jamais longtemps
+      // la déconnexion : le lot reste persistant pour ce compte si nécessaire.
+      if (window.SUIVI_OF_LOCAL_PENDING_V1118) {
+        try {
+          await Promise.race([
+            flushSharedDataV1121(),
+            new Promise(resolve => setTimeout(resolve, 700))
+          ]);
+        } catch (error) {
+          console.error(error);
         }
-      } catch (error) {
-        console.error(error);
-        const leave = confirm(
-          "La sauvegarde Firebase n'a pas pu être confirmée.\n\n" +
-          "Veux-tu quand même te déconnecter ?"
-        );
-        if (!leave) return;
       }
 
       await auth.signOut();
@@ -7088,6 +7379,8 @@ initApp();
     lastPublicPayloadJSONV116.clear();
     lastPublicGlobalJSONV117 = '';
 
+    // Réinitialise seulement timers/requêtes de l'ancienne session.
+    // Le lot persistant du compte reste sur le disque jusqu'à confirmation Firebase.
     if(typeof resetGroupedSaveSessionV1125 === 'function'){
       resetGroupedSaveSessionV1125();
     }
@@ -7186,6 +7479,7 @@ initApp();
               ? window.personFromEmailV1116(user.email || '')
               : '') || '';
 
+          window.SUIVI_OF_CONNECTED_UID_V1126 = user.uid || '';
           window.SUIVI_OF_CONNECTED_EMAIL_V1116 = user.email || '';
           window.SUIVI_OF_CONNECTED_PERSON_V1116 = connectedName;
 
@@ -7207,9 +7501,18 @@ initApp();
           // Le rôle est toujours recalculé à partir de l'adresse du NOUVEAU compte.
           // Plusieurs comptes peuvent être admin simultanément.
           applyRoleUiV1117();
-          render();
+
+          // Si ce compte possède des modifications non envoyées d'une ancienne
+          // fermeture, elles sont restaurées avant l'écoute distante.
+          const recoveredPendingV1126 =
+            typeof recoverPersistentSaveV1126 === 'function'
+              ? recoverPersistentSaveV1126()
+              : false;
+
+          if(!recoveredPendingV1126) render();
           startSnapshot();
         }else{
+          window.SUIVI_OF_CONNECTED_UID_V1126 = '';
           window.SUIVI_OF_CONNECTED_EMAIL_V1116 = '';
           window.SUIVI_OF_CONNECTED_PERSON_V1116 = '';
 
@@ -7240,11 +7543,19 @@ initApp();
   installSaveBridge();
   installBasesBridge();
 
-  // Évite une perte si la page est fermée pendant les 5 secondes d'attente.
-  window.addEventListener('beforeunload', event => {
-    if (window.SUIVI_OF_LOCAL_PENDING_V1118) {
-      event.preventDefault();
-      event.returnValue = '';
+  // Plus aucun popup de fermeture : le lot est déjà conservé dans localStorage.
+  // On tente simplement une synchronisation opportuniste lorsque l'onglet passe
+  // en arrière-plan. Si le navigateur coupe la requête, la reprise au prochain
+  // login du même compte est automatique.
+  document.addEventListener('visibilitychange', () => {
+    if(document.visibilityState === 'hidden' && window.SUIVI_OF_LOCAL_PENDING_V1118){
+      flushSharedDataV1121().catch(() => {});
+    }
+  });
+
+  window.addEventListener('pagehide', () => {
+    if(window.SUIVI_OF_LOCAL_PENDING_V1118){
+      flushSharedDataV1121().catch(() => {});
     }
   });
 
