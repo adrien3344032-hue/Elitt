@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.24.1 Statut planifié</title>
+<title>ELITT - Suivi OF - V11.25 Changement de session</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}.brandText{display:none}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -589,7 +589,7 @@ body.publicGlobalModeV117 main{padding:18px;max-width:2200px;margin:0 auto}
 
 </style>
 </head>
-<body><div class="app"><aside><div class="brand"><img class="logo" src="logo_elitt.png" alt="Elitt"></div><nav id="nav"></nav></aside><main><header><div><h1 id="title"></h1><p id="subtitle"></p></div><div class="mainHeaderActions"><div class="headerGroup" data-admin-only-v1117><button onclick="openVehicle()">+ Véhicule</button><button class="good" onclick="openSAV()">+ SAV</button></div><div class="headerGroup"><button class="alt" data-admin-only-v1117 onclick="openExcelImport()">Bases OF + pièces</button><button class="alt" onclick="openGlobalTrackingQRV117()">▦ QR Suivi global</button></div></div></header><section id="view"></section></main></div>
+<body><div class="app"><aside><div class="brand"><img class="logo" src="logo_elitt.png" alt="Elitt"></div><nav id="nav"></nav></aside><main><header><div><h1 id="title"></h1><p id="subtitle"></p></div><div class="mainHeaderActions"><div class="headerGroup" data-admin-only-v1117><button class="alt" onclick="page='planadmin';render()">📋 Planification</button><button onclick="openVehicle()">+ Véhicule</button><button class="good" onclick="openSAV()">+ SAV</button></div><div class="headerGroup"><button class="alt" data-admin-only-v1117 onclick="openExcelImport()">Bases OF + pièces</button><button class="alt" onclick="openGlobalTrackingQRV117()">▦ QR Suivi global</button></div></div></header><section id="view"></section></main></div>
 <div class="modal" id="modal"><div class="dialog"><h2 id="modalTitle"></h2><div id="modalBody"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -1162,6 +1162,14 @@ function timesPageV1112() {
 }
 
 // Correspondance entre les comptes Firebase atelier et les personnes du site.
+// ============================================================================
+// >>> ZONE À MODIFIER POUR AJOUTER UN UTILISATEUR <<<
+// 1) Crée d'abord le compte dans Firebase Authentication.
+// 2) Ajoute ensuite ici : 'adresse@elitt.com': 'Prénom',
+// Exemple : 'maxime@elitt.com': 'Maxime',
+//
+// Cette liste sert à relier l'adresse Firebase au nom visible dans le logiciel.
+// ============================================================================
 const USER_EMAIL_PERSON_V1116 = Object.freeze({
   'david@elitt.com': 'David',
   'dimitri@elitt.com': 'Dimitri',
@@ -1203,11 +1211,14 @@ function matchingPersonNameV1116(name) {
   return match ? personName(match) : name;
 }
 
-// ============================================================
-// RÔLES DES UTILISATEURS
-// Change simplement "user" en "admin" pour donner les droits admin.
-// Tu peux avoir plusieurs administrateurs en même temps.
-// ============================================================
+// ============================================================================
+// >>> ZONE À MODIFIER POUR CHOISIR LE RÔLE D'UN UTILISATEUR <<<
+// Valeurs autorisées : 'user' ou 'admin'.
+// Tu peux avoir AUTANT D'ADMINISTRATEURS QUE TU VEUX.
+// Exemple : 'maxime@elitt.com': 'admin',
+//
+// Si une adresse n'est pas présente dans cette liste, son rôle sera 'user'.
+// ============================================================================
 const USERS_ROLES = {
   'olivier@elitt.com': 'admin',
   'adrien@elitt.com': 'user',
@@ -1333,6 +1344,28 @@ let firebaseBatchTimerV1121 = null;
 let firebaseBatchPromiseV1121 = null;
 let firebaseBatchResolveV1121 = null;
 let firebaseBatchRejectV1121 = null;
+
+// Réinitialise complètement le système de sauvegarde groupée lors d'un changement
+// de compte. Une promesse/timer de l'utilisateur précédent ne doit jamais être
+// réutilisé par le compte suivant.
+function resetGroupedSaveSessionV1125() {
+  if (firebaseBatchTimerV1121) {
+    clearTimeout(firebaseBatchTimerV1121);
+    firebaseBatchTimerV1121 = null;
+  }
+
+  // Si une ancienne promesse existe encore, on la termine proprement.
+  if (firebaseBatchResolveV1121) {
+    try { firebaseBatchResolveV1121(false); } catch (error) {}
+  }
+
+  firebaseBatchPromiseV1121 = null;
+  firebaseBatchResolveV1121 = null;
+  firebaseBatchRejectV1121 = null;
+
+  window.SUIVI_OF_PENDING_WRITES_V1120 = 0;
+  window.SUIVI_OF_LOCAL_PENDING_V1118 = false;
+}
 
 function setFirebasePendingStatusV1121() {
   const status = document.getElementById('fbStatusText');
@@ -4207,9 +4240,6 @@ function dash() {
   const savInProgress = totalSAVInProgressV1114();
 
   document.getElementById('view').innerHTML = `
-    ${isAdminV1117() ? `<div class="toolbar" style="justify-content:flex-end;margin-bottom:12px">
-      <button onclick="page='planadmin';render()">📋 Planification</button>
-    </div>` : ''}
     <div class="grid cards dashboardKpisV1111">
       <div class="card"><b>Véhicules actifs</b><div class="kpi">${active.length}</div><div class="muted">Archivés : ${archivedVehicles().length}</div></div>
       <div class="card"><b>OF total</b><div class="kpi">${total}</div></div>
@@ -6491,6 +6521,11 @@ initApp();
   let unsubscribeSnapshot = null;
   let lastRemoteDataJSON = '';
   let deferredRemotePayloadV1118 = null;
+
+  // Numéro de génération de la session : permet d'ignorer un callback
+  // Firestore provenant encore de l'ancien compte après une reconnexion.
+  let authSessionGenerationV1125 = 0;
+
   const lastPublicPayloadJSONV116 = new Map();
   let lastPublicGlobalJSONV117 = '';
 
@@ -6548,7 +6583,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.241,
+      version: 11.25,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -6809,6 +6844,8 @@ initApp();
   async function pushFirebaseNow(force = false){
     if(!fbReady || !currentUser || !db) return null;
 
+    const saveUserUid = currentUser.uid;
+    const saveGeneration = authSessionGenerationV1125;
     const localStableJSON = JSON.stringify(stableDataFromCurrent());
     if(!force && localStableJSON === lastRemoteDataJSON) return null;
 
@@ -6822,6 +6859,12 @@ initApp();
       const localPayload = payloadFromCurrent();
 
       const committedPayload = await db.runTransaction(async transaction => {
+        // Si l'utilisateur a changé entre le clic et le début de la transaction,
+        // on annule cette sauvegarde plutôt que de l'associer au mauvais compte.
+        if(saveGeneration !== authSessionGenerationV1125 || !currentUser || currentUser.uid !== saveUserUid){
+          throw new Error('Session Firebase changée pendant la sauvegarde.');
+        }
+
         const snapshot = await transaction.get(reference);
         const remotePayload = snapshot.exists ? snapshot.data() : null;
         const payload = mergePayloadForSaveV1118(remotePayload, localPayload);
@@ -6829,6 +6872,11 @@ initApp();
         transaction.set(reference, payload, {merge:true});
         return payload;
       });
+
+      // Si le compte a changé pendant l'attente réseau, l'ancien résultat est ignoré.
+      if(saveGeneration !== authSessionGenerationV1125 || !currentUser || currentUser.uid !== saveUserUid){
+        return null;
+      }
 
       // On remet le navigateur exactement sur la version validée par la transaction.
       if(committedPayload?.state) applyRemotePayload(committedPayload, true);
@@ -7017,17 +7065,57 @@ initApp();
     }
   }
 
+  // Nettoie tout ce qui appartient à l'ancienne session Firebase.
+  // Appelé dès que l'utilisateur Firebase change.
+  function resetFirebaseAccountSessionV1125(){
+    authSessionGenerationV1125 += 1;
+
+    if(saveTimer){
+      clearTimeout(saveTimer);
+      saveTimer = null;
+    }
+
+    if(unsubscribeSnapshot){
+      try { unsubscribeSnapshot(); } catch(error) { console.error(error); }
+      unsubscribeSnapshot = null;
+    }
+
+    applyingRemote = false;
+    lastRemoteDataJSON = '';
+    deferredRemotePayloadV1118 = null;
+
+    // Les caches des QR ne doivent pas empêcher le nouveau compte de republier.
+    lastPublicPayloadJSONV116.clear();
+    lastPublicGlobalJSONV117 = '';
+
+    if(typeof resetGroupedSaveSessionV1125 === 'function'){
+      resetGroupedSaveSessionV1125();
+    }
+  }
+
   // Démarre l'écoute temps réel du document Firestore partagé.
   async function startSnapshot(){
-    if(unsubscribeSnapshot) unsubscribeSnapshot();
+    if(unsubscribeSnapshot){
+      try { unsubscribeSnapshot(); } catch(error) { console.error(error); }
+      unsubscribeSnapshot = null;
+    }
+
+    const generation = authSessionGenerationV1125;
+    const userUid = currentUser?.uid || '';
     const reference = db.collection(FIREBASE_DOC_COLLECTION).doc(FIREBASE_DOC_ID);
+
     unsubscribeSnapshot = reference.onSnapshot(snapshot => {
+      // Ignore tout retour provenant d'une session/utilisateur devenu obsolète.
+      if(generation !== authSessionGenerationV1125) return;
+      if(!currentUser || currentUser.uid !== userUid) return;
+
       if(snapshot.exists){
         applyRemotePayload(snapshot.data());
       }else{
         setStatus('Aucune donnée Firebase : restauration ou création possible', '');
       }
     }, error => {
+      if(generation !== authSessionGenerationV1125) return;
       console.error(error);
       setStatus('Erreur lecture Firebase', 'bad');
       alert('Erreur lecture Firebase : ' + error.message);
@@ -7081,6 +7169,15 @@ initApp();
       buildTopbar();
       auth = firebase.auth();
       auth.onAuthStateChanged(user => {
+        const previousUid = currentUser?.uid || '';
+        const nextUid = user?.uid || '';
+
+        // Un changement de compte doit créer une session Firebase totalement neuve.
+        // Cela corrige les sauvegardes qui restaient bloquées jusqu'au F5.
+        if(previousUid !== nextUid){
+          resetFirebaseAccountSessionV1125();
+        }
+
         currentUser = user;
         const login = document.getElementById('fbLogin');
         if(user){
@@ -7107,6 +7204,8 @@ initApp();
             badge.style.display = 'inline-flex';
           }
 
+          // Le rôle est toujours recalculé à partir de l'adresse du NOUVEAU compte.
+          // Plusieurs comptes peuvent être admin simultanément.
           applyRoleUiV1117();
           render();
           startSnapshot();
@@ -7114,14 +7213,21 @@ initApp();
           window.SUIVI_OF_CONNECTED_EMAIL_V1116 = '';
           window.SUIVI_OF_CONNECTED_PERSON_V1116 = '';
 
-          if(unsubscribeSnapshot) unsubscribeSnapshot();
+          // Le reset a déjà fermé l'écoute et les timers ; on garantit ici
+          // qu'aucune référence ancienne ne reste active.
+          if(unsubscribeSnapshot){
+            try { unsubscribeSnapshot(); } catch(error) { console.error(error); }
+            unsubscribeSnapshot = null;
+          }
 
           const badge = document.getElementById('fbConnectedPersonV1116');
           if(badge) badge.style.display = 'none';
 
+          page = 'dash';
           login.classList.remove('hidden');
           setStatus('Déconnecté', '');
           applyRoleUiV1117();
+          render();
         }
       });
     }catch(e){
