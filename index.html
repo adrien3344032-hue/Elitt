@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.34.1 Dashboard Graphique Testé</title>
+<title>ELITT - Suivi OF - V11.35 Écran Atelier Pro</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -1390,6 +1390,607 @@ main>header.dashboardHeaderV1134{
   .dashDonutWrapV1134,.dashTimeDonutWrapV1134{flex-direction:column}
   .dashPhaseRowV1134{grid-template-columns:82px 1fr}
   .dashPhaseValueV1134{grid-column:2}
+}
+
+/* ==========================================================================
+   V11.35 - ÉCRAN ATELIER PRO
+   Vue temps réel inspirée de la maquette validée, sans donnée fictive.
+   ========================================================================== */
+
+main>header.workshopHeaderV1135{
+  margin-top:14px;
+  padding:16px 18px;
+  background:linear-gradient(180deg,#0d2039,#0a1b31);
+  border:1px solid #294464;
+  border-radius:16px;
+  box-shadow:0 8px 24px rgba(0,0,0,.12);
+}
+#fbTopbar + header.workshopHeaderV1135{margin-top:24px}
+
+.workshopV1135{
+  display:grid;
+  gap:13px;
+  min-width:0;
+}
+.workshopTopV1135{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.workshopViewTabsV1135{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+}
+.workshopViewTabsV1135 button{
+  min-height:39px;
+  padding:8px 14px;
+  border-radius:10px;
+  background:#102844;
+  border:1px solid #315779;
+  color:#bfd7ee;
+  font-size:10px;
+  font-weight:900;
+}
+.workshopViewTabsV1135 button.active{
+  background:linear-gradient(180deg,#1188e9,#0870c9);
+  border-color:#45b6ff;
+  color:#fff;
+  box-shadow:0 0 18px rgba(14,149,255,.20);
+}
+.workshopTvActionsV1135{
+  display:flex;
+  gap:7px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.workshopClockInlineV1135{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#8ba5c1;
+  font-size:10px;
+  font-weight:750;
+}
+.workshopClockInlineV1135 strong{
+  color:#fff;
+  font-size:21px;
+  letter-spacing:.3px;
+}
+
+/* KPI */
+.workshopKpisV1135{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(135px,1fr));
+  gap:10px;
+}
+.workshopKpiV1135{
+  min-height:94px;
+  padding:13px 14px;
+  border:1px solid #294464;
+  border-radius:15px;
+  background:linear-gradient(180deg,#0d2039,#0a1b31);
+  box-shadow:0 8px 22px rgba(0,0,0,.12);
+}
+.workshopKpiHeadV1135{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#d7e6f7;
+  font-size:10px;
+  font-weight:850;
+}
+.workshopKpiIconV1135{
+  width:31px;
+  height:31px;
+  border-radius:9px;
+  display:grid;
+  place-items:center;
+  background:#123b66;
+  color:#8dcaff;
+  font-size:11px;
+  font-weight:950;
+}
+.workshopKpiV1135.run .workshopKpiIconV1135{background:#0e432d;color:#88e2aa}
+.workshopKpiV1135.pause .workshopKpiIconV1135{background:#49350f;color:#ffd06e}
+.workshopKpiV1135.block .workshopKpiIconV1135{background:#4a1e27;color:#ff9ca8}
+.workshopKpiV1135.time .workshopKpiIconV1135{background:#34225f;color:#c6b0ff}
+.workshopKpiV1135.date .workshopKpiIconV1135{background:#0d3b5f;color:#89d8ff}
+.workshopKpiValueV1135{
+  margin-top:8px;
+  color:#fff;
+  font-size:26px;
+  line-height:1;
+  font-weight:950;
+}
+.workshopKpiSubV1135{
+  margin-top:6px;
+  color:#7e96b2;
+  font-size:9px;
+  line-height:1.3;
+}
+
+/* Cartes véhicules */
+.workshopCardsV1135{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:11px;
+}
+.workshopVehicleV1135{
+  --status:#3b82f6;
+  position:relative;
+  overflow:hidden;
+  min-width:0;
+  min-height:345px;
+  padding:13px;
+  border:1px solid color-mix(in srgb,var(--status) 70%,#294464);
+  border-radius:16px;
+  background:linear-gradient(180deg,#0c2038,#091a30);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.18),
+    0 0 15px color-mix(in srgb,var(--status) 22%,transparent);
+}
+.workshopVehicleV1135::before{
+  content:"";
+  position:absolute;
+  left:0;right:0;top:0;
+  height:3px;
+  background:var(--status);
+}
+.workshopVehicleV1135.ok{--status:#34c96d}
+.workshopVehicleV1135.run{--status:#35aaf5}
+.workshopVehicleV1135.pause{--status:#f0b33e}
+.workshopVehicleV1135.blocked,
+.workshopVehicleV1135.late{--status:#f05564}
+.workshopVehicleV1135.risk{--status:#f0a83d}
+
+.workshopVehicleHeadV1135{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:10px;
+}
+.workshopVinV1135{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.workshopVinIconV1135{
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:#123653;
+  color:#7ed0ff;
+  font-size:17px;
+}
+.workshopVinTextV1135 strong{
+  display:block;
+  color:#fff;
+  font-size:20px;
+  line-height:1;
+}
+.workshopVinTextV1135 span{
+  display:block;
+  margin-top:3px;
+  color:#8199b5;
+  font-size:9px;
+}
+.workshopStatusBadgeV1135{
+  display:inline-flex;
+  align-items:center;
+  padding:5px 8px;
+  border:1px solid color-mix(in srgb,var(--status) 75%,#294464);
+  border-radius:999px;
+  background:color-mix(in srgb,var(--status) 22%,#0b1d34);
+  color:#fff;
+  font-size:8px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+/* Ring + infos */
+.workshopSummaryV1135{
+  display:grid;
+  grid-template-columns:90px minmax(0,1fr);
+  gap:10px;
+  align-items:center;
+  margin-bottom:10px;
+}
+.workshopRingV1135{
+  --p:0;
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  position:relative;
+  background:conic-gradient(var(--status) calc(var(--p)*1%),#203a57 0);
+}
+.workshopRingV1135::before{
+  content:"";
+  position:absolute;
+  inset:11px;
+  border-radius:50%;
+  background:#0b1c32;
+  box-shadow:inset 0 0 0 1px #294464;
+}
+.workshopRingV1135 strong{
+  position:relative;
+  z-index:1;
+  color:#fff;
+  font-size:18px;
+}
+.workshopMetaV1135{
+  min-width:0;
+  display:grid;
+  gap:5px;
+}
+.workshopMetaLineV1135{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  min-width:0;
+  color:#9eb1c6;
+  font-size:9px;
+}
+.workshopMetaLineV1135 b{
+  color:#eaf4ff;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* Phases */
+.workshopPhasesV1135{
+  display:grid;
+  gap:7px;
+  padding:9px 0;
+  border-top:1px solid #203a58;
+  border-bottom:1px solid #203a58;
+}
+.workshopPhaseV1135{
+  display:grid;
+  grid-template-columns:75px minmax(0,1fr) 32px;
+  gap:7px;
+  align-items:center;
+}
+.workshopPhaseNameV1135{
+  color:#d9e6f4;
+  font-size:8.5px;
+  font-weight:850;
+}
+.workshopPhaseTrackV1135{
+  height:7px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#203a57;
+}
+.workshopPhaseFillV1135{
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#2ac668,#65e68d);
+}
+.workshopPhasePctV1135{
+  color:#f2f7ff;
+  text-align:right;
+  font-size:8.5px;
+  font-weight:900;
+}
+
+/* OF / personne / blocage */
+.workshopTaskBoxV1135{
+  min-height:59px;
+  margin-top:9px;
+  padding:8px 9px;
+  border:1px solid #294464;
+  border-radius:10px;
+  background:#10243e;
+}
+.workshopTaskBoxV1135.blocked{
+  background:#3b1820;
+  border-color:#7c3540;
+}
+.workshopTaskBoxV1135.pause{
+  background:#3a2b10;
+  border-color:#72561e;
+}
+.workshopTaskTitleV1135{
+  color:#7f97b3;
+  font-size:8px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.workshopTaskMainV1135{
+  margin-top:3px;
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+  line-height:1.25;
+}
+.workshopTaskSubV1135{
+  margin-top:3px;
+  color:#91a6bd;
+  font-size:8px;
+  line-height:1.25;
+}
+.workshopTaskPersonV1135{
+  display:inline-flex;
+  align-items:center;
+  margin-top:5px;
+  padding:3px 6px;
+  border-radius:999px;
+  background:#153b5b;
+  border:1px solid #2d5e82;
+  color:#c9e5f9;
+  font-size:8px;
+  font-weight:900;
+}
+.workshopTaskBoxV1135.pause .workshopTaskPersonV1135{
+  background:#594317;
+  border-color:#826325;
+  color:#ffe09b;
+}
+
+/* Footer carte */
+.workshopCardFooterV1135{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:5px;
+  margin-top:9px;
+}
+.workshopFooterItemV1135{
+  min-width:0;
+  padding:6px 5px;
+  border-radius:8px;
+  background:#0d2139;
+  border:1px solid #25415f;
+  text-align:center;
+}
+.workshopFooterItemV1135 span{
+  display:block;
+  color:#748da8;
+  font-size:7px;
+}
+.workshopFooterItemV1135 b{
+  display:block;
+  margin-top:2px;
+  overflow:hidden;
+  color:#eef6ff;
+  font-size:8px;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.workshopNoteMiniV1135{
+  margin-top:7px;
+  padding:5px 7px;
+  border-radius:8px;
+  border:1px solid #63501d;
+  background:#372b0d;
+  color:#f0d98f;
+  font-size:7.5px;
+  line-height:1.25;
+}
+
+/* Bas écran */
+.workshopBottomV1135{
+  display:grid;
+  grid-template-columns:.95fr 1.1fr 1fr;
+  gap:11px;
+}
+.workshopPanelV1135{
+  min-width:0;
+  padding:13px;
+  border:1px solid #294464;
+  border-radius:15px;
+  background:linear-gradient(180deg,#0d2039,#0a1b31);
+  box-shadow:0 8px 22px rgba(0,0,0,.12);
+}
+.workshopPanelTitleV1135{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  margin-bottom:10px;
+  color:#eff6ff;
+  font-size:12px;
+  font-weight:950;
+}
+.workshopPanelTitleV1135 small{
+  color:#7890ad;
+  font-size:8px;
+}
+.workshopLoadListV1135{display:grid;gap:9px}
+.workshopLoadRowV1135{
+  display:grid;
+  grid-template-columns:78px minmax(0,1fr) 72px;
+  gap:8px;
+  align-items:center;
+}
+.workshopLoadNameV1135{
+  color:#dce9f7;
+  font-size:8.5px;
+  font-weight:850;
+}
+.workshopLoadTrackV1135{
+  height:9px;
+  border-radius:999px;
+  overflow:hidden;
+  background:#203a58;
+}
+.workshopLoadFillV1135{
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#2ac668,#64e88d);
+}
+.workshopLoadValueV1135{
+  color:#dce9f7;
+  text-align:right;
+  font-size:8px;
+  font-weight:850;
+}
+
+/* Tableau OF en cours */
+.workshopRunningListV1135{
+  display:grid;
+  gap:5px;
+}
+.workshopRunningRowV1135{
+  display:grid;
+  grid-template-columns:68px 54px minmax(0,1fr) 72px 55px;
+  gap:7px;
+  align-items:center;
+  padding:7px 8px;
+  border:1px solid #223d5a;
+  border-radius:8px;
+  background:#0d2139;
+  font-size:8px;
+}
+.workshopRunningRowV1135 b{color:#fff}
+.workshopRunningRowV1135 span{color:#90a5bc}
+.workshopRunningPersonV1135{
+  overflow:hidden;
+  padding:3px 6px;
+  border-radius:999px;
+  background:#153b5b;
+  color:#cce7fb!important;
+  text-align:center;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-weight:850;
+}
+
+/* Alertes */
+.workshopAlertsV1135{display:grid;gap:7px}
+.workshopAlertV1135{
+  display:grid;
+  grid-template-columns:31px minmax(0,1fr) auto;
+  gap:8px;
+  align-items:center;
+  padding:8px 9px;
+  border:1px solid #294464;
+  border-radius:9px;
+  background:#0e223b;
+}
+.workshopAlertIconV1135{
+  width:29px;
+  height:29px;
+  border-radius:8px;
+  display:grid;
+  place-items:center;
+  background:#123653;
+  color:#9bd5ff;
+  font-size:14px;
+}
+.workshopAlertV1135.block .workshopAlertIconV1135{background:#4a1d25;color:#ff919d}
+.workshopAlertV1135.pause .workshopAlertIconV1135{background:#49350f;color:#ffd26f}
+.workshopAlertV1135.risk .workshopAlertIconV1135{background:#173a59;color:#8fd4ff}
+.workshopAlertMainV1135 b{
+  display:block;
+  color:#fff;
+  font-size:9px;
+}
+.workshopAlertMainV1135 span{
+  display:block;
+  margin-top:2px;
+  color:#8299b5;
+  font-size:7.5px;
+}
+.workshopAlertSideV1135{
+  color:#93a9c0;
+  font-size:7.5px;
+  white-space:nowrap;
+}
+
+/* Vue charge */
+.workshopChargeGridV1135{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+}
+.workshopChargeCardV1135{
+  padding:13px;
+  border:1px solid #294464;
+  border-radius:14px;
+  background:linear-gradient(180deg,#0d2039,#0a1b31);
+}
+.workshopChargeCardV1135 h3{
+  margin:0 0 10px;
+  color:#fff;
+  font-size:13px;
+}
+.workshopChargeBigV1135{
+  color:#fff;
+  font-size:29px;
+  font-weight:950;
+}
+.workshopChargeMetaV1135{
+  margin-top:6px;
+  color:#839bb6;
+  font-size:9px;
+}
+.workshopChargePeopleV1135{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-top:10px;
+}
+.workshopChargePersonV1135{
+  padding:4px 7px;
+  border-radius:999px;
+  background:#153b5b;
+  border:1px solid #2c5a80;
+  color:#cde7fa;
+  font-size:8px;
+  font-weight:850;
+}
+.workshopChargeBottomV1135{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+  margin-top:11px;
+}
+
+/* Plein écran / TV */
+.workshopFullscreenV1123 .workshopV1135{gap:10px}
+.workshopFullscreenV1123 .workshopCardsV1135{grid-template-columns:repeat(4,minmax(0,1fr))}
+.workshopFullscreenV1123 .workshopVehicleV1135{min-height:320px}
+.workshopFullscreenV1123 .workshopTopV1135{
+  position:sticky;
+  top:0;
+  z-index:20;
+  padding:8px 0;
+  background:#071427;
+}
+
+@media(max-width:1550px){
+  .workshopKpisV1135{grid-template-columns:repeat(3,minmax(150px,1fr))}
+  .workshopCardsV1135{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .workshopBottomV1135{grid-template-columns:1fr 1fr}
+  .workshopBottomV1135>.workshopPanelV1135:last-child{grid-column:1/-1}
+}
+@media(max-width:1150px){
+  .workshopCardsV1135{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .workshopChargeGridV1135{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .workshopBottomV1135{grid-template-columns:1fr}
+  .workshopBottomV1135>.workshopPanelV1135:last-child{grid-column:auto}
+  .workshopChargeBottomV1135{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+  .workshopKpisV1135{grid-template-columns:1fr 1fr}
+  .workshopCardsV1135,
+  .workshopChargeGridV1135{grid-template-columns:1fr}
+  .workshopSummaryV1135{grid-template-columns:75px 1fr}
+  .workshopRingV1135{width:68px;height:68px}
+  .workshopRunningRowV1135{grid-template-columns:60px 48px 1fr}
+  .workshopRunningRowV1135 span:nth-child(4),
+  .workshopRunningRowV1135 span:nth-child(5){display:none}
 }
 
 </style>
@@ -3527,6 +4128,7 @@ function setHead(titleText, subtitleText = '') {
   const header = document.querySelector('main > header');
   if (header) {
     header.classList.toggle('dashboardHeaderV1134', titleText === 'Tableau de bord');
+    header.classList.toggle('workshopHeaderV1135', titleText === 'Écran atelier');
   }
 }
 
@@ -5533,65 +6135,430 @@ document.addEventListener('fullscreenchange', () => {
   }
 });
 
+
+function workshopViewModeV1135() {
+  return window._workshopViewModeV1135 === 'charge' ? 'charge' : 'vehicles';
+}
+
+function setWorkshopViewModeV1135(mode) {
+  window._workshopViewModeV1135 = mode === 'charge' ? 'charge' : 'vehicles';
+  workshopPageV1123();
+}
+
+function workshopKpiV1135(icon, label, value, sub = '', className = '') {
+  return `<div class="workshopKpiV1135 ${className}">
+    <div class="workshopKpiHeadV1135">
+      <span class="workshopKpiIconV1135">${escHtml(icon)}</span>
+      <span>${escHtml(label)}</span>
+    </div>
+    <div class="workshopKpiValueV1135">${value}</div>
+    ${sub ? `<div class="workshopKpiSubV1135">${sub}</div>` : ''}
+  </div>`;
+}
+
+function workshopVehicleStatusV1135(vehicle, estimate) {
+  const blocked = blockedCount(vehicle);
+  const paused = pausedOFCountV11143(vehicle);
+  const running = runningOFCountV11143(vehicle);
+  const deadline = deadlineInfoV115(vehicle, estimate, false);
+
+  if (blocked > 0) return { key: 'blocked', label: '⚠ Bloqué', deadline };
+  if (deadline.className === 'late') return { key: 'late', label: '⚠ En retard', deadline };
+  if (paused > 0) return { key: 'pause', label: 'Ⅱ En pause', deadline };
+  if (deadline.className === 'risk') return { key: 'risk', label: '⚠ Risque retard', deadline };
+  if (running > 0) return { key: 'run', label: '▶ En cours', deadline };
+  return { key: 'ok', label: 'À faire', deadline };
+}
+
+function workshopPhaseHtmlV1135(vehicle, category) {
+  const stats = phaseStatsV5(vehicle, category);
+  const pctValue = Math.max(0, Math.min(100, Number(stats.hoursPct) || 0));
+  return `<div class="workshopPhaseV1135">
+    <div class="workshopPhaseNameV1135">${escHtml(category)}</div>
+    <div class="workshopPhaseTrackV1135"><div class="workshopPhaseFillV1135" style="width:${pctValue}%"></div></div>
+    <div class="workshopPhasePctV1135">${pctValue}%</div>
+  </div>`;
+}
+
+function workshopCurrentTaskV1135(vehicle) {
+  for (const of of (vehicle.ofs || [])) {
+    const session = activeWorkSessionV1111(of);
+    if (session) return { of, session };
+  }
+  return null;
+}
+
+function workshopFirstBlockedV1135(vehicle) {
+  return (vehicle.ofs || []).find(of => of.status === 'Bloqué') || null;
+}
+
+function workshopNextPlannedV1135(vehicle) {
+  const rows = (state.planningV1124 || [])
+    .filter(item => item.vehicleId === vehicle.id)
+    .slice()
+    .sort((a,b) => (Number(a.order)||9999) - (Number(b.order)||9999));
+
+  for (const item of rows) {
+    const target = planningTargetV1124(item);
+    if (!target.of || qtyRemainingV5(target.of) <= 0 || target.of.status === 'Bloqué') continue;
+    if (activeWorkSessionV1111(target.of)) continue;
+    return { item, of: target.of };
+  }
+  return null;
+}
+
+function workshopCardTaskHtmlV1135(vehicle) {
+  const blocked = workshopFirstBlockedV1135(vehicle);
+  if (blocked) {
+    return `<div class="workshopTaskBoxV1135 blocked">
+      <div class="workshopTaskTitleV1135">Blocage</div>
+      <div class="workshopTaskMainV1135">${escHtml(blocked.name || 'OF')} • ${escHtml(blocked.desc || blocked.category || '')}</div>
+      <div class="workshopTaskSubV1135">${escHtml(blocked.blockReason || 'Blocage en attente de résolution')}</div>
+    </div>`;
+  }
+
+  const current = workshopCurrentTaskV1135(vehicle);
+  if (current) {
+    const paused = !!current.session.pausedAt;
+    return `<div class="workshopTaskBoxV1135 ${paused ? 'pause' : ''}">
+      <div class="workshopTaskTitleV1135">${paused ? 'OF en pause' : 'OF en cours'}</div>
+      <div class="workshopTaskMainV1135">${escHtml(current.of.name || 'OF')} • ${escHtml(current.of.desc || current.of.category || '')}</div>
+      <div class="workshopTaskPersonV1135">${paused ? 'Ⅱ' : '▶'} ${escHtml(current.session.person)} • ${escHtml(workSessionDurationLabelV1113(current.session))}</div>
+    </div>`;
+  }
+
+  const planned = workshopNextPlannedV1135(vehicle);
+  if (planned) {
+    return `<div class="workshopTaskBoxV1135">
+      <div class="workshopTaskTitleV1135">Prochaine tâche planifiée</div>
+      <div class="workshopTaskMainV1135">${escHtml(planned.of.name || 'OF')} • ${escHtml(planned.of.desc || planned.of.category || '')}</div>
+      <div class="workshopTaskPersonV1135">👤 ${escHtml(planned.item.person || 'Non attribué')} • #${Number(planned.item.order)||'-'}</div>
+    </div>`;
+  }
+
+  return `<div class="workshopTaskBoxV1135">
+    <div class="workshopTaskTitleV1135">Activité</div>
+    <div class="workshopTaskMainV1135">Aucun OF démarré</div>
+    <div class="workshopTaskSubV1135">En attente d’une prochaine opération.</div>
+  </div>`;
+}
+
+function workshopVehicleCardV1135(vehicle, estimates) {
+  const estimate = estimates?.[vehicle.id] || null;
+  const status = workshopVehicleStatusV1135(vehicle, estimate);
+  const overall = Math.max(0, Math.min(100, pct(vehicle)));
+  const options = vehicleOptionsHtml(vehicle);
+  const note = vehicleNoteTextV1122(vehicle).trim();
+  const target = vehicle.targetDate ? targetDateLabelV115(vehicle.targetDate) : '—';
+  const estimated = estimate ? fmtDate(estimate) : '—';
+
+  return `<article class="workshopVehicleV1135 ${status.key}">
+    <div class="workshopVehicleHeadV1135">
+      <div class="workshopVinV1135">
+        <div class="workshopVinIconV1135">🚒</div>
+        <div class="workshopVinTextV1135">
+          <strong>VIN ${escHtml(vehicle.vin || '-')}</strong>
+          <span>${escHtml(vehicle.type || 'CCF')}</span>
+        </div>
+      </div>
+      <span class="workshopStatusBadgeV1135">${escHtml(status.label)}</span>
+    </div>
+
+    <div class="workshopSummaryV1135">
+      <div class="workshopRingV1135" style="--p:${overall}"><strong>${overall}%</strong></div>
+      <div class="workshopMetaV1135">
+        <div class="workshopMetaLineV1135"><span>Marque</span><b>${escHtml(vehicle.brand || '-')}</b></div>
+        <div class="workshopMetaLineV1135"><span>Client</span><b>${escHtml(vehicle.client || '-')}</b></div>
+        <div class="workshopMetaLineV1135"><span>Options</span><b>${options ? options.replace(/<[^>]+>/g,' ') : 'Aucune'}</b></div>
+      </div>
+    </div>
+
+    <div class="workshopPhasesV1135">
+      ${['Fabrication','Prémontage','Pose','Essais'].map(category => workshopPhaseHtmlV1135(vehicle, category)).join('')}
+    </div>
+
+    ${workshopCardTaskHtmlV1135(vehicle)}
+
+    ${note ? `<div class="workshopNoteMiniV1135">📝 ${escHtml(note.length > 80 ? note.slice(0,80)+'…' : note)}</div>` : ''}
+
+    <div class="workshopCardFooterV1135">
+      <div class="workshopFooterItemV1135"><span>Restant</span><b>${escHtml(fmt(remain(vehicle)))}</b></div>
+      <div class="workshopFooterItemV1135"><span>Objectif</span><b>${escHtml(target)}</b></div>
+      <div class="workshopFooterItemV1135"><span>Fin estimée</span><b>${escHtml(estimated)}</b></div>
+    </div>
+  </article>`;
+}
+
+function workshopSavCardV1135(vehicle) {
+  const status = savWorkStatusV1114(vehicle);
+  const planned = Math.max(0, Number(vehicle.savEstimated) || 0);
+  const actual = savActualHoursNowV1114(vehicle);
+  const p = planned ? Math.min(100, Math.round(actual/planned*100)) : (vehicle.savDone ? 100 : 0);
+
+  return `<article class="workshopVehicleV1135 ${status.key === 'paused' ? 'pause' : status.key === 'running' ? 'run' : 'ok'}">
+    <div class="workshopVehicleHeadV1135">
+      <div class="workshopVinV1135">
+        <div class="workshopVinIconV1135">🛠</div>
+        <div class="workshopVinTextV1135">
+          <strong>SAV ${escHtml(vehicle.vin || '-')}</strong>
+          <span>${escHtml(vehicle.client || '-')}</span>
+        </div>
+      </div>
+      <span class="workshopStatusBadgeV1135">${escHtml(status.label)}</span>
+    </div>
+
+    <div class="workshopSummaryV1135">
+      <div class="workshopRingV1135" style="--p:${p}"><strong>${p}%</strong></div>
+      <div class="workshopMetaV1135">
+        <div class="workshopMetaLineV1135"><span>Réalisé</span><b>${escHtml(fmtHoursMinutesV11122(actual))}</b></div>
+        <div class="workshopMetaLineV1135"><span>Prévu</span><b>${escHtml(fmtHoursMinutesV11122(planned))}</b></div>
+        <div class="workshopMetaLineV1135"><span>Personne</span><b>${escHtml(status.person || '—')}</b></div>
+      </div>
+    </div>
+
+    <div class="workshopTaskBoxV1135">
+      <div class="workshopTaskTitleV1135">SAV</div>
+      <div class="workshopTaskMainV1135">${escHtml(vehicle.savDescription || vehicle.desc || 'Intervention SAV')}</div>
+      ${status.person ? `<div class="workshopTaskPersonV1135">${status.key === 'paused' ? 'Ⅱ' : '▶'} ${escHtml(status.person)}</div>` : ''}
+    </div>
+
+    <div class="workshopCardFooterV1135">
+      <div class="workshopFooterItemV1135"><span>Restant</span><b>${escHtml(fmt(remain(vehicle)))}</b></div>
+      <div class="workshopFooterItemV1135"><span>Réalisé</span><b>${escHtml(fmtHoursMinutesV11122(actual))}</b></div>
+      <div class="workshopFooterItemV1135"><span>Prévu</span><b>${escHtml(fmtHoursMinutesV11122(planned))}</b></div>
+    </div>
+  </article>`;
+}
+
+function workshopRunningItemsV1135(vehicles) {
+  const rows = [];
+  vehicles.forEach(vehicle => {
+    (vehicle.ofs || []).forEach(of => {
+      const session = activeWorkSessionV1111(of);
+      if (!session) return;
+      rows.push({ vehicle, of, session });
+    });
+  });
+  return rows.sort((a,b) => String(a.vehicle.vin||'').localeCompare(String(b.vehicle.vin||''),'fr',{numeric:true}));
+}
+
+function workshopRunningPanelV1135(vehicles) {
+  const rows = workshopRunningItemsV1135(vehicles);
+  if (!rows.length) {
+    return `<div class="dashEmptyChartV1134">Aucun OF actuellement démarré.</div>`;
+  }
+
+  return `<div class="workshopRunningListV1135">${rows.slice(0,8).map(row => `
+    <div class="workshopRunningRowV1135">
+      <b>${escHtml(row.of.name || 'OF')}</b>
+      <span>VIN ${escHtml(row.vehicle.vin || '-')}</span>
+      <span>${escHtml(row.of.desc || row.of.category || '')}</span>
+      <span class="workshopRunningPersonV1135">${escHtml(row.session.person)}</span>
+      <span>${escHtml(workSessionDurationLabelV1113(row.session))}</span>
+    </div>`).join('')}</div>`;
+}
+
+function workshopAlertsPanelV1135(vehicles, estimates) {
+  const blockedVehicles = vehicles.filter(vehicle => blockedCount(vehicle) > 0);
+  const pausedVehicles = vehicles.filter(vehicle => pausedOFCountV11143(vehicle) > 0);
+  const riskyVehicles = vehicles.filter(vehicle => {
+    const info = deadlineInfoV115(vehicle, estimates?.[vehicle.id] || null, false);
+    return info.className === 'risk' || info.className === 'late';
+  });
+
+  const alerts = [];
+  if (blockedVehicles.length) {
+    const blockedOF = blockedVehicles.reduce((sum,v)=>sum+blockedCount(v),0);
+    alerts.push(`<div class="workshopAlertV1135 block">
+      <div class="workshopAlertIconV1135">⚠</div>
+      <div class="workshopAlertMainV1135"><b>${blockedOF} OF bloqué${blockedOF>1?'s':''}</b><span>${blockedVehicles.map(v=>'VIN '+v.vin).join(' • ')}</span></div>
+      <div class="workshopAlertSideV1135">à traiter</div>
+    </div>`);
+  }
+  if (pausedVehicles.length) {
+    const pausedOF = pausedVehicles.reduce((sum,v)=>sum+pausedOFCountV11143(v),0);
+    alerts.push(`<div class="workshopAlertV1135 pause">
+      <div class="workshopAlertIconV1135">Ⅱ</div>
+      <div class="workshopAlertMainV1135"><b>${pausedOF} OF en pause</b><span>${pausedVehicles.length} véhicule${pausedVehicles.length>1?'s':''} concerné${pausedVehicles.length>1?'s':''}</span></div>
+      <div class="workshopAlertSideV1135">à reprendre</div>
+    </div>`);
+  }
+  if (riskyVehicles.length) {
+    alerts.push(`<div class="workshopAlertV1135 risk">
+      <div class="workshopAlertIconV1135">i</div>
+      <div class="workshopAlertMainV1135"><b>${riskyVehicles.length} véhicule${riskyVehicles.length>1?'s':''} à risque / retard</b><span>${riskyVehicles.map(v=>'VIN '+v.vin).join(' • ')}</span></div>
+      <div class="workshopAlertSideV1135">objectif</div>
+    </div>`);
+  }
+
+  if (!alerts.length) {
+    alerts.push(`<div class="workshopAlertV1135">
+      <div class="workshopAlertIconV1135">✓</div>
+      <div class="workshopAlertMainV1135"><b>Aucune alerte critique</b><span>Pas de blocage, pause ou retard détecté.</span></div>
+      <div class="workshopAlertSideV1135">OK</div>
+    </div>`);
+  }
+
+  return `<div class="workshopAlertsV1135">${alerts.join('')}</div>`;
+}
+
+function workshopAverageEstimatedV1135(vehicles, estimates) {
+  const times = vehicles
+    .filter(vehicle => remain(vehicle) > 0 && estimates?.[vehicle.id] instanceof Date && !Number.isNaN(estimates[vehicle.id].getTime()))
+    .map(vehicle => estimates[vehicle.id].getTime());
+
+  if (!times.length) return { label:'—', sub:'Aucune estimation' };
+  const avg = new Date(times.reduce((a,b)=>a+b,0)/times.length);
+  const days = Math.ceil((avg - new Date()) / 86400000);
+  return {
+    label: avg.toLocaleDateString('fr-FR'),
+    sub: days >= 0 ? `dans ${days} jour${days>1?'s':''}` : `${Math.abs(days)} jour${Math.abs(days)>1?'s':''} de retard`
+  };
+}
+
+function workshopLoadHtmlV1135(vehicles) {
+  const phases = dashboardAggregatePhasesV1134(vehicles);
+  const running = workshopRunningItemsV1135(vehicles);
+
+  return `<div>
+    <div class="workshopChargeGridV1135">
+      ${phases.map(phase => {
+        const people = [...new Set(running.filter(row => row.of.category === phase.category).map(row => row.session.person).filter(Boolean))];
+        const active = running.filter(row => row.of.category === phase.category).length;
+        return `<div class="workshopChargeCardV1135">
+          <h3>${escHtml(phase.category)}</h3>
+          <div class="workshopChargeBigV1135">${escHtml(fmtHoursMinutesV11122(phase.remainingHours))}</div>
+          <div class="workshopChargeMetaV1135">${active} OF actif${active>1?'s':''} • ${phase.pct}% réalisé</div>
+          <div class="workshopLoadTrackV1135" style="margin-top:9px"><div class="workshopLoadFillV1135" style="width:${phase.pct}%"></div></div>
+          <div class="workshopChargePeopleV1135">
+            ${people.length ? people.map(person=>`<span class="workshopChargePersonV1135">${escHtml(person)}</span>`).join('') : `<span class="workshopChargeMetaV1135">Aucune personne active</span>`}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="workshopChargeBottomV1135">
+      <div class="workshopPanelV1135">
+        <div class="workshopPanelTitleV1135"><span>OF actuellement démarrés</span><small>${running.length}</small></div>
+        ${workshopRunningPanelV1135(vehicles)}
+      </div>
+      <div class="workshopPanelV1135">
+        <div class="workshopPanelTitleV1135"><span>Planification équipe</span><small>prochaines tâches</small></div>
+        ${(() => {
+          const items = (state.planningV1124 || []).slice()
+            .sort((a,b)=>(Number(a.order)||9999)-(Number(b.order)||9999))
+            .filter(item => {
+              const target=planningTargetV1124(item);
+              return target.vehicle && target.of && !target.vehicle.archived && qtyRemainingV5(target.of)>0;
+            })
+            .slice(0,10);
+          if(!items.length) return `<div class="dashEmptyChartV1134">Aucune tâche planifiée.</div>`;
+          return `<div class="workshopRunningListV1135">${items.map(item=>{
+            const target=planningTargetV1124(item);
+            return `<div class="workshopRunningRowV1135">
+              <b>#${Number(item.order)||'-'}</b>
+              <span>VIN ${escHtml(target.vehicle.vin||'-')}</span>
+              <span>${escHtml(target.of.name||'OF')} • ${escHtml(target.of.desc||target.of.category||'')}</span>
+              <span class="workshopRunningPersonV1135">${escHtml(item.person||'-')}</span>
+              <span>${escHtml(fmtHoursMinutesV11122(planningRemainingHoursV1124(item)))}</span>
+            </div>`;
+          }).join('')}</div>`;
+        })()}
+      </div>
+    </div>
+  </div>`;
+}
+
 function workshopPageV1123() {
   normalizeAll();
-  setHead('Écran atelier', 'Vue supervision en temps réel');
+  setHead('Écran atelier', 'Suivi de production en temps réel');
 
   const active = activeVehicles()
     .slice()
-    .sort((a, b) => {
+    .sort((a,b) => {
       if (isSAV(a) !== isSAV(b)) return isSAV(a) ? 1 : -1;
-      return (Number(a.priority) || 1) - (Number(b.priority) || 1)
-        || String(a.vin || '').localeCompare(String(b.vin || ''));
+      return (Number(a.priority)||1) - (Number(b.priority)||1)
+        || String(a.vin||'').localeCompare(String(b.vin||''),'fr',{numeric:true});
     });
 
-  const estimates = estimateVehiclesActive(true);
-  const normal = active.filter(vehicle => !isSAV(vehicle));
+  const vehicles = active.filter(vehicle => !isSAV(vehicle));
   const savs = active.filter(vehicle => isSAV(vehicle));
-
-  const running = normal.reduce((sum, vehicle) => sum + runningOFCountV11143(vehicle), 0);
-  const paused = normal.reduce((sum, vehicle) => sum + pausedOFCountV11143(vehicle), 0);
-  const blocked = normal.reduce((sum, vehicle) => sum + blockedCount(vehicle), 0);
+  const estimates = estimateVehiclesActive(true);
+  const running = vehicles.reduce((sum,v)=>sum+runningOFCountV11143(v),0);
+  const paused = vehicles.reduce((sum,v)=>sum+pausedOFCountV11143(v),0);
+  const blocked = vehicles.reduce((sum,v)=>sum+blockedCount(v),0);
+  const totalHours = dashboardAggregatePhasesV1134(vehicles).reduce((sum,phase)=>sum+phase.totalHours,0);
+  const doneHours = dashboardAggregatePhasesV1134(vehicles).reduce((sum,phase)=>sum+phase.doneHours,0);
+  const averageEnd = workshopAverageEstimatedV1135(vehicles, estimates);
   const values = workshopClockTextV1123();
+  const mode = workshopViewModeV1135();
 
-  const cards = [
-    ...normal.map(vehicle => workshopVehicleCardV1123(vehicle, estimates)),
-    ...savs.map(vehicle => workshopVehicleCardV1123(vehicle, estimates))
-  ].join('');
+  document.getElementById('view').innerHTML = `<div class="workshopV1135">
+    <div class="workshopTopV1135">
+      <div class="workshopViewTabsV1135">
+        <button class="${mode==='vehicles'?'active':''}" onclick="setWorkshopViewModeV1135('vehicles')">🚒 Vue véhicules</button>
+        <button class="${mode==='charge'?'active':''}" onclick="setWorkshopViewModeV1135('charge')">▥ Vue charge atelier</button>
+      </div>
 
-  document.getElementById('view').innerHTML = `
-    <div class="workshopToolbarV1123">
-      <div class="workshopTitleBlockV1123">
-        <div>
-          <div class="workshopClockV1123" id="workshopClockV1123">${escHtml(values.time)}</div>
-          <div class="workshopDateV1123" id="workshopDateV1123">${escHtml(values.date)}</div>
+      <div class="workshopTvActionsV1135">
+        <div class="workshopClockInlineV1135">
+          <strong id="workshopClockV1123">${escHtml(values.time)}</strong>
+          <span id="workshopDateV1123">${escHtml(values.date)}</span>
         </div>
-        <span class="muted">Mise à jour automatique avec Firebase</span>
-      </div>
-
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="alt" onclick="toggleWorkshopFullscreenV1123()">
-          ${document.body.classList.contains('workshopFullscreenV1123') ? '⤢ Quitter plein écran' : '⛶ Plein écran'}
+          ${document.body.classList.contains('workshopFullscreenV1123') ? '⤢ Quitter Mode TV' : '▣ Mode TV'}
         </button>
-        ${document.body.classList.contains('workshopFullscreenV1123')
-          ? `<button class="bad" onclick="leaveWorkshopV1123()">Quitter écran atelier</button>`
-          : ''}
       </div>
     </div>
 
-    <div class="workshopKpisV1123">
-      <div class="workshopKpiV1123"><b>Camions actifs</b><strong>${normal.length}</strong></div>
-      <div class="workshopKpiV1123"><b>OF en cours</b><strong>${running}</strong></div>
-      <div class="workshopKpiV1123"><b>OF en pause</b><strong>${paused}</strong></div>
-      <div class="workshopKpiV1123"><b>OF bloqués</b><strong>${blocked}</strong></div>
-      <div class="workshopKpiV1123"><b>SAV actifs</b><strong>${savs.length}</strong></div>
+    <div class="workshopKpisV1135">
+      ${workshopKpiV1135('V','Véhicules en production',vehicles.length,`${archivedVehicles().filter(v=>!isSAV(v)).length} archivés`)}
+      ${workshopKpiV1135('▶','OF en cours',running,'sessions réellement actives','run')}
+      ${workshopKpiV1135('Ⅱ','OF en pause',paused,'à reprendre','pause')}
+      ${workshopKpiV1135('⚠','OF bloqués',blocked,`${vehicles.filter(v=>blockedCount(v)>0).length} véhicule${vehicles.filter(v=>blockedCount(v)>0).length>1?'s':''} concerné${vehicles.filter(v=>blockedCount(v)>0).length>1?'s':''}`,'block')}
+      ${workshopKpiV1135('H','Temps réalisé',fmtHoursMinutesV11122(doneHours),`${totalHours ? Math.round(doneHours/totalHours*100) : 0}% du total`,'time')}
+      ${workshopKpiV1135('CAL','Fin moyenne estimée',averageEnd.label,averageEnd.sub,'date')}
     </div>
 
-    ${active.length
-      ? `<div class="workshopGridV1123">${cards}</div>`
-      : `<div class="workshopEmptyV1123">Aucun véhicule actif à afficher.</div>`}
-  `;
+    ${mode === 'vehicles' ? `
+      ${vehicles.length
+        ? `<div class="workshopCardsV1135">${vehicles.map(vehicle=>workshopVehicleCardV1135(vehicle,estimates)).join('')}</div>`
+        : `<div class="workshopEmptyV1123">Aucun véhicule actif à afficher.</div>`}
+
+      ${savs.length
+        ? `<div class="workshopPanelV1135">
+            <div class="workshopPanelTitleV1135"><span>SAV actifs</span><small>${savs.length}</small></div>
+            <div class="workshopCardsV1135">${savs.map(workshopSavCardV1135).join('')}</div>
+          </div>`
+        : ''}
+
+      <div class="workshopBottomV1135">
+        <div class="workshopPanelV1135">
+          <div class="workshopPanelTitleV1135"><span>Charge atelier</span><small>heures restantes</small></div>
+          <div class="workshopLoadListV1135">
+            ${dashboardAggregatePhasesV1134(vehicles).map(phase=>`
+              <div class="workshopLoadRowV1135">
+                <div class="workshopLoadNameV1135">${escHtml(phase.category)}</div>
+                <div class="workshopLoadTrackV1135"><div class="workshopLoadFillV1135" style="width:${phase.pct}%"></div></div>
+                <div class="workshopLoadValueV1135">${escHtml(fmtHoursMinutesV11122(phase.remainingHours))}</div>
+              </div>`).join('')}
+          </div>
+        </div>
+
+        <div class="workshopPanelV1135">
+          <div class="workshopPanelTitleV1135"><span>OF en cours</span><small>${workshopRunningItemsV1135(vehicles).length}</small></div>
+          ${workshopRunningPanelV1135(vehicles)}
+        </div>
+
+        <div class="workshopPanelV1135">
+          <div class="workshopPanelTitleV1135"><span>Alertes & informations</span><small>temps réel</small></div>
+          ${workshopAlertsPanelV1135(vehicles, estimates)}
+        </div>
+      </div>
+    ` : workshopLoadHtmlV1135(vehicles)}
+  </div>`;
 }
+
 
 // Affiche le tableau de bord avec les compteurs et les véhicules actifs.
 
