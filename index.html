@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.33 Camion Pleine Largeur</title>
+<title>ELITT - Suivi OF - V11.34.1 Dashboard Graphique Testé</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -871,6 +871,525 @@ aside::before{
     rgba(7,23,45,0) 100%
   );
   pointer-events:none;
+}
+
+/* ==========================================================================
+   V11.34 - TABLEAU DE BORD GRAPHIQUE
+   Design sombre professionnel, données 100% réelles.
+   ========================================================================== */
+
+/* Espace supplémentaire uniquement sur le Tableau de bord. */
+main>header.dashboardHeaderV1134{
+  margin-top:14px;
+  padding:16px 18px;
+  background:linear-gradient(180deg,#0d2039,#0a1b31);
+  border:1px solid #294464;
+  border-radius:16px;
+  box-shadow:0 8px 24px rgba(0,0,0,.12);
+}
+#fbTopbar + header.dashboardHeaderV1134{
+  margin-top:30px;
+}
+
+.dashV1134{
+  display:grid;
+  gap:14px;
+  min-width:0;
+}
+.dashKpisV1134{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(145px,1fr));
+  gap:12px;
+}
+.dashKpiV1134{
+  position:relative;
+  overflow:hidden;
+  min-height:104px;
+  background:linear-gradient(180deg,#0d2039,#0a1b31);
+  border:1px solid #294464;
+  border-radius:16px;
+  padding:14px 15px;
+  box-shadow:0 8px 22px rgba(0,0,0,.13);
+}
+.dashKpiHeadV1134{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:#dbe9fa;
+  font-size:11px;
+  font-weight:850;
+}
+.dashKpiIconV1134{
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  flex:0 0 32px;
+  border-radius:9px;
+  background:#123b66;
+  color:#8dcaff;
+  font-size:11px;
+  font-weight:950;
+}
+.dashKpiV1134.pause .dashKpiIconV1134{background:#4a3510;color:#ffd477}
+.dashKpiV1134.done .dashKpiIconV1134{background:#0d432d;color:#8ee6b1}
+.dashKpiV1134.time .dashKpiIconV1134{background:#30235f;color:#c1afff}
+.dashKpiV1134.sav .dashKpiIconV1134{background:#43235e;color:#e1b3ff}
+.dashKpiValueV1134{
+  margin-top:9px;
+  font-size:29px;
+  line-height:1;
+  font-weight:950;
+  color:#fff;
+}
+.dashKpiSubV1134{
+  margin-top:7px;
+  color:#8097b4;
+  font-size:10px;
+  line-height:1.35;
+}
+
+.dashOverviewV1134{
+  display:grid;
+  grid-template-columns:.95fr 1.35fr .9fr;
+  gap:12px;
+}
+.dashChartsV1134{
+  display:grid;
+  grid-template-columns:1.25fr 1fr 1fr;
+  gap:12px;
+}
+.dashPanelV1134{
+  min-width:0;
+  background:linear-gradient(180deg,#0d2039,#0a1b31);
+  border:1px solid #294464;
+  border-radius:16px;
+  padding:15px;
+  box-shadow:0 8px 22px rgba(0,0,0,.12);
+}
+.dashPanelTitleV1134{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:13px;
+  color:#f0f6ff;
+  font-size:14px;
+  font-weight:950;
+}
+.dashPanelTitleV1134 small{
+  color:#7890ad;
+  font-size:9px;
+  font-weight:750;
+}
+
+.dashDonutWrapV1134{
+  min-height:175px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:28px;
+}
+.dashDonutV1134{
+  --p:0;
+  width:142px;
+  height:142px;
+  flex:0 0 142px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  position:relative;
+  background:conic-gradient(#39aaf5 calc(var(--p)*1%),#1c3551 0);
+}
+.dashDonutV1134::before{
+  content:"";
+  position:absolute;
+  inset:19px;
+  border-radius:50%;
+  background:#0b1d34;
+  box-shadow:inset 0 0 0 1px #23405f;
+}
+.dashDonutV1134 strong{
+  position:relative;
+  z-index:1;
+  color:#fff;
+  font-size:28px;
+}
+.dashLegendV1134{
+  display:grid;
+  gap:9px;
+  min-width:150px;
+}
+.dashLegendLineV1134{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  color:#8fa6c0;
+  font-size:10px;
+}
+.dashLegendLineV1134 b{color:#eef6ff}
+
+.dashPhaseListV1134{display:grid;gap:13px;padding-top:3px}
+.dashPhaseRowV1134{
+  display:grid;
+  grid-template-columns:105px minmax(120px,1fr) 115px;
+  align-items:center;
+  gap:10px;
+}
+.dashPhaseNameV1134{
+  color:#d9e7f7;
+  font-size:10px;
+  font-weight:850;
+}
+.dashPhaseTrackV1134{
+  height:10px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#203a58;
+  box-shadow:inset 0 0 0 1px #284662;
+}
+.dashPhaseFillV1134{
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#24c26a,#5be884);
+}
+.dashPhaseValueV1134{
+  color:#8fa6c0;
+  text-align:right;
+  font-size:9px;
+}
+.dashPhaseValueV1134 b{
+  color:#eaf4ff;
+  font-size:10px;
+}
+
+.dashSituationV1134{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+.dashSituationItemV1134{
+  min-height:72px;
+  padding:11px 12px;
+  border:1px solid #294464;
+  border-radius:11px;
+  background:#10243e;
+}
+.dashSituationItemV1134 span{
+  color:#8299b5;
+  font-size:9px;
+  font-weight:800;
+}
+.dashSituationItemV1134 strong{
+  display:block;
+  margin-top:6px;
+  font-size:25px;
+  line-height:1;
+  color:#fff;
+}
+.dashSituationItemV1134.run strong{color:#4bdb86}
+.dashSituationItemV1134.pause strong{color:#f0b64d}
+.dashSituationItemV1134.block strong{color:#f06a76}
+.dashSituationItemV1134.plan strong{color:#78baf3}
+
+/* Courbe 7 jours */
+.dashTrendV1134{
+  height:190px;
+  width:100%;
+  display:block;
+}
+.dashTrendGridV1134{stroke:#24425f;stroke-width:1}
+.dashTrendLineV1134{
+  fill:none;
+  stroke:#31aaf8;
+  stroke-width:3;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.dashTrendAreaV1134{fill:url(#dashTrendGradientV1134)}
+.dashTrendPointV1134{fill:#73cbff;stroke:#0b1d34;stroke-width:2}
+.dashTrendTextV1134{fill:#7892ae;font-size:10px}
+.dashTrendValueV1134{fill:#e9f6ff;font-size:10px;font-weight:850}
+.dashEmptyChartV1134{
+  min-height:170px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  color:#7890ad;
+  font-size:11px;
+  padding:20px;
+}
+
+/* Donut temps réels */
+.dashTimeDonutWrapV1134{
+  min-height:180px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:22px;
+}
+.dashTimeDonutV1134{
+  width:128px;
+  height:128px;
+  flex:0 0 128px;
+  border-radius:50%;
+  position:relative;
+  display:grid;
+  place-items:center;
+}
+.dashTimeDonutV1134::after{
+  content:"";
+  position:absolute;
+  inset:22px;
+  border-radius:50%;
+  background:#0b1d34;
+  box-shadow:inset 0 0 0 1px #23405f;
+}
+.dashTimeDonutCenterV1134{
+  position:relative;
+  z-index:1;
+  text-align:center;
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  line-height:1.2;
+}
+.dashTimeDonutCenterV1134 small{
+  display:block;
+  margin-top:2px;
+  color:#7f96b2;
+  font-size:8px;
+}
+.dashTimeLegendV1134{
+  display:grid;
+  gap:8px;
+  min-width:145px;
+}
+.dashTimeLegendRowV1134{
+  display:grid;
+  grid-template-columns:9px 1fr auto;
+  gap:7px;
+  align-items:center;
+  color:#91a7bf;
+  font-size:9px;
+}
+.dashTimeLegendDotV1134{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+}
+.dashTimeLegendRowV1134 b{color:#edf6ff}
+
+/* Charge par personne */
+.dashPeopleLoadV1134{
+  display:grid;
+  gap:10px;
+  padding-top:5px;
+}
+.dashPersonRowV1134{
+  display:grid;
+  grid-template-columns:78px minmax(80px,1fr) 55px;
+  align-items:center;
+  gap:9px;
+}
+.dashPersonNameV1134{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#dce9f8;
+  font-size:10px;
+  font-weight:850;
+}
+.dashPersonTrackV1134{
+  height:9px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#203a58;
+}
+.dashPersonFillV1134{
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#2bc96f,#68e893);
+}
+.dashPersonHoursV1134{
+  color:#dce9f8;
+  text-align:right;
+  font-size:9px;
+  font-weight:850;
+}
+
+/* Tableau véhicules dashboard */
+.dashVehicleBlockV1134{
+  min-width:0;
+  overflow:hidden;
+  background:linear-gradient(180deg,#0d2039,#0a1b31);
+  border:1px solid #294464;
+  border-radius:16px;
+  box-shadow:0 8px 22px rgba(0,0,0,.12);
+}
+.dashVehicleHeadV1134{
+  min-height:52px;
+  padding:11px 13px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  border-bottom:1px solid #294464;
+}
+.dashVehicleTitleV1134{
+  color:#f2f7ff;
+  font-size:15px;
+  font-weight:950;
+}
+.dashVehicleToolsV1134{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.dashVehicleSearchV1134{
+  width:min(330px,70vw);
+  min-height:34px;
+  padding:7px 10px;
+  font-size:10px;
+  border-radius:9px;
+}
+.dashVehicleCountV1134{
+  padding:5px 9px;
+  border-radius:999px;
+  background:#143453;
+  border:1px solid #2c5276;
+  color:#cfe7ff;
+  font-size:9px;
+  font-weight:850;
+}
+.dashVehicleTableWrapV1134{
+  width:100%;
+  max-width:100%;
+  overflow:auto;
+}
+.dashVehicleTableV1134{
+  width:100%;
+  min-width:1480px;
+  border-collapse:separate;
+  border-spacing:0;
+}
+.dashVehicleTableV1134 th{
+  position:sticky;
+  top:0;
+  z-index:1;
+  padding:9px 8px;
+  background:#0b1b33;
+  border-bottom:1px solid #294464;
+  color:#8da8c6;
+  font-size:8px;
+  letter-spacing:.045em;
+}
+.dashVehicleTableV1134 td{
+  padding:10px 8px;
+  border-bottom:1px solid #203a58;
+  color:#dce9f7;
+  font-size:9px;
+  vertical-align:middle;
+}
+.dashVehicleTableV1134 tbody tr:hover td{background:#102642}
+.dashVinV1134{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.dashVinV1134 b{font-size:10px;color:#fff}
+.dashVinV1134 small{display:block;color:#7089a5;font-size:7px;margin-top:2px}
+.dashPhaseCellV1134{min-width:128px}
+.dashPhaseCellTopV1134{
+  display:flex;
+  justify-content:space-between;
+  gap:6px;
+  align-items:center;
+  margin-bottom:4px;
+}
+.dashPhaseCellTopV1134 b{font-size:9px;color:#fff}
+.dashPhaseCellTopV1134 span{font-size:7px;color:#718ba8}
+.dashMiniTrackV1134{
+  height:6px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#213b58;
+}
+.dashMiniFillV1134{
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#31c56e,#6be992);
+}
+.dashGlobalFillV1134{
+  background:linear-gradient(90deg,#37a8f3,#6acaff);
+}
+.dashPhaseCellV1134 small{
+  display:block;
+  margin-top:4px;
+  color:#6f89a5;
+  font-size:7px;
+}
+.dashStatusV1134{
+  display:inline-flex;
+  align-items:center;
+  padding:4px 7px;
+  border-radius:999px;
+  border:1px solid;
+  white-space:nowrap;
+  font-size:8px;
+  font-weight:900;
+}
+.dashStatusV1134.todo{background:#152d48;border-color:#365979;color:#cce1f5}
+.dashStatusV1134.run{background:#0f3c2a;border-color:#286447;color:#9ae5b4}
+.dashStatusV1134.pause{background:#49340e;border-color:#77571c;color:#ffd17c}
+.dashStatusV1134.blocked{background:#4b1f27;border-color:#7d3440;color:#ff9da7}
+.dashStatusV1134.done{background:#0f3c2a;border-color:#286447;color:#9ae5b4}
+.dashPriorityV1134{
+  width:25px;
+  height:25px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#153453;
+  border:1px solid #2d5377;
+  color:#e2f1ff;
+  font-size:8px;
+  font-weight:900;
+}
+.dashActionsV1134{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  white-space:nowrap;
+}
+.dashActionsV1134 button{
+  min-width:0;
+  padding:6px 7px;
+  border-radius:7px;
+  font-size:8px;
+}
+
+@media(max-width:1500px){
+  .dashKpisV1134{grid-template-columns:repeat(3,minmax(160px,1fr))}
+  .dashOverviewV1134{grid-template-columns:1fr 1fr}
+  .dashOverviewV1134>.dashPanelV1134:last-child{grid-column:1/-1}
+  .dashChartsV1134{grid-template-columns:1fr 1fr}
+  .dashChartsV1134>.dashPanelV1134:last-child{grid-column:1/-1}
+}
+@media(max-width:1000px){
+  .dashOverviewV1134,.dashChartsV1134{grid-template-columns:1fr}
+  .dashOverviewV1134>.dashPanelV1134:last-child,
+  .dashChartsV1134>.dashPanelV1134:last-child{grid-column:auto}
+  .dashKpisV1134{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .dashKpisV1134{grid-template-columns:1fr}
+  .dashDonutWrapV1134,.dashTimeDonutWrapV1134{flex-direction:column}
+  .dashPhaseRowV1134{grid-template-columns:82px 1fr}
+  .dashPhaseValueV1134{grid-column:2}
 }
 
 </style>
@@ -3004,6 +3523,11 @@ function render() {
 function setHead(titleText, subtitleText = '') {
   document.getElementById('title').textContent = titleText;
   document.getElementById('subtitle').textContent = subtitleText || '';
+
+  const header = document.querySelector('main > header');
+  if (header) {
+    header.classList.toggle('dashboardHeaderV1134', titleText === 'Tableau de bord');
+  }
 }
 
 // Ouvre une fenêtre modale avec un titre et un contenu HTML.
@@ -5070,26 +5594,460 @@ function workshopPageV1123() {
 }
 
 // Affiche le tableau de bord avec les compteurs et les véhicules actifs.
+
+function dashboardAggregatePhasesV1134(vehicles) {
+  const categories = ['Fabrication', 'Prémontage', 'Pose', 'Essais'];
+  return categories.map(category => {
+    const totals = vehicles.reduce((acc, vehicle) => {
+      const stats = phaseStatsV5(vehicle, category);
+      acc.doneHours += stats.doneHours;
+      acc.totalHours += stats.totalHours;
+      return acc;
+    }, { doneHours: 0, totalHours: 0 });
+
+    const pctValue = totals.totalHours
+      ? Math.round(totals.doneHours / totals.totalHours * 100)
+      : 0;
+
+    return {
+      category,
+      doneHours: totals.doneHours,
+      totalHours: totals.totalHours,
+      remainingHours: Math.max(0, totals.totalHours - totals.doneHours),
+      pct: pctValue
+    };
+  });
+}
+
+function dashboardKpiV1134(icon, label, value, sub = '', className = '') {
+  return `<div class="dashKpiV1134 ${className}">
+    <div class="dashKpiHeadV1134">
+      <span class="dashKpiIconV1134">${escHtml(icon)}</span>
+      <span>${escHtml(label)}</span>
+    </div>
+    <div class="dashKpiValueV1134">${value}</div>
+    ${sub ? `<div class="dashKpiSubV1134">${sub}</div>` : ''}
+  </div>`;
+}
+
+function dashboardPlannedCountV1134() {
+  const items = Array.isArray(state.planningV1124) ? state.planningV1124 : [];
+  return items.filter(item => {
+    const vehicle = (state.vehicles || []).find(v => v.id === item.vehicleId);
+    const of = vehicle?.ofs?.find(row => row.id === item.ofId);
+    if (!vehicle || vehicle.archived || !of || qtyRemainingV5(of) <= 0) return false;
+    if (of.status === 'Bloqué') return false;
+    if (activeWorkSessionV1111(of)) return false;
+    return true;
+  }).length;
+}
+
+function dashboardTrendDataV1134(vehicles) {
+  const now = new Date();
+  const days = [];
+  const byVehicle = new Map();
+
+  vehicles.forEach(vehicle => {
+    byVehicle.set(
+      vehicle.id,
+      vehicleProgressEvents(vehicle.id)
+        .filter(event => Number.isFinite(Number(event?.progress?.global)))
+        .map(event => ({
+          time: Date.parse(event.at || '') || 0,
+          value: Number(event.progress.global) || 0
+        }))
+    );
+  });
+
+  for (let offset = 6; offset >= 0; offset--) {
+    const day = new Date(now.getFullYear(), now.getMonth(), now.getDate() - offset, 23, 59, 59, 999);
+    const end = day.getTime();
+    let weighted = 0;
+    let weight = 0;
+
+    vehicles.forEach(vehicle => {
+      const events = byVehicle.get(vehicle.id) || [];
+      let value = null;
+
+      for (let i = events.length - 1; i >= 0; i--) {
+        if (events[i].time <= end) {
+          value = events[i].value;
+          break;
+        }
+      }
+
+      if (offset === 0) value = pct(vehicle);
+      if (value === null) return;
+
+      const vehicleWeight = Math.max(1, totalUnitsV5(vehicle));
+      weighted += value * vehicleWeight;
+      weight += vehicleWeight;
+    });
+
+    days.push({
+      label: day.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }),
+      value: weight ? Math.round(weighted / weight) : null
+    });
+  }
+
+  return days;
+}
+
+function dashboardTrendHtmlV1134(vehicles) {
+  const data = dashboardTrendDataV1134(vehicles);
+  const valid = data.filter(row => row.value !== null);
+  if (valid.length < 2) {
+    return `<div class="dashEmptyChartV1134">
+      Pas encore assez d'historique d'avancement pour tracer une courbe sur 7 jours.
+    </div>`;
+  }
+
+  const left = 42;
+  const top = 14;
+  const width = 540;
+  const height = 128;
+  const bottom = top + height;
+  const xStep = width / Math.max(1, data.length - 1);
+
+  const points = [];
+  const circles = [];
+  const labels = [];
+  const valueLabels = [];
+
+  data.forEach((row, index) => {
+    const x = left + index * xStep;
+    labels.push(`<text x="${x}" y="174" text-anchor="middle" class="dashTrendTextV1134">${escHtml(row.label)}</text>`);
+    if (row.value === null) return;
+
+    const y = top + height - (Math.max(0, Math.min(100, row.value)) / 100 * height);
+    points.push(`${x},${y}`);
+    circles.push(`<circle cx="${x}" cy="${y}" r="4" class="dashTrendPointV1134"></circle>`);
+    if (index === data.length - 1) {
+      valueLabels.push(`<text x="${Math.min(580, x + 8)}" y="${Math.max(18, y - 9)}" class="dashTrendValueV1134">${row.value}%</text>`);
+    }
+  });
+
+  const grid = [0,25,50,75,100].map(value => {
+    const y = top + height - value / 100 * height;
+    return `<line x1="${left}" y1="${y}" x2="${left+width}" y2="${y}" class="dashTrendGridV1134"></line>
+      <text x="32" y="${y+3}" text-anchor="end" class="dashTrendTextV1134">${value}%</text>`;
+  }).join('');
+
+  const area = points.length
+    ? `<polygon points="${left},${bottom} ${points.join(' ')} ${left+width},${bottom}" class="dashTrendAreaV1134"></polygon>`
+    : '';
+
+  return `<svg class="dashTrendV1134" viewBox="0 0 600 185" preserveAspectRatio="none" aria-label="Évolution de l'avancement sur 7 jours">
+    <defs>
+      <linearGradient id="dashTrendGradientV1134" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#2daaf7" stop-opacity=".26"></stop>
+        <stop offset="100%" stop-color="#2daaf7" stop-opacity=".02"></stop>
+      </linearGradient>
+    </defs>
+    ${grid}
+    ${area}
+    <polyline points="${points.join(' ')}" class="dashTrendLineV1134"></polyline>
+    ${circles.join('')}
+    ${labels.join('')}
+    ${valueLabels.join('')}
+  </svg>`;
+}
+
+function dashboardTimeDistributionV1134(vehicles) {
+  const ids = new Set(vehicles.map(vehicle => vehicle.id));
+  const rows = workTimesV1112().filter(item => ids.has(item.vehicleId));
+
+  const colors = {
+    'Fabrication': '#22c55e',
+    'Prémontage': '#38bdf8',
+    'Pose': '#f59e0b',
+    'Essais': '#a855f7'
+  };
+  const categories = ['Fabrication','Prémontage','Pose','Essais'];
+  const totals = categories.map(category => ({
+    category,
+    minutes: rows
+      .filter(item => item.category === category)
+      .reduce((sum, item) => sum + Math.max(0, Number(item.durationMinutes) || 0), 0),
+    color: colors[category]
+  }));
+
+  const total = totals.reduce((sum, item) => sum + item.minutes, 0);
+  if (!total) {
+    return `<div class="dashEmptyChartV1134">
+      Aucun temps chronométré disponible pour la répartition par phase.
+    </div>`;
+  }
+
+  let cursor = 0;
+  const segments = totals.filter(item => item.minutes > 0).map(item => {
+    const start = cursor;
+    const share = item.minutes / total * 100;
+    cursor += share;
+    return `${item.color} ${start.toFixed(2)}% ${cursor.toFixed(2)}%`;
+  });
+
+  const legend = totals.map(item => {
+    const share = total ? Math.round(item.minutes / total * 100) : 0;
+    return `<div class="dashTimeLegendRowV1134">
+      <span class="dashTimeLegendDotV1134" style="background:${item.color}"></span>
+      <span>${escHtml(item.category)}</span>
+      <b>${share}% • ${escHtml(workMinutesLabelV1112(item.minutes))}</b>
+    </div>`;
+  }).join('');
+
+  return `<div class="dashTimeDonutWrapV1134">
+    <div class="dashTimeDonutV1134" style="background:conic-gradient(${segments.join(',')})">
+      <div class="dashTimeDonutCenterV1134">
+        ${escHtml(workMinutesLabelV1112(total))}
+        <small>réalisées</small>
+      </div>
+    </div>
+    <div class="dashTimeLegendV1134">${legend}</div>
+  </div>`;
+}
+
+function dashboardPeopleLoadV1134(vehicles) {
+  const ids = new Set(vehicles.map(vehicle => vehicle.id));
+  const now = new Date();
+  const monday = new Date(now);
+  const day = (now.getDay() + 6) % 7;
+  monday.setDate(now.getDate() - day);
+  monday.setHours(0,0,0,0);
+
+  const totals = new Map();
+  workTimesV1112().forEach(item => {
+    if (!ids.has(item.vehicleId) || !item.person) return;
+    const finished = new Date(item.finishedAt || 0);
+    if (Number.isNaN(finished.getTime()) || finished < monday || finished > now) return;
+    totals.set(item.person, (totals.get(item.person) || 0) + Math.max(0, Number(item.durationMinutes) || 0));
+  });
+
+  const rows = [...totals.entries()]
+    .map(([person, minutes]) => ({ person, minutes }))
+    .sort((a,b) => b.minutes - a.minutes)
+    .slice(0,5);
+
+  if (!rows.length) {
+    return `<div class="dashEmptyChartV1134">
+      Aucun temps OF terminé cette semaine pour calculer la charge par personne.
+    </div>`;
+  }
+
+  const max = Math.max(...rows.map(row => row.minutes), 1);
+  return `<div class="dashPeopleLoadV1134">${rows.map(row => `
+    <div class="dashPersonRowV1134">
+      <div class="dashPersonNameV1134" title="${escHtml(row.person)}">${escHtml(row.person)}</div>
+      <div class="dashPersonTrackV1134"><div class="dashPersonFillV1134" style="width:${Math.round(row.minutes/max*100)}%"></div></div>
+      <div class="dashPersonHoursV1134">${escHtml(workMinutesLabelV1112(row.minutes))}</div>
+    </div>`).join('')}</div>`;
+}
+
+function dashboardVehicleStatusV1134(vehicle) {
+  if (remain(vehicle) <= 0) return { key: 'done', label: '✓ Fait' };
+
+  const blocked = blockedCount(vehicle);
+  if (blocked > 0) return { key: 'blocked', label: `${blocked} bloqué${blocked > 1 ? 's' : ''}` };
+
+  const paused = pausedOFCountV11143(vehicle);
+  if (paused > 0) return { key: 'pause', label: `${paused} en pause` };
+
+  const running = runningOFCountV11143(vehicle);
+  if (running > 0) return { key: 'run', label: `${running} en cours` };
+
+  return { key: 'todo', label: 'À faire' };
+}
+
+function dashboardPhaseCellV1134(vehicle, category) {
+  const stats = phaseStatsV5(vehicle, category);
+  const pctValue = Math.max(0, Math.min(100, stats.hoursPct || 0));
+
+  return `<div class="dashPhaseCellV1134">
+    <div class="dashPhaseCellTopV1134">
+      <b>${pctValue}%</b>
+      <span>${escHtml(fmtHoursMinutesV11122(stats.doneHours))} / ${escHtml(fmtHoursMinutesV11122(stats.totalHours))}</span>
+    </div>
+    <div class="dashMiniTrackV1134"><div class="dashMiniFillV1134" style="width:${pctValue}%"></div></div>
+    <small>${stats.done}/${stats.total} réalisations</small>
+  </div>`;
+}
+
+function dashboardVehicleTableV1134(vehicles, estimates) {
+  const rows = vehicles.map(vehicle => {
+    const status = dashboardVehicleStatusV1134(vehicle);
+    const overall = Math.max(0, Math.min(100, pct(vehicle)));
+    const noteButton = `<button class="${vehicleHasNoteV1122(vehicle) ? 'warn' : 'alt'}" onclick="openVehicleNoteV1122('${vehicle.id}')">Note</button>`;
+
+    const actions = isAdminV1117()
+      ? `${noteButton}<button class="good" onclick="openVehicleDetail('${vehicle.id}')">Ouvrir</button><button class="alt" onclick="openVehicle('${vehicle.id}')">Modifier</button>`
+      : `${noteButton}<span class="adminRestrictedHintV1117">🔒</span>`;
+
+    const searchable = [
+      vehicle.vin, vehicle.brand, vehicle.client, vehicle.type,
+      ...(vehicle.selectedOptions || [])
+    ].join(' ');
+
+    return `<tr data-dash-search-v1134="${escHtml(searchable)}">
+      <td>
+        <div class="dashVinV1134">
+          ${colorDot(vehicle)}
+          <div><b>${escHtml(vehicle.vin)}</b><small>${escHtml(vehicle.type || 'CCF')}</small></div>
+        </div>
+      </td>
+      <td><b>${escHtml(vehicle.brand || '-')}</b></td>
+      <td>${escHtml(vehicle.client || '-')}</td>
+      <td><div class="optionchips">${vehicleOptionsHtml(vehicle)}</div></td>
+      <td><span class="dashPriorityV1134">${escHtml(vehicle.priority || 1)}</span></td>
+      <td>${dashboardPhaseCellV1134(vehicle,'Fabrication')}</td>
+      <td>${dashboardPhaseCellV1134(vehicle,'Prémontage')}</td>
+      <td>${dashboardPhaseCellV1134(vehicle,'Pose')}</td>
+      <td>${dashboardPhaseCellV1134(vehicle,'Essais')}</td>
+      <td>
+        <div class="dashPhaseCellV1134">
+          <div class="dashPhaseCellTopV1134"><b>${overall}%</b><span>Global</span></div>
+          <div class="dashMiniTrackV1134"><div class="dashMiniFillV1134 dashGlobalFillV1134" style="width:${overall}%"></div></div>
+          <small>${doneUnitsV5(vehicle)}/${totalUnitsV5(vehicle)} réalisations</small>
+        </div>
+      </td>
+      <td><span class="dashStatusV1134 ${status.key}">${escHtml(status.label)}</span></td>
+      <td><b>${escHtml(fmt(remain(vehicle)))}</b></td>
+      <td>${deadlineHtmlV115(vehicle, estimates[vehicle.id], false)}</td>
+      <td><b>${escHtml(remain(vehicle) > 0 ? fmtDate(estimates[vehicle.id]) : 'Terminé')}</b><div class="muted">hors week-end et fériés</div></td>
+      <td><div class="dashActionsV1134">${actions}</div></td>
+    </tr>`;
+  }).join('');
+
+  return `<div class="dashVehicleBlockV1134">
+    <div class="dashVehicleHeadV1134">
+      <div class="dashVehicleTitleV1134">🚒 Suivi des véhicules</div>
+      <div class="dashVehicleToolsV1134">
+        <input id="dashVehicleSearchV1134" class="dashVehicleSearchV1134" type="search"
+          placeholder="Rechercher VIN, marque, client..."
+          oninput="filterDashboardVehiclesV1134(this.value)">
+        <span id="dashVehicleCountV1134" class="dashVehicleCountV1134">${vehicles.length} véhicule${vehicles.length > 1 ? 's' : ''}</span>
+      </div>
+    </div>
+
+    <div class="dashVehicleTableWrapV1134">
+      <table class="dashVehicleTableV1134">
+        <thead><tr>
+          <th>VIN</th><th>Marque</th><th>Client</th><th>Options</th><th>Prio</th>
+          <th>Fabrication</th><th>Prémontage</th><th>Pose</th><th>Essais</th>
+          <th>Global</th><th>Statut</th><th>Restant</th><th>Objectif</th><th>Fin estimée</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="dashVehicleBodyV1134">${rows}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function filterDashboardVehiclesV1134(value) {
+  const query = String(value || '').trim().toLowerCase();
+  const rows = Array.from(document.querySelectorAll('#dashVehicleBodyV1134 tr[data-dash-search-v1134]'));
+
+  rows.forEach(row => {
+    const haystack = String(row.getAttribute('data-dash-search-v1134') || '').toLowerCase();
+    row.style.display = !query || haystack.includes(query) ? '' : 'none';
+  });
+
+  const shown = rows.filter(row => row.style.display !== 'none').length;
+  const counter = document.getElementById('dashVehicleCountV1134');
+  if (counter) counter.textContent = `${shown} véhicule${shown > 1 ? 's' : ''}`;
+}
+
 function dash() {
   normalizeAll();
-  const active = activeVehicles();
-  setHead('Tableau de bord');
-  const total = active.reduce((sum, vehicle) => sum + (isSAV(vehicle) ? 0 : (vehicle.ofs || []).length), 0);
-  const done = active.reduce((sum, vehicle) => sum + (isSAV(vehicle) ? 0 : doneOf(vehicle)), 0);
-  const estimates = estimateVehiclesActive(true);
-  const inProgress = totalInProgressV1111();
-  const savInProgress = totalSAVInProgressV1114();
 
-  document.getElementById('view').innerHTML = `
-    <div class="grid cards dashboardKpisV1111">
-      <div class="card"><b>Véhicules actifs</b><div class="kpi">${active.length}</div><div class="muted">Archivés : ${archivedVehicles().length}</div></div>
-      <div class="card"><b>OF total</b><div class="kpi">${total}</div></div>
-      <div class="card"><b>OF faits</b><div class="kpi">${done}</div></div>
-      <div class="card"><b>OF en cours</b><div class="kpi">${inProgress}</div><div class="muted">réellement démarrés</div></div>
-      <div class="card"><b>SAV en cours</b><div class="kpi">${savInProgress}</div><div class="muted">travail démarré ou en pause</div></div>
-      <div class="card"><b>Temps restant</b><div class="kpi">${fmt(active.reduce((sum, vehicle) => sum + remain(vehicle), 0))}</div></div>
-    </div><br>${vehicleTable(active, estimates, false, true)}`;
+  const vehicles = activeNormalVehicles()
+    .slice()
+    .sort((a,b) =>
+      (Number(a.priority)||1) - (Number(b.priority)||1)
+      || String(a.vin||'').localeCompare(String(b.vin||''),'fr',{numeric:true})
+    );
+  const savs = activeVehicles().filter(isSAV);
+  const estimates = estimateVehiclesActive(true);
+  const totalOF = vehicles.reduce((sum, vehicle) => sum + (vehicle.ofs || []).length, 0);
+  const doneOFCount = vehicles.reduce((sum, vehicle) => sum + doneOf(vehicle), 0);
+  const running = vehicles.reduce((sum, vehicle) => sum + runningOFCountV11143(vehicle), 0);
+  const paused = vehicles.reduce((sum, vehicle) => sum + pausedOFCountV11143(vehicle), 0);
+  const blocked = vehicles.reduce((sum, vehicle) => sum + blockedCount(vehicle), 0);
+  const planned = dashboardPlannedCountV1134();
+  const remainingHours = vehicles.reduce((sum, vehicle) => sum + remain(vehicle), 0);
+  const savRunning = savs.filter(vehicle => ['running','paused'].includes(savWorkStatusV1114(vehicle).key)).length;
+
+  const phases = dashboardAggregatePhasesV1134(vehicles);
+  const totalHours = phases.reduce((sum, item) => sum + item.totalHours, 0);
+  const doneHours = phases.reduce((sum, item) => sum + item.doneHours, 0);
+  const globalPct = totalHours ? Math.round(doneHours / totalHours * 100) : 0;
+
+  setHead('Tableau de bord', 'Vue d’ensemble de la production • suivi des véhicules, OF et avancement');
+
+  document.getElementById('view').innerHTML = `<div class="dashV1134">
+    <div class="dashKpisV1134">
+      ${dashboardKpiV1134('V','Véhicules en production',vehicles.length,`${archivedVehicles().filter(v=>!isSAV(v)).length} archivés`)}
+      ${dashboardKpiV1134('▶','OF en cours',running,`${totalOF} OF au total`)}
+      ${dashboardKpiV1134('Ⅱ','OF en pause / bloqués',paused + blocked,`${paused} en pause • ${blocked} bloqué${blocked>1?'s':''}`,'pause')}
+      ${dashboardKpiV1134('✓','OF terminés',doneOFCount,`${totalOF ? Math.round(doneOFCount/totalOF*100) : 0}% des lignes OF`,'done')}
+      ${dashboardKpiV1134('H','Temps restant',fmtHoursMinutesV11122(remainingHours),'hors week-end et fériés','time')}
+      ${dashboardKpiV1134('SAV','SAV en cours',savRunning,`${savs.length} SAV actif${savs.length>1?'s':''}`,'sav')}
+    </div>
+
+    <div class="dashOverviewV1134">
+      <div class="dashPanelV1134">
+        <div class="dashPanelTitleV1134"><span>◎ Avancement global</span><small>heures OF</small></div>
+        <div class="dashDonutWrapV1134">
+          <div class="dashDonutV1134" style="--p:${globalPct}"><strong>${globalPct}%</strong></div>
+          <div class="dashLegendV1134">
+            <div class="dashLegendLineV1134"><span>Réalisé</span><b>${escHtml(fmtHoursMinutesV11122(doneHours))}</b></div>
+            <div class="dashLegendLineV1134"><span>Restant</span><b>${escHtml(fmtHoursMinutesV11122(Math.max(0,totalHours-doneHours)))}</b></div>
+            <div class="dashLegendLineV1134"><span>Total</span><b>${escHtml(fmtHoursMinutesV11122(totalHours))}</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashPanelV1134">
+        <div class="dashPanelTitleV1134"><span>▱ Avancement par phase</span><small>${vehicles.length} véhicules</small></div>
+        <div class="dashPhaseListV1134">
+          ${phases.map(item => `<div class="dashPhaseRowV1134">
+            <div class="dashPhaseNameV1134">${escHtml(item.category)}</div>
+            <div class="dashPhaseTrackV1134"><div class="dashPhaseFillV1134" style="width:${item.pct}%"></div></div>
+            <div class="dashPhaseValueV1134"><b>${item.pct}%</b> • ${escHtml(fmtHoursMinutesV11122(item.doneHours))}</div>
+          </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="dashPanelV1134">
+        <div class="dashPanelTitleV1134"><span>⌂ Situation atelier</span><small>temps réel</small></div>
+        <div class="dashSituationV1134">
+          <div class="dashSituationItemV1134 run"><span>OF en cours</span><strong>${running}</strong></div>
+          <div class="dashSituationItemV1134 pause"><span>OF en pause</span><strong>${paused}</strong></div>
+          <div class="dashSituationItemV1134 block"><span>OF bloqués</span><strong>${blocked}</strong></div>
+          <div class="dashSituationItemV1134 plan"><span>OF planifiés</span><strong>${planned}</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashChartsV1134">
+      <div class="dashPanelV1134">
+        <div class="dashPanelTitleV1134"><span>◴ Évolution de l’avancement</span><small>7 derniers jours</small></div>
+        ${dashboardTrendHtmlV1134(vehicles)}
+      </div>
+
+      <div class="dashPanelV1134">
+        <div class="dashPanelTitleV1134"><span>◉ Répartition des temps réalisés</span><small>temps chronométrés</small></div>
+        ${dashboardTimeDistributionV1134(vehicles)}
+      </div>
+
+      <div class="dashPanelV1134">
+        <div class="dashPanelTitleV1134"><span>♟ Charge par personne</span><small>semaine en cours</small></div>
+        ${dashboardPeopleLoadV1134(vehicles)}
+      </div>
+    </div>
+
+    ${dashboardVehicleTableV1134(vehicles, estimates)}
+  </div>`;
 }
+
 
 // Ouvre la fiche détaillée d'un véhicule ou d'un SAV.
 function openVehicleDetail(id) {
