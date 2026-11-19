@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.36 Pourcentages Heures</title>
+<title>ELITT - Suivi OF - V11.37 Pourcentages Décimaux</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -2139,6 +2139,22 @@ function escHtml(value) {
     .replace(/'/g, '&#39;');
 }
 
+
+// V11.37 - Arrondit un pourcentage d'avancement à une décimale.
+function progressPercentValueV1137(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return 0;
+  return Math.max(0, Math.min(100, Math.round(numeric * 10) / 10));
+}
+
+// V11.37 - Affiche les pourcentages d'avancement avec une décimale en français.
+function formatProgressPercentV1137(value) {
+  return progressPercentValueV1137(value).toLocaleString('fr-FR', {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1
+  }) + ' %';
+}
+
 // Charge une bibliothèque optionnelle uniquement au moment où elle est réellement utilisée.
 const optionalScriptPromisesV1130 = new Map();
 function loadOptionalScriptV1130(src, globalName) {
@@ -3433,13 +3449,13 @@ function doneOf(vehicle) {
   return (vehicle.ofs || []).filter(of => qtyRemainingV5(of) === 0).length;
 }
 
-// Calcule le pourcentage global d'avancement en tenant compte des quantités de chaque OF.
+// Calcule le pourcentage global d'avancement à partir des HEURES prévues réalisées.
 function pct(vehicle) {
   if (isSAV(vehicle)) {
     if (vehicle.savDone) return 100;
     const planned = Math.max(0, Number(vehicle.savEstimated) || 0);
     const actual = savActualHoursNowV1114(vehicle);
-    return planned ? Math.min(100, Math.round(actual / planned * 100)) : 0;
+    return planned ? progressPercentValueV1137(actual / planned * 100) : 0;
   }
 
   let totalHours = 0;
@@ -3451,7 +3467,6 @@ function pct(vehicle) {
     const unitHours = Math.max(0, Number(of.time) || 0);
     const total = qtyTotalV5(of);
     const done = qtyDoneV5(of);
-
     totalHours += unitHours * total;
     doneHours += unitHours * done;
     totalUnits += total;
@@ -3459,11 +3474,10 @@ function pct(vehicle) {
   }
 
   if (totalHours > 0) {
-    return Math.max(0, Math.min(100, Math.round(doneHours / totalHours * 100)));
+    return progressPercentValueV1137(doneHours / totalHours * 100);
   }
 
-  // Anciennes données sans aucune heure : 0 % tant que tout n'est pas terminé,
-  // puis 100 %. On évite ainsi de réintroduire un pourcentage basé sur le nombre d'OF.
+  // Anciennes données sans heures : 100 % seulement lorsque tout est terminé.
   return totalUnits > 0 && doneUnits >= totalUnits ? 100 : 0;
 }
 
@@ -4789,13 +4803,13 @@ function renderPublicVinDataV116(data) {
         100,
         stats.hoursPct !== undefined
           ? Number(stats.hoursPct) || 0
-          : (totalHours ? Math.round(doneHours / totalHours * 100) : Number(stats.pct) || 0)
+          : (totalHours ? progressPercentValueV1137(doneHours / totalHours * 100) : Number(stats.pct) || 0)
       )
     );
 
     return `<div class="publicPhaseV116">
       <div class="publicPhaseHeadV116">
-        <strong>${escHtml(category)} — ${pctValue}%</strong>
+        <strong>${escHtml(category)} — ${formatProgressPercentV1137(pctValue)}</strong>
         <span>${fmtHoursMinutesV11122(doneHours)} / ${fmtHoursMinutesV11122(totalHours)}</span>
       </div>
       <div class="publicPhaseTrackV116"><div class="publicPhaseBarV116" style="width:${pctValue}%"></div></div>
@@ -4881,7 +4895,7 @@ function publicGlobalVehicleCardV117(data) {
 
     return `<div class="publicGlobalPhaseV117">
       <div class="publicGlobalPhaseHeadV117">
-        <strong>${escHtml(category)} ${pctValue}%</strong>
+        <strong>${escHtml(category)} ${formatProgressPercentV1137(pctValue)}</strong>
         <span>${fmtHoursMinutesV11122(doneHours)} / ${fmtHoursMinutesV11122(totalHours)}</span>
       </div>
       <div class="publicGlobalPhaseTrackV117"><div class="publicGlobalPhaseBarV117" style="width:${pctValue}%"></div></div>
@@ -5107,7 +5121,7 @@ function estimateVehiclesActive(alreadyNormalized = false) {
   return result;
 }
 
-// Calcule l'avancement d'une phase en quantités ET en heures afin que chaque réalisation retire uniquement le temps de sa propre phase.
+// Calcule l'avancement d'une phase en quantités ET en heures.
 function phaseStatsV5(vehicle, category) {
   let total = 0;
   let done = 0;
@@ -5119,7 +5133,6 @@ function phaseStatsV5(vehicle, category) {
     const qtyTotal = qtyTotalV5(of);
     const qtyDone = qtyDoneV5(of);
     const unitHours = Math.max(0, Number(of.time) || 0);
-
     total += qtyTotal;
     done += qtyDone;
     totalHours += unitHours * qtyTotal;
@@ -5128,25 +5141,11 @@ function phaseStatsV5(vehicle, category) {
 
   const remainingHours = Math.max(0, totalHours - doneHours);
   const qtyPct = total ? Math.round(done / total * 100) : 0;
-
-  // Règle V11.36 : tout pourcentage d'avancement métier est calculé en heures.
-  // Si une ancienne base ne contient absolument aucune heure, on ne simule pas
-  // une progression intermédiaire en quantité : seul un ensemble totalement fini
-  // peut alors apparaître à 100 %.
   const hoursPct = totalHours > 0
-    ? Math.round(doneHours / totalHours * 100)
+    ? progressPercentValueV1137(doneHours / totalHours * 100)
     : (total > 0 && done >= total ? 100 : 0);
 
-  return {
-    total,
-    done,
-    qtyPct,
-    pct: hoursPct,
-    totalHours,
-    doneHours,
-    remainingHours,
-    hoursPct
-  };
+  return { total, done, qtyPct, pct: hoursPct, totalHours, doneHours, remainingHours, hoursPct };
 }
 
 // Génère les trois barres du tableau de bord en heures faites / heures totales, séparées strictement par phase.
@@ -5156,7 +5155,7 @@ function phaseProgressHtmlV5(vehicle) {
     const planned = Math.max(0, Number(vehicle.savEstimated) || 0);
     return '<div style="min-width:220px">' +
       '<div style="display:flex;justify-content:space-between;gap:10px;margin-bottom:5px">' +
-        '<b>SAV ' + pct(vehicle) + '%</b>' +
+        '<b>SAV ' + formatProgressPercentV1137(pct(vehicle)) + '</b>' +
         '<b>' + fmtHoursMinutesV11122(actual) + ' / ' + fmtHoursMinutesV11122(planned) + '</b>' +
       '</div>' +
       '<div class="progress"><div class="bar" style="width:' + pct(vehicle) + '%"></div></div>' +
@@ -5171,7 +5170,7 @@ function phaseProgressHtmlV5(vehicle) {
 
     html += '<div style="margin-bottom:8px">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:3px;flex-wrap:wrap">' +
-        '<span><b>' + escHtml(category) + '</b> ' + stats.hoursPct + '%</span>' +
+        '<span><b>' + escHtml(category) + '</b> ' + formatProgressPercentV1137(stats.hoursPct) + '</span>' +
         '<span style="font-weight:850">' +
           fmtHoursMinutesV11122(stats.doneHours) + ' / ' + fmtHoursMinutesV11122(stats.totalHours) +
         '</span>' +
@@ -6043,7 +6042,7 @@ function workshopPhaseRowV1123(vehicle, category) {
   return `<div class="workshopPhaseV1123">
     <div class="workshopPhaseTopV1123">
       <b>${escHtml(category)}</b>
-      <span>${stats.hoursPct}% • ${fmtHoursMinutesV11122(stats.doneHours)} / ${fmtHoursMinutesV11122(stats.totalHours)}</span>
+      <span>${formatProgressPercentV1137(stats.hoursPct)} • ${fmtHoursMinutesV11122(stats.doneHours)} / ${fmtHoursMinutesV11122(stats.totalHours)}</span>
     </div>
     <div class="progress"><div class="bar" style="width:${stats.hoursPct}%"></div></div>
   </div>`;
@@ -6083,7 +6082,7 @@ function workshopVehicleCardV1123(vehicle, estimates) {
     ? `<div class="workshopPhaseV1123">
         <div class="workshopPhaseTopV1123">
           <b>SAV</b>
-          <span>${pct(vehicle)}% • ${fmtHoursMinutesV11122(savActualHoursNowV1114(vehicle))} / ${fmtHoursMinutesV11122(Math.max(0, Number(vehicle.savEstimated) || 0))}</span>
+          <span>${formatProgressPercentV1137(pct(vehicle))} • ${fmtHoursMinutesV11122(savActualHoursNowV1114(vehicle))} / ${fmtHoursMinutesV11122(Math.max(0, Number(vehicle.savEstimated) || 0))}</span>
         </div>
         <div class="progress"><div class="bar" style="width:${pct(vehicle)}%"></div></div>
       </div>`
@@ -6208,7 +6207,7 @@ function workshopPhaseHtmlV1135(vehicle, category) {
   return `<div class="workshopPhaseV1135">
     <div class="workshopPhaseNameV1135">${escHtml(category)}</div>
     <div class="workshopPhaseTrackV1135"><div class="workshopPhaseFillV1135" style="width:${pctValue}%"></div></div>
-    <div class="workshopPhasePctV1135">${pctValue}%</div>
+    <div class="workshopPhasePctV1135">${formatProgressPercentV1137(pctValue)}</div>
   </div>`;
 }
 
@@ -6297,7 +6296,7 @@ function workshopVehicleCardV1135(vehicle, estimates) {
     </div>
 
     <div class="workshopSummaryV1135">
-      <div class="workshopRingV1135" style="--p:${overall}"><strong>${overall}%</strong></div>
+      <div class="workshopRingV1135" style="--p:${overall}"><strong>${formatProgressPercentV1137(overall)}</strong></div>
       <div class="workshopMetaV1135">
         <div class="workshopMetaLineV1135"><span>Marque</span><b>${escHtml(vehicle.brand || '-')}</b></div>
         <div class="workshopMetaLineV1135"><span>Client</span><b>${escHtml(vehicle.client || '-')}</b></div>
@@ -6340,7 +6339,7 @@ function workshopSavCardV1135(vehicle) {
     </div>
 
     <div class="workshopSummaryV1135">
-      <div class="workshopRingV1135" style="--p:${p}"><strong>${p}%</strong></div>
+      <div class="workshopRingV1135" style="--p:${p}"><strong>${formatProgressPercentV1137(p)}</strong></div>
       <div class="workshopMetaV1135">
         <div class="workshopMetaLineV1135"><span>Réalisé</span><b>${escHtml(fmtHoursMinutesV11122(actual))}</b></div>
         <div class="workshopMetaLineV1135"><span>Prévu</span><b>${escHtml(fmtHoursMinutesV11122(planned))}</b></div>
@@ -6460,7 +6459,7 @@ function workshopLoadHtmlV1135(vehicles) {
         return `<div class="workshopChargeCardV1135">
           <h3>${escHtml(phase.category)}</h3>
           <div class="workshopChargeBigV1135">${escHtml(fmtHoursMinutesV11122(phase.remainingHours))}</div>
-          <div class="workshopChargeMetaV1135">${active} OF actif${active>1?'s':''} • ${phase.pct}% réalisé</div>
+          <div class="workshopChargeMetaV1135">${active} OF actif${active>1?'s':''} • ${formatProgressPercentV1137(phase.pct)} réalisé</div>
           <div class="workshopLoadTrackV1135" style="margin-top:9px"><div class="workshopLoadFillV1135" style="width:${phase.pct}%"></div></div>
           <div class="workshopChargePeopleV1135">
             ${people.length ? people.map(person=>`<span class="workshopChargePersonV1135">${escHtml(person)}</span>`).join('') : `<span class="workshopChargeMetaV1135">Aucune personne active</span>`}
@@ -6605,7 +6604,7 @@ function dashboardAggregatePhasesV1134(vehicles) {
     }, { doneHours: 0, totalHours: 0 });
 
     const pctValue = totals.totalHours
-      ? Math.round(totals.doneHours / totals.totalHours * 100)
+      ? progressPercentValueV1137(totals.doneHours / totals.totalHours * 100)
       : 0;
 
     return {
@@ -6691,7 +6690,7 @@ function dashboardTrendDataV1134(vehicles) {
 
     days.push({
       label: day.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }),
-      value: weight ? Math.round(weighted / weight) : null
+      value: weight ? progressPercentValueV1137(weighted / weight) : null
     });
   }
 
@@ -6728,7 +6727,7 @@ function dashboardTrendHtmlV1134(vehicles) {
     points.push(`${x},${y}`);
     circles.push(`<circle cx="${x}" cy="${y}" r="4" class="dashTrendPointV1134"></circle>`);
     if (index === data.length - 1) {
-      valueLabels.push(`<text x="${Math.min(580, x + 8)}" y="${Math.max(18, y - 9)}" class="dashTrendValueV1134">${row.value}%</text>`);
+      valueLabels.push(`<text x="${Math.min(580, x + 8)}" y="${Math.max(18, y - 9)}" class="dashTrendValueV1134">${formatProgressPercentV1137(row.value)}</text>`);
     }
   });
 
@@ -6921,7 +6920,7 @@ function dashboardPhaseCellV1134(vehicle, category) {
 
   return `<div class="dashPhaseCellV1134">
     <div class="dashPhaseCellTopV1134">
-      <b>${pctValue}%</b>
+      <b>${formatProgressPercentV1137(pctValue)}</b>
       <span>${escHtml(fmtHoursMinutesV11122(stats.doneHours))} / ${escHtml(fmtHoursMinutesV11122(stats.totalHours))}</span>
     </div>
     <div class="dashMiniTrackV1134"><div class="dashMiniFillV1134" style="width:${pctValue}%"></div></div>
@@ -6961,7 +6960,7 @@ function dashboardVehicleTableV1134(vehicles, estimates) {
       <td>${dashboardPhaseCellV1134(vehicle,'Essais')}</td>
       <td>
         <div class="dashPhaseCellV1134">
-          <div class="dashPhaseCellTopV1134"><b>${overall}%</b><span>Global</span></div>
+          <div class="dashPhaseCellTopV1134"><b>${formatProgressPercentV1137(overall)}</b><span>Global</span></div>
           <div class="dashMiniTrackV1134"><div class="dashMiniFillV1134 dashGlobalFillV1134" style="width:${overall}%"></div></div>
           <small>${doneUnitsV5(vehicle)}/${totalUnitsV5(vehicle)} réalisations</small>
         </div>
@@ -7035,7 +7034,7 @@ function dash() {
   const phases = dashboardAggregatePhasesV1134(vehicles);
   const totalHours = phases.reduce((sum, item) => sum + item.totalHours, 0);
   const doneHours = phases.reduce((sum, item) => sum + item.doneHours, 0);
-  const globalPct = totalHours ? Math.round(doneHours / totalHours * 100) : 0;
+  const globalPct = totalHours ? progressPercentValueV1137(doneHours / totalHours * 100) : 0;
 
   setHead('Tableau de bord', 'Vue d’ensemble de la production • suivi des véhicules, OF et avancement');
 
@@ -7053,7 +7052,7 @@ function dash() {
       <div class="dashPanelV1134">
         <div class="dashPanelTitleV1134"><span>◎ Avancement global</span><small>heures OF</small></div>
         <div class="dashDonutWrapV1134">
-          <div class="dashDonutV1134" style="--p:${globalPct}"><strong>${globalPct}%</strong></div>
+          <div class="dashDonutV1134" style="--p:${globalPct}"><strong>${formatProgressPercentV1137(globalPct)}</strong></div>
           <div class="dashLegendV1134">
             <div class="dashLegendLineV1134"><span>Réalisé</span><b>${escHtml(fmtHoursMinutesV11122(doneHours))}</b></div>
             <div class="dashLegendLineV1134"><span>Restant</span><b>${escHtml(fmtHoursMinutesV11122(Math.max(0,totalHours-doneHours)))}</b></div>
@@ -7068,7 +7067,7 @@ function dash() {
           ${phases.map(item => `<div class="dashPhaseRowV1134">
             <div class="dashPhaseNameV1134">${escHtml(item.category)}</div>
             <div class="dashPhaseTrackV1134"><div class="dashPhaseFillV1134" style="width:${item.pct}%"></div></div>
-            <div class="dashPhaseValueV1134"><b>${item.pct}%</b> • ${escHtml(fmtHoursMinutesV11122(item.doneHours))}</div>
+            <div class="dashPhaseValueV1134"><b>${formatProgressPercentV1137(item.pct)}</b> • ${escHtml(fmtHoursMinutesV11122(item.doneHours))}</div>
           </div>`).join('')}
         </div>
       </div>
@@ -8110,7 +8109,7 @@ function vehicleDetail() {
   const timeButton = `<button class="alt" onclick="openVehicleTimesV1112('${vehicle.id}')">⏱ Temps OF</button>`;
   const qrButton = `<button class="alt" onclick="openVehicleQRV115('${vehicle.id}')">▦ QR Code</button>`;
   const objectiveText = vehicle.targetDate ? ' • Objectif ' + targetDateLabelV115(vehicle.targetDate) : ' • Objectif non défini';
-  document.getElementById('view').innerHTML = `<div class="toolbar">${back}${actions}${timeline}${timeButton}${qrButton}</div><br><div class="grid cards"><div class="card vehicleBanner" style="--vehColor:${vehicleColor(vehicle)}"><b>VIN</b><div class="kpi">${colorDot(vehicle)}${escHtml(vehicle.vin)}</div><div class="muted">${escHtml(vehicle.brand || '-')} • ${escHtml(vehicle.client || '-')}${escHtml(objectiveText)}</div></div><div class="card"><b>Avancement total</b><div class="kpi">${pct(vehicle)}%</div><div class="muted">${doneUnitsV5(vehicle)}/${totalUnitsV5(vehicle)} réalisations</div></div><div class="card"><b>Temps restant</b><div class="kpi">${fmt(remain(vehicle))}</div></div><div class="card"><b>OF</b><div class="kpi">${doneOf(vehicle)}/${(vehicle.ofs || []).length}</div><div class="muted">lignes terminées • ${inProgressCountV1111(vehicle)} en cours</div></div></div><br>${detailTableV5(vehicle)}`;
+  document.getElementById('view').innerHTML = `<div class="toolbar">${back}${actions}${timeline}${timeButton}${qrButton}</div><br><div class="grid cards"><div class="card vehicleBanner" style="--vehColor:${vehicleColor(vehicle)}"><b>VIN</b><div class="kpi">${colorDot(vehicle)}${escHtml(vehicle.vin)}</div><div class="muted">${escHtml(vehicle.brand || '-')} • ${escHtml(vehicle.client || '-')}${escHtml(objectiveText)}</div></div><div class="card"><b>Avancement total</b><div class="kpi">${formatProgressPercentV1137(pct(vehicle))}</div><div class="muted">${doneUnitsV5(vehicle)}/${totalUnitsV5(vehicle)} réalisations</div></div><div class="card"><b>Temps restant</b><div class="kpi">${fmt(remain(vehicle))}</div></div><div class="card"><b>OF</b><div class="kpi">${doneOf(vehicle)}/${(vehicle.ofs || []).length}</div><div class="muted">lignes terminées • ${inProgressCountV1111(vehicle)} en cours</div></div></div><br>${detailTableV5(vehicle)}`;
 }
 
 // Retourne le libellé français correspondant au type d'événement d'avancement.
@@ -8369,7 +8368,7 @@ function renderTimelineBodyV6(vehicle) {
     <div class="card">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
         <div>
-          <b>${escHtml(mode)} : ${mode === 'Global' ? pct(vehicle) : phaseStatsV5(vehicle, mode).hoursPct}%</b>
+          <b>${escHtml(mode)} : ${formatProgressPercentV1137(mode === 'Global' ? pct(vehicle) : phaseStatsV5(vehicle, mode).hoursPct)}</b>
           <div class="muted" style="margin-top:6px">
             ${first ? `Première activité : ${escHtml(fmtProgressDate(first.at))}` : 'Pas encore commencé'}
             ${last && last !== first ? ` • Dernière activité : ${escHtml(fmtProgressDate(last.at))}` : ''}
@@ -9106,7 +9105,7 @@ function archiveVehicle(id) {
   const message = isSAV(vehicle)
     ? 'Archiver ce SAV ? Il restera visible dans Archives avec le filtre SAV.'
     : remain(vehicle) > 0
-      ? `Ce véhicule n’est pas terminé à 100% (${pct(vehicle)}%). L’archiver quand même ?`
+      ? `Ce véhicule n’est pas terminé à 100% (${formatProgressPercentV1137(pct(vehicle))}). L’archiver quand même ?`
       : 'Archiver ce véhicule terminé ?';
   if (!confirm(message)) return;
   vehicle.archived = true;
