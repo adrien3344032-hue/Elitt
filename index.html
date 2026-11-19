@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.35 Écran Atelier Pro</title>
+<title>ELITT - Suivi OF - V11.36 Pourcentages Heures</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -2700,7 +2700,7 @@ const USERS_ROLES = {
   'julien@elitt.com': 'user',
   'david@elitt.com': 'user',
   'dimitri@elitt.com': 'user',
-  'priscilla@elitt.com': 'user',
+  'priscilla@elitt.com': 'admin',
   'pierre@elitt.com': 'user',
   'maël@elitt.com': 'user',
   'lucas@elitt.com': 'user'
@@ -3437,13 +3437,34 @@ function doneOf(vehicle) {
 function pct(vehicle) {
   if (isSAV(vehicle)) {
     if (vehicle.savDone) return 100;
-    const planned = Number(vehicle.savEstimated) || 0;
+    const planned = Math.max(0, Number(vehicle.savEstimated) || 0);
     const actual = savActualHoursNowV1114(vehicle);
     return planned ? Math.min(100, Math.round(actual / planned * 100)) : 0;
   }
-  const total = (vehicle.ofs || []).reduce((sum, of) => sum + qtyTotalV5(of), 0);
-  const done = (vehicle.ofs || []).reduce((sum, of) => sum + qtyDoneV5(of), 0);
-  return total ? Math.round(done / total * 100) : 0;
+
+  let totalHours = 0;
+  let doneHours = 0;
+  let totalUnits = 0;
+  let doneUnits = 0;
+
+  for (const of of (vehicle.ofs || [])) {
+    const unitHours = Math.max(0, Number(of.time) || 0);
+    const total = qtyTotalV5(of);
+    const done = qtyDoneV5(of);
+
+    totalHours += unitHours * total;
+    doneHours += unitHours * done;
+    totalUnits += total;
+    doneUnits += done;
+  }
+
+  if (totalHours > 0) {
+    return Math.max(0, Math.min(100, Math.round(doneHours / totalHours * 100)));
+  }
+
+  // Anciennes données sans aucune heure : 0 % tant que tout n'est pas terminé,
+  // puis 100 %. On évite ainsi de réintroduire un pourcentage basé sur le nombre d'OF.
+  return totalUnits > 0 && doneUnits >= totalUnits ? 100 : 0;
 }
 
 // Calcule le temps restant d'un véhicule en multipliant le temps unitaire par la quantité restante.
@@ -5097,7 +5118,7 @@ function phaseStatsV5(vehicle, category) {
     if ((of.category || '') !== category) continue;
     const qtyTotal = qtyTotalV5(of);
     const qtyDone = qtyDoneV5(of);
-    const unitHours = Number(of.time) || 0;
+    const unitHours = Math.max(0, Number(of.time) || 0);
 
     total += qtyTotal;
     done += qtyDone;
@@ -5106,14 +5127,25 @@ function phaseStatsV5(vehicle, category) {
   }
 
   const remainingHours = Math.max(0, totalHours - doneHours);
+  const qtyPct = total ? Math.round(done / total * 100) : 0;
+
+  // Règle V11.36 : tout pourcentage d'avancement métier est calculé en heures.
+  // Si une ancienne base ne contient absolument aucune heure, on ne simule pas
+  // une progression intermédiaire en quantité : seul un ensemble totalement fini
+  // peut alors apparaître à 100 %.
+  const hoursPct = totalHours > 0
+    ? Math.round(doneHours / totalHours * 100)
+    : (total > 0 && done >= total ? 100 : 0);
+
   return {
     total,
     done,
-    pct: total ? Math.round(done / total * 100) : 0,
+    qtyPct,
+    pct: hoursPct,
     totalHours,
     doneHours,
     remainingHours,
-    hoursPct: totalHours ? Math.round(doneHours / totalHours * 100) : 0
+    hoursPct
   };
 }
 
@@ -6646,7 +6678,13 @@ function dashboardTrendDataV1134(vehicles) {
       if (offset === 0) value = pct(vehicle);
       if (value === null) return;
 
-      const vehicleWeight = Math.max(1, totalUnitsV5(vehicle));
+      const vehicleWeight = Math.max(
+        0.0001,
+        (vehicle.ofs || []).reduce(
+          (sum, of) => sum + Math.max(0, Number(of.time) || 0) * qtyTotalV5(of),
+          0
+        )
+      );
       weighted += value * vehicleWeight;
       weight += vehicleWeight;
     });
@@ -6775,29 +6813,81 @@ function dashboardTimeDistributionV1134(vehicles) {
 }
 
 function dashboardPeopleLoadV1134(vehicles) {
-  const ids = new Set(vehicles.map(vehicle => vehicle.id));
+  const activeVehicleIds = new Set(vehicles.map(vehicle => vehicle.id));
   const now = new Date();
   const monday = new Date(now);
   const day = (now.getDay() + 6) % 7;
   monday.setDate(now.getDate() - day);
-  monday.setHours(0,0,0,0);
+  monday.setHours(0, 0, 0, 0);
+
+  // Index des OF actuels, utilisé uniquement comme fallback pour les événements
+  // enregistrés avant V11.36 qui ne stockaient pas encore plannedUnitHoursV1136.
+  const ofIndex = new Map();
+  (state.vehicles || []).forEach(vehicle => {
+    (vehicle.ofs || []).forEach(of => {
+      ofIndex.set(`${vehicle.id}||${of.id}`, of);
+    });
+  });
+
+  // On rejoue les validations par OF. Une correction -1 retire la dernière
+  // réalisation correspondante, ce qui évite de conserver une charge annulée.
+  const stacks = new Map();
+  const events = progressEvents()
+    .filter(event => event?.vehicleId && event?.ofId && Number(event?.qtyDelta))
+    .slice()
+    .sort((a, b) => (Date.parse(a.at || '') || 0) - (Date.parse(b.at || '') || 0));
+
+  events.forEach(event => {
+    const delta = Math.trunc(Number(event.qtyDelta) || 0);
+    if (!delta) return;
+
+    const key = `${event.vehicleId}||${event.ofId}`;
+    if (!stacks.has(key)) stacks.set(key, []);
+    const stack = stacks.get(key);
+
+    if (delta < 0) {
+      for (let i = 0; i < Math.abs(delta); i++) {
+        if (stack.length) stack.pop();
+      }
+      return;
+    }
+
+    if (!event.person) return;
+
+    const currentOF = ofIndex.get(key);
+    const unitHours = Number.isFinite(Number(event.plannedUnitHoursV1136))
+      ? Math.max(0, Number(event.plannedUnitHoursV1136))
+      : Math.max(0, Number(currentOF?.time) || 0);
+
+    const eventTime = Date.parse(event.at || '') || 0;
+    for (let i = 0; i < delta; i++) {
+      stack.push({
+        person: event.person,
+        vehicleId: event.vehicleId,
+        at: eventTime,
+        minutes: Math.round(unitHours * 60)
+      });
+    }
+  });
 
   const totals = new Map();
-  workTimesV1112().forEach(item => {
-    if (!ids.has(item.vehicleId) || !item.person) return;
-    const finished = new Date(item.finishedAt || 0);
-    if (Number.isNaN(finished.getTime()) || finished < monday || finished > now) return;
-    totals.set(item.person, (totals.get(item.person) || 0) + Math.max(0, Number(item.durationMinutes) || 0));
+  stacks.forEach(units => {
+    units.forEach(unit => {
+      if (!activeVehicleIds.has(unit.vehicleId) || !unit.person) return;
+      if (!unit.at || unit.at < monday.getTime() || unit.at > now.getTime()) return;
+      totals.set(unit.person, (totals.get(unit.person) || 0) + Math.max(0, unit.minutes || 0));
+    });
   });
 
   const rows = [...totals.entries()]
     .map(([person, minutes]) => ({ person, minutes }))
-    .sort((a,b) => b.minutes - a.minutes)
-    .slice(0,5);
+    .filter(row => row.minutes > 0)
+    .sort((a, b) => b.minutes - a.minutes)
+    .slice(0, 5);
 
   if (!rows.length) {
     return `<div class="dashEmptyChartV1134">
-      Aucun temps OF terminé cette semaine pour calculer la charge par personne.
+      Aucune heure OF validée cette semaine pour calculer la charge par personne.
     </div>`;
   }
 
@@ -6805,7 +6895,7 @@ function dashboardPeopleLoadV1134(vehicles) {
   return `<div class="dashPeopleLoadV1134">${rows.map(row => `
     <div class="dashPersonRowV1134">
       <div class="dashPersonNameV1134" title="${escHtml(row.person)}">${escHtml(row.person)}</div>
-      <div class="dashPersonTrackV1134"><div class="dashPersonFillV1134" style="width:${Math.round(row.minutes/max*100)}%"></div></div>
+      <div class="dashPersonTrackV1134"><div class="dashPersonFillV1134" style="width:${Math.round(row.minutes / max * 100)}%"></div></div>
       <div class="dashPersonHoursV1134">${escHtml(workMinutesLabelV1112(row.minutes))}</div>
     </div>`).join('')}</div>`;
 }
@@ -7006,7 +7096,7 @@ function dash() {
       </div>
 
       <div class="dashPanelV1134">
-        <div class="dashPanelTitleV1134"><span>♟ Charge par personne</span><small>semaine en cours</small></div>
+        <div class="dashPanelTitleV1134"><span>♟ Charge par personne</span><small>heures OF validées • semaine en cours</small></div>
         ${dashboardPeopleLoadV1134(vehicles)}
       </div>
     </div>
@@ -7408,9 +7498,10 @@ function delOF(vehicleId, ofId) {
 function progressSnapshot(vehicle) {
   return {
     global: pct(vehicle),
-    Fabrication: phaseStatsV5(vehicle, 'Fabrication').pct,
-    Prémontage: phaseStatsV5(vehicle, 'Prémontage').pct,
-    Pose: phaseStatsV5(vehicle, 'Pose').pct
+    Fabrication: phaseStatsV5(vehicle, 'Fabrication').hoursPct,
+    Prémontage: phaseStatsV5(vehicle, 'Prémontage').hoursPct,
+    Pose: phaseStatsV5(vehicle, 'Pose').hoursPct,
+    basisV1136: 'hours'
   };
 }
 
@@ -7451,6 +7542,8 @@ function recordProgressEvent(vehicle, of, delta, person, kind = 'realisation', n
     id: uid(), vehicleId: vehicle.id, vin: vehicle.vin || '', ofId: of?.id || '', ofName: of?.name || '',
     description: of?.desc || '', category: of?.category || 'Global', person: person || '',
     qtyDelta: Number(delta) || 0, qtyAfter: of ? qtyDoneV5(of) : 0, qtyTotal: of ? qtyTotalV5(of) : 0,
+    plannedUnitHoursV1136: of ? Math.max(0, Number(of.time) || 0) : 0,
+    progressBasisV1136: 'hours',
     kind, note, at: when, progress: progressSnapshot(vehicle)
   });
   // Évite que l'historique graphique grossisse indéfiniment : on garde jusqu'à 10 000 événements globaux.
@@ -8276,7 +8369,7 @@ function renderTimelineBodyV6(vehicle) {
     <div class="card">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
         <div>
-          <b>${escHtml(mode)} : ${mode === 'Global' ? pct(vehicle) : phaseStatsV5(vehicle, mode).pct}%</b>
+          <b>${escHtml(mode)} : ${mode === 'Global' ? pct(vehicle) : phaseStatsV5(vehicle, mode).hoursPct}%</b>
           <div class="muted" style="margin-top:6px">
             ${first ? `Première activité : ${escHtml(fmtProgressDate(first.at))}` : 'Pas encore commencé'}
             ${last && last !== first ? ` • Dernière activité : ${escHtml(fmtProgressDate(last.at))}` : ''}
