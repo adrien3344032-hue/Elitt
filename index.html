@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.38 Corrections Mercedes Firebase</title>
+<title>ELITT - Suivi OF - V11.39 Firebase Multi-Documents</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -9419,14 +9419,16 @@ initApp();
   ============================================================================
   FIREBASE - synchronisation du site GitHub Pages avec Firestore
   ============================================================================
-  Cette partie ne change pas l'organisation des données : elle conserve un seul
-  document Firestore partagé, comme la V10 fonctionnelle.
+  V11.39 : les données métier restent dans `donnees_principales`, tandis que
+  `progressEventsV6` est stocké dans un second document Firestore afin de rester
+  largement sous la limite stricte de 1 MiB par document.
   ============================================================================
 */
 
 (function firebaseModule(){
   const FIREBASE_DOC_COLLECTION = 'suivi_of';
   const FIREBASE_DOC_ID = 'donnees_principales';
+  const FIREBASE_PROGRESS_DOC_ID_V1139 = 'progress_events_v1139';
   const FIREBASE_PUBLIC_VINS_COLLECTION = 'public_vins';
   const FIREBASE_PUBLIC_GLOBAL_DOC_ID = 'global_dashboard_v117';
 
@@ -9436,8 +9438,12 @@ initApp();
   let currentUser = null;
   let applyingRemote = false;
   let unsubscribeSnapshot = null;
+  let unsubscribeProgressSnapshotV1139 = null;
   let lastRemoteDataJSON = '';
   let deferredRemotePayloadV1118 = null;
+  let lastMainPayloadV1139 = null;
+  let remoteProgressEventsV1139 = [];
+  let legacySplitMigrationScheduledV1139 = false;
 
   // Numéro de génération de la session : permet d'ignorer un callback
   // Firestore provenant encore de l'ancien compte après une reconnexion.
@@ -9488,20 +9494,48 @@ initApp();
     }
   }
 
-  // Construit la partie stable des données utilisées pour savoir si une vraie modification doit être envoyée.
+  // V11.39 - Etat principal Firestore sans l'historique graphique volumineux.
+  function mainStateForFirebaseV1139(source = state){
+    const copy = sharedStateV1120(source || {});
+    delete copy.progressEventsV6;
+    return copy;
+  }
+
+  function progressEventsForFirebaseV1139(source = state){
+    return Array.isArray(source?.progressEventsV6) ? source.progressEventsV6 : [];
+  }
+
+  // Fusion compatible avec l'ancien stockage et le nouveau document dédié.
+  function mergedProgressEventsV1139(legacyEvents, separateEvents, localEvents){
+    const first = mergeArrayByIdV1118(
+      Array.isArray(legacyEvents) ? legacyEvents : [],
+      Array.isArray(separateEvents) ? separateEvents : [],
+      10000,
+      'at'
+    );
+    return mergeArrayByIdV1118(
+      first,
+      Array.isArray(localEvents) ? localEvents : [],
+      10000,
+      'at'
+    );
+  }
+
+  // La comparaison stable inclut les deux documents, même s'ils sont stockés séparément.
   function stableDataFromCurrent(){
     return {
-      state: sharedStateV1120(state),
+      state: mainStateForFirebaseV1139(state),
+      progressEventsV6: progressEventsForFirebaseV1139(state),
       basesExcel: getBasesPayload()
     };
   }
 
-  // Construit le document complet envoyé à Firestore avec sa date de dernière mise à jour.
+  // Document principal uniquement. Les progressEvents sont écrits à part.
   function payloadFromCurrent(){
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.38,
+      version: 11.39,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -9736,7 +9770,8 @@ initApp();
       result.planningSyncUpdatedAtV1124 = remote.planningSyncUpdatedAtV1124 || '';
     }
 
-    result.progressEventsV6 = mergeArrayByIdV1118(remote.progressEventsV6, result.progressEventsV6, 10000, 'at');
+    // V11.39 : progressEventsV6 est fusionné dans son document dédié.
+    delete result.progressEventsV6;
     result.notificationsV1115 = mergeArrayByIdV1118(remote.notificationsV1115, result.notificationsV1115, 300, 'at');
     result.workTimesV1112 = mergeArrayByIdV1118(remote.workTimesV1112, result.workTimesV1112, 10000, 'finishedAt');
     result.history = mergeHistoryV1118(remote.history, result.history);
@@ -9748,7 +9783,7 @@ initApp();
   function mergePayloadForSaveV1118(remotePayload, localPayload){
     const cleanLocalPayload = {
       ...localPayload,
-      state: sharedStateV1120(localPayload?.state || {})
+      state: mainStateForFirebaseV1139(localPayload?.state || {})
     };
 
     if(!remotePayload?.state) return cleanLocalPayload;
@@ -9756,7 +9791,7 @@ initApp();
     return {
       ...cleanLocalPayload,
       state: mergeCriticalStateV1118(
-        sharedStateV1120(remotePayload.state),
+        mainStateForFirebaseV1139(remotePayload.state),
         cleanLocalPayload.state
       ),
       basesExcel: cleanLocalPayload.basesExcel || remotePayload.basesExcel || {}
@@ -9771,70 +9806,102 @@ initApp();
     const saveUserUid = currentUser.uid;
     const saveGeneration = authSessionGenerationV1125;
 
-    const stableSource = payloadOverride
-      ? {
-          state: sharedStateV1120(payloadOverride.state || {}),
-          basesExcel: payloadOverride.basesExcel || {}
-        }
-      : stableDataFromCurrent();
+    // La file persistante garde volontairement l'état complet. La séparation se
+    // fait seulement au moment de l'écriture Firestore.
+    const fullLocalState = payloadOverride
+      ? sharedStateV1120(payloadOverride.state || {})
+      : sharedStateV1120(state);
+
+    const stableSource = {
+      state: mainStateForFirebaseV1139(fullLocalState),
+      progressEventsV6: progressEventsForFirebaseV1139(fullLocalState),
+      basesExcel: payloadOverride ? (payloadOverride.basesExcel || {}) : getBasesPayload()
+    };
 
     const localStableJSON = JSON.stringify(stableSource);
     if(!force && localStableJSON === lastRemoteDataJSON) return null;
 
     const reference = db.collection(FIREBASE_DOC_COLLECTION).doc(FIREBASE_DOC_ID);
+    const progressReference = db.collection(FIREBASE_DOC_COLLECTION).doc(FIREBASE_PROGRESS_DOC_ID_V1139);
 
     try{
       setStatus('Sauvegarde...', '');
 
-      const localPayload = payloadOverride
-        ? {
-            app: 'ELITT Suivi OF Web Firebase',
-            version: 11.30,
-            updatedAt: new Date().toISOString(),
-            state: stableSource.state,
-            basesExcel: stableSource.basesExcel
-          }
-        : payloadFromCurrent();
+      const localPayload = {
+        app: 'ELITT Suivi OF Web Firebase',
+        version: 11.39,
+        updatedAt: new Date().toISOString(),
+        state: stableSource.state,
+        basesExcel: stableSource.basesExcel
+      };
 
-      const committedPayload = await db.runTransaction(async transaction => {
-        // Si l'utilisateur a changé entre le clic et le début de la transaction,
-        // on annule cette sauvegarde plutôt que de l'associer au mauvais compte.
+      const committed = await db.runTransaction(async transaction => {
+        // Les deux lectures ont lieu avant toute écriture, comme l'exige une transaction Firestore.
+        const mainSnapshot = await transaction.get(reference);
+        const progressSnapshot = await transaction.get(progressReference);
+
         if(saveGeneration !== authSessionGenerationV1125 || !currentUser || currentUser.uid !== saveUserUid){
           throw new Error('Session Firebase changée pendant la sauvegarde.');
         }
 
-        const snapshot = await transaction.get(reference);
-        const remotePayload = snapshot.exists ? snapshot.data() : null;
-        const payload = mergePayloadForSaveV1118(remotePayload, localPayload);
-        payload.updatedAt = new Date().toISOString();
-        transaction.set(reference, payload, {merge:true});
-        return payload;
+        const remotePayload = mainSnapshot.exists ? mainSnapshot.data() : null;
+        const remoteProgressPayload = progressSnapshot.exists ? progressSnapshot.data() : null;
+
+        const mergedProgress = mergedProgressEventsV1139(
+          remotePayload?.state?.progressEventsV6 || [],
+          remoteProgressPayload?.progressEventsV6 || [],
+          stableSource.progressEventsV6
+        );
+
+        const mainPayload = mergePayloadForSaveV1118(remotePayload, localPayload);
+        mainPayload.version = 11.39;
+        mainPayload.updatedAt = new Date().toISOString();
+        if(mainPayload.state) delete mainPayload.state.progressEventsV6;
+
+        const progressPayload = {
+          app: 'ELITT Suivi OF Web Firebase',
+          version: 11.39,
+          kind: 'progressEventsV6',
+          updatedAt: mainPayload.updatedAt,
+          progressEventsV6: mergedProgress
+        };
+
+        // Ecriture complète du principal : indispensable pour supprimer réellement
+        // l'ancien champ state.progressEventsV6 qui faisait dépasser 1 MiB.
+        transaction.set(reference, mainPayload);
+        transaction.set(progressReference, progressPayload);
+
+        return { mainPayload, progressPayload };
       });
 
-      // Si le compte a changé pendant l'attente réseau, l'ancien résultat est ignoré.
       if(saveGeneration !== authSessionGenerationV1125 || !currentUser || currentUser.uid !== saveUserUid){
         return null;
       }
 
+      remoteProgressEventsV1139 = committed.progressPayload?.progressEventsV6 || [];
+      lastMainPayloadV1139 = committed.mainPayload || null;
+      legacySplitMigrationScheduledV1139 = false;
+
+      const committedPayload = {
+        ...committed.mainPayload,
+        state: {
+          ...(committed.mainPayload?.state || {}),
+          progressEventsV6: remoteProgressEventsV1139
+        },
+        progressEventsV6: remoteProgressEventsV1139
+      };
+
       const newerPersistentVersion =
         options?.persistentOwner &&
         typeof window.persistentQueueHasNewerV1126 === 'function' &&
-        window.persistentQueueHasNewerV1126(
-          options.persistentOwner,
-          options.persistentVersion
-        );
+        window.persistentQueueHasNewerV1126(options.persistentOwner, options.persistentVersion);
 
-      // On n'applique le retour que si aucune action plus récente n'a été faite
-      // pendant la requête réseau.
       if(!newerPersistentVersion && committedPayload?.state) {
         applyRemotePayload(committedPayload, true);
       }
 
       deferredRemotePayloadV1118 = null;
 
-      // Les QR publics sont secondaires par rapport à la sauvegarde métier.
-      // V11.38 : une erreur de permission/réseau sur public_vins ne doit jamais
-      // transformer une sauvegarde privée déjà validée en « Connexion indisponible ».
       if(!newerPersistentVersion) {
         try {
           await syncPublicVinDocumentsV116();
@@ -9847,14 +9914,14 @@ initApp();
       }
 
       lastRemoteDataJSON = JSON.stringify({
-        state: committedPayload?.state || state,
-        basesExcel: committedPayload?.basesExcel || getBasesPayload()
+        state: committed.mainPayload?.state || mainStateForFirebaseV1139(state),
+        progressEventsV6: remoteProgressEventsV1139,
+        basesExcel: committed.mainPayload?.basesExcel || getBasesPayload()
       });
 
       if(!newerPersistentVersion) {
         if (window.SUIVI_OF_PUBLIC_SYNC_WARNING_V1138) {
           setStatus('Sauvegardé Firebase • QR à vérifier', 'ok');
-          // Le message sert uniquement à informer ; la sauvegarde privée est confirmée.
           window.SUIVI_OF_PUBLIC_SYNC_WARNING_V1138 = '';
         } else {
           setStatus('Sauvegardé Firebase', 'ok');
@@ -9864,9 +9931,7 @@ initApp();
     }catch(e){
       console.error(e);
       setStatus('Erreur sauvegarde Firebase', 'bad');
-      if(!options?.silent) {
-        alert('Erreur sauvegarde Firebase : ' + e.message);
-      }
+      if(!options?.silent) alert('Erreur sauvegarde Firebase : ' + e.message);
       throw e;
     }
   }
@@ -9999,15 +10064,20 @@ initApp();
     }
 
     const localUi = captureLocalUiStateV1120(state);
-    const incomingSharedState = sharedStateV1120(data.state);
+    const incomingEvents = mergedProgressEventsV1139(
+      Array.isArray(data.state?.progressEventsV6) ? data.state.progressEventsV6 : [],
+      remoteProgressEventsV1139,
+      Array.isArray(data.progressEventsV6) ? data.progressEventsV6 : []
+    );
+    const incomingMainState = mainStateForFirebaseV1139(data.state);
+    const incomingSharedState = { ...incomingMainState, progressEventsV6: incomingEvents };
+
     const incomingStableJSON = JSON.stringify({
-      state: incomingSharedState,
+      state: incomingMainState,
+      progressEventsV6: incomingEvents,
       basesExcel: data.basesExcel || {}
     });
 
-    // Firestore renvoie aussi nos propres écritures. Le cas le plus fréquent est
-    // exactement le dernier document déjà confirmé : on l'écarte sans sérialiser
-    // une seconde fois tout l'état local.
     if(!force && incomingStableJSON === lastRemoteDataJSON){
       setStatus('Synchronisé Firebase', 'ok');
       return;
@@ -10024,16 +10094,12 @@ initApp();
     try{
       state = restoreLocalUiStateV1120(incomingSharedState, localUi);
       invalidateDerivedCachesV1130();
-      // Compatibilité : une très ancienne sauvegarde peut encore avoir les bases
-      // uniquement dans state.customTemplates.
       setBasesPayload(data.basesExcel || data.state?.customTemplates || {});
 
       if(typeof migrateStateV10 === 'function') migrateStateV10();
       else if(typeof normalizeAll === 'function') normalizeAll();
 
-      if(typeof applyConnectedPersonV1116 === 'function') {
-        applyConnectedPersonV1116();
-      }
+      if(typeof applyConnectedPersonV1116 === 'function') applyConnectedPersonV1116();
 
       persistLocalStateV1130();
       lastRemoteDataJSON = incomingStableJSON;
@@ -10045,6 +10111,30 @@ initApp();
     }
   }
 
+  // Si l'ancien document contient encore progressEventsV6, une sauvegarde forcée
+  // le migre automatiquement vers le second document. C'est idempotent.
+  function scheduleLegacyProgressSplitV1139(mainPayload){
+    const legacy = mainPayload?.state?.progressEventsV6;
+    if(!Array.isArray(legacy) || !legacy.length) return;
+    if(legacySplitMigrationScheduledV1139) return;
+
+    legacySplitMigrationScheduledV1139 = true;
+    setTimeout(async () => {
+      try{
+        if(!currentUser || !db) return;
+        if(window.SUIVI_OF_LOCAL_PENDING_V1118 === true){
+          legacySplitMigrationScheduledV1139 = false;
+          return;
+        }
+        await pushFirebaseNow(true, null, { silent: true });
+        console.info('Migration V11.39 terminée : progressEventsV6 déplacé vers le document dédié.');
+      }catch(error){
+        legacySplitMigrationScheduledV1139 = false;
+        console.warn('Migration V11.39 différée :', error);
+      }
+    }, 800);
+  }
+
   // Nettoie tout ce qui appartient à l'ancienne session Firebase.
   // Appelé dès que l'utilisateur Firebase change.
   function resetFirebaseAccountSessionV1125(){
@@ -10054,10 +10144,17 @@ initApp();
       try { unsubscribeSnapshot(); } catch(error) { console.error(error); }
       unsubscribeSnapshot = null;
     }
+    if(unsubscribeProgressSnapshotV1139){
+      try { unsubscribeProgressSnapshotV1139(); } catch(error) { console.error(error); }
+      unsubscribeProgressSnapshotV1139 = null;
+    }
 
     applyingRemote = false;
     lastRemoteDataJSON = '';
     deferredRemotePayloadV1118 = null;
+    lastMainPayloadV1139 = null;
+    remoteProgressEventsV1139 = [];
+    legacySplitMigrationScheduledV1139 = false;
 
     // Les caches des QR ne doivent pas empêcher le nouveau compte de republier.
     lastPublicPayloadJSONV116.clear();
@@ -10076,19 +10173,30 @@ initApp();
       try { unsubscribeSnapshot(); } catch(error) { console.error(error); }
       unsubscribeSnapshot = null;
     }
+    if(unsubscribeProgressSnapshotV1139){
+      try { unsubscribeProgressSnapshotV1139(); } catch(error) { console.error(error); }
+      unsubscribeProgressSnapshotV1139 = null;
+    }
 
     const generation = authSessionGenerationV1125;
     const userUid = currentUser?.uid || '';
     const reference = db.collection(FIREBASE_DOC_COLLECTION).doc(FIREBASE_DOC_ID);
+    const progressReference = db.collection(FIREBASE_DOC_COLLECTION).doc(FIREBASE_PROGRESS_DOC_ID_V1139);
 
     unsubscribeSnapshot = reference.onSnapshot(snapshot => {
-      // Ignore tout retour provenant d'une session/utilisateur devenu obsolète.
       if(generation !== authSessionGenerationV1125) return;
       if(!currentUser || currentUser.uid !== userUid) return;
 
       if(snapshot.exists){
-        applyRemotePayload(snapshot.data());
+        lastMainPayloadV1139 = snapshot.data();
+        const legacy = lastMainPayloadV1139?.state?.progressEventsV6;
+        if(Array.isArray(legacy) && legacy.length){
+          remoteProgressEventsV1139 = mergedProgressEventsV1139(legacy, remoteProgressEventsV1139, []);
+        }
+        applyRemotePayload(lastMainPayloadV1139);
+        scheduleLegacyProgressSplitV1139(lastMainPayloadV1139);
       }else{
+        lastMainPayloadV1139 = null;
         setStatus('Aucune donnée Firebase : restauration ou création possible', '');
       }
     }, error => {
@@ -10096,6 +10204,21 @@ initApp();
       console.error(error);
       setStatus('Erreur lecture Firebase', 'bad');
       alert('Erreur lecture Firebase : ' + error.message);
+    });
+
+    unsubscribeProgressSnapshotV1139 = progressReference.onSnapshot(snapshot => {
+      if(generation !== authSessionGenerationV1125) return;
+      if(!currentUser || currentUser.uid !== userUid) return;
+
+      remoteProgressEventsV1139 = snapshot.exists && Array.isArray(snapshot.data()?.progressEventsV6)
+        ? snapshot.data().progressEventsV6
+        : [];
+
+      if(lastMainPayloadV1139) applyRemotePayload(lastMainPayloadV1139);
+    }, error => {
+      if(generation !== authSessionGenerationV1125) return;
+      console.error('Erreur lecture historique graphique Firebase :', error);
+      setStatus('Firebase connecté • historique graphique à vérifier', '');
     });
   }
 
@@ -10188,6 +10311,10 @@ initApp();
           if(unsubscribeSnapshot){
             try { unsubscribeSnapshot(); } catch(error) { console.error(error); }
             unsubscribeSnapshot = null;
+          }
+          if(unsubscribeProgressSnapshotV1139){
+            try { unsubscribeProgressSnapshotV1139(); } catch(error) { console.error(error); }
+            unsubscribeProgressSnapshotV1139 = null;
           }
 
           const badge = document.getElementById('fbConnectedPersonV1116');
