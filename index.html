@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ELITT - Suivi OF - V11.39 Firebase Multi-Documents</title>
+<title>ELITT - Suivi OF - V11.40 Export Bases OF</title>
 <style>
 :root{--bg:#071426;--panel:#0e1e35;--panel2:#122743;--text:#eaf2ff;--muted:#9cb2d1;--line:#284262;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--pill:#18375f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;color:#fff;background:var(--blue);cursor:pointer}button.alt{background:#28415f}button.good{background:var(--green)}button.warn{background:var(--orange);color:#071426}button.bad{background:var(--red)}button.small{padding:8px 10px;font-size:13px}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}aside{background:#081830;border-right:1px solid var(--line);padding:18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:170px;height:auto;border-radius:0;background:transparent;display:block;object-fit:contain}.brand{align-items:flex-start}nav button{width:100%;text-align:left;background:transparent;margin:4px 0;color:var(--text)}nav button.active,nav button:hover{background:#1b2f51}main{padding:20px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}h1{margin:0 0 6px;font-size:28px}p{color:var(--muted);margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(150px,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.kpi{font-size:30px;font-weight:900;margin-top:6px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;white-space:nowrap}th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bcd2f2;background:#0b1b33}td.desc{white-space:normal;min-width:280px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--pill);font-weight:800;font-size:12px;color:#cfe2ff}.progress{height:10px;background:#203654;border-radius:999px;overflow:hidden;min-width:140px}.bar{height:100%;background:linear-gradient(90deg,#38bdf8,#22c55e)}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0d1f38;border:1px solid var(--line);border-radius:20px;padding:18px;width:min(720px,96vw);max-height:92vh;overflow:auto}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-weight:700;color:#dceaff}input,select,textarea{background:#081830;color:#fff;border:1px solid #385579;border-radius:12px;padding:10px}textarea{min-height:90px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:nowrap;align-items:center;justify-content:flex-start}.actions.wrap{flex-wrap:wrap}td.actions{min-width:290px}.actions button{min-width:74px;text-align:center}.checkrow{display:flex!important;align-items:center;gap:10px;background:#081830;border:1px solid #385579;border-radius:12px;padding:10px}.checkrow input{width:18px;height:18px}.actions{align-items:center!important}.tablewrap td.actions{vertical-align:middle!important}td,th{line-height:1.25}.tablewrap table td{vertical-align:middle}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar label{display:flex;align-items:center;gap:8px;font-weight:800;color:#dceaff}.toolbar select{min-width:180px}.searchbox{width:min(520px,100%);font-size:16px}@media(max-width:900px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}
@@ -8638,6 +8638,156 @@ function partsForOF(brand, ofName) {
   return ((state.partsCatalogV8 || {})[brand] || []).filter(part => String(part.of || '').trim().toUpperCase() === key);
 }
 
+
+// -----------------------------------------------------------------------------
+// V11.40 - EXPORT DES BASES OF DU SITE
+// Les fichiers sont reconstruits depuis state.customTemplates, c'est-à-dire
+// les bases réellement chargées/synchronisées dans l'application.
+// -----------------------------------------------------------------------------
+
+function excelExportFileNameV1140(brand) {
+  const date = new Date().toISOString().slice(0, 10);
+  return `OF_${String(brand || '').toUpperCase()}_SITE_${date}.xlsx`;
+}
+
+function excelExportRowsV1140(brand) {
+  return templateForBrand(brand)
+    .slice()
+    .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0))
+    .map(of => ({
+      'Ordre': Number(of.order) || '',
+      'OF': String(of.name || of.id || '').trim(),
+      'Description': String(of.desc || '').trim(),
+      'Temps X1': Number(of.time) || 0,
+      'Quantité': Math.max(1, Number(of.quantity) || 1),
+      'Phase': String(of.category || '').trim(),
+      'Option': String(of.option || '').trim(),
+      'Règle option': of.removeIfOption
+        ? `SUPPRIMER SI ${String(of.removeIfOption).trim()}`
+        : ''
+    }));
+}
+
+// Exporte une seule marque au format Excel.
+async function exportBrandBaseExcelV1140(brand) {
+  if (!requireAdminV1117('l’export des bases OF')) return;
+
+  const rows = excelExportRowsV1140(brand);
+  if (!rows.length) {
+    alert(`Aucune base OF ${brand} n'est actuellement chargée dans le site.`);
+    return;
+  }
+
+  try {
+    await ensureSheetJSV1130();
+
+    const workbook = XLSX.utils.book_new();
+    const sheet = XLSX.utils.json_to_sheet(rows, {
+      header: ['Ordre', 'OF', 'Description', 'Temps X1', 'Quantité', 'Phase', 'Option', 'Règle option']
+    });
+
+    // Largeurs lisibles à l'ouverture dans Excel.
+    sheet['!cols'] = [
+      { wch: 8 },
+      { wch: 22 },
+      { wch: 52 },
+      { wch: 12 },
+      { wch: 10 },
+      { wch: 18 },
+      { wch: 24 },
+      { wch: 32 }
+    ];
+
+    XLSX.utils.book_append_sheet(workbook, sheet, 'OF');
+
+    // Si le catalogue pièces existe sur ce poste, on l'ajoute également dans
+    // une seconde feuille, sans modifier la base métier OF.
+    const parts = Array.isArray(state.partsCatalogV8?.[brand])
+      ? state.partsCatalogV8[brand]
+      : [];
+
+    if (parts.length) {
+      const partRows = parts.map(part => ({
+        'OF': String(part.of || '').trim(),
+        'Référence pièce': String(part.ref || '').trim(),
+        'Désignation': String(part.name || '').trim(),
+        'Quantité par OF': Math.max(1, Number(part.quantity) || 1),
+        'Commentaire': String(part.comment || '').trim()
+      }));
+
+      const partSheet = XLSX.utils.json_to_sheet(partRows, {
+        header: ['OF', 'Référence pièce', 'Désignation', 'Quantité par OF', 'Commentaire']
+      });
+      partSheet['!cols'] = [
+        { wch: 22 },
+        { wch: 24 },
+        { wch: 52 },
+        { wch: 16 },
+        { wch: 40 }
+      ];
+      XLSX.utils.book_append_sheet(workbook, partSheet, 'PIECES_OF');
+    }
+
+    XLSX.writeFile(workbook, excelExportFileNameV1140(brand), {
+      compression: true
+    });
+
+    logAction(
+      'Base OF exportée',
+      null,
+      null,
+      `${brand} • ${rows.length} OF${parts.length ? ` • ${parts.length} lignes pièces` : ''}`
+    );
+  } catch (error) {
+    console.error('Export base OF impossible :', error);
+    alert('Export Excel impossible : ' + (error?.message || error));
+  }
+}
+
+// Fenêtre admin permettant de récupérer exactement les bases OF actuellement
+// utilisées par le site, marque par marque.
+function openExcelExportV1140() {
+  if (!requireAdminV1117('l’export des bases OF')) return;
+
+  const brands = ['Renault', 'Mercedes', 'MAN'];
+  const rows = brands.map(brand => {
+    const count = templateForBrand(brand).length;
+    const parts = Array.isArray(state.partsCatalogV8?.[brand])
+      ? state.partsCatalogV8[brand].length
+      : 0;
+
+    return `<div class="card" style="margin:0;padding:14px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center">
+      <div>
+        <b style="font-size:15px">${escHtml(brand)}</b>
+        <div class="muted" style="margin-top:5px">${count} OF chargés${parts ? ` • ${parts} lignes pièces` : ''}</div>
+      </div>
+      <button class="good" type="button" ${count ? '' : 'disabled'} onclick="exportBrandBaseExcelV1140('${brand}')">
+        ⬇ Télécharger .xlsx
+      </button>
+    </div>`;
+  }).join('');
+
+  openModal('Exporter les bases OF du site', `
+    <div class="form">
+      <div class="full card" style="margin:0;padding:12px">
+        <b>Source : bases actuellement utilisées par le site</b>
+        <div class="muted" style="margin-top:7px;line-height:1.5">
+          Les fichiers sont reconstruits depuis les bases OF chargées dans l'application.
+          Ils permettent donc de vérifier exactement ce que le site utilise pour créer les nouveaux véhicules.
+        </div>
+      </div>
+      <div class="full" style="display:grid;gap:10px">${rows}</div>
+      <div class="full muted" style="line-height:1.5">
+        Le fichier contient la feuille <b>OF</b>. Si un catalogue de pièces est disponible sur ce poste,
+        une feuille <b>PIECES_OF</b> est également ajoutée.
+      </div>
+      <div class="full actions">
+        <button class="alt" type="button" onclick="closeModal()">Fermer</button>
+      </div>
+    </div>
+  `);
+}
+
 // Ouvre la fenêtre de chargement des trois bases Excel et de leurs feuilles PIECES_OF.
 function openExcelImport() {
   if (!requireAdminV1117('la modification des bases OF et pièces')) return;
@@ -9535,7 +9685,7 @@ initApp();
     const stable = stableDataFromCurrent();
     return {
       app: 'ELITT Suivi OF Web Firebase',
-      version: 11.39,
+      version: 11.40,
       updatedAt: new Date().toISOString(),
       state: stable.state,
       basesExcel: stable.basesExcel
@@ -9829,7 +9979,7 @@ initApp();
 
       const localPayload = {
         app: 'ELITT Suivi OF Web Firebase',
-        version: 11.39,
+        version: 11.40,
         updatedAt: new Date().toISOString(),
         state: stableSource.state,
         basesExcel: stableSource.basesExcel
@@ -10008,6 +10158,7 @@ initApp();
           <span class="notificationBellLabelV1115">Notifications</span>
           <span class="notificationBadgeV1115 empty" id="notificationBadgeV1115">0</span>
         </button>
+        <button class="small alt" id="fbExportBasesV1140" data-admin-only-v1117 title="Télécharger les bases OF réellement utilisées par le site">⬇ Exporter bases OF</button>
         <button class="small alt" id="fbForceSave" data-admin-only-v1117>Forcer sauvegarde</button>
         <button class="small alt" id="fbBackupData" data-admin-only-v1117>Sauvegarder données</button>
         <button class="small alt" id="fbRestoreData" data-admin-only-v1117>Restaurer données</button>
@@ -10018,6 +10169,7 @@ initApp();
       event.stopPropagation();
       toggleNotificationsV1115();
     };
+    document.getElementById('fbExportBasesV1140').onclick = () => openExcelExportV1140();
     document.getElementById('fbForceSave').onclick = async () => {
       try {
         if (window.SUIVI_OF_LOCAL_PENDING_V1118) {
